@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WorldManager
 {
-    private WorldType _currentWorldType = WorldType.Gang;
+    private WorldType _currentWorldType = WorldType.Pelmanus;
     public List<bool> isWorldClear;
     public WorldType CurrentWorldType
     {
@@ -30,7 +30,7 @@ public class WorldManager
     public WorldInfo GetWorldInfo()
     {
         WorldInfo worldInfo = null;
-
+        Debug.Log($"CurrentWorldType: {_currentWorldType}");
         switch (_currentWorldType)
         {
             case WorldType.Pelmanus:

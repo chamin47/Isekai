@@ -128,7 +128,7 @@ public class GridSystem : MonoBehaviour
 
     #region µð¹ö±ë
     private void OnDrawGizmos()
-    {
+    {        
         foreach (var gridInfo in _gridInfos)
         {
             DrawGrid(gridInfo);

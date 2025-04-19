@@ -137,7 +137,7 @@ public class UI_MiniGame : UI_Popup
         // 50% 확률로 2개의 키를 동시에 눌러야 하는 미니게임
         if (_miniGameInfo.canPressConcurrent)
         {
-            hasConcurrentKey = MakeConcurrenceButton(2, 2, 70f);
+            hasConcurrentKey = MakeConcurrenceButton(2, 2, 100f);
         }
 
         for (int i = 0; i < requiredKeyCount - hasConcurrentKey; i++)
@@ -182,7 +182,6 @@ public class UI_MiniGame : UI_Popup
         }
         // KeyButton 생성
         TwoKeyButton keyButton = Managers.UI.MakeSubItem<TwoKeyButton>(_keyBoardTransform, "TwoKeyButton");
-        keyButton.OnKeyPressed += OnKeyPressed; // 입력 이벤트 연결
         keyButton.Init(keyCode[0], keyCode[1], _keySpriteFactory.GetKeySprite(keyCode[0]), _keySpriteFactory.GetKeySprite(keyCode[1])); // KeyCode 설정
         _requiredKeys.Add(keyButton); // 리스트에 추가
         
@@ -214,10 +213,10 @@ public class UI_MiniGame : UI_Popup
         }
     }
     #endregion
+
     private void OnKeyPressed()
     {
         _pressedKeyCount++;
-        Debug.Log(_pressedKeyCount);
 
         if (_pressedKeyCount == _requiredKeys.Count)
         {

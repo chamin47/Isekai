@@ -24,7 +24,7 @@ public class TwoKeyButton : KeyButton
     }
     private void Update()
     {
-        if (Input.GetKeyDown(_keyCode) && Input.GetKeyDown(_secondKeyCode))
+        if (_isActive && Input.GetKeyDown(_keyCode) && Input.GetKeyDown(_secondKeyCode))
         {
             if (_canPressKey)
             {
