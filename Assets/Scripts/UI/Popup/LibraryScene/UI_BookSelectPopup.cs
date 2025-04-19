@@ -21,6 +21,7 @@ public class UI_BookSelectWorldSpace : UI_Base, IPointerEnterHandler, IPointerEx
 	private Color defaultColor2;
 	
 	private LibraryBook _book;
+
     public override void Init()
 	{
 		_selectImage1.gameObject.BindEvent(OnClickOpenBook);
@@ -29,7 +30,7 @@ public class UI_BookSelectWorldSpace : UI_Base, IPointerEnterHandler, IPointerEx
 		defaultColor1 = _selectImage1.color;
 		defaultColor2 = _selectImage2.color;
 
-		SetTransform();
+        SetTransform();
 	}
 
 	public void Init(LibraryBook book)

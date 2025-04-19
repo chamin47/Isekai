@@ -381,8 +381,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: -3591674793743027783}
-        m_TargetAssemblyTypeName: UI_Popup, Assembly-CSharp
-        m_MethodName: ClosePopupUI
+        m_TargetAssemblyTypeName: UI_BookPopup, Assembly-CSharp
+        m_MethodName: ClosePopup
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

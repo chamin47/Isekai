@@ -30,6 +30,7 @@ public class PlayerController : MonoBehaviour
 
 	private void Update()
 	{
+
 		if (isMoving == true || currentScene != "IntroScene")
 		{
 			float x = 0f;
@@ -47,7 +48,7 @@ public class PlayerController : MonoBehaviour
 
             UpdateMove(x);
 			_playerAnimator.UpdateAnimation(x);
-		}
+        }
 		else
 		{
 			UpdateMove(0);
@@ -55,7 +56,12 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
-	private void UpdateMove(float x)
+    public void PlayFootSound()
+    {
+        Managers.Sound.Play("all_s_walk2", Sound.Effect);
+    }
+
+    private void UpdateMove(float x)
 	{
 		_movement.MoveTo(x);
 	}

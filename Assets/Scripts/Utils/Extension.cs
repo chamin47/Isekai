@@ -126,6 +126,64 @@ public static class Extension
         }
         return stringBuilder.ToString();
     }
+
+    //Rich Text 태그를 포함한 문자열을 타이핑 효과로 출력하는 코루틴
+    public static IEnumerator CoTypeEffectWithRichText(this TMP_Text textComponent, string content, float typingSpeed)
+    {
+        textComponent.text = ""; // 초기화
+
+        int stringIndex = 0;
+        while (stringIndex < content.Length)
+        {
+            char c = content[stringIndex];
+
+            if (c == '<') // Rich Text 태그 시작
+            {
+                int closeIndex = content.IndexOf('>', stringIndex);
+                if (closeIndex == -1) // 태그가 정상적으로 닫히지 않음
+                {
+                    textComponent.text += c;
+                }
+                else
+                {
+                    textComponent.text += content.Substring(stringIndex, closeIndex - stringIndex + 1);
+                    stringIndex = closeIndex; // 태그 끝까지 건너뛰기
+                }
+            }
+            else
+            {
+                textComponent.text += c;
+            }
+
+            stringIndex++;
+            yield return new WaitForSeconds(typingSpeed);
+        }
+
+        yield return new WaitForSeconds(0.5f); // 효과 마무리 시간
+    }
+
+    public static IEnumerator CoBlinkText(this TMP_Text text, int blinkCount, float blinkDuration)
+    {
+        for (int i = 0; i < blinkCount; i++)
+        {
+            yield return CoFadeIn(text, blinkDuration / 2);
+            yield return CoFadeOut(text, blinkDuration / 2);
+        }
+    }
+
+    public static IEnumerator CoTypingEffect(this TMP_Text text, string message, float typingSpeed, bool spaceSkip = false)
+    {
+        text.text = "";
+        foreach (char letter in message)
+        {
+            text.text += letter;
+            if (spaceSkip && letter == ' ')
+            {
+                continue;
+            }
+            yield return WaitForSecondsCache.Get(typingSpeed);
+        }
+    }
     #endregion
 
 
@@ -236,27 +294,6 @@ public static class Extension
         image.fillAmount = targetFill;
     }
 
-    public static IEnumerator CoBlinkText(this TMP_Text text, int blinkCount, float blinkDuration)
-    {
-        for (int i = 0; i < blinkCount; i++)
-        {
-            yield return CoFadeIn(text, blinkDuration / 2);
-            yield return CoFadeOut(text, blinkDuration / 2);
-        }
-    }
-
-    public static IEnumerator CoTypingEffect(this TMP_Text text, string message, float typingSpeed, bool spaceSkip = false)
-    {
-        text.text = "";
-        foreach (char letter in message)
-        {
-            text.text += letter;
-            if(spaceSkip && letter == ' ')
-            {
-                continue;
-            }
-            yield return WaitForSecondsCache.Get(typingSpeed);
-        }
-    }
+   
 
 }

@@ -5,11 +5,15 @@ using UnityEngine;
 
 public class SoundManager
 {
-	AudioSource[] _audioSources = new AudioSource[(int)Sound.MaxCount];
-	Dictionary<string, AudioClip> _audioClips = new Dictionary<string, AudioClip>();
+    AudioSource _bgmAudio;
+    AudioSource[] _effectAudio;
+
+    Dictionary<string, AudioClip> _audioClips = new Dictionary<string, AudioClip>();
 
 	private GameObject _root = null;
-	public void Init()
+
+    private const int MAX_EFFECT_COUNT = 10;
+    public void Init()
 	{
 		if(_root != null)
 		{
@@ -22,34 +26,42 @@ public class SoundManager
             _root = new GameObject { name = "@SoundRoot" };
 			UnityEngine.Object.DontDestroyOnLoad(_root);
 
-			string[] soundNames = System.Enum.GetNames(typeof(Sound));
-			for (int i = 0; i < soundNames.Length - 1; i++)
-			{
-				GameObject go = new GameObject { name = soundNames[i] };
-				_audioSources[i] = go.AddComponent<AudioSource>();
-				go.transform.parent = _root.transform;
-			}
+            _bgmAudio = new GameObject { name = "BgmAudio" }.AddComponent<AudioSource>();
+            _bgmAudio.transform.parent = _root.transform;
+            _bgmAudio.playOnAwake = false;
+            _bgmAudio.loop = true;
 
-			_audioSources[(int)Sound.Bgm].loop = true;
-		}
+            _effectAudio = new AudioSource[MAX_EFFECT_COUNT];
+
+            for (int i = 0; i < MAX_EFFECT_COUNT; i++)
+            {
+                _effectAudio[i] = new GameObject { name = $"EffectAudio_{i}" }.AddComponent<AudioSource>();
+                _effectAudio[i].transform.parent = _root.transform;
+                _effectAudio[i].playOnAwake = false;
+            }
+        }
 	}
 
 	public void Clear()
 	{
-		foreach (AudioSource audioSource in _audioSources)
-		{
-			audioSource.Stop();
-			audioSource.clip = null;
-		}
+        _bgmAudio.Stop();
+        _bgmAudio.clip = null;
+
+        for (int i = 0; i < MAX_EFFECT_COUNT; i++)
+        {
+            _effectAudio[i].Stop();
+            _effectAudio[i].clip = null;
+        }
 		_audioClips.Clear();
 	}
 
     public void Play(string key, Sound type, float pitch = 1.0f)
     {
-        AudioSource audioSource = _audioSources[(int)type];
+        AudioSource audioSource = null;
 
         if (type == Sound.Bgm)
         {
+            audioSource = _bgmAudio;
             LoadAudioClip(key, (audioClip) =>
             {
                 if (audioSource.isPlaying)
@@ -59,20 +71,29 @@ public class SoundManager
                 audioSource.Play();
             });
         }
-        else if(type == Sound.Effect)
+        else if (type == Sound.Effect)
         {
+            for (int i = 0; i < MAX_EFFECT_COUNT; i++)
+            {
+                if (!_effectAudio[i].isPlaying)
+                {
+                    audioSource = _effectAudio[i];
+                    break;
+                }
+            }
+
+            if (audioSource == null)
+            {
+                Debug.Log("모든 효과음 소스가 사용중입니다.");
+                return;
+            }
+
             LoadAudioClip(key, (audioClip) =>
             {
                 audioSource.pitch = pitch;
                 audioSource.PlayOneShot(audioClip);
             });
         }
-    }
-
-    public void Stop(Sound type)
-    { 
-        AudioSource audioSource = _audioSources[(int)type];
-        audioSource.Stop();
     }
 
     private void LoadAudioClip(string key, Action<AudioClip> callback)
@@ -84,7 +105,7 @@ public class SoundManager
             return;
         }
 
-        audioClip = Managers.Resource.Load<AudioClip>(key);
+        audioClip = Managers.Resource.Load<AudioClip>($"Sounds/{key}");
 
         if (!_audioClips.ContainsKey(key))
             _audioClips.Add(key, audioClip);

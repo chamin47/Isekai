@@ -32,8 +32,7 @@ public class LibraryScene : BaseScene
 
     protected override void Init()
 	{
-		base.Init();
-
+		
 		SceneType = Scene.LibraryScene;
 
         // 도서관에서의 플레이어 이동속도 설정
@@ -58,6 +57,7 @@ public class LibraryScene : BaseScene
     {
         onStartTimeLineEnd?.Invoke();
 
+        Managers.Sound.Play("bgm_library_sketch_4", Sound.Bgm);
         // 특정 책 만 켜주기
         BookSwitch();
     }
@@ -100,11 +100,13 @@ public class LibraryScene : BaseScene
     public void SetLightOn()
     {
         _background.material = _lightOn;
+        EnableBookSelect();
     }
 
     public void SetLightOff()
     {
         _background.material = _lightOff;
+        DisableBookSelect();
     }
     #endregion
     public override void Clear()

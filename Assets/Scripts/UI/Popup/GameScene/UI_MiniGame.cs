@@ -34,7 +34,7 @@ public class UI_MiniGame : UI_Popup
 
     private bool _isGameEnd = false;                        
     private bool _isGameStart = false;
-    private bool _canKeyPress = true;  
+    private bool _canSpacePress = true;  
 
     private float _remainTime;
     private float _currentGaugeValue;
@@ -76,16 +76,17 @@ public class UI_MiniGame : UI_Popup
 
     public void Init(MiniGameInfo miniGameInfo, SpawnInfo spawnInfo, KeySpriteFactory keySpriteFactory)
     {
-        SetMiniGameInfo(miniGameInfo);
-        SetKeyPressButton();
-
         _keySpriteFactory = keySpriteFactory;
+
         _spawnInfo = spawnInfo;
 
         if (!_spawnInfo.isLeft)
         {
             _bubbleImage.transform.Rotate(0, 180, 0);
         }
+
+        SetMiniGameInfo(miniGameInfo);
+        SetKeyPressButton();
         
         // 사이즈를 자동으로 조정해 준다.
         FixBubbleSize();
@@ -93,6 +94,7 @@ public class UI_MiniGame : UI_Popup
         UpdateUI();
     }
 
+    // 인스펙터창 테스트 용
     [ContextMenu("FixBubbleSize")]
     private void FixBubbleSize()
     {
@@ -103,6 +105,7 @@ public class UI_MiniGame : UI_Popup
 
         _bubbleImage.rectTransform.sizeDelta = preferSize;
     }
+
     // 남은시간표기 및 게이지바 업데이트
     private void UpdateUI()
     {
@@ -134,7 +137,7 @@ public class UI_MiniGame : UI_Popup
         // 50% 확률로 2개의 키를 동시에 눌러야 하는 미니게임
         if (_miniGameInfo.canPressConcurrent)
         {
-            hasConcurrentKey = MakeConcurrenceButton(2, 2, 50f);
+            hasConcurrentKey = MakeConcurrenceButton(2, 2, 70f);
         }
 
         for (int i = 0; i < requiredKeyCount - hasConcurrentKey; i++)
@@ -148,7 +151,7 @@ public class UI_MiniGame : UI_Popup
 
         if (requiredKeyCount > 0)
         {
-            _canKeyPress = false; // Space 비활성화 
+            _canSpacePress = false; // Space 비활성화 
             SetKeyButtonPosition();
         }
 
@@ -163,6 +166,7 @@ public class UI_MiniGame : UI_Popup
     // 현재 동시에 누를 수 있는 키는 2개 한정으로 추후 수정이 필요할 수 있다
     private int MakeConcurrenceButton(int minKeyCount, int maxKeyCount, float spawnPercent)
     {
+        // spawnPercent 확률로 동시 입력키 생성
         if(UnityEngine.Random.Range(0, 100) > spawnPercent)
         {
             return 0;
@@ -213,10 +217,11 @@ public class UI_MiniGame : UI_Popup
     private void OnKeyPressed()
     {
         _pressedKeyCount++;
+        Debug.Log(_pressedKeyCount);
 
         if (_pressedKeyCount == _requiredKeys.Count)
         {
-            _canKeyPress = true;
+            _canSpacePress = true;
             return;
         }
 
@@ -256,26 +261,33 @@ public class UI_MiniGame : UI_Popup
             // 스페이스바를 누르면 게이지 증가
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                ChangeGauge(_miniGameInfo.perIncreaseGauge);
+                OnSpaceKeyPressed();
             }
         }
         else if (_miniGameInfo.difficulty == MiniGameDifficulty.Normal)
         {
             // 모든 키를 누른 후 스페이스바를 누르는 난이도
-            if (_canKeyPress && Input.GetKeyDown(KeyCode.Space))
+            if (_canSpacePress && Input.GetKeyDown(KeyCode.Space))
             {
-                ChangeGauge(_miniGameInfo.perIncreaseGauge);
+                OnSpaceKeyPressed();
             }
         }
         else if (_miniGameInfo.difficulty == MiniGameDifficulty.Hard)
         {
             // 동시에 특정 키를 누르는 난이도
-            if (_canKeyPress && Input.GetKeyDown(KeyCode.Space))
+            if (_canSpacePress && Input.GetKeyDown(KeyCode.Space))
             {
-                ChangeGauge(_miniGameInfo.perIncreaseGauge);
+                OnSpaceKeyPressed();
             }
         }
     }
+
+    private void OnSpaceKeyPressed()
+    {
+        Managers.Sound.Play("i_mini_space2", Sound.Effect);
+        ChangeGauge(_miniGameInfo.perIncreaseGauge);
+    }
+
     private void ChangeGauge(float amount)
     {
         CurrentGaugeValue += amount;

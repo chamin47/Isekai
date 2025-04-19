@@ -31,8 +31,7 @@ public class EndingScene : BaseScene
 
     protected override void Init()
 	{
-		base.Init();
-
+		
 		SceneType = Scene.EndingScene;
 
         _noiseImage.SetActive(true);

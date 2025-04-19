@@ -15,11 +15,7 @@ public abstract class BaseScene : MonoBehaviour
 	/// <summary>
 	/// Awake시점에서 초기화 예정
 	/// </summary>
-	protected virtual void Init()
-	{
-		// if you have initialize somthing
-		// TODO
-	}
+	protected abstract void Init();
 
 	/// <summary>
 	/// Scene의 전환이 일어 날 시 자동으로 호출

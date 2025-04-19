@@ -36,13 +36,13 @@ public class UI_EndingScene : UI_Scene
         _bubbleImage.SetActive(true); // 말풍선 이미지 활성화
         
         _newsText.text = _sceneData.newsDialog[0];
-        ResizeBubbleImage(_sceneData.newsDialog[0]); // 말풍선 이미지 크기 조정
+        //ResizeBubbleImage(_sceneData.newsDialog[0]); // 말풍선 이미지 크기 조정
 
         yield return WaitForSecondsCache.Get(1.5f); // 1초 대기
         // 뉴스 텍스트 출력
         for (int i = 1; i < _sceneData.newsDialog.Count; i++)
         {
-            ResizeBubbleImage(_sceneData.newsDialog[i]);
+            //ResizeBubbleImage(_sceneData.newsDialog[i]);
             yield return StartCoroutine(TypeEffect(_newsText, _sceneData.newsDialog[i], 0.1f));
         }
 
@@ -63,13 +63,14 @@ public class UI_EndingScene : UI_Scene
 
         // 비디오 효과로 글리치 효과
         _endingVideoPlayer.gameObject.SetActive(true); // 비디오 플레이어 활성화
-        yield return WaitForSecondsCache.Get(3f); // 0.5초 대기
+        yield return WaitForSecondsCache.Get(5f); // 0.5초 대기
 
         // 메인 화면으로 전환
-        //Managers.Scene.LoadScene(Scene.TitleScene); // Main Title Scene으로 전환
+        Managers.Scene.LoadScene(Scene.TitleScene); // Main Title Scene으로 전환
     }
 
     // 말풍선 이미지를 targetText의 크기에 맞게 조정한다
+    // 삭제예정
     private void ResizeBubbleImage(string targetText)
     {
         RectTransform bubbleRectTransform = _bubbleImage.GetComponent<RectTransform>();

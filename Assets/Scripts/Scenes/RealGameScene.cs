@@ -6,7 +6,7 @@ using UnityEngine.Playables;
 using UnityEngine.Timeline;
 using UnityEngine.UI;
 
-public class RealGameScene : MonoBehaviour
+public class RealGameScene : BaseScene
 {
     [SerializeField] private RealGameFactory _realGameFactory;
     [SerializeField] private PlayableDirector _timeline;
@@ -27,6 +27,9 @@ public class RealGameScene : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         // 게임시작
         RealWorldInfo realWorldInfo = GetRealWorldInfo();
+
+        Managers.Sound.Play("bgm_real_world", Sound.Bgm);
+
         Init(realWorldInfo);
     }
 
@@ -127,5 +130,14 @@ public class RealGameScene : MonoBehaviour
     public void EndGame()
     {
         RealGameFactory_OnGameEnd(true);
+    }
+
+    protected override void Init()
+    {
+        SceneType = Scene.RealGameScene;
+    }
+
+    public override void Clear()
+    {
     }
 }

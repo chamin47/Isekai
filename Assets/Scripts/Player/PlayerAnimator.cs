@@ -25,4 +25,6 @@ public class PlayerAnimator : MonoBehaviour
 	{
 		transform.localScale = new Vector3((x < 0 ? -1f : 1f), 1f, 1f);
 	}
+
+    
 }

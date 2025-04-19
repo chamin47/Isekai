@@ -22,7 +22,7 @@ public class LibraryBook : MonoBehaviour
 
     public void StartFingerBlink()
     {
-        StartCoroutine(CoFingerBlink());
+        StartCoroutine(CoFingerBlink());// ???
     }
 
     public void StopFingerBlink()
@@ -38,6 +38,7 @@ public class LibraryBook : MonoBehaviour
         _collider.enabled = true;
     }
 
+ 
     // 손가락 깜박거림
     private IEnumerator CoFingerBlink()
     {

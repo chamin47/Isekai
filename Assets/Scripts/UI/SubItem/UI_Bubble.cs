@@ -67,6 +67,7 @@ public class UI_Bubble : UI_Base
 
         transform.position = targetPos; 
 
+        Managers.Sound.Play("s1_say_impact3", Sound.Effect);
         StartCoroutine(BounceEffect());
     }
 
@@ -132,6 +133,7 @@ public class UI_Bubble : UI_Base
         if (other.CompareTag("Player"))
         {
             isFading = true;
+            Managers.Sound.Play("s1_say_impact3", Sound.Effect);
             Managers.Happy.ChangeHappiness(_score);
             Camera.main.GetComponent<CameraShake>().Shake();
         }        

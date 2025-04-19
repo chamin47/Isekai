@@ -45,7 +45,7 @@ public class GameSceneEx : BaseScene
     private WorldType _worldType;
     protected override void Init()
 	{
-		base.Init();
+		
 		SceneType = Scene.GameScene;
 
         _worldType = Managers.World.CurrentWorldType;
@@ -89,8 +89,10 @@ public class GameSceneEx : BaseScene
             go.transform.position = newPosition;
 
             Portal portal = go.GetComponent<Portal>();
-            portal.SetPortalPosition(Scene.RealGameScene);
+            portal.SetPortalPosition(Scene.LoadingScene);
             portal.onEnterEvent += ClearEvent;
+
+            Managers.Sound.Play("i_mini_portal1", Sound.Effect);
         }
 		else
 		{
@@ -108,13 +110,13 @@ public class GameSceneEx : BaseScene
         
         switch (strength) 
         {
-            case 4:
+            case 2:
                 AdjustVolume(0.05f, 0.1f, 0.3f);
                 break;
-            case 5:
+            case 3:
                 AdjustVolume(0.1f, 0.3f, 0.5f);
                 break;
-            case 6:
+            case 4:
                 AdjustVolume(0.15f, 0.4f, 0.7f);
                 break;
         }
@@ -122,6 +124,7 @@ public class GameSceneEx : BaseScene
 
     private void AdjustVolume(float filmIntensity, float vignetteIntensity, float chromaticAberrationIntensity)
     {
+        Debug.Log("What");
         _volume.gameObject.SetActive(true);
         if (_volume.profile.TryGet(out FilmGrain filmGrain))
         {

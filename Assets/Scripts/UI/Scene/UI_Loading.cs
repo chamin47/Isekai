@@ -52,10 +52,6 @@ public class UI_Loading : UI_Scene
                 yield return DefaultLoadingSequence();
                 break;
             default:
-
-
-
-
                 yield return DefaultLoadingSequence();
                 break;
         }
@@ -103,12 +99,18 @@ public class UI_Loading : UI_Scene
 
     private IEnumerator GangrilLoadingSequence()
     {
-        yield return FillProgressBar(0.5f, 3f);
+        //        게이지 다 찰때까지 TIP 하단에 글씨 안 나옴(TIP 글씨만 존재)
+        //        게이지 다 찬 후에 ‘지금은 0년 0월 0일입니다.’ 출력
+        //        2초 유지 후, 글리치로 화면 트렌지션
+
+        _tipText.gameObject.SetActive(false);
+        yield return FillProgressBar(1f, 2f);
         yield return WaitForSecondsCache.Get(1f);
+        _tipText.gameObject.SetActive(true);
         yield return StartCoroutine(_tipText.CoTypingEffect(_loadingSceneData.tip, 0.3f));
-        yield return FillProgressBar(1f, 1f);
-        yield return StartCoroutine(_tipText.CoBlinkText(3, 0.2f));
-        yield return WaitForSecondsCache.Get(2f);  // NoiseEffect() 제거
+        yield return WaitForSecondsCache.Get(2f);
+
+        // 글리치 화면 트랜잭션
     }
 
     private IEnumerator FillProgressBar(float target, float duration)

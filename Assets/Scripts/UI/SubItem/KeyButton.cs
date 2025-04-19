@@ -60,11 +60,13 @@ public class KeyButton : UI_Base
 
     protected void OnkeyPressedEvent()
     {
+        Managers.Sound.Play("i_mini_key_correct2", Sound.Effect);
         OnKeyPressed?.Invoke();
     }
 
     protected void OnKeyMissedEvent()
     {
+        Managers.Sound.Play("i_mini_key_miss2", Sound.Effect);
         OnKeyMissed?.Invoke();
     }
 

@@ -25,7 +25,6 @@ public class UI_Information : UI_Popup
         {
             //현실세계로 이동
             onYesEvent?.Invoke();
-            //Managers.Scene.LoadScene(Scene.RealGameScene);
             Managers.UI.ClosePopupUI(this); 
         };
 

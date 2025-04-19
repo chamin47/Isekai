@@ -11,7 +11,7 @@ public class Portal : MonoBehaviour
 
     public event System.Action onEnterEvent;
 
-    private Scene _nextScene = Scene.RealGameScene;
+    private Scene _nextScene = Scene.LoadingScene;
 
     private void Start()
     {
@@ -37,6 +37,7 @@ public class Portal : MonoBehaviour
     private void OnEnterEvent()
     {
         onEnterEvent?.Invoke();
+        Debug.Log(_nextScene.ToString());
         Managers.Scene.LoadScene(_nextScene);
     }
 

@@ -8,7 +8,6 @@ public class TitleScene : BaseScene
 	//public VideoPlayer test;
 	protected override void Init()
 	{
-		base.Init();
 		//Screen.SetResolution(1920, 1080, true);
 		SceneType = Scene.TitleScene;
 

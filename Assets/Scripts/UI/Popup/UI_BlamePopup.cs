@@ -63,13 +63,17 @@ public class UI_BlamePopup : UI_Popup
 		//ClosePopupUI();
 	}
 
-	private IEnumerator TypeEffect(TMP_Text textComponent, string dialogue)
+	private IEnumerator TypeEffect(TMP_Text textComponent, string dialogue, bool playSound = false, string soundKey = "")
 	{
 		textComponent.text = "";
 		foreach (char c in dialogue)
 		{
 			textComponent.text += c;
-			yield return new WaitForSeconds(0.05f); // 타자 치는 속도 조절 가능
+            if (playSound && (c != ' ' || c != '\n'))
+            {
+                Managers.Sound.Play(soundKey, Sound.Effect);
+            }
+            yield return new WaitForSeconds(0.05f); // 타자 치는 속도 조절 가능
 		}
 	}
 

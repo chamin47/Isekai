@@ -600,6 +600,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI_HappinessHUD
       objectReference: {fileID: 0}
+    - target: {fileID: 4690293418905282394, guid: 10723e3edd83a2248833965e7d4ad2cd, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8767876715314164501, guid: 10723e3edd83a2248833965e7d4ad2cd, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -675,6 +679,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 857144197}
+  - component: {fileID: 857144198}
   m_Layer: 0
   m_Name: '@Scene'
   m_TagString: Untagged
@@ -697,6 +702,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &857144198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 857144195}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86ebd05f92a0d4246b4298958c962b6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &865115842
 GameObject:
   m_ObjectHideFlags: 0
@@ -1130,6 +1147,10 @@ PrefabInstance:
     - target: {fileID: 4741322476003141675, guid: 349d3e81c4f276143b7dc6f11809c0d2, type: 3}
       propertyPath: m_Name
       value: TrigerEnter
+      objectReference: {fileID: 0}
+    - target: {fileID: 4741322476003141675, guid: 349d3e81c4f276143b7dc6f11809c0d2, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6234753182763340736, guid: 349d3e81c4f276143b7dc6f11809c0d2, type: 3}
       propertyPath: m_RootOrder

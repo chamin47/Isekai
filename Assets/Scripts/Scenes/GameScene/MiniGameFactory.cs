@@ -145,17 +145,21 @@ public class MiniGameFactory : MonoBehaviour
 
                 miniGame.Init(miniGameInfo, spawnInfo, _keySpriteFactory);
 
+                Managers.Sound.Play("i_mini_say1", Sound.Effect);
+
                 // 이 부분이 심히 거슬린다
                 // 세계가 바뀌면?
                 // 펠마누스 세계에서만 포스트 프로세싱과 7개의 미니게임을 성공했을 시 게임 종료
-                if(Managers.World.CurrentWorldType == WorldType.Pelmanus)
+                if (Managers.World.CurrentWorldType == WorldType.Pelmanus)
                 {
                     miniGame.onMiniGameSucced += () =>
                     {
+                        successCount++;
+
                         GameSceneEx scene = Managers.Scene.CurrentScene as GameSceneEx;
                         scene.SetPostProcessing(successCount);
 
-                        if(successCount == 7)
+                        if(successCount == 5)
                         {
                             GameEnd(true);
                         }

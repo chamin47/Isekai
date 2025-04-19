@@ -4,10 +4,14 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+/// <summary>
+/// 펠마누스 세계의 로딩창은 존재하지 않습니다.
+/// 이세계 씬 -> 현실세계로 이동
+/// </summary>
 public class UI_GameLoading : UI_Scene
 {
     private Animator _animator;
-    private LoadingGameSceneData _data;
+    [SerializeField] private LoadingGameSceneData _data;
 
     [SerializeField] private UI_TodoList _todoList;
     [SerializeField] private TMP_Text _curDateText;
@@ -24,7 +28,7 @@ public class UI_GameLoading : UI_Scene
     {
         _totalDateText.text = "";
         _worldNameText.text = "";
-        StartCoroutine(AnimateDateRange($"{_data.startDate} ~ {_data.endDate}", 1f));
+        StartCoroutine(AnimateDateRange($"{_data.startDate} ~ {_data.endDate}", 1.5f));
     }
 
     IEnumerator AnimateDateRange(string range, float totalTime)
@@ -36,20 +40,26 @@ public class UI_GameLoading : UI_Scene
 
         int startYear = int.Parse(startParts[0]);
         int startMonth = int.Parse(startParts[1]);
+        int startDay = int.Parse(startParts[2]);
         int endYear = int.Parse(endParts[0]);
         int endMonth = int.Parse(endParts[1]);
+        int endDay = int.Parse(endParts[2]);
 
-        DateTime currentDate = new DateTime(startYear, startMonth, 1);
-        DateTime endDate = new DateTime(endYear, endMonth, 1);
+        DateTime currentDate = new DateTime(startYear, startMonth, startDay);
+        DateTime endDate = new DateTime(endYear, endMonth, Mathf.Min(endDay, DateTime.DaysInMonth(endYear, endMonth)));
+
+        // 년 월이 같다면 0
+        // 년 월이 다르면 차이나는 달 만큼 
         float timePerMonth = totalTime / (endDate.Year * 12 + endDate.Month - (currentDate.Year * 12 + currentDate.Month));
-
-        while (currentDate <= endDate)
+        Debug.Log($"timePerMonth: {timePerMonth}");
+        while (currentDate < endDate)
         {
-            int totalDays = DateTime.DaysInMonth(currentDate.Year, currentDate.Month);
+            // 진행할 일자 가져오기
+            int totalDays = DateTime.DaysInMonth(currentDate.Year, currentDate.Month) - currentDate.Day;
             float elapsedTime = 0f;
-            int currentDay = 1;
+            int currentDay = currentDate.Day;
 
-            _curDateText.text = $"{currentDate.Year}.{currentDate.Month:D2}"; // "YYYY.MM" 초기 표시
+            _curDateText.text = $"{currentDate.Year}.{currentDate.Month:D2}.{currentDay:D2}"; // "YYYY.MM" 초기 표시
 
             // 해당 월의 1일부터 마지막 일까지 증가
             while (elapsedTime < timePerMonth)
@@ -66,12 +76,16 @@ public class UI_GameLoading : UI_Scene
                 yield return null;
             }
 
-            // 다음 달로 이동
+            // 다음 달초로 이동
             currentDate = currentDate.AddMonths(1);
         }
 
         // 마지막 년.월 표시
-        _curDateText.text = $"{endDate.Year}.{endDate.Month:D2}";
+        _curDateText.text = $"{endDate.Year}.{endDate.Month:D2}.{endDate.Day:D2}";
+
+        yield return new WaitForSeconds(0.5f);
+
+        OnAnimationEnd();
     }
 
     public void OnAnimationEnd()

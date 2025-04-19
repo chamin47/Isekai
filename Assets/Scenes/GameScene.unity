@@ -406,20 +406,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _miniGame: {fileID: 7239389962711676317, guid: c3d6d2b36a95c4d4bbca1a853e8aaa56, type: 3}
-  _worldInfo:
-    worldType: 0
-    difficulty: 
-    startGauge: 
-    perDecreaseGauge: 
-    perIncreaseGauge: 
-    succedGauge: 
-    failGauge: 
-    runGauge: 
-    limitTime: 
-    dialog: []
-    requireKeys: 
-    requiredKeyCount: 
-    canPressConcurrent: 
   _gridSystem: {fileID: 184603175}
   _target: {fileID: 1786195230}
   _leftExclamation: {fileID: 1363547730}
@@ -440,26 +426,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cad1517ef4dab0d4b8d2f32dc4c36c81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  referenceSize: {x: 10, y: 5}
-  referenceTransform: {fileID: 1786195230}
-  maxGridCount: 5
-  gridInfos:
-  - Position: {x: -23.279999, y: 0}
-    sizeX: 10
-    sizeY: 5
-  - Position: {x: -13.28, y: 0}
-    sizeX: 10
-    sizeY: 5
-  - Position: {x: -3.28, y: 0}
-    sizeX: 10
-    sizeY: 5
-  - Position: {x: 6.7200003, y: 0}
-    sizeX: 10
-    sizeY: 5
-  - Position: {x: 16.720001, y: 0}
-    sizeX: 10
-    sizeY: 5
-  randomIndexList: 0000000001000000020000000300000004000000
+  _referenceSize: {x: 5, y: 5}
+  _referenceTransform: {fileID: 0}
+  _maxGridCount: 9
+  _gridInfos: []
 --- !u!1001 &259136080
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -759,7 +729,7 @@ GameObject:
   - component: {fileID: 807611483}
   - component: {fileID: 807611482}
   m_Layer: 5
-  m_Name: 'Panel '
+  m_Name: FadeImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -783,7 +753,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 10, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &807611482
 MonoBehaviour:
@@ -869,9 +839,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7919b1286a27ecc4687d42f550c1ec95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _worldType: 1
+  player: {fileID: 1786195230}
   _miniGameFactory: {fileID: 184603174}
-  _player: {fileID: 1786195230}
   _fadeImage: {fileID: 807611482}
   _fadeTime: 3
   _waitTimeAfterFade: 0
@@ -892,7 +861,7 @@ GameObject:
   - component: {fileID: 1331672447}
   - component: {fileID: 1331672446}
   m_Layer: 5
-  m_Name: Panel
+  m_Name: UI_Fade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1747,7 +1716,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4918651752278786949, guid: cbd2deb9e00d06d4c87d99cd95fa26f4, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6378559756637077112, guid: cbd2deb9e00d06d4c87d99cd95fa26f4, type: 3}
       propertyPath: m_RootOrder

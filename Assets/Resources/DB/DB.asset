@@ -143,7 +143,7 @@ MonoBehaviour:
     - "\uB098\uB3C4 \uB108\uCC98\uB7FC \uD589\uBCF5\uD574\uC9C0\uACE0 \uC2F6\uC5B4."
     requireKeys: 7100000077000000650000006100000073000000640000006600000072000000
     requiredKeyCount: 000000000400000003000000
-    canPressConcurrent: 000000
+    canPressConcurrent: 000001
   playerData:
     moveSpeed:
     - 2
@@ -163,8 +163,8 @@ MonoBehaviour:
       \uB0B4\uAC00 \uBB34\uC2A8 \uB9D0\uC744 \uD574\uB3C4 \uAC00\uCE58\uAC00 \uC788\uACE0
       \uC758\uBBF8\uAC00 \uC788\uC5C8\uB2E4.<br>\uD604\uC2E4\uC5D0\uC11C\uB294 \uC874\uC7AC\uAC10
       \uC5C6\uB358 \uB0B4\uAC00, \uC5EC\uAE30\uC11C\uB294 \uC138\uC0C1\uC758 \uC911\uC2EC\uC774\uC5C8\uB2E4."
-    startDate: 2030.07
-    endDate: 2030.08
+    startDate: 2030.07.01
+    endDate: 2030.08.01
     worldName: "\uBE48\uD130\uBC1C\uD2B8\uC138\uACC4"
   - worldType: 1
     todoList:
@@ -178,8 +178,8 @@ MonoBehaviour:
       \uBCC0\uD558\uC9C0 \uC54A\uC558\uB2E4\uB294 \uC0AC\uC2E4\uC774.<br>\uC774\uACF3\uC774
       \uC9C4\uC9DC \uB098\uC77C\uAE4C?<br>\uC544\uB2C8\uBA74 \uD604\uC2E4\uC758 \uB0B4\uAC00
       \uC9C4\uC9DC\uC77C\uAE4C?"
-    startDate: 2031.12
-    endDate: 2032.04
+    startDate: 2031.12.02
+    endDate: 2032.04.18
     worldName: "\uCC28\uC740\uC720\uC138\uACC4"
   - worldType: 2
     todoList:
@@ -196,8 +196,8 @@ MonoBehaviour:
       \uC5C6\uB294 \uC77C\uC774\uB2E4.<br>\uB098\uB294 \uC5EC\uAE30\uC11C \uB098
       \uC790\uCCB4\uB85C \uAC00\uCE58\uAC00 \uC788\uB2E4.<br>\uC774\uC138\uACC4\uC5D0\uC11C
       \uC601\uC6D0\uD788 \uC0B4 \uC21C \uC5C6\uB294\uAC78\uAE4C? "
-    startDate: 2031.04
-    endDate: 2040.09
+    startDate: 2031.04.10
+    endDate: 2040.04.30.
     worldName: "\uAC31\uADF8\uB9B4\uC138\uACC4"
   endingSceneData:
     newsDialog:
