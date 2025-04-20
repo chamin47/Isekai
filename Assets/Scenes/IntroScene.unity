@@ -1034,6 +1034,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _moveSpeed: 2.5
   _gravityScale: 3.5
+  isTestMode: 0
 --- !u!114 &1786195234
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1047,6 +1048,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isMoving: 0
+  _footStepInterval: 1
+  _maxSpeed: 7
 --- !u!95 &1786195235
 Animator:
   serializedVersion: 5
@@ -1150,7 +1153,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4741322476003141675, guid: 349d3e81c4f276143b7dc6f11809c0d2, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6234753182763340736, guid: 349d3e81c4f276143b7dc6f11809c0d2, type: 3}
       propertyPath: m_RootOrder

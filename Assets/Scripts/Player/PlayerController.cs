@@ -13,6 +13,10 @@ public class PlayerController : MonoBehaviour
 
 	private string currentScene;
 
+	[SerializeField] private float _footStepInterval = 1f;
+	[SerializeField] private float _maxSpeed = 7f;
+    private float _footStepTimer = 0f;
+
 	// dir, moveSpeed
 	public event Action<Vector2, float> OnPlayerMove;
 
@@ -48,6 +52,35 @@ public class PlayerController : MonoBehaviour
 
             UpdateMove(x);
 			_playerAnimator.UpdateAnimation(x);
+
+			if(x != 0)
+			{
+                float speed = _movement.GetMoveSpeed();
+
+				if(speed >= 7f)
+				{
+					_footStepInterval = 0.3f;
+				}
+                else if (speed >= 5f)
+				{
+                    _footStepInterval = 0.45f;
+                }
+                else if (speed >= 3f)
+				{
+                    _footStepInterval = 0.56f;
+                }
+				else
+				{
+                    _footStepInterval = 0.63f;
+                }
+                _footStepTimer += Time.deltaTime;
+
+                if (_footStepTimer >= _footStepInterval)
+                {
+                    PlayFootSound();
+                    _footStepTimer = 0f;
+                }
+            }
         }
 		else
 		{

@@ -30,7 +30,7 @@ public class UI_PelmanusNoticePopup : UI_NoticePopup
     {
         if (_popupIndex == 2)
         {
-            _volume.profile.TryGet(out _noticePopupVolume);
+            _libraryScene = Managers.Scene.CurrentScene as LibraryScene;
             MakeInfinityPopup(_position);
         }
         else
@@ -112,8 +112,8 @@ public class UI_PelmanusNoticePopup : UI_NoticePopup
 
         while (true)
         {
-            StopColorConversion();
-            ColorConversion(Mathf.Max(currentSpawnTime * 0.5f, 0.15f));
+            _libraryScene.StopColorConversion();
+            _libraryScene.ColorConversion(Mathf.Max(currentSpawnTime * 0.5f, 0.15f));
             SpawnPopup();
 
             yield return new WaitForSeconds(currentSpawnTime);
@@ -145,7 +145,7 @@ public class UI_PelmanusNoticePopup : UI_NoticePopup
         yield return StartCoroutine(_warningText.CoTypingEffect("거기서 당장 나와", 0.5f, true));
         yield return WaitForSecondsCache.Get(2f);
 
-        Managers.Scene.LoadScene(Scene.GameScene);
+        Managers.Scene.LoadScene(Scene.LoadingScene);
     }
 
     /// <summary>
@@ -183,38 +183,5 @@ public class UI_PelmanusNoticePopup : UI_NoticePopup
     {
         _checkToggle.onValueChanged.RemoveAllListeners();
         _checkToggle.isOn = true;
-    }
-
-
-    [SerializeField] private Volume _volume;
-    [SerializeField] private ColorAdjustments _noticePopupVolume;
-
-    private Coroutine _colorConversionCoroutine;
-    public void ColorConversion(float blinkTime)
-    {
-        _colorConversionCoroutine = StartCoroutine(CoColorConversion(blinkTime));
-    }
-
-    public void StopColorConversion()
-    {
-        if (_colorConversionCoroutine != null)
-        {
-            _noticePopupVolume.colorFilter.value = originColor;
-            StopCoroutine(_colorConversionCoroutine);
-            _colorConversionCoroutine = null;
-        }
-    }
-
-    private Color originColor = new Color(1f, 1f, 1f);
-    private IEnumerator CoColorConversion(float blinkTime)
-    {
-
-        Color targetColor = new Color(140 / 255f, 0f, 0f);
-        Color originColor = _noticePopupVolume.colorFilter.value;
-
-        _noticePopupVolume.colorFilter.value = targetColor;
-        yield return WaitForSecondsCache.Get(blinkTime);
-        _noticePopupVolume.colorFilter.value = originColor;
-        yield return WaitForSecondsCache.Get(blinkTime);
     }
 }

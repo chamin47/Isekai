@@ -26,6 +26,7 @@ public enum Sound
 {
 	Bgm,
 	Effect,
+	SubEffect,
 	MaxCount,
 }
 

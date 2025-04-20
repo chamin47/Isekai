@@ -40,11 +40,12 @@ public class UI_BlamePopup : UI_Popup
 			_talkBalloonImages[i].gameObject.SetActive(true);
 
 			// 타자 치는 효과로 대사 출력
-			yield return StartCoroutine(TypeEffect(_dialogueTexts[i], _dialogues[i]));
+			yield return StartCoroutine(TypeEffect(_dialogueTexts[i], _dialogues[i], true, "intro_type_short"));
 
 			// 행복 게이지 감소
 			Managers.Happy.ChangeHappiness(-10f);
 
+			Managers.Sound.Play("s1_say_impact2", Sound.Effect);
 			// 카메라 흔들림 효과 적용 (더 역동적으로)
 			ShakeCamera(duration: 0.5f, magnitude: 0.3f);
 
@@ -65,13 +66,19 @@ public class UI_BlamePopup : UI_Popup
 
 	private IEnumerator TypeEffect(TMP_Text textComponent, string dialogue, bool playSound = false, string soundKey = "")
 	{
-		textComponent.text = "";
+        int typingCount = 0;
+
+        textComponent.text = "";
 		foreach (char c in dialogue)
 		{
 			textComponent.text += c;
             if (playSound && (c != ' ' || c != '\n'))
             {
-                Managers.Sound.Play(soundKey, Sound.Effect);
+				typingCount += 1;
+				if(typingCount % 2 == 0)
+				{
+                    Managers.Sound.Play(soundKey, Sound.Effect);
+				}
             }
             yield return new WaitForSeconds(0.05f); // 타자 치는 속도 조절 가능
 		}

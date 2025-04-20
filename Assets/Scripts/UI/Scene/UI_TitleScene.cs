@@ -65,10 +65,15 @@ public class UI_TitleScene : UI_Scene
 	private IEnumerator TypeAndWait(TMP_Text textComponent, string content, float typingSpeed)
 	{
 		textComponent.text = "";
-		// 대사 타이핑
-		yield return StartCoroutine(TypeEffect(textComponent, content, typingSpeed));
-		// 타이핑 완료 후 3초 대기
-		yield return new WaitForSeconds(4f);
+		Managers.Sound.Play("intro_typing2", Sound.Effect);
+		Debug.Log("타이핑 시작");
+        // 대사 타이핑
+        yield return StartCoroutine(TypeEffect(textComponent, content, typingSpeed));
+
+        Debug.Log("타이핑 완료");
+        Managers.Sound.PauseSubEffect();
+        // 타이핑 완료 후 3초 대기
+        yield return new WaitForSeconds(4f);
 	}
 
 	// 텍스트 타이핑 효과

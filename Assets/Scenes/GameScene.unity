@@ -1517,6 +1517,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isMoving: 0
+  _footStepInterval: 0.9
+  _maxSpeed: 7
 --- !u!1001 &2049364553
 PrefabInstance:
   m_ObjectHideFlags: 0

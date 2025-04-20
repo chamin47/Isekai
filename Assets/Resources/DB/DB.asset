@@ -89,7 +89,7 @@ MonoBehaviour:
       \uD504\uB9B0\uC2A4\uB2C8\uAE4C ><"
     - "\uC740\uC720\uB9CC \uBCF4\uBA74 \uD6C4\uAD11\uC774 \uBCF4\uC5EC!!"
     - "\uC81C\uBC1C \uB098\uB97C \uAC00\uC838\uC694 \uC5C9\uC5C9"
-    - "\uB2E8\uC2E0 \uC790\uCCB4\uAC00 \uB0B4 \uC0B6\uC774\uC57C"
+    - "\uB2F9\uC2E0 \uC790\uCCB4\uAC00 \uB0B4 \uC0B6\uC774\uC57C"
     requireKeys: 710000007700000065000000610000007300000064000000
     requiredKeyCount: 000000000300000000000000
     canPressConcurrent: 000000
@@ -126,7 +126,7 @@ MonoBehaviour:
     succedGauge: 020000000200000002000000
     failGauge: f6fffffff6fffffff6ffffff
     runGauge: 00000000f6fffffff6ffffff
-    limitTime: 080000000800000008000000
+    limitTime: 0b0000000b0000000b000000
     dialog:
     - "\uB108\uC758 \uC874\uC7AC\uB9CC\uC73C\uB85C\uB3C4 \uC138\uC0C1\uC774 \uCD95\uBCF5\uBC1B\uC740
       \uAC83 \uAC19\uC544."

@@ -64,7 +64,7 @@ public class MiniGameFactory : MonoBehaviour
 
     private bool _isGameEnd = false;
     private int successCount = 0;
-
+    private bool _isFirstMiniGame = true;
 
     public void Init()
     {
@@ -128,46 +128,58 @@ public class MiniGameFactory : MonoBehaviour
 
         while (true)
         {
-            
-            if(TryGetRandomPosition(out Vector2 randomPos)){
-                bool isLeftSide = randomPos.x < _target.position.x;
-
-                SpawnInfo spawnInfo = new SpawnInfo
-                {
-                    position = randomPos,
-                    isLeft = isLeftSide
-                };
-
-                MiniGameInfo miniGameInfo = _worldInfo.GetRandomMiniGameInfo();
-
-                UI_MiniGame miniGame = Instantiate(_miniGame, spawnInfo.position, Quaternion.identity);
-                _miniGameQueue.Enqueue(miniGame);
-
-                miniGame.Init(miniGameInfo, spawnInfo, _keySpriteFactory);
-
-                Managers.Sound.Play("i_mini_say1", Sound.Effect);
-
-                // 이 부분이 심히 거슬린다
-                // 세계가 바뀌면?
-                // 펠마누스 세계에서만 포스트 프로세싱과 7개의 미니게임을 성공했을 시 게임 종료
-                if (Managers.World.CurrentWorldType == WorldType.Pelmanus)
-                {
-                    miniGame.onMiniGameSucced += () =>
-                    {
-                        successCount++;
-
-                        GameSceneEx scene = Managers.Scene.CurrentScene as GameSceneEx;
-                        scene.SetPostProcessing(successCount);
-
-                        if(successCount == 5)
-                        {
-                            GameEnd(true);
-                        }
-                    };
-                }
+            if(!_isFirstMiniGame && TryGetRandomPosition(out Vector2 randomPos))
+            {
+                SpawnMiniGame(randomPos);
+            }
+            else
+            {
+                _isFirstMiniGame = false;
+                // 첫 미니게임은 무조건 플레이어 위쪽에 생성
+                Vector2 spawnPos = new Vector2(_target.position.x, _target.position.y + 5.5f);
+                SpawnMiniGame(spawnPos);
             }
 
             yield return WaitForSecondsCache.Get(_spawnDelay);
+        }
+    }
+
+    private void SpawnMiniGame(Vector2 spawnPosition)
+    {
+        bool isLeftSide = spawnPosition.x < _target.position.x;
+
+        SpawnInfo spawnInfo = new SpawnInfo
+        {
+            position = spawnPosition,
+            isLeft = isLeftSide
+        };
+
+        MiniGameInfo miniGameInfo = _worldInfo.GetRandomMiniGameInfo();
+
+        UI_MiniGame miniGame = Instantiate(_miniGame, spawnInfo.position, Quaternion.identity);
+        _miniGameQueue.Enqueue(miniGame);
+
+        miniGame.Init(miniGameInfo, spawnInfo, _keySpriteFactory);
+
+        Managers.Sound.Play("i_mini_say1", Sound.Effect);
+
+        // 이 부분이 심히 거슬린다
+        // 세계가 바뀌면?
+        // 펠마누스 세계에서만 포스트 프로세싱과 7개의 미니게임을 성공했을 시 게임 종료
+        if (Managers.World.CurrentWorldType == WorldType.Pelmanus)
+        {
+            miniGame.onMiniGameSucced += () =>
+            {
+                successCount++;
+
+                GameSceneEx scene = Managers.Scene.CurrentScene as GameSceneEx;
+                scene.SetPostProcessing(successCount);
+
+                if (successCount == 5)
+                {
+                    GameEnd(true);
+                }
+            };
         }
     }
 

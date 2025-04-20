@@ -45,7 +45,7 @@ public class UI_TodoList : MonoBehaviour
         {
             _diaryText.gameObject.SetActive(true);
             yield return new WaitForSeconds(1f);
-            yield return StartCoroutine(_diaryText.CoTypeEffectWithRichText(_data.diary, 0.05f));
+            yield return StartCoroutine(_diaryText.CoTypeEffectWithRichText(_data.diary, 0.07f));
 
             yield return new WaitForSeconds(1f);
             Managers.Scene.LoadScene(Scene.RealGameScene);

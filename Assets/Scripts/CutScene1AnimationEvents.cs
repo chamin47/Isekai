@@ -11,9 +11,15 @@ public class CutScene1AnimationEvents : MonoBehaviour
 		cutScene1Popup = GetComponentInParent<UI_CutScene1Popup>();
 	}
 
+	public void OnCutSceneAnimationStart()
+	{
+		Managers.Sound.Play("s1_wind", Sound.Effect);
+	}
+
 	public void OnCutSceneAnimationEnd()
 	{
 		cutScene1Popup.ClosePopupUI();
+		Managers.Sound.Play("s1_letter", Sound.Effect);
 		Managers.UI.ShowPopupUI<UI_LetterPopup>();
 	}
 }

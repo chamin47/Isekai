@@ -435,7 +435,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &981760401571340959
 RectTransform:
   m_ObjectHideFlags: 0
@@ -547,7 +547,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 16
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &6088068851412760558
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -581,7 +581,6 @@ MonoBehaviour:
   _bubbleText: {fileID: 8246742761711535414}
   _minigameGaugeBar: {fileID: 3852245650422302410}
   _keyBoardTransform: {fileID: 3801208920577190320}
-  _remainTimeText: {fileID: 3096670951526292238}
   _keyPositionGap: 0.1
   _mosaicRemoveSpeed: 1
 --- !u!61 &5505001869256885618

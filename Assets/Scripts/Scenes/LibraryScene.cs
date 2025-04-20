@@ -29,6 +29,9 @@ public class LibraryScene : BaseScene
     [SerializeField] private Material _lightOn;
     [SerializeField] private Material _lightOff;
 
+    [Header("PostProcessing")]
+    [SerializeField] private Volume _volume;
+    private ColorAdjustments _colorAdjustments;
 
     protected override void Init()
 	{
@@ -49,6 +52,8 @@ public class LibraryScene : BaseScene
 
         _startTimeLine.stopped += OnStartTimeLineEnd;
         _endTimeLine.stopped += OnEndTimeLineEnd;
+
+        _volume.profile.TryGet(out _colorAdjustments);
     }
 
     #region TimeLineMethod
@@ -109,12 +114,39 @@ public class LibraryScene : BaseScene
         DisableBookSelect();
     }
     #endregion
-    public override void Clear()
-	{
-        // 플레이어 이동속도 초기화
-		Managers.DB.ResetPlayerData();
 
-        _startTimeLine.stopped -= OnStartTimeLineEnd;
-        _endTimeLine.stopped -= OnEndTimeLineEnd;
+    #region PostProcessing
+    private Coroutine _colorConversionCoroutine;
+    public void ColorConversion(float blinkTime)
+    {
+        _colorConversionCoroutine = StartCoroutine(CoColorConversion(blinkTime));
     }
+
+    public void StopColorConversion()
+    {
+        if (_colorConversionCoroutine != null)
+        {
+            _colorAdjustments.colorFilter.value = originColor;
+            StopCoroutine(_colorConversionCoroutine);
+            _colorConversionCoroutine = null;
+        }
+    }
+
+    private Color originColor = new Color(1f, 1f, 1f);
+    private IEnumerator CoColorConversion(float blinkTime)
+    {
+
+        Color targetColor = new Color(140 / 255f, 0f, 0f);
+        Color originColor = _colorAdjustments.colorFilter.value;
+
+        _colorAdjustments.colorFilter.value = targetColor;
+        yield return WaitForSecondsCache.Get(blinkTime);
+        _colorAdjustments.colorFilter.value = originColor;
+        yield return WaitForSecondsCache.Get(blinkTime);
+    }
+
+    public override void Clear()
+    {
+    }
+    #endregion
 }

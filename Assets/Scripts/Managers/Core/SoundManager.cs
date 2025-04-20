@@ -7,6 +7,7 @@ public class SoundManager
 {
     AudioSource _bgmAudio;
     AudioSource[] _effectAudio;
+    AudioSource _subEffectAudio;
 
     Dictionary<string, AudioClip> _audioClips = new Dictionary<string, AudioClip>();
 
@@ -30,6 +31,10 @@ public class SoundManager
             _bgmAudio.transform.parent = _root.transform;
             _bgmAudio.playOnAwake = false;
             _bgmAudio.loop = true;
+
+            _subEffectAudio = new GameObject { name = "SubEffectAudio" }.AddComponent<AudioSource>();
+            _subEffectAudio.transform.parent = _root.transform;
+            _subEffectAudio.playOnAwake = false;
 
             _effectAudio = new AudioSource[MAX_EFFECT_COUNT];
 
@@ -94,6 +99,41 @@ public class SoundManager
                 audioSource.PlayOneShot(audioClip);
             });
         }
+        //여기 오류 끝기지 않음
+        else if (type == Sound.SubEffect)
+        {
+            audioSource = _subEffectAudio;
+
+            if (isPaused)
+            {
+                ReStartSubEffect();
+            }
+
+            LoadAudioClip(key, (audioClip) =>
+            {
+                if (audioSource.isPlaying)
+                    audioSource.Stop();
+                audioSource.clip = audioClip;
+                audioSource.loop = true;
+                audioSource.Play();
+            });
+        }
+    }
+
+    private bool isPaused = false;
+
+    public void ReStartSubEffect()
+    {
+        Debug.Log("SubEffectAudio ReStart");
+        _subEffectAudio.UnPause();
+        isPaused = false;
+    }
+
+    public void PauseSubEffect()
+    {
+        Debug.Log("SubEffectAudio Pause");
+        _subEffectAudio.Stop();
+        isPaused = true;
     }
 
     private void LoadAudioClip(string key, Action<AudioClip> callback)

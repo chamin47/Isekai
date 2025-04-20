@@ -22,6 +22,7 @@ public class UI_GameLoading : UI_Scene
         _animator = GetComponent<Animator>();
         _animator.SetTrigger("StartAnimation");
         _data = Managers.DB.GetLoadingGameSceneData(Managers.World.CurrentWorldType);
+        Debug.Log(Managers.World.CurrentWorldType);
     }
 
     private void Start()

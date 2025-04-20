@@ -83,8 +83,19 @@ public class UI_NoticePopup : UI_Popup
     protected virtual void ProcessWorldInteraction()
     {
         _libraryScene.PlayEndTimeLine();
+        StartCoroutine(CoFadeOut());
+    }
+
+    private IEnumerator CoFadeOut()
+    {
+        _fadeImage.gameObject.SetActive(true);
+        StartCoroutine(_fadeImage.CoFadeOut(2f));
+        yield return WaitForSecondsCache.Get(1f);
+        Managers.Sound.Play("s2_book1", Sound.Effect);
+
+        yield return WaitForSecondsCache.Get(2f);
         Managers.UI.CloseAllPopupUI();
-        Managers.Scene.LoadScene(Scene.GameScene);
+        Managers.Scene.LoadScene(Scene.LoadingScene);
     }
 
     public void SetActiveFalse()

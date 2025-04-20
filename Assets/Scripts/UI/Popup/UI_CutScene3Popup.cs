@@ -18,7 +18,9 @@ public class UI_CutScene3Popup : UI_Popup
 		_playerController = FindObjectOfType<PlayerController>();
 		base.Init();
 		Managers.Resource.Instantiate("Item/TrigerEnter");
-		_playerController.isMoving = true;
+
+		Managers.Sound.Play("s1_glitter2", Sound.Effect);
+        _playerController.isMoving = true;
 	}
 
 	public void ClosePopup()

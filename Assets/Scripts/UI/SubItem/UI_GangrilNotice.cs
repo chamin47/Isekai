@@ -77,7 +77,7 @@ public class UI_GangrilNotice : UI_Base
     private IEnumerator EnterGameScene()
     {
         yield return StartCoroutine(_fadeImage.CoFadeOut(1f));
-        Managers.Scene.LoadScene(Scene.GameScene);
+        Managers.Scene.LoadScene(Scene.LoadingScene);
     }
 
     public override void Init()

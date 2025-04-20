@@ -24,8 +24,8 @@ public class UI_MiniGame : UI_Popup
     [SerializeField] private Image _minigameGaugeBar;       // 게임 게이지바
     [SerializeField] private Transform _keyBoardTransform;  // 키입력 생성 위치
 
-    [Header("타이머 텍스트")]
-    [SerializeField] private TextMeshProUGUI _remainTimeText;
+    //[Header("타이머 텍스트")]
+    //[SerializeField] private TextMeshProUGUI _remainTimeText;
 
     [Header("미니게임 설정")]
     [SerializeField] private float _keyPositionGap = 0.1f;
@@ -110,7 +110,7 @@ public class UI_MiniGame : UI_Popup
     private void UpdateUI()
     {
         _minigameGaugeBar.fillAmount = _currentGaugeValue / 100f;
-        _remainTimeText.text = $"남은 시간: {_remainTime:F1}초";
+       // _remainTimeText.text = $"남은 시간: {_remainTime:F1}초";
     }
 
     #region Init
@@ -300,11 +300,13 @@ public class UI_MiniGame : UI_Popup
         if (isSuccess)
         {
             //Debug.Log("미니게임 성공! 행복도가 상승합니다.");
+            Managers.Sound.Play("i_mini_game_success", Sound.Effect);
             Managers.Happy.ChangeHappiness(_miniGameInfo.succedGauge);
         }
         else
         {
             //Debug.Log("미니게임 실패! 행복도가 감소합니다.");
+            Managers.Sound.Play("i_mini_game_fail", Sound.Effect);
             Managers.Happy.ChangeHappiness(_miniGameInfo.failGauge);
         }
 
@@ -358,6 +360,9 @@ public class UI_MiniGame : UI_Popup
     // 처음 키를 스타트 지점으로 설정
     private void MiniGameStart()
     {
+        _isGameStart = true;
+
+        Debug.Log("미니게임 시작!");
         foreach (KeyButton key in _requiredKeys)
         {
             if(key != null)
@@ -373,12 +378,13 @@ public class UI_MiniGame : UI_Popup
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    private void OnTriggerExit2D(Collider2D other)
     {
         if (!_isGameStart) return;
 
         _isGameStart = false;
 
+        Debug.Log("미니게임 종료!");
         if (other.CompareTag("Player"))
         {
             MiniGameStop();
