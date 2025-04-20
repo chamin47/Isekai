@@ -126,7 +126,7 @@ public class GridSystem : MonoBehaviour
         return _gridInfos[index].Position + new Vector2(_referenceTransform.position.x, 0);
     }
 
-    #region µð¹ö±ë
+#if UNITY_EDITOR
     private void OnDrawGizmos()
     {        
         foreach (var gridInfo in _gridInfos)
@@ -153,5 +153,5 @@ public class GridSystem : MonoBehaviour
         float width = height * Camera.main.aspect;
         Gizmos.DrawWireCube(Camera.main.transform.position, new Vector3(width - 0.1f, height - 0.1f, 0.1f));
     }
-    #endregion
+#endif
 }
