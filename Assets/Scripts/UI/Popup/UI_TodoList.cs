@@ -39,6 +39,7 @@ public class UI_TodoList : MonoBehaviour
 
     private IEnumerator OnToggleOn()
     {
+        _toggles[index].Toggle.interactable = false;
         yield return StartCoroutine(_toggles[index].Text.CoTypingEffect(_data.todoList[index], 0.1f));
 
         if(index == _toggles.Count - 1)
