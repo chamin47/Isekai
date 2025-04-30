@@ -133,6 +133,12 @@ public class SoundManager
         }
     }
 
+    public void StopSubEffect()
+    {
+        _subEffectAudio.Stop();
+        _subEffectAudio.clip = null;
+    }
+
     private void LoadAudioClip(string key, Action<AudioClip> callback)
     {
         AudioClip audioClip = null;

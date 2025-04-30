@@ -162,12 +162,76 @@ public static class Extension
         yield return new WaitForSeconds(0.5f); // 효과 마무리 시간
     }
 
+    public static IEnumerator CoTypeEffectWithRichText(this TMP_Text textComponent, string content, float typingSpeed, string soundKey = null)
+    {
+        int typingCount = 0;
+        textComponent.text = ""; // 초기화
+
+        int stringIndex = 0;
+        while (stringIndex < content.Length)
+        {
+            char c = content[stringIndex];
+
+            if (c == '<') // Rich Text 태그 시작
+            {
+                int closeIndex = content.IndexOf('>', stringIndex);
+                if (closeIndex == -1) // 태그가 정상적으로 닫히지 않음
+                {
+                    textComponent.text += c;
+                }
+                else
+                {
+                    textComponent.text += content.Substring(stringIndex, closeIndex - stringIndex + 1);
+                    stringIndex = closeIndex; // 태그 끝까지 건너뛰기
+                }
+            }
+            else
+            {
+                textComponent.text += c;
+            }
+
+            if (soundKey != null && (c != ' ' || c != '\n'))
+            {
+                typingCount += 1;
+                if (typingCount % 2 == 0)
+                {
+                    Managers.Sound.Play(soundKey, Sound.Effect);
+                }
+            }
+
+            stringIndex++;
+            yield return new WaitForSeconds(typingSpeed);
+        }
+
+        yield return new WaitForSeconds(0.5f); // 효과 마무리 시간
+    }
+
+
     public static IEnumerator CoBlinkText(this TMP_Text text, int blinkCount, float blinkDuration)
     {
         for (int i = 0; i < blinkCount; i++)
         {
             yield return CoFadeIn(text, blinkDuration / 2);
             yield return CoFadeOut(text, blinkDuration / 2);
+        }
+    }
+    public static IEnumerator CoTypeEffect(this TMP_Text text, string message, float textSpeed, bool playSound = false, string soundKey = "")
+    {
+        int typingCount = 0;
+
+        text.text = "";
+        foreach (char c in message)
+        {
+            text.text += c;
+            if (playSound && (c != ' ' || c != '\n'))
+            {
+                typingCount += 1;
+                if (typingCount % 2 == 0)
+                {
+                    Managers.Sound.Play(soundKey, Sound.Effect);
+                }
+            }
+            yield return WaitForSecondsCache.Get(textSpeed); // 타자 치는 속도 조절 가능
         }
     }
 

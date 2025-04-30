@@ -80,7 +80,7 @@ public class UI_BlamePopup : UI_Popup
                     Managers.Sound.Play(soundKey, Sound.Effect);
 				}
             }
-            yield return new WaitForSeconds(0.05f); // 타자 치는 속도 조절 가능
+			yield return WaitForSecondsCache.Get(0.05f); // 타자 치는 속도 조절 가능
 		}
 	}
 

@@ -43,7 +43,7 @@ public class UI_EndingScene : UI_Scene
         for (int i = 1; i < _sceneData.newsDialog.Count; i++)
         {
             //ResizeBubbleImage(_sceneData.newsDialog[i]);
-            yield return StartCoroutine(TypeEffect(_newsText, _sceneData.newsDialog[i], 0.1f));
+            yield return _newsText.CoTypeEffectWithRichText(_sceneData.newsDialog[i], 0.1f, "keyboard_oneshot2");
         }
 
         // 화면 fadeOut
@@ -54,7 +54,7 @@ public class UI_EndingScene : UI_Scene
         // 검은 화면상의 텍스트 출력
         foreach (var finalDialogue in _sceneData.finalDialog)
         {
-            yield return StartCoroutine(TypeEffect(_finalText, finalDialogue, 0.1f));
+            yield return _finalText.CoTypeEffectWithRichText(finalDialogue, 0.1f, "keyboard_oneshot2");
         }
 
         _finalText.text = "";
@@ -62,7 +62,9 @@ public class UI_EndingScene : UI_Scene
         yield return WaitForSecondsCache.Get(2f);
 
         // 비디오 효과로 글리치 효과
+
         _endingVideoPlayer.gameObject.SetActive(true); // 비디오 플레이어 활성화
+        Managers.Sound.Play("titleName", Sound.Effect);
         yield return WaitForSecondsCache.Get(5f); // 0.5초 대기
 
         // 메인 화면으로 전환
@@ -101,6 +103,7 @@ public class UI_EndingScene : UI_Scene
                 }
                 else
                 {
+                    Managers.Sound.Play("red_text", Sound.Effect);
                     textComponent.text += content.Substring(stringIndex, closeIndex - stringIndex + 1);
                     stringIndex = closeIndex; // 태그 끝까지 건너뛰기
                 }

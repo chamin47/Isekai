@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class EndingScene : BaseScene
 {
-	[SerializeField] AudioSource _bgm;
 	private Animator _mainCameraAni;
 
     [SerializeField] private GameObject _noiseImage;
@@ -17,11 +16,14 @@ public class EndingScene : BaseScene
     // 카메라 줌 아웃 1초 후 EndingSceneUI 활성화
     private IEnumerator EndingSceneSequence()
     {
+        Managers.Sound.Play("tv_noise", Sound.SubEffect);
         yield return WaitForSecondsCache.Get(2f);
         _mainCameraAni.SetTrigger("CloseIn");
         yield return WaitForSecondsCache.Get(2f);
-        _noiseImage.GetComponent<Animator>().enabled = false;
-        //_noiseImage.SetActive(false);
+
+        Managers.Sound.StopSubEffect();
+        
+        _noiseImage.GetComponent<Animator>().enabled = false;        
         _newsImage.SetActive(true);
         yield return WaitForSecondsCache.Get(2f);
         _mainCameraAni.SetTrigger("CloseOut");
