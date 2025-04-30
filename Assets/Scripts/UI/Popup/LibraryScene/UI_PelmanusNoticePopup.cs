@@ -114,6 +114,7 @@ public class UI_PelmanusNoticePopup : UI_NoticePopup
         {
             _libraryScene.StopColorConversion();
             _libraryScene.ColorConversion(Mathf.Max(currentSpawnTime * 0.5f, 0.15f));
+            Managers.Sound.Play("window_screen", Sound.Effect);
             SpawnPopup();
 
             yield return new WaitForSeconds(currentSpawnTime);

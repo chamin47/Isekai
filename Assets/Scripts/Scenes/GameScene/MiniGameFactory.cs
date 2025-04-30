@@ -111,6 +111,23 @@ public class MiniGameFactory : MonoBehaviour
                 }
             }
 
+            if(_leftExclamation.activeInHierarchy == false)
+            {
+                if (isLeft)
+                {
+                    Debug.Log("왼쪽에 미니게임이 있습니다.");
+                    Managers.Sound.Play("exclamation_mark", Sound.Effect);
+                }
+            }
+            else if (_rightExclamation.activeInHierarchy == false)
+            {
+                if (isRight)
+                {
+                    Managers.Sound.Play("exclamation_mark", Sound.Effect);
+                }
+            }
+
+
             _leftExclamation.SetActive(isLeft);
             _rightExclamation.SetActive(isRight);
         }

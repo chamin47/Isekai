@@ -26,6 +26,7 @@ public class UI_BookPopup : UI_Popup
 
 	public void Init(LibraryBook book)
 	{
+		Managers.Sound.Play("book", Sound.Effect);
         _book = book;
     }
 
