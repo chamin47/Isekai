@@ -196,8 +196,10 @@ public class UI_BlamePopup : UI_Popup
 			yield return null;
 		}
 
-		// 최종적으로 알파 값을 0으로 설정하고 오브젝트 비활성화
-		for (int i = 0; i < _talkBalloonImages.Length; i++)
+		Managers.Sound.Play("s1_glitch2", Sound.Effect);
+
+        // 최종적으로 알파 값을 0으로 설정하고 오브젝트 비활성화
+        for (int i = 0; i < _talkBalloonImages.Length; i++)
 		{
 			if (_talkBalloonImages[i].gameObject.activeSelf)
 			{
