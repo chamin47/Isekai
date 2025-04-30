@@ -23,11 +23,11 @@ public class LoadingScene : BaseScene
     {
         if(Managers.Scene.prevSceneType == Scene.GameScene)
         {
+            Managers.UI.ShowSceneUI<UI_Loading>();  
         }
         else
         {
             Managers.UI.ShowSceneUI<UI_GameLoading>();
-            //Managers.UI.ShowSceneUI<UI_Loading>();  
         }
         
         

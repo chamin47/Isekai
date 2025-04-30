@@ -49,6 +49,8 @@ public class UI_MiniGame : UI_Popup
             if (_currentGaugeValue < 0)
             {
                 _currentGaugeValue = 0;
+                Debug.Log("미니게임 실패! 게이지가 0이 되었습니다.");
+                Managers.Sound.Play("i_mini_game_fail", Sound.Effect);
                 EndMiniGame(false);
             }
 
@@ -236,6 +238,8 @@ public class UI_MiniGame : UI_Popup
 
         if (_remainTime <= 0)
         {
+            Debug.Log("미니게임 실패! 시간이 다 되었습니다.");
+            Managers.Sound.Play("i_mini_pass", Sound.Effect);
             EndMiniGame(false);
             return;
         }
@@ -306,7 +310,6 @@ public class UI_MiniGame : UI_Popup
         else
         {
             //Debug.Log("미니게임 실패! 행복도가 감소합니다.");
-            Managers.Sound.Play("i_mini_game_fail", Sound.Effect);
             Managers.Happy.ChangeHappiness(_miniGameInfo.failGauge);
         }
 
@@ -362,7 +365,6 @@ public class UI_MiniGame : UI_Popup
     {
         _isGameStart = true;
 
-        Debug.Log("미니게임 시작!");
         foreach (KeyButton key in _requiredKeys)
         {
             if(key != null)
@@ -384,7 +386,6 @@ public class UI_MiniGame : UI_Popup
 
         _isGameStart = false;
 
-        Debug.Log("미니게임 종료!");
         if (other.CompareTag("Player"))
         {
             MiniGameStop();
