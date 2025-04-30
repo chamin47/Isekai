@@ -26,14 +26,19 @@ public class TwoKeyButton : KeyButton
     {
         if (_isActive && Input.GetKeyDown(_keyCode) && Input.GetKeyDown(_secondKeyCode))
         {
-            if (_canPressKey)
+            OnkeyPressedEvent();
+            Destroy(gameObject);
+        }
+        else if (_isActive)
+        {
+            for (KeyCode key = KeyCode.A; key <= KeyCode.Z; key++)
             {
-                OnkeyPressedEvent();
-                Destroy(gameObject);
-            }
-            else
-            {
-                OnKeyMissedEvent();
+                if ((key != _keyCode && key != _secondKeyCode) && Input.GetKeyDown(key))
+                {
+                    OnKeyMissedEvent();
+                    Destroy(gameObject);
+                    break;
+                }
             }
         }
     }

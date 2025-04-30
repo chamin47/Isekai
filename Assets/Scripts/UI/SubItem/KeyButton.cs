@@ -16,7 +16,6 @@ public class KeyButton : UI_Base
     [SerializeField] protected KeyCode _keyCode;
     [SerializeField] protected Image _image;
 
-    protected bool _canPressKey = false;
     protected bool _isActive = false;
     public virtual float Width
     {
@@ -30,7 +29,6 @@ public class KeyButton : UI_Base
     {
         _keyCode = keyCode;
         _image.sprite = sprite;
-        _canPressKey = false;
         _isActive = false;
     }
 
@@ -38,27 +36,31 @@ public class KeyButton : UI_Base
     {
         if (_isActive && Input.GetKeyDown(_keyCode)){
             Debug.Log($"Key Pressed : {_keyCode}");
-            if (_canPressKey)
+            OnkeyPressedEvent();
+            Destroy(gameObject);
+        }
+        else if (_isActive)
+        {
+            for (KeyCode key = KeyCode.A; key <= KeyCode.Z; key++)
             {
-                OnkeyPressedEvent();
-                Destroy(gameObject);
-            }
-            else
-            {
-                OnKeyMissedEvent();
+                if (key != _keyCode && Input.GetKeyDown(key))
+                {
+                    Debug.Log($"Key Missed : {key}, Correct Key : {_keyCode}");
+                    OnKeyMissedEvent();
+                    Destroy(gameObject);
+                    break;
+                }
             }
         }
     }
 
     public void EnableKeyPress()
-    {
-        _canPressKey = true;
+    { 
         _isActive = true;
     }
 
     public void DisableKeyPress()
     {
-        _canPressKey = false;
         _isActive = false;
     }
 

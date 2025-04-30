@@ -226,7 +226,13 @@ public class UI_MiniGame : UI_Popup
             return;
         }
 
-        _requiredKeys[_pressedKeyCount].EnableKeyPress();
+        StartCoroutine(EnableKeyNextFrame(_pressedKeyCount));
+    }
+
+    private IEnumerator EnableKeyNextFrame(int keyIndex)
+    {
+        yield return null; // 다음 프레임까지 대기
+        _requiredKeys[keyIndex].EnableKeyPress();
     }
 
     private void Update()
