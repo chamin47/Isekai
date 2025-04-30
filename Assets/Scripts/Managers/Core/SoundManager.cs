@@ -35,6 +35,7 @@ public class SoundManager
             _subEffectAudio = new GameObject { name = "SubEffectAudio" }.AddComponent<AudioSource>();
             _subEffectAudio.transform.parent = _root.transform;
             _subEffectAudio.playOnAwake = false;
+            _subEffectAudio.loop = true;
 
             _effectAudio = new AudioSource[MAX_EFFECT_COUNT];
 
@@ -57,7 +58,11 @@ public class SoundManager
             _effectAudio[i].Stop();
             _effectAudio[i].clip = null;
         }
-		_audioClips.Clear();
+
+        _subEffectAudio.Stop();
+        _subEffectAudio.clip = null;
+
+        _audioClips.Clear();
 	}
 
     public void Play(string key, Sound type, float pitch = 1.0f)
@@ -99,41 +104,33 @@ public class SoundManager
                 audioSource.PlayOneShot(audioClip);
             });
         }
-        //여기 오류 끝기지 않음
         else if (type == Sound.SubEffect)
         {
             audioSource = _subEffectAudio;
-
-            if (isPaused)
-            {
-                ReStartSubEffect();
-            }
-
             LoadAudioClip(key, (audioClip) =>
             {
-                if (audioSource.isPlaying)
-                    audioSource.Stop();
                 audioSource.clip = audioClip;
-                audioSource.loop = true;
                 audioSource.Play();
             });
         }
     }
 
-    private bool isPaused = false;
-
-    public void ReStartSubEffect()
+    //현재 pause사용은 하나의 음악만 사용하므로 문제 발생 여부가 없지만
+    //추후 한번에 두개 이상이 사용될시 문제 발생 및 해결 필요
+    public void UnPauseSubEffect()
     {
-        Debug.Log("SubEffectAudio ReStart");
-        _subEffectAudio.UnPause();
-        isPaused = false;
+        if (_subEffectAudio.clip != null)
+        {
+            _subEffectAudio.UnPause();
+        }
     }
 
     public void PauseSubEffect()
     {
-        Debug.Log("SubEffectAudio Pause");
-        _subEffectAudio.Stop();
-        isPaused = true;
+        if (_subEffectAudio.clip != null)
+        {
+            _subEffectAudio.Pause();
+        }
     }
 
     private void LoadAudioClip(string key, Action<AudioClip> callback)
@@ -152,4 +149,6 @@ public class SoundManager
 
         callback?.Invoke(audioClip);
     }
+
+   
 }
