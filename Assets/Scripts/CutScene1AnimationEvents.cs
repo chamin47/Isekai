@@ -16,10 +16,14 @@ public class CutScene1AnimationEvents : MonoBehaviour
 		Managers.Sound.Play("s1_wind", Sound.Effect);
 	}
 
+	public void OnReadLetter()
+	{
+		Managers.Sound.Play("s1_letter", Sound.Effect);
+	}
+
 	public void OnCutSceneAnimationEnd()
 	{
 		cutScene1Popup.ClosePopupUI();
-		Managers.Sound.Play("s1_letter", Sound.Effect);
 		Managers.UI.ShowPopupUI<UI_LetterPopup>();
 	}
 }
