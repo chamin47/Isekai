@@ -56,6 +56,7 @@ public class RealGameScene : BaseScene
             yield return new WaitUntil(() => _enterTimeline.state != PlayState.Playing);
         }
     }
+
     public void Init(RealWorldInfo realWorldInfo)
     {
         _realGameFactory.Init(realWorldInfo);
