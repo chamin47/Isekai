@@ -32,8 +32,6 @@ public class LibraryEnter : MonoBehaviour
 		{
 			Debug.LogError("메인 카메라를 찾을 수 없습니다!");
 		}
-        Managers.Sound.Play("s1_glitter2", Sound.Effect);
-
 
     }
 

@@ -2,9 +2,79 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class SoundManager
 {
+    #region AudioMixer
+    private AudioMixer _audioMixer;
+    private AudioMixerGroup _masterGroup;
+    private AudioMixerGroup _bgmGroup;
+    private AudioMixerGroup _effectGroup;
+    private AudioMixerGroup _subEffectGroup;
+
+    private void SettingAudioMixer()
+    {
+        _audioMixer = Managers.Resource.Load<AudioMixer>("Sounds/SoundManager");
+
+        
+        _audioMixer.SetFloat("MasterVolume", Mathf.Log10(Mathf.Clamp(PlayerPrefs.GetFloat("MasterVolume", 0.5f), 0.0001f, 1f)));
+        _audioMixer.SetFloat("BgmVolume", Mathf.Log10(Mathf.Clamp(PlayerPrefs.GetFloat("BgmVolume", 0.5f), 0.0001f, 1f)));
+        _audioMixer.SetFloat("EffectVolume", Mathf.Log10(Mathf.Clamp(PlayerPrefs.GetFloat("EffectVolume", 0.5f), 0.0001f, 1f)));
+
+
+        _masterGroup = _audioMixer.FindMatchingGroups("Master")[0];
+        _bgmGroup = _audioMixer.FindMatchingGroups("Master/Bgm")[0];
+        _effectGroup = _audioMixer.FindMatchingGroups("Master/Effect")[0];
+
+        _bgmAudio.outputAudioMixerGroup = _bgmGroup;
+        _subEffectAudio.outputAudioMixerGroup = _subEffectGroup;
+        for (int i = 0; i < MAX_EFFECT_COUNT; i++)
+        {
+            _effectAudio[i].outputAudioMixerGroup = _effectGroup;
+        }
+    }
+
+    
+
+
+    public void SetMasterVolume(float volume)
+    {
+        volume = Mathf.Log10(Mathf.Clamp(volume, 0.0001f, 1f)) * 20f;
+        _audioMixer.SetFloat("MasterVolume", volume);
+    }
+
+    public void SetBgmVolume(float volume)
+    {
+        volume = Mathf.Log10(Mathf.Clamp(volume, 0.0001f, 1f)) * 20f;
+        _audioMixer.SetFloat("BgmVolume", volume);
+    }
+
+    public void SetEffectVolume(float volume)
+    {
+        volume = Mathf.Log10(Mathf.Clamp(volume, 0.0001f, 1f)) * 20f;
+        _audioMixer.SetFloat("EffectVolume", volume);
+    }
+
+    public float GetVolume(string key)
+    {
+        _audioMixer.GetFloat(key, out float volume);
+        volume = Mathf.Pow(10, volume / 20);
+        return volume;
+    }
+
+    
+    public void SaveVolumeSettings()
+    {
+        PlayerPrefs.SetFloat("MasterVolume", GetVolume("MasterVolume"));
+        PlayerPrefs.SetFloat("BgmVolume", GetVolume("BgmVolume"));
+        PlayerPrefs.SetFloat("EffectVolume", GetVolume("EffectVolume"));
+
+        PlayerPrefs.Save();
+    }
+
+    #endregion
+
     AudioSource _bgmAudio;
     AudioSource[] _effectAudio;
     AudioSource _subEffectAudio;
@@ -31,7 +101,7 @@ public class SoundManager
             _bgmAudio.transform.parent = _root.transform;
             _bgmAudio.playOnAwake = false;
             _bgmAudio.loop = true;
-
+            
             _subEffectAudio = new GameObject { name = "SubEffectAudio" }.AddComponent<AudioSource>();
             _subEffectAudio.transform.parent = _root.transform;
             _subEffectAudio.playOnAwake = false;
@@ -46,7 +116,10 @@ public class SoundManager
                 _effectAudio[i].playOnAwake = false;
             }
         }
-	}
+
+        _audioMixer = Managers.Resource.Load<AudioMixer>("Sounds/SoundManager");
+        SettingAudioMixer();
+    }
 
 	public void Clear()
 	{
@@ -65,7 +138,21 @@ public class SoundManager
         _audioClips.Clear();
 	}
 
-    public void Play(string key, Sound type, float pitch = 1.0f)
+    public void PlaySubEffect(string Key, float volume)
+    {
+        AudioSource audioSource = _subEffectAudio;
+        LoadAudioClip(Key, (audioClip) =>
+        {
+            if (audioSource.isPlaying)
+                audioSource.Stop();
+            audioSource.clip = audioClip;
+            audioSource.volume = volume;
+            audioSource.loop = true;
+            audioSource.Play();
+        });
+    }
+
+    public void Play(string key, Sound type, float volume = 1f, float pitch = 1.0f)
     {
         AudioSource audioSource = null;
 
@@ -101,7 +188,8 @@ public class SoundManager
             LoadAudioClip(key, (audioClip) =>
             {
                 audioSource.pitch = pitch;
-                audioSource.PlayOneShot(audioClip);
+                audioSource.volume = 1.0f;
+                audioSource.PlayOneShot(audioClip, volume);
             });
         }
         else if (type == Sound.SubEffect)
@@ -113,6 +201,66 @@ public class SoundManager
                 audioSource.Play();
             });
         }
+    }
+    public IEnumerator ChangeEffectVolume(float start, float target, float duration)
+    {
+        if(_effectAudio == null)
+            yield break;
+
+        float time = 0f;
+
+        while (time < duration)
+        {
+            time += Time.deltaTime;
+            float t = time / duration;
+            for (int i = 0; i < MAX_EFFECT_COUNT; i++)
+            {
+                _effectAudio[i].volume = Mathf.Lerp(start, target, t);
+            }
+            yield return null;
+        }
+
+    }
+    public IEnumerator FadeInBGM(string path, float duration)
+    {
+        LoadAudioClip(path, (audioClip) => {
+            _bgmAudio.clip = audioClip;
+            _bgmAudio.volume = 0f;
+            _bgmAudio.Play();
+        });
+
+        float startVolume = 0f;
+        float targetVolume = 1f;
+
+        float time = 0f;
+
+        while (time < duration)
+        {
+            time += Time.deltaTime;
+            float t = time / duration;
+            _bgmAudio.volume = Mathf.Lerp(startVolume, targetVolume, t);
+            yield return null;
+        }
+
+        _bgmAudio.volume = targetVolume;
+    }
+
+    public IEnumerator FadeOutBGM(float duration)
+    {
+        if (_bgmAudio.clip == null)
+            yield break;
+
+        float startVolume = _bgmAudio.volume;
+        float targetVolume = 0f;
+        float time = 0f;
+        while (time < duration)
+        {
+            time += Time.deltaTime;
+            float t = time / duration;
+            _bgmAudio.volume = Mathf.Lerp(startVolume, targetVolume, t);
+            yield return null;
+        }
+        _bgmAudio.Stop();
     }
 
     //현재 pause사용은 하나의 음악만 사용하므로 문제 발생 여부가 없지만
@@ -156,5 +304,7 @@ public class SoundManager
         callback?.Invoke(audioClip);
     }
 
+
+    
    
 }

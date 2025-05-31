@@ -509,6 +509,7 @@ GameObject:
   - component: {fileID: 286667076}
   - component: {fileID: 286667080}
   - component: {fileID: 286667079}
+  - component: {fileID: 286667081}
   m_Layer: 0
   m_Name: book_0(Vinter)
   m_TagString: Book
@@ -645,6 +646,20 @@ MonoBehaviour:
   _collider: {fileID: 286667079}
   _isClicked: 0
   _fingerBlinkSpeed: 0.8
+--- !u!114 &286667081
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 286667075}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 170f6719097fd9e498de177864ce45b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _clickDownSound: click_down
+  _clickUpSound: click_up
 --- !u!1 &477170671
 GameObject:
   m_ObjectHideFlags: 0
@@ -1348,6 +1363,7 @@ GameObject:
   - component: {fileID: 1057986701}
   - component: {fileID: 1057986704}
   - component: {fileID: 1057986705}
+  - component: {fileID: 1057986706}
   m_Layer: 0
   m_Name: book_2(Gang)
   m_TagString: Book
@@ -1484,6 +1500,20 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.24, y: 0.56}
   m_EdgeRadius: 0
+--- !u!114 &1057986706
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1057986700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 170f6719097fd9e498de177864ce45b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _clickDownSound: click_down
+  _clickUpSound: click_up
 --- !u!1 &1089894157
 GameObject:
   m_ObjectHideFlags: 0
@@ -2201,6 +2231,7 @@ GameObject:
   - component: {fileID: 2030263357}
   - component: {fileID: 2030263360}
   - component: {fileID: 2030263361}
+  - component: {fileID: 2030263362}
   m_Layer: 0
   m_Name: book_3(Pelmanus)
   m_TagString: Book
@@ -2337,6 +2368,20 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.32, y: 0.48}
   m_EdgeRadius: 0
+--- !u!114 &2030263362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2030263356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 170f6719097fd9e498de177864ce45b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _clickDownSound: click_down
+  _clickUpSound: click_up
 --- !u!1 &2045367017
 GameObject:
   m_ObjectHideFlags: 0
@@ -2349,6 +2394,7 @@ GameObject:
   - component: {fileID: 2045367018}
   - component: {fileID: 2045367021}
   - component: {fileID: 2045367022}
+  - component: {fileID: 2045367023}
   m_Layer: 0
   m_Name: book_1(Chaumm)
   m_TagString: Book
@@ -2485,6 +2531,20 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.28, y: 0.44}
   m_EdgeRadius: 0
+--- !u!114 &2045367023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2045367017}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 170f6719097fd9e498de177864ce45b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _clickDownSound: click_down
+  _clickUpSound: click_up
 --- !u!1 &2070269047
 GameObject:
   m_ObjectHideFlags: 0

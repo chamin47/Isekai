@@ -15,7 +15,13 @@ public class CutScene2AnimationEvents : MonoBehaviour
 
 	public void OnCutScene2AnimationEnd()
 	{
-		cutScene2Popup.ClosePopupUI();
 		Managers.Resource.Instantiate("CutScene/after cutscene Variant");
+		//cutScene2Popup.ClosePopupUI();
+		cutScene2Popup.gameObject.SetActive(false);
+    }
+
+	public void DoorSound()
+	{
+		Managers.Sound.Play("s1_glitter2", Sound.Effect);
 	}
 }

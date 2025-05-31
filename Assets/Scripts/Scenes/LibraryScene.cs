@@ -35,6 +35,8 @@ public class LibraryScene : BaseScene
 
     protected override void Init()
 	{
+        StartCoroutine(Managers.Sound.FadeInBGM("bgm_library_sketch_4", 3f));
+        //Managers.Sound.Play("bgm_library_sketch_4", Sound.Bgm);
 		
 		SceneType = Scene.LibraryScene;
 
@@ -54,6 +56,21 @@ public class LibraryScene : BaseScene
         _endTimeLine.stopped += OnEndTimeLineEnd;
 
         _volume.profile.TryGet(out _colorAdjustments);
+
+        StartCoroutine(TempFakeFootSound());
+    }
+
+    private IEnumerator TempFakeFootSound()
+    {
+        yield return WaitForSecondsCache.Get(1f);
+        float _footStepInterval = 0.63f;
+        float curVolume = 0f;
+        for(int i = 0; i < 10; i++) 
+        {
+            curVolume += 0.1f;
+            Managers.Sound.Play("all_s_walk2", Sound.Effect, curVolume);
+            yield return WaitForSecondsCache.Get(_footStepInterval);
+        }
     }
 
     #region TimeLineMethod
@@ -62,7 +79,6 @@ public class LibraryScene : BaseScene
     {
         onStartTimeLineEnd?.Invoke();
 
-        Managers.Sound.Play("bgm_library_sketch_4", Sound.Bgm);
         // 특정 책 만 켜주기
         BookSwitch();
     }

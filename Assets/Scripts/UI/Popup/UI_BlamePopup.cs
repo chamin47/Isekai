@@ -172,6 +172,7 @@ public class UI_BlamePopup : UI_Popup
 			balloonColors[i] = _talkBalloonImages[i].color;
 			textColors[i] = _dialogueTexts[i].color;
 		}
+		Managers.Sound.Play("s1_glitch2", Sound.Effect);
 
 		while (elapsed < duration)
 		{
@@ -196,7 +197,6 @@ public class UI_BlamePopup : UI_Popup
 			yield return null;
 		}
 
-		Managers.Sound.Play("s1_glitch2", Sound.Effect);
 
         // 최종적으로 알파 값을 0으로 설정하고 오브젝트 비활성화
         for (int i = 0; i < _talkBalloonImages.Length; i++)

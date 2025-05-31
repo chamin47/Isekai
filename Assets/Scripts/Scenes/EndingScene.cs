@@ -22,11 +22,14 @@ public class EndingScene : BaseScene
         yield return WaitForSecondsCache.Get(2f);
 
         Managers.Sound.StopSubEffect();
-        
+
+        Managers.Sound.PlaySubEffect("tv_noise", 0.2f);
+
         _noiseImage.GetComponent<Animator>().enabled = false;        
         _newsImage.SetActive(true);
         yield return WaitForSecondsCache.Get(2f);
         _mainCameraAni.SetTrigger("CloseOut");
+        Managers.Sound.StopSubEffect();
         yield return WaitForSecondsCache.Get(2f);
         Managers.UI.ShowSceneUI<UI_EndingScene>();
     }
