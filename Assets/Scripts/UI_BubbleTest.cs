@@ -7,9 +7,10 @@ public class UI_BubbleTest: MonoBehaviour
 {
 	[SerializeField] private TMP_Text _text;
 	[SerializeField] private CanvasGroup _canvasGroup;
-	[SerializeField] private RectTransform _rectTransform;
-	[SerializeField] private DialogUnit _dialogUnit;
+	[SerializeField] private RectTransform _rectTransformPosition;  // UI_BubbleTest
+	[SerializeField] private RectTransform _rectTransformSize;		// bubbleImage
 	[SerializeField] private bool _fadeCharacter = true;
+	private DialogUnit _dialogUnit;
 
 	public event System.Action<GameObject> OnDialogTriggered;
 
@@ -27,13 +28,18 @@ public class UI_BubbleTest: MonoBehaviour
 
 	public void SetPosition(Vector3 worldPosition)
 	{
-		_rectTransform.position = worldPosition + Vector3.up * 1.0f + Vector3.right * 0.2f;
+		_rectTransformPosition.position = worldPosition + Vector3.up * 1.0f + Vector3.right * 0.2f;
 	}
 
 	public void SetDialogUnit(DialogUnit unit)
 	{
 		_dialogUnit = unit;
 		_fadeCharacter = unit.fadeCharacter;
+
+		if (_rectTransformSize != null)
+		{
+			_rectTransformSize.sizeDelta = unit.bubbleSize;
+		}
 	}
 
 	private void TriggerDialog()

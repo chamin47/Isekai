@@ -175,5 +175,6 @@ public class DialogUnit
 	public bool isFinal = false;
 	public int happinessDelta = -20;
 	public bool fadeCharacter = true;
+	public Vector2 bubbleSize;
 }
 
