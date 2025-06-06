@@ -18,7 +18,7 @@ public enum Scene
 	EndingScene,
 	RealGameScene,
 	LoadingScene,
-
+	DongMinTestScene,
 	TestScene,
 }
 

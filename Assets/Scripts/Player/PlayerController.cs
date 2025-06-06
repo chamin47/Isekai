@@ -1,7 +1,4 @@
-using Cinemachine.Examples;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -15,7 +12,7 @@ public class PlayerController : MonoBehaviour
 
 	[SerializeField] private float _footStepInterval = 1f;
 	[SerializeField] private float _maxSpeed = 7f;
-    private float _footStepTimer = 0f;
+	private float _footStepTimer = 0f;
 
 	// dir, moveSpeed
 	public event Action<Vector2, float> OnPlayerMove;
@@ -48,28 +45,28 @@ public class PlayerController : MonoBehaviour
 				x = -1f;
 			}
 			else if (Input.GetKey(KeyCode.RightArrow))
-            {
-                x = 1f;
+			{
+				x = 1f;
 			}
 
-            OnPlayerMove?.Invoke(new Vector2(x, 0), _movement.GetMoveSpeed());
+			OnPlayerMove?.Invoke(new Vector2(x, 0), _movement.GetMoveSpeed());
 
-            UpdateMove(x);
+			UpdateMove(x);
 			_playerAnimator.UpdateAnimation(x);
 
-			if(x != 0)
+			if (x != 0)
 			{
-                float speed = _movement.GetMoveSpeed();
+				float speed = _movement.GetMoveSpeed();
 
-				if(speed >= 7f)
+				if (speed >= 7f)
 				{
 					_footStepInterval = 0.3f;
 				}
-                else if (speed >= 5f)
+				else if (speed >= 5f)
 				{
-                    _footStepInterval = 0.45f;
-                }
-                else if (speed >= 3f)
+					_footStepInterval = 0.45f;
+				}
+				else if (speed >= 3f)
 				{
                     _footStepInterval = 0.56f;
                 }
@@ -83,13 +80,13 @@ public class PlayerController : MonoBehaviour
 				}
                 _footStepTimer += Time.deltaTime;
 
-                if (_footStepTimer >= _footStepInterval)
-                {
-                    PlayFootSound();
-                    _footStepTimer = 0f;
-                }
-            }
-        }
+				if (_footStepTimer >= _footStepInterval)
+				{
+					PlayFootSound();
+					_footStepTimer = 0f;
+				}
+			}
+		}
 		else
 		{
 			UpdateMove(0);
@@ -97,12 +94,12 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
-    public void PlayFootSound()
-    {
-        Managers.Sound.Play("all_s_walk2", Sound.Effect);
-    }
+	public void PlayFootSound()
+	{
+		Managers.Sound.Play("all_s_walk2", Sound.Effect);
+	}
 
-    private void UpdateMove(float x)
+	private void UpdateMove(float x)
 	{
 		_movement.MoveTo(x);
 	}
@@ -112,4 +109,8 @@ public class PlayerController : MonoBehaviour
         _playerAnimator.SpriteFlipX(x);
     }
 
+	public float GetCurrentXSpeed()
+	{
+		return _movement.Velocity.x;
+	}
 }
