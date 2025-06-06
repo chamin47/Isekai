@@ -253,6 +253,7 @@ public class SoundManager
         float startVolume = _bgmAudio.volume;
         float targetVolume = 0f;
         float time = 0f;
+
         while (time < duration)
         {
             time += Time.deltaTime;
@@ -261,6 +262,13 @@ public class SoundManager
             yield return null;
         }
         _bgmAudio.Stop();
+        _bgmAudio.volume = 1f;
+    }
+
+    public void StopBGM()
+    {
+        _bgmAudio.Stop();
+        _bgmAudio.clip = null;
     }
 
     //현재 pause사용은 하나의 음악만 사용하므로 문제 발생 여부가 없지만

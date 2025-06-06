@@ -31,6 +31,8 @@ public class LibraryScene : BaseScene
 
     [Header("PostProcessing")]
     [SerializeField] private Volume _volume;
+
+    [SerializeField] private GameObject _HUDHappy;
     private ColorAdjustments _colorAdjustments;
 
     protected override void Init()
@@ -161,6 +163,10 @@ public class LibraryScene : BaseScene
         yield return WaitForSecondsCache.Get(blinkTime);
     }
 
+    public void DisableHUDHappy()
+    {
+        _HUDHappy.SetActive(false);
+    }
     public override void Clear()
     {
     }

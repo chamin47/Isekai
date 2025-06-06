@@ -34,6 +34,7 @@ public class UI_GameLoading : UI_Scene
 
     IEnumerator AnimateDateRange(string range, float totalTime)
     {
+        Managers.Sound.Play("counting",Sound.Effect);
         // 입력된 문자열을 파싱해서 시작/끝 날짜 가져오기
         string[] parts = range.Split('~');
         string[] startParts = parts[0].Trim().Split('.');
@@ -97,15 +98,18 @@ public class UI_GameLoading : UI_Scene
     private IEnumerator ShowWorldNameText()
     {
         _worldNameText.gameObject.SetActive(true);
+        Managers.Sound.Play("keyboard_long", Sound.SubEffect);
         yield return StartCoroutine(_worldNameText.CoTypingEffect(_data.worldName, 0.1f));
+        Managers.Sound.StopSubEffect();
         yield return new WaitForSeconds(1f);
-        yield return StartCoroutine(_totalDateText.CoTypingEffect($"{_data.startDate} ~ {_data.endDate}", 0.1f));
+        yield return StartCoroutine(_totalDateText.CoTypingEffect($"{_data.startDate} ~ {_data.endDate}", 0.1f, true, "textbox"));
         yield return new WaitForSeconds(1f);
         ShowToDoList();
     }
 
     private void ShowToDoList()
     {
+        Managers.Sound.Play("s2_book1", Sound.Effect);
         _todoList.gameObject.SetActive(true);
         _todoList.Init(_data);
     }

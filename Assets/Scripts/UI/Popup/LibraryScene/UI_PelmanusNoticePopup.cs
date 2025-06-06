@@ -10,7 +10,8 @@ public class UI_PelmanusNoticePopup : UI_NoticePopup
 {
     [SerializeField] private TMP_Text _warningText;
     [SerializeField] private Sprite _changeSprite;
-
+    [SerializeField] private Image _backgroundImage;
+    [SerializeField] private Toggle _toggle;
     // 이미지 pixcel에 맞춘 고정된 값
     private const float X_OFFSET = 70f;
     private const float Y_OFFSET = 50f;
@@ -38,14 +39,20 @@ public class UI_PelmanusNoticePopup : UI_NoticePopup
             UI_PelmanusNoticePopup popup = Managers.UI.ShowPopupUI<UI_PelmanusNoticePopup>();
             popup.Init(_popupIndex + 1, false, _position + new Vector2(X_OFFSET, -Y_OFFSET));
             _canHandle = false;
-            SetActiveFalse();
+            ChangeBackground();
         }
     }
 
     public void ChangeBackground()
     {
-        _backgroundParent.gameObject.GetComponent<Image>().sprite = _changeSprite;
+        _backgroundImage.sprite = _changeSprite;
         SetActiveFalse();
+    }
+
+    public void ToggleDisable()
+    {
+        _toggle.isOn = true;
+        _toggle.interactable = false;
     }
 
     
@@ -107,6 +114,7 @@ public class UI_PelmanusNoticePopup : UI_NoticePopup
 
     private IEnumerator InfinityPopupCoroutine()
     {
+        Managers.Sound.StopBGM();
         int spawnCount = 0;
         int maxSpawnCount = 20;
 
@@ -146,7 +154,7 @@ public class UI_PelmanusNoticePopup : UI_NoticePopup
         yield return StartCoroutine(_warningText.CoTypingEffect("거기서 당장 나와", 0.5f, true));
         yield return WaitForSecondsCache.Get(2f);
 
-        Managers.Scene.LoadScene(Scene.LoadingScene);
+        Managers.Scene.LoadScene(Scene.GameScene);
     }
 
     /// <summary>
@@ -157,7 +165,7 @@ public class UI_PelmanusNoticePopup : UI_NoticePopup
     {
         Vector3 spawnPosition = new Vector3(spawnX, spawnY, 0);
         UI_PelmanusNoticePopup popup = Managers.UI.ShowPopupUI<UI_PelmanusNoticePopup>();
-
+        popup.ToggleDisable();
         // 다음 위치 계산
         spawnX += _xOffset;
         spawnY -= _yOffset;
@@ -174,7 +182,7 @@ public class UI_PelmanusNoticePopup : UI_NoticePopup
 
         if (_lastPopup != null)
         {
-            _lastPopup.SetActiveFalse();
+            _lastPopup.ChangeBackground();
         }
 
         _lastPopup = popup;

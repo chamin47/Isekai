@@ -20,7 +20,7 @@ public class UI_CutScene3Popup : UI_Popup
 		Managers.Resource.Instantiate("Item/TrigerEnter");
 
 		Managers.Sound.Play("s1_glitter2", Sound.Effect);
-        _playerController.isMoving = true;
+        _playerController.canMove = true;
 	}
 
 	public void ClosePopup()

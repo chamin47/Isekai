@@ -2712,7 +2712,7 @@ GameObject:
   - component: {fileID: 744417564}
   - component: {fileID: 744417563}
   m_Layer: 0
-  m_Name: '@Scene'
+  m_Name: '@TitleScene'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7072,7 +7072,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1473829861075704133, guid: 622e1a75a307a48489feb7b614b231bb, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1739347783447557634, guid: 622e1a75a307a48489feb7b614b231bb, type: 3}
       propertyPath: m_AnchorMax.y

@@ -24,9 +24,11 @@ public class UI_GangrilNoticePopup : UI_NoticePopup
         sequence.AppendInterval(2f);
         sequence.AppendCallback(() => _fadeImage.gameObject.SetActive(true));
         sequence.Append(_fadeImage.DOFade(1, 2f).SetEase(Ease.Linear));
-        sequence.AppendInterval(1f);
+        sequence.AppendCallback(() => Managers.Sound.StopBGM());
+        sequence.AppendInterval(2.5f);
         sequence.OnComplete(() =>
         {
+            (Managers.Scene.CurrentScene as LibraryScene).DisableHUDHappy();
             Managers.UI.ClosePopupUI(this);
             Managers.UI.MakeSubItem<UI_GangrilNotice>().Init(1);
         });

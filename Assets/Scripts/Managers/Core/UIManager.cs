@@ -29,8 +29,8 @@ public class UIManager
 		canvas.renderMode = RenderMode.ScreenSpaceOverlay;
 		canvas.overrideSorting = true;
 
-		var canvasScaler = Util.GetOrAddComponent<CanvasScaler>(go);
-		canvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+        var canvasScaler = Util.GetOrAddComponent<CanvasScaler>(go);
+        canvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
         canvasScaler.referenceResolution = new Vector2(1920, 1080);
 
         if (sort)

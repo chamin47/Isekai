@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System;
 
 public class UI_TitleScene : UI_Scene
 {
@@ -19,40 +20,72 @@ public class UI_TitleScene : UI_Scene
 	[SerializeField] private CanvasGroup _inputCanvasGroup; // 장면2 UI용
 
 	// 대사들
-	private string dialogue1 = "이 세계에서 상처받은 모든 이들에게 묻습니다.";
-	private string dialogue2 = "이 세계에서 벗어나 이세계로 향한다면 \n우리는 과연 행복해질 수 있을까요?";
-	private string dialogue3 = "당신의 답변에 담긴 의미는 무엇일까요? \n그것을 찾기 위한 첫걸음이 시작됩니다.";
+	private readonly List<string> dialogue = new List<string>
+	{
+		"이 세계에서 상처받은 모든 이들에게 묻습니다.",
+		"이 세계에서 벗어나 이세계로 향한다면 \n우리는 과연 행복해질 수 있을까요?",
+	};
 
-	public override void Init()
+	private readonly string lastDialogue = "당신의 답변에 담긴 의미는 무엇일까요? \n그것을 찾기 위한 첫걸음이 시작됩니다.";
+
+    public override void Init()
 	{
 		base.Init();
 		_dialogueText.text = "";
 		_dialogueCanvasGroup.alpha = 1.0f;
 		_inputCanvasGroup.alpha = 0f;
-		_inputField.characterLimit = 50;
+		_inputField.characterLimit = 20;
+		//_inputField.onValueChanged.AddListener(OnInputFieldChanged);
 		_inputField.onSubmit.AddListener(OnInputSubmit);
 
 		StartCoroutine(PlayIntroSequence());
 	}
 
-	private IEnumerator PlayIntroSequence()
+
+    private string _lastComposition = "";
+    private string _lastInputText = "";
+	[SerializeField] private float _soundDelay = 0.075f; // 타이핑 사운드 딜레이
+	private float _soundTimer = 0f;
+    void Update()
+    {
+        // 한글 감지를 위한 작업
+        if (Input.compositionString != _lastComposition)
+        {
+            if (!string.IsNullOrEmpty(Input.compositionString))
+            {
+                OnInputFieldChanged();
+            }
+            _lastComposition = Input.compositionString;
+        }
+
+        // 2) 실제 입력 필드 텍스트 변경 감지
+        if (_inputField.text != _lastInputText)
+        {
+            OnInputFieldChanged();
+            _lastInputText = _inputField.text;
+        }
+
+        _soundTimer += Time.deltaTime;
+    }
+
+    private void OnInputFieldChanged()
+    {
+		if (_soundTimer < _soundDelay)
+			return;
+
+		_soundTimer = 0f;
+		Managers.Sound.Play("intro_type_short", Sound.Effect);
+    }
+
+    private IEnumerator PlayIntroSequence()
 	{
-		// 장면 1
-		Managers.Sound.Play("intro_typing2", Sound.SubEffect);
-        yield return _dialogueText.CoTypingEffect(dialogue1, 0.075f);
-		Managers.Sound.PauseSubEffect();
+		for (int i = 0; i < dialogue.Count; i++)
+        {
+            yield return StartCoroutine(TypeAndWait(_dialogueText, dialogue[i], 0.075f));
+        }
 
-        yield return StartCoroutine(FadeOutText());
-
-        Managers.Sound.Play("intro_typing2", Sound.SubEffect);
-        yield return _dialogueText.CoTypingEffect(dialogue2, 0.075f);
-        Managers.Sound.PauseSubEffect();
-
-        yield return StartCoroutine(FadeOutText());
-
-		// 장면 2
 		yield return StartCoroutine(ShowInputField());
-		// 유저 입력 대기 (OnInputSubmit 발생 전까지 대기)
+		// 유저 입력 대기
 		while (_inputCanvasGroup.alpha > 0 && _inputField.gameObject.activeSelf)
 		{
 			yield return null;
@@ -60,12 +93,8 @@ public class UI_TitleScene : UI_Scene
 
 		// 장면 3
 		// 유저 입력 완료 후 마지막 대사 출력
-		_dialogueText.text = "";
 
-        Managers.Sound.Play("intro_typing2", Sound.SubEffect);
-        yield return StartCoroutine(TypeAndWait(_dialogueText, dialogue3, 0.075f));
-        Managers.Sound.PauseSubEffect();
-        yield return StartCoroutine(FadeOutText());
+		yield return StartCoroutine(TypeAndWait(_dialogueText, lastDialogue, 0.075f));
 
 		// 게임 씬으로 페이드인
 		Managers.Scene.LoadScene(Scene.IntroScene);
@@ -73,27 +102,14 @@ public class UI_TitleScene : UI_Scene
 
 	private IEnumerator TypeAndWait(TMP_Text textComponent, string content, float typingSpeed)
 	{
-		textComponent.text = "";
-		Managers.Sound.Play("intro_typing2", Sound.Effect);
-		Debug.Log("타이핑 시작");
-        // 대사 타이핑
-        yield return StartCoroutine(TypeEffect(textComponent, content, typingSpeed));
-
-        Debug.Log("타이핑 완료");
+        _dialogueText.text = "";
+        Managers.Sound.Play("intro_typing2", Sound.SubEffect);
+        yield return _dialogueText.CoTypingEffect(content, 0.075f);
         Managers.Sound.PauseSubEffect();
-        // 타이핑 완료 후 3초 대기
-        yield return new WaitForSeconds(4f);
-	}
+        yield return WaitForSecondsCache.Get(2f);
 
-	// 텍스트 타이핑 효과
-	private IEnumerator TypeEffect(TMP_Text textComponent, string content, float typingSpeed)
-	{
-		foreach (char c in content)
-		{
-			textComponent.text += c;
-			yield return new WaitForSeconds(typingSpeed);
-		}
-	}
+        yield return StartCoroutine(FadeOutText());
+    }
 
 	private IEnumerator FadeOutText()
 	{

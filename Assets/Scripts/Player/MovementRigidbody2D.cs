@@ -50,13 +50,27 @@ public class MovementRigidbody2D : MonoBehaviour
 		_rigid2D.velocity = new Vector2(x * _moveSpeed, _rigid2D.velocity.y);
 	}
 
-	public void SetMoveSpeed(float speed)
-	{
-		_moveSpeed = speed;
-	}
-
 	public float GetMoveSpeed()
 	{
 		return _moveSpeed;
 	}
+
+    private bool _isKnockback = false;
+    public bool IsKnockback => _isKnockback;
+
+    public void Knockback(Vector2 direction, float force, float duration = 0.3f)
+    {
+        if (_isKnockback) return;
+        StartCoroutine(KnockbackCoroutine(direction, force, duration));
+    }
+
+    private IEnumerator KnockbackCoroutine(Vector2 direction, float force, float duration)
+    {
+        _isKnockback = true;
+        _rigid2D.velocity = Vector2.zero;
+        _rigid2D.AddForce(direction.normalized * force, ForceMode2D.Impulse);
+        yield return new WaitForSeconds(duration);
+
+        _isKnockback = false;
+    }
 }

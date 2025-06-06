@@ -18,6 +18,10 @@ public class UI_GangrilNotice : UI_Base
     //Notice창의 크기는 0.7, 1.0, 1.3 순으로 되어있다 
     public void Init(int index)
     {
+        Canvas canvas = GetComponent<Canvas>();
+        canvas.renderMode = RenderMode.ScreenSpaceCamera;
+        canvas.worldCamera = Camera.main;
+
         _noticeImage.gameObject.SetActive(false);
         StartCoroutine(ShowNoticeImage(index));
         

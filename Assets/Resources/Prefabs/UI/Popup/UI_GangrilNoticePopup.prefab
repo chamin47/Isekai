@@ -348,6 +348,7 @@ GameObject:
   - component: {fileID: 7458896354422928671}
   - component: {fileID: 267999844735921193}
   - component: {fileID: 470435711434624719}
+  - component: {fileID: 5538080155097070678}
   m_Layer: 5
   m_Name: Checkmark
   m_TagString: Untagged
@@ -413,6 +414,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &5538080155097070678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5204335205761593016}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 625b98ae9d821c943b952cb317d09d25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5648123460190567318
 GameObject:
   m_ObjectHideFlags: 0

@@ -1111,12 +1111,12 @@ RectTransform:
   - {fileID: 7371314525400925106}
   - {fileID: 6563252664227922776}
   - {fileID: 1352780023360381683}
-  - {fileID: 1521481436713525727}
   - {fileID: 4617044391682218985}
   - {fileID: 8496791502192425358}
   - {fileID: 5528515104876208020}
+  - {fileID: 1521481436713525727}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}

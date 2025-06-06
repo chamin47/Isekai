@@ -89,6 +89,7 @@ public class UI_NoticePopup : UI_Popup
     private IEnumerator CoFadeOut()
     {
         _fadeImage.gameObject.SetActive(true);
+        StartCoroutine(Managers.Sound.FadeOutBGM(2f));
         StartCoroutine(_fadeImage.CoFadeOut(2f));
         yield return WaitForSecondsCache.Get(1f);
         Managers.Sound.Play("s2_book1", Sound.Effect);

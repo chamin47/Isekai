@@ -34,7 +34,10 @@ public class UI_BlamePopup : UI_Popup
 
 	private IEnumerator ShowDialogues()
 	{
-		for (int i = 0; i < _dialogues.Length; i++)
+
+		yield return WaitForSecondsCache.Get(2f); // 약간의 대기 시간
+
+        for (int i = 0; i < _dialogues.Length; i++)
 		{
 			// 해당 대화 풍선 이미지를 활성화합니다.
 			_talkBalloonImages[i].gameObject.SetActive(true);

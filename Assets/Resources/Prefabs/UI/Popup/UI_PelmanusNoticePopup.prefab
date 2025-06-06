@@ -35,7 +35,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -319, y: 0}
+  m_AnchoredPosition: {x: -319, y: 31}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &693206455678970337
@@ -171,7 +171,7 @@ RectTransform:
   - {fileID: 5175561143400197377}
   - {fileID: 6282374820944417366}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -259,6 +259,8 @@ MonoBehaviour:
   _noticeText: {fileID: 6091846366744234489}
   _warningText: {fileID: 1031711647991588123}
   _changeSprite: {fileID: 21300000, guid: a8f9903045f58e24e847d9a33baad9aa, type: 3}
+  _backgroundImage: {fileID: 4857300687752412464}
+  _toggle: {fileID: 4796887041335602771}
 --- !u!1 &2471825697099343903
 GameObject:
   m_ObjectHideFlags: 0
@@ -488,6 +490,7 @@ GameObject:
   - component: {fileID: 6212036268189642300}
   - component: {fileID: 6400582886101974156}
   - component: {fileID: 7755481434288255133}
+  - component: {fileID: 4776576902810898672}
   m_Layer: 5
   m_Name: Checkmark
   m_TagString: Untagged
@@ -553,6 +556,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &4776576902810898672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3316127710086916656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 625b98ae9d821c943b952cb317d09d25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3463625774604629720
 GameObject:
   m_ObjectHideFlags: 0

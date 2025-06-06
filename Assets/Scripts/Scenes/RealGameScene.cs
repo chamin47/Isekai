@@ -77,7 +77,7 @@ public class RealGameScene : BaseScene
         //화면은 천천히 faded out되고 fade in 되면서 도서관 씬으로 이동
         //상관없이 도서관 씬으로 이동
         PlayerController playerController = _player.GetComponent<PlayerController>();
-        playerController.isMoving = false;
+        playerController.canMove = false;
 
         StartCoroutine(CoWaitAndStart());
     }

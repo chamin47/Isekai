@@ -886,6 +886,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI_HappinessHUD
       objectReference: {fileID: 0}
+    - target: {fileID: 8072432044795425438, guid: 10723e3edd83a2248833965e7d4ad2cd, type: 3}
+      propertyPath: m_AdditionalShaderChannelsFlag
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 8750764605794651025, guid: 10723e3edd83a2248833965e7d4ad2cd, type: 3}
       propertyPath: m_PixelsPerUnitMultiplier
       value: 1

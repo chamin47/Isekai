@@ -102,6 +102,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _text: {fileID: 2500423085195045758}
   _toggle: {fileID: 888227203731494722}
+  _backGround: {fileID: 3612305748460600432}
   _onImage: {fileID: 21300000, guid: 9b93eeab4e8b50e4283952b1954b95f0, type: 3}
   _offImage: {fileID: 21300000, guid: 80faa404ae0cfd24d8874e322501d92c, type: 3}
   index: 0
@@ -116,13 +117,14 @@ GameObject:
   - component: {fileID: 3500324843034794146}
   - component: {fileID: 1916421740692786178}
   - component: {fileID: 817271896629359930}
+  - component: {fileID: 6287172743290916983}
   m_Layer: 5
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3500324843034794146
 RectTransform:
   m_ObjectHideFlags: 0
@@ -181,6 +183,20 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &6287172743290916983
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3612305748460600432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 170f6719097fd9e498de177864ce45b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _clickDownSound: click_down
+  _clickUpSound: click_up
 --- !u!1 &5703067797891156142
 GameObject:
   m_ObjectHideFlags: 0

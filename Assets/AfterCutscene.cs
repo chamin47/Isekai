@@ -10,6 +10,6 @@ public class AfterCutscene : MonoBehaviour
     {
 		_playerController = FindObjectOfType<PlayerController>();
 		Managers.Resource.Instantiate("Item/TrigerEnter");
-		_playerController.isMoving = true;
+		_playerController.canMove = true;
 	}
 }

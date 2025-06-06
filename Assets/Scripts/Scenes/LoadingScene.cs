@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// µµ¼­°ü -> ÀÌ¼¼°è GameLoadingUI
-/// Çö½Ç¼¼°è -> µµ¼­°ü UI_Loading
+/// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ -> ï¿½Ì¼ï¿½ï¿½ï¿½ GameLoadingUI
+/// ï¿½ï¿½ï¿½Ç¼ï¿½ï¿½ï¿½ -> ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ UI_Loading
 /// </summary>
 public class LoadingScene : BaseScene
 {
@@ -21,7 +21,7 @@ public class LoadingScene : BaseScene
 
     private void ShowLodingUI()
     {
-        if(Managers.Scene.prevSceneType == Scene.GameScene)
+        if(Managers.Scene.prevSceneType != Scene.GameScene)
         {
             Managers.UI.ShowSceneUI<UI_Loading>();  
         }

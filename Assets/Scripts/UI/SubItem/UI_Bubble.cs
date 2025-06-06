@@ -21,12 +21,15 @@ public class UI_Bubble : UI_Base
     public event Action OnCollisionEvent;
 
     public float test;
-    public void Init(string text, int score)
+
+    public void Init(string text, int score, bool drop = true)
     {
         FixBubbleSize(text, score);
-        StartCoroutine(DropDown());
+        if(drop)
+            StartCoroutine(CoDropDown());
     }
 
+    [ContextMenu("Test Init")]
     private void FixBubbleSize(string text, int score)
     {
         _text.text = text;
@@ -52,7 +55,7 @@ public class UI_Bubble : UI_Base
     public float fadeOutTime = 1f;     // 서서히 사라지는 시간
     public float bounceDecrease = 0.6f; // 튕길 때마다 감소하는 높이
 
-    IEnumerator DropDown()
+    IEnumerator CoDropDown()
     {
         float elapsedTime = 0f;
         Vector3 startPos = transform.position;
@@ -123,6 +126,22 @@ public class UI_Bubble : UI_Base
 
         OnCollisionEvent?.Invoke();
         Destroy(gameObject); // 완전히 사라지면 오브젝트 삭제
+    }
+
+    public IEnumerator FadeOutImage()
+    {
+        float elapsedTime = 0f;
+        Color originalColor = _bubbleImage.color;
+        Color originalTextColor = _text.color;
+        while (elapsedTime < fadeOutTime)
+        {
+            elapsedTime += Time.deltaTime;
+            _bubbleImage.color = new Color(originalColor.r, originalColor.g, originalColor.b, 1 - (elapsedTime / fadeOutTime));
+            _text.color = new Color(originalTextColor.r, originalTextColor.g, originalTextColor.b, 1 - (elapsedTime / fadeOutTime));
+            yield return null;
+        }
+
+        Destroy(gameObject);
     }
 
     bool isFading = false;

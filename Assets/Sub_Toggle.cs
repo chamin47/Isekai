@@ -10,12 +10,14 @@ public class Sub_Toggle : UI_Base
 {
     [SerializeField] private TMP_Text _text;
     [SerializeField] private Toggle _toggle;
+    [SerializeField] private GameObject _backGround;
     [SerializeField] private Sprite _onImage;
     [SerializeField] private Sprite _offImage;
 
     public int index;
     public Toggle Toggle => _toggle;
     public TMP_Text Text => _text;
+    public GameObject BackGround => _backGround;
     public void Init(string text, int index)
     {
         this.index = index;

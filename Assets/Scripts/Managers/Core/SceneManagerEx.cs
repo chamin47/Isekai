@@ -13,6 +13,7 @@ public class SceneManagerEx
 		Managers.Clear();
 
 		prevSceneType = CurrentScene?.SceneType ?? Scene.Unknown;
+		Managers.DB.ResetPlayerData();
         SceneManager.LoadScene(GetSceneName(type));
 	}
 

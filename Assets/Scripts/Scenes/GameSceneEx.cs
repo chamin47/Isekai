@@ -45,13 +45,20 @@ public class GameSceneEx : BaseScene
     private WorldType _worldType;
     protected override void Init()
 	{
-		
-		SceneType = Scene.GameScene;
+        player.GetComponent<PlayerController>().canMove = true;
+
+        SceneType = Scene.GameScene;
 
         _worldType = Managers.World.CurrentWorldType;
 
 		Managers.Resource.Instantiate($"Background/{_worldType.ToString()}World");
         Managers.Happy.ChangeHappiness(20f);
+
+        if(Managers.Happy.Happiness < 40f && ( Managers.World.CurrentWorldType == WorldType.Pelmanus
+            || Managers.World.CurrentWorldType == WorldType.Gang))
+        {
+            Managers.Happy.Happiness = 40f;
+        }
 
         StartCoroutine(GameStart());
 	}

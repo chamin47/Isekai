@@ -32,9 +32,9 @@ public class UI_BookPopup : UI_Popup
 
 	public void ClosePopup()
 	{
+        _libraryScene.SetLightOn();
         _book.SetCanClicked();
 		_book.StartFingerBlink();
-        _libraryScene.SetLightOn();
         Managers.UI.ClosePopupUI(this);
 	}
 

@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
 {
 	private MovementRigidbody2D _movement;
 	private PlayerAnimator _playerAnimator;
-	public bool isMoving = false;
+	public bool canMove = false;
 
 	private string currentScene;
 
@@ -34,8 +34,12 @@ public class PlayerController : MonoBehaviour
 
 	private void Update()
 	{
+		if (_movement.IsKnockback)
+		{
+			return;
+		}
 
-		if (isMoving == true || currentScene != "IntroScene")
+		if (canMove == true)
 		{
 			float x = 0f;
 
@@ -69,10 +73,14 @@ public class PlayerController : MonoBehaviour
 				{
                     _footStepInterval = 0.56f;
                 }
-				else
+				else if(speed >= 1f)
 				{
                     _footStepInterval = 0.63f;
                 }
+				else
+				{
+					_footStepInterval = 0.63f + (1 - speed);
+				}
                 _footStepTimer += Time.deltaTime;
 
                 if (_footStepTimer >= _footStepInterval)
@@ -98,4 +106,10 @@ public class PlayerController : MonoBehaviour
 	{
 		_movement.MoveTo(x);
 	}
+
+	public void SetLook(float x)
+	{
+        _playerAnimator.SpriteFlipX(x);
+    }
+
 }

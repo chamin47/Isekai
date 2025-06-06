@@ -124,7 +124,8 @@ public class UI_MiniGame : UI_Popup
         _currentGaugeValue = _miniGameInfo.startGauge;
         _remainTime = _miniGameInfo.limitTime;
     }
-   
+
+    private int _hasConrurrentKey = 0;
     private void SetKeyPressButton()
     {
         if (_miniGameInfo.requiredKeys == null) return;
@@ -133,16 +134,16 @@ public class UI_MiniGame : UI_Popup
 
         int requiredKeyCount = _miniGameInfo.requiredKeyCount;
 
-        int hasConcurrentKey = 0;
+        _hasConrurrentKey = 0;
 
         // 동시 입력이 가능할 경우
         // 50% 확률로 2개의 키를 동시에 눌러야 하는 미니게임
         if (_miniGameInfo.canPressConcurrent)
         {
-            hasConcurrentKey = MakeConcurrenceButton(2, 2, 100f);
+            _hasConrurrentKey = MakeConcurrenceButton(2, 2, 100f);
         }
 
-        for (int i = 0; i < requiredKeyCount - hasConcurrentKey; i++)
+        for (int i = 0; i < requiredKeyCount - _hasConrurrentKey; i++)
         {
             // KeyButton 생성
             KeyButton keyButton = Managers.UI.MakeSubItem<KeyButton>(_keyBoardTransform, "KeyButton");
@@ -207,12 +208,29 @@ public class UI_MiniGame : UI_Popup
 
         float startX = -totalWidth / 2;
 
-        for (int i = 0; i < keyCount; i++)
+        if(_hasConrurrentKey == 1)
         {
-            float posX = startX + keyWidths[i] / 2;
-            _requiredKeys[i].transform.localPosition = new Vector3(posX, 0, 0);
-            startX += keyWidths[i] + _keyPositionGap;
+            float posX = startX + keyWidths[0] / 2 - 0.5f;
+            _requiredKeys[0].transform.localPosition = new Vector3(posX, 0, 0);
+            startX += keyWidths[0] + _keyPositionGap + 0.4f;
+
+            for (int i = 1; i < keyCount; i++)
+            {
+                float posX2 = startX + keyWidths[i] / 2;
+                _requiredKeys[i].transform.localPosition = new Vector3(posX2, 0, 0);
+                startX += keyWidths[i] + _keyPositionGap;
+            }
         }
+        else
+        {
+            for (int i = 0; i < keyCount; i++)
+            {
+                float posX = startX + keyWidths[i] / 2;
+                _requiredKeys[i].transform.localPosition = new Vector3(posX, 0, 0);
+                startX += keyWidths[i] + _keyPositionGap;
+            }
+        }
+
     }
     #endregion
 

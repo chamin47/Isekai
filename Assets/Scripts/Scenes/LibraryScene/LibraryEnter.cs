@@ -18,6 +18,10 @@ public class LibraryEnter : MonoBehaviour
 	// 트리거 충돌 시점의 플레이어 위치를 저장할 변수
 	private Vector3 triggerPlayerPosition;
 
+	[SerializeField] private GameObject _gauidLine;
+
+	private bool canUI = true;
+
 	private void Start()
 	{
 		mainCamera = Camera.main;
@@ -32,7 +36,14 @@ public class LibraryEnter : MonoBehaviour
 		{
 			Debug.LogError("메인 카메라를 찾을 수 없습니다!");
 		}
+    }
 
+    public void Update()
+    {
+        if(canUI && Input.GetKeyDown(KeyCode.M))
+		{
+            _gauidLine.SetActive(!_gauidLine.activeSelf);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -41,7 +52,7 @@ public class LibraryEnter : MonoBehaviour
 		{
 			// 트리거에 부딪힌 시점의 플레이어 위치 저장
 			triggerPlayerPosition = collision.transform.position;
-			playerController.isMoving = false;
+			playerController.canMove = false;
 			Debug.Log(triggerPlayerPosition);
 			StartCoroutine(HandleSceneTransition());
 		}
@@ -49,7 +60,10 @@ public class LibraryEnter : MonoBehaviour
 
 	private IEnumerator HandleSceneTransition()
 	{
-		if (timeline != null)
+		canUI = false;
+        _gauidLine.SetActive(false);
+
+        if (timeline != null)
 		{
 			timeline.Play();
 			while (timeline.state == PlayState.Playing)

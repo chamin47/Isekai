@@ -215,7 +215,7 @@ public static class Extension
             yield return CoFadeOut(text, blinkDuration / 2);
         }
     }
-    public static IEnumerator CoTypeEffect(this TMP_Text text, string message, float textSpeed, bool playSound = false, string soundKey = "")
+    public static IEnumerator CoTypingEffect(this TMP_Text text, string message, float textSpeed, bool playSound, string soundKey)
     {
         int typingCount = 0;
 
@@ -252,6 +252,9 @@ public static class Extension
 
 
 
+    /// <summary>
+    /// 알파값을 감소시킨다
+    /// </summary>
     public static IEnumerator CoFadeIn(this Graphic graphic, float fadeTime, float waitBefore = 0f, float waitAfter = 0f)
     {
         if (waitBefore > 0f) yield return WaitForSecondsCache.Get(waitBefore);
@@ -274,6 +277,10 @@ public static class Extension
 
         if (waitAfter > 0f) yield return WaitForSecondsCache.Get(waitAfter);
     }
+
+    /// <summary>
+    /// 알파값을 증가시킨다
+    /// </summary>
     public static IEnumerator CoFadeOut(this Graphic graphic, float fadeTime, float waitBefore = 0f, float waitAfter = 0f)
     {
         if (waitBefore > 0f) yield return WaitForSecondsCache.Get(waitBefore);

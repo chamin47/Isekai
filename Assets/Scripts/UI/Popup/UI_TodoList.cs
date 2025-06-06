@@ -29,32 +29,40 @@ public class UI_TodoList : MonoBehaviour
             {
                 if (isOn)
                 {
+                    go.Toggle.interactable = false;
                     StartCoroutine(OnToggleOn());
                 }
             });
             go.gameObject.SetActive(false);
         }
-        _toggles[0].gameObject.SetActive(true);
+
+        StartCoroutine(OnToggleOn());
     }
 
     private IEnumerator OnToggleOn()
     {
-        _toggles[index].Toggle.interactable = false;
-        yield return StartCoroutine(_toggles[index].Text.CoTypingEffect(_data.todoList[index], 0.1f));
+        yield return WaitForSecondsCache.Get(1f);
 
-        if(index == _toggles.Count - 1)
+        if (index == _toggles.Count)
         {
             _diaryText.gameObject.SetActive(true);
-            yield return new WaitForSeconds(1f);
+            yield return WaitForSecondsCache.Get(1f);
+            Managers.Sound.Play("writing", Sound.SubEffect);
             yield return StartCoroutine(_diaryText.CoTypeEffectWithRichText(_data.diary, 0.07f));
+            Managers.Sound.StopSubEffect();
 
-            yield return new WaitForSeconds(1f);
+            yield return WaitForSecondsCache.Get(1f);
             Managers.Scene.LoadScene(Scene.RealGameScene);
         }
         else
         {
-            _toggles[index + 1].gameObject.SetActive(true);
+            _toggles[index].gameObject.SetActive(true);
+            Managers.Sound.Play("keyboard_long", Sound.SubEffect);
+            yield return StartCoroutine(_toggles[index].Text.CoTypingEffect(_data.todoList[index], 0.07f));
+            Managers.Sound.StopSubEffect();
+            _toggles[index].BackGround.SetActive(true);
         }
         index++;
     }
+
 }
