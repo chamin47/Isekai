@@ -72,9 +72,10 @@ public class GiantController : MonoBehaviour
         _player.canMove = false;
         _player.SetLook(1);
 
+        Managers.Sound.Play("feet_3", Sound.Effect, time: 0.45f);
         _player.transform.DOJump(_playerEndingPosition.position, 2f, 1, 1f);
 
-        yield return WaitForSecondsCache.Get(2f); //¿·±Ò ¥Î±‚
+        yield return WaitForSecondsCache.Get(3f); //¿·±Ò ¥Î±‚
 
         List<UI_Bubble> bubbles = new List<UI_Bubble>();
         for (int i = 0; i < dialogues.Count; i++)
@@ -87,7 +88,8 @@ public class GiantController : MonoBehaviour
             ui.Init(dialogues[i], 0, false);
             ui.transform.DOMoveY(endPos.y, _bubbleDropDuration)
                 .SetEase(Ease.Linear).OnComplete(() =>
-                {   
+                {
+                    Managers.Sound.Play("s1_say_impact3", Sound.Effect);
                     _player.GetComponent<PlayerEmotion>().Frusted(i);
                     Camera.main.GetComponent<CameraShake>().Shake();
                     
@@ -194,7 +196,8 @@ public class GiantController : MonoBehaviour
         if (collision.collider.CompareTag("Player"))
         {
             Debug.Log("Player collided with Giant");
-            collision.collider.GetComponent<MovementRigidbody2D>().Knockback(Vector2.left, 10f, 0.3f);
+            Managers.Sound.Play("feet_3", Sound.Effect, time : 0.45f);
+            collision.collider.GetComponent<MovementRigidbody2D>().Knockback(Vector2.left, 20f, 0.3f);
         }
     }
 

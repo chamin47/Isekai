@@ -199,15 +199,15 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3575847712366361140, guid: 629db1c141cd42149a3e36fca4322e3c, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4310730920543817383, guid: 629db1c141cd42149a3e36fca4322e3c, type: 3}
       propertyPath: m_Name
       value: UI_GameLoading
       objectReference: {fileID: 0}
     - target: {fileID: 4310730920543817383, guid: 629db1c141cd42149a3e36fca4322e3c, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5714470127323889096, guid: 629db1c141cd42149a3e36fca4322e3c, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -298,30 +298,8 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 5602008814069302889, guid: 629db1c141cd42149a3e36fca4322e3c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1593134430}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 629db1c141cd42149a3e36fca4322e3c, type: 3}
---- !u!1 &1593134428 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5602008814069302889, guid: 629db1c141cd42149a3e36fca4322e3c, type: 3}
-  m_PrefabInstance: {fileID: 1097091286}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1593134430
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1593134428}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 170f6719097fd9e498de177864ce45b5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _clickDownSound: click_down
-  _clickUpSound: click_up
 --- !u!1 &1922677941
 GameObject:
   m_ObjectHideFlags: 0
@@ -475,7 +453,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &2095639482
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -601,7 +579,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6473410523208493354, guid: ffde50a80e2157546b60ffa0720cef56, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

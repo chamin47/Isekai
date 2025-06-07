@@ -76,6 +76,7 @@ public class UI_NoticePopup : UI_Popup
     {
         if (!isOn) return;
 
+        _checkToggle.interactable = false;
         // 각 월드 타입별 처리를 하위 클래스에서 구현
         ProcessWorldInteraction();
     }

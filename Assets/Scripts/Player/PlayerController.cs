@@ -113,4 +113,9 @@ public class PlayerController : MonoBehaviour
 	{
 		return _movement.Velocity.x;
 	}
+
+    private void OnDisable()
+    {
+		UpdateMove(0);
+    }
 }

@@ -75,9 +75,9 @@ public class UI_Loading : UI_Scene
     private IEnumerator DefaultLoadingSequence()
     {
         SetLoadingTexts();
-        yield return FillProgressBar(0.8f, 2f);
-        yield return FillProgressBar(1f, 2f);
-        yield return StartCoroutine(_fadeImage.CoFadeOut(_fadeTime));
+        yield return FillProgressBar(0.8f, 3f);
+        yield return FillProgressBar(1f, 3f);
+        yield return StartCoroutine(_fadeImage.CoFadeOut(_fadeTime, 1f));
     }
 
     private IEnumerator PelmanusLoadingSequence()
@@ -104,18 +104,20 @@ public class UI_Loading : UI_Scene
         //        2초 유지 후, 글리치로 화면 트렌지션
 
         _tipText.gameObject.SetActive(false);
-        yield return FillProgressBar(1f, 2f);
-        yield return WaitForSecondsCache.Get(1f);
+        yield return FillProgressBar(1f, 3f);
+        yield return WaitForSecondsCache.Get(2f);
         _tipText.gameObject.SetActive(true);
         yield return StartCoroutine(_tipText.CoTypingEffect(_loadingSceneData.tip, 0.3f));
         yield return WaitForSecondsCache.Get(2f);
-
-        // 글리치 화면 트랜잭션
     }
 
     private IEnumerator FillProgressBar(float target, float duration)
     {
         yield return StartCoroutine(_progressBar.CoFillImage(target, duration));
+        if(target == 1f)
+        {
+            Managers.Sound.Play("loading_100", Sound.Effect);
+        }
     }
 
     private void SetLoadingTexts()

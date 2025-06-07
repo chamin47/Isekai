@@ -16,8 +16,6 @@ public class GangRealWorld : MonoBehaviour
     [SerializeField] private GiantController _giant;
     public void Start()
     {
-        Managers.Sound.Play("bgm_real_world", Sound.Bgm);
-
         _player.canMove = false;
         Managers.Happy.Happiness = 50f;
 
@@ -35,4 +33,13 @@ public class GangRealWorld : MonoBehaviour
         _giant.ChangeState(GiantController.GiantState.Walk);
     }
 
+    public void PlaySubBgm()
+    {
+        Managers.Sound.Play("cinematic_boom", Sound.Effect, 0.2f);
+    }
+
+    public void StartSoundEffect()
+    {
+        Managers.Sound.Play("riser", Sound.Effect);
+    }
 }

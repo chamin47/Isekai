@@ -210,9 +210,9 @@ public class UI_MiniGame : UI_Popup
 
         if(_hasConrurrentKey == 1)
         {
-            float posX = startX + keyWidths[0] / 2 - 0.5f;
+            float posX = startX + keyWidths[0] / 2 - 0.3f;
             _requiredKeys[0].transform.localPosition = new Vector3(posX, 0, 0);
-            startX += keyWidths[0] + _keyPositionGap + 0.4f;
+            startX += keyWidths[0] + _keyPositionGap + 0.2f;
 
             for (int i = 1; i < keyCount; i++)
             {

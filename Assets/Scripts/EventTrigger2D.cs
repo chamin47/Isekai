@@ -33,6 +33,11 @@ public class EventTrigger2D : MonoBehaviour
 			_bubbleB.SetDialogUnit(_dialogUnitB);
 			scene.HandlePageTrigger(_dialogUnitA, _dialogUnitB);
 		}
+		else if(this.gameObject.name == "Page08Trigger")
+		{
+			_bubbleA.gameObject.GetComponent<Collider2D>().enabled = false;
+			_bubbleA.SetDialogUnit(_dialogUnitA);
+        }
 		else
 		{
 			_bubbleA.SetDialogUnit(_dialogUnitA);

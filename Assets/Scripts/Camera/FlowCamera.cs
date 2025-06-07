@@ -19,6 +19,7 @@ public class FlowCamera : MonoBehaviour
 
     public void StopFlow()
     {
+        Debug.Log("FlowCamera StopFlow");
         canMove = false;
     }
 

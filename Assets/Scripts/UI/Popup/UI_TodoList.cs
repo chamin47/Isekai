@@ -16,6 +16,7 @@ public class UI_TodoList : MonoBehaviour
     [SerializeField] private TMP_Text _diaryText;
 
     [SerializeField] private List<Sub_Toggle> _toggles = new List<Sub_Toggle>();
+    [SerializeField] private Image _fadeImage;
     int index = 0;
     public void Init(LoadingGameSceneData data)
     {
@@ -52,6 +53,8 @@ public class UI_TodoList : MonoBehaviour
             Managers.Sound.StopSubEffect();
 
             yield return WaitForSecondsCache.Get(1f);
+            Managers.Sound.Play("s2_book1", Sound.Effect);
+            yield return StartCoroutine(_fadeImage.CoFadeOut(2f));
             Managers.Scene.LoadScene(Scene.RealGameScene);
         }
         else

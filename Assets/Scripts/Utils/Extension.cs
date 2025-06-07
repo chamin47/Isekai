@@ -223,13 +223,35 @@ public static class Extension
         foreach (char c in message)
         {
             text.text += c;
-            if (playSound && (c != ' ' || c != '\n'))
+            if (playSound && (c != ' ' && c != '\n'))
             {
                 typingCount += 1;
                 if (typingCount % 2 == 0)
                 {
                     Managers.Sound.Play(soundKey, Sound.Effect);
                 }
+            }
+            yield return WaitForSecondsCache.Get(textSpeed); // 타자 치는 속도 조절 가능
+        }
+    }
+
+    public static IEnumerator CoTypingEffectPerChar(this TMP_Text text, string message, float textSpeed, bool playSound, string soundKey, bool spaceSkip = false, bool resetText = true)
+    {
+        int typingCount = 0;
+        if(resetText)
+            text.text = "";
+        foreach (char c in message)
+        {
+            text.text += c;
+            if (playSound && (c != ' ' && c != '\n'))
+            {
+                typingCount += 1;
+                Managers.Sound.Play(soundKey, Sound.Effect);
+                
+            }
+            if (spaceSkip && c == ' ')
+            {
+                continue;
             }
             yield return WaitForSecondsCache.Get(textSpeed); // 타자 치는 속도 조절 가능
         }

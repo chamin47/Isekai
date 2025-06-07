@@ -31,6 +31,12 @@ public class UI_BubbleTest: MonoBehaviour
 		_rectTransformPosition.position = worldPosition + Vector3.up * 1.0f + Vector3.right * 0.2f;
 	}
 
+	public IEnumerator ShowText(float speed)
+	{
+        _canvasGroup.alpha = 1;
+        yield return StartCoroutine(_text.CoTypingEffect(_dialogUnit.dialogs[0], speed, true));
+    }
+
 	public void SetDialogUnit(DialogUnit unit)
 	{
 		_dialogUnit = unit;
@@ -41,6 +47,11 @@ public class UI_BubbleTest: MonoBehaviour
 			_rectTransformSize.sizeDelta = unit.bubbleSize;
 		}
 	}
+
+	public IEnumerator FadeAll(float time)
+	{
+        yield return StartCoroutine(CoFadeOut(2f));
+    }
 
 	private void TriggerDialog()
 	{
@@ -97,13 +108,13 @@ public class UI_BubbleTest: MonoBehaviour
 		StartCoroutine(CoFadeOut());
 	}
 
-	private IEnumerator CoFadeOut()
+	private IEnumerator CoFadeOut(float time = 1f)
 	{
 		float t = 1f;
 		while (t > 0f)
 		{
-			t -= Time.deltaTime;
-			_canvasGroup.alpha = t;
+			t -= Time.deltaTime / time;
+            _canvasGroup.alpha = t;
 			yield return null;
 		}
 

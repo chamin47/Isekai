@@ -55,8 +55,7 @@ public class LibraryScene : BaseScene
         }
 
         _startTimeLine.stopped += OnStartTimeLineEnd;
-        _endTimeLine.stopped += OnEndTimeLineEnd;
-
+        _endTimeLine.stopped += OnEndTimeLineEnd;        
         _volume.profile.TryGet(out _colorAdjustments);
 
         StartCoroutine(TempFakeFootSound());

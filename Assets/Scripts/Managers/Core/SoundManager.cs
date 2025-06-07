@@ -152,7 +152,7 @@ public class SoundManager
         });
     }
 
-    public void Play(string key, Sound type, float volume = 1f, float pitch = 1.0f)
+    public AudioSource Play(string key, Sound type, float volume = 1f, float pitch = 1.0f, float time = 0f)
     {
         AudioSource audioSource = null;
 
@@ -165,6 +165,9 @@ public class SoundManager
                     audioSource.Stop();
 
                 audioSource.clip = audioClip;
+                audioSource.volume = volume;
+                audioSource.pitch = pitch;
+                audioSource.time = time;
                 audioSource.Play();
             });
         }
@@ -182,14 +185,25 @@ public class SoundManager
             if (audioSource == null)
             {
                 Debug.Log("모든 효과음 소스가 사용중입니다.");
-                return;
+                return null;
             }
 
             LoadAudioClip(key, (audioClip) =>
             {
                 audioSource.pitch = pitch;
-                audioSource.volume = 1.0f;
-                audioSource.PlayOneShot(audioClip, volume);
+                audioSource.volume = volume;
+                audioSource.time = time;
+                audioSource.loop = false;
+                if(time > 0f)
+                {
+                    audioSource.clip = audioClip;
+                    audioSource.Play();
+                    return;
+                }
+                else
+                {
+                    audioSource.PlayOneShot(audioClip, volume);
+                }
             });
         }
         else if (type == Sound.SubEffect)
@@ -201,6 +215,8 @@ public class SoundManager
                 audioSource.Play();
             });
         }
+
+        return audioSource;
     }
     public IEnumerator ChangeEffectVolume(float start, float target, float duration)
     {
@@ -265,6 +281,22 @@ public class SoundManager
         _bgmAudio.volume = 1f;
     }
 
+    public void PauseBGM()
+    {
+        if (_bgmAudio.clip != null)
+        {
+            _bgmAudio.Pause();
+        }
+    }
+
+    public void UnPauseBGM()
+    {
+        if (_bgmAudio.clip != null)
+        {
+            _bgmAudio.UnPause();
+        }
+    }
+
     public void StopBGM()
     {
         _bgmAudio.Stop();
@@ -305,6 +337,11 @@ public class SoundManager
         }
 
         audioClip = Managers.Resource.Load<AudioClip>($"Sounds/{key}");
+
+        if(audioClip == null)
+        {
+            Debug.LogError($"AudioClip not found: {key}");
+        }
 
         if (!_audioClips.ContainsKey(key))
             _audioClips.Add(key, audioClip);

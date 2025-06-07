@@ -151,7 +151,8 @@ public class UI_PelmanusNoticePopup : UI_NoticePopup
         _fadeImage.color = new Color(0, 0, 0, 1);
         yield return WaitForSecondsCache.Get(2f);
 
-        yield return StartCoroutine(_warningText.CoTypingEffect("거기서 당장 나와", 0.5f, true));
+        yield return StartCoroutine(_warningText.CoTypingEffectPerChar("거기서 당장 나", 0.5f, true, "getout_short",true));
+        yield return StartCoroutine(_warningText.CoTypingEffectPerChar("와!", 0.5f, true, "getout_long", true, false));
         yield return WaitForSecondsCache.Get(2f);
 
         Managers.Scene.LoadScene(Scene.GameScene);

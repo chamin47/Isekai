@@ -23,8 +23,10 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 560ad52cc2ea3024dbe7cfdd5ea1b5f5, type: 3}
   - name: "\uCC28\uC740\uC720\uC758 \uC138\uACC4"
     worldType: 1
-    tip: "\uD574\uCE58\uC6B0\uACE0 \uD589\uBCF5\uD574\uC838 \uBD10\uC694."
-    backgroundImage: {fileID: 21300000, guid: 9dce1a77071353c4992c7e3c0dc2aaa3, type: 3}
+    tip: "\uB354 \uAE4A\uC740 \uC774\uC138\uACC4\uB85C \uB4E4\uC5B4\uC654\uAD70\uC694.
+      \uADF8\uB9CC\uD07C \uB09C\uC774\uB3C4 \uC0C1\uC2B9! \uC9D1\uC911\uD574\uC11C
+      \uB3C4\uC804\uD574\uBCF4\uC138\uC694~"
+    backgroundImage: {fileID: 21300000, guid: ba8689d3f4704c94993d9f00710b480a, type: 3}
     subImages: []
   - name: "\uAC31\uADF8\uB9B4\uC758 \uC138\uACC4"
     worldType: 2

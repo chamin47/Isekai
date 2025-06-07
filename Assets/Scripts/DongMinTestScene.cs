@@ -1,3 +1,5 @@
+using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,29 +11,100 @@ public class DongMinTestScene : BaseScene
 	[SerializeField] private PlayableDirector _timeline;
 	[SerializeField] private PlayableDirector _enterTimeline;
 	[SerializeField] private Transform _player;
-	[SerializeField] private Image _fadeImage;
+	[SerializeField] private SpriteRenderer _fadeImage;
 	[SerializeField] private TMPro.TMP_Text _warningText;
 	[SerializeField] private List<EventTrigger2D> _pageTriggers;
 	[SerializeField] private UI_BubbleTest _bubbleA;
 	[SerializeField] private UI_BubbleTest _bubbleB;
 	[SerializeField] private PlayerController _playerController;
-
-	private void Awake()
+	[SerializeField] private CameraStopCollider _cameraStopCollider;
+	[SerializeField] private DialogUnit _endingUnit;
+	[SerializeField] private Transform _playerTargetPosition;
+	[SerializeField] private Animator _playerAnimator;
+    private void Awake()
 	{
 		_bubbleA.OnDialogTriggered += HandleFadeOutCharacter;
 		_bubbleB.OnDialogTriggered += HandleFadeOutCharacter;
-	}
+		_cameraStopCollider.OnCameraStopped += OnCameraStop;
+
+    }
 
 	private void OnDestroy()
 	{
 		_bubbleA.OnDialogTriggered -= HandleFadeOutCharacter;
 		_bubbleB.OnDialogTriggered -= HandleFadeOutCharacter;
-	}
+        _cameraStopCollider.OnCameraStopped -= OnCameraStop;
+    }
 
-	private IEnumerator Start()
+	bool isEndingScene = false;
+	private void OnCameraStop()
 	{
-		_playerController.isMoving = true;
-		Managers.Sound.Play("realWorldBgm", Sound.Bgm);
+        if (isEndingScene)
+            return;
+
+        isEndingScene = true;
+
+        _bubbleA.gameObject.GetComponent<Collider2D>().enabled = false;
+        _bubbleA.SetDialogUnit(_endingUnit);
+        StartCoroutine(EndingSequence());
+    }
+
+    private IEnumerator EndingSequence()
+    {
+		_playerController.canMove = false;
+		_playerController.SetLook(1);
+		_playerController.enabled = false;
+        bool isMoveEnd = false;
+        _playerAnimator.SetFloat("Speed", 1f);
+        _playerController.transform.DOMoveX(_playerTargetPosition.position.x, 2f).SetEase(Ease.Linear).OnComplete(() => { isMoveEnd = true; });
+		Coroutine coroutine = StartCoroutine(PlayFootsteps(2f));
+        while (!isMoveEnd)
+		{
+            yield return null;
+        }
+        StopCoroutine(coroutine);
+        _playerAnimator.SetFloat("Speed", 0f);
+
+		yield return WaitForSecondsCache.Get(2f);
+		_bubbleA.SetPosition(_endingUnit.characterObject.transform.position);
+        yield return StartCoroutine(_bubbleA.ShowText(0.5f));
+		
+		StartCoroutine(CoFadeOutCharacter(_endingUnit.characterObject, 2f));
+        yield return StartCoroutine(_bubbleA.FadeAll(2f));
+
+        yield return StartCoroutine(FadeToBlack());
+
+        _playerAnimator.SetFloat("Speed", 1f);
+        coroutine = StartCoroutine(PlayFootsteps(3f));
+        _playerController.transform.DOMoveX(_playerController.transform.position.x + 12f, 4f).SetEase(Ease.Linear).OnComplete(() => { isMoveEnd = true; });
+
+        while (!isMoveEnd)
+        {
+            yield return null;
+        }
+        StopCoroutine(coroutine);
+        _playerAnimator.SetFloat("Speed", 0f);
+
+        Managers.World.MoveNextWorld();
+        Managers.Scene.LoadScene(Scene.LibraryScene);
+    }
+
+    private IEnumerator PlayFootsteps(float duration)
+    {
+        float timer = 0f;
+        float interval = 0.7f; // 발소리 간격
+        while (timer < duration)
+        {
+            Managers.Sound.Play("all_s_walk2", Sound.Effect);
+            yield return new WaitForSeconds(interval);
+            timer += interval;
+        }
+    }
+
+    private IEnumerator Start()
+	{
+		_playerController.canMove = true;
+		//Managers.Sound.Play("realWorldBgm", Sound.Bgm);
 		yield return PlayEnterTimeline();
 
 		yield return new WaitForSeconds(0.3f);
@@ -125,7 +198,7 @@ public class DongMinTestScene : BaseScene
 	{
 		float t = 0f;
 		Color color = _fadeImage.color;
-		while (t < 1f)
+		while (t < 2f)
 		{
 			t += Time.deltaTime;
 			color.a = Mathf.Lerp(0, 1, t);

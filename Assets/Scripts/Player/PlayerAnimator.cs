@@ -10,8 +10,7 @@ public class PlayerAnimator : MonoBehaviour
 	{
 		_animator = GetComponent<Animator>();
 		_movement = GetComponentInParent<MovementRigidbody2D>();
-        _spriteRenderer = GetComponent<SpriteRenderer>();
-
+        _spriteRenderer = GetComponent<SpriteRenderer>();		
     }
 
 	public void UpdateAnimation(float x)

@@ -51,7 +51,7 @@ public class GameSceneEx : BaseScene
 
         _worldType = Managers.World.CurrentWorldType;
 
-		Managers.Resource.Instantiate($"Background/{_worldType.ToString()}World");
+        Managers.Resource.Instantiate($"Background/{_worldType.ToString()}World");
         Managers.Happy.ChangeHappiness(20f);
 
         if(Managers.Happy.Happiness < 40f && ( Managers.World.CurrentWorldType == WorldType.Pelmanus
@@ -68,7 +68,24 @@ public class GameSceneEx : BaseScene
         yield return StartCoroutine(_fadeImage.CoFadeIn(_fadeTime, waitAfter : _waitTimeAfterFade));
 
         // 배경음악 재생
-        Managers.Sound.Play("anotherWorldBgm", Sound.Bgm);
+        switch (_worldType)
+        {
+            case WorldType.Vinter:
+                Managers.Sound.Play("bgm_isekai_world_bin", Sound.Bgm);
+                break;
+            case WorldType.Chaumm:
+                Managers.Sound.Play("bgm_isekai_world_choi", Sound.Bgm);
+                break;
+            case WorldType.Gang:
+                Managers.Sound.Play("bgm_isekai_world_gang", Sound.Bgm);
+                break;
+            case WorldType.Pelmanus:
+                Managers.Sound.Play("bgm_isekai_world_pel", Sound.Bgm);
+                break;
+            default:
+                Managers.Sound.Play("bgm_isekai_world_bin", Sound.Bgm);
+                break;
+        }
 
         // 미니게임 생성
         _miniGameFactory.Init();
