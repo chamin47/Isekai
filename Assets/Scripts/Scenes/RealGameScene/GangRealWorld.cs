@@ -14,8 +14,9 @@ public class GangRealWorld : MonoBehaviour
     [SerializeField] private PlayableDirector _startTimeLine;
     [SerializeField] private PlayerController _player;
     [SerializeField] private GiantController _giant;
-    public void Start()
+    public IEnumerator Start()
     {
+        yield return _fadeImage.CoFadeIn(2f);
         _player.canMove = false;
         Managers.Happy.Happiness = 50f;
 
