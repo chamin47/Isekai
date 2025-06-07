@@ -60,23 +60,23 @@ public class PlayerController : MonoBehaviour
 
 				if (speed >= 7f)
 				{
-					_footStepInterval = 0.3f;
+					_footStepInterval = 0.33f;
 				}
 				else if (speed >= 5f)
 				{
-					_footStepInterval = 0.45f;
+					_footStepInterval = 0.48f;
 				}
 				else if (speed >= 3f)
 				{
-                    _footStepInterval = 0.56f;
+                    _footStepInterval = 0.59f;
                 }
 				else if(speed >= 1f)
 				{
-                    _footStepInterval = 0.63f;
+                    _footStepInterval = 0.66f;
                 }
 				else
 				{
-					_footStepInterval = 0.63f + (1 - speed);
+					_footStepInterval = 0.66f + (1 - speed);
 				}
                 _footStepTimer += Time.deltaTime;
 
