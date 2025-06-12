@@ -14,7 +14,7 @@ public class VinterRealWorld : MonoBehaviour
     [SerializeField] private Transform _player;
     [SerializeField] private Image _fadeImage;
     [SerializeField] private TMPro.TMP_Text _warningText;
-
+    [SerializeField] private GameObject _diary;
     private IEnumerator Start()
     {
         yield return PlayEnterTimeline();
@@ -81,6 +81,7 @@ public class VinterRealWorld : MonoBehaviour
         PlayerController playerController = _player.GetComponent<PlayerController>();
         playerController.canMove = false;
 
+        _diary.SetActive(false);
         StartCoroutine(CoWaitAndStart());
     }
 
