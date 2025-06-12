@@ -21,7 +21,9 @@ public class VinterRealWorld : MonoBehaviour
 
         yield return WaitForSecondsCache.Get(0.3f);
 
-        yield return _warningText.CoBlinkText(3, 0.5f);
+        _warningText.gameObject.SetActive(true);
+        yield return _warningText.CoBlinkText(3, 0.5f, "warning");
+        _warningText.gameObject.SetActive(false);
 
         yield return WaitForSecondsCache.Get(0.5f);
         // 게임시작

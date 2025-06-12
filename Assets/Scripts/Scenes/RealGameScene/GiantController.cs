@@ -2,7 +2,9 @@ using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GiantController : MonoBehaviour
 {
@@ -67,6 +69,24 @@ public class GiantController : MonoBehaviour
     [SerializeField] private float _bubbleDropDuration = 0.4f;
     [SerializeField] private float _bubbleSize = 1.22f;
     [SerializeField] private Transform _playerEndingPosition;
+
+    [SerializeField] private List<CanvasGroup> _bubbles;
+    private List<string> _buubleDialogue = new List<string>()
+    {
+        "이 세계는 나를 버렸어",
+        "그치만 그곳에선 나를 필요로 했다고.",
+        "이젠 없으면 안 돼.",
+        "난 거기 있어야만 해."
+    };
+    [SerializeField] private List<TextMeshProUGUI> _bubbleTexts;
+
+    [SerializeField] private Image _fadeImage;
+
+    private List<float> intervals = new List<float>()
+    {
+        0, 0, 0.1f, 0.4f, 0.1f
+    };
+
     private IEnumerator AttackSequnce()
     {
         _player.canMove = false;
@@ -78,11 +98,15 @@ public class GiantController : MonoBehaviour
         yield return WaitForSecondsCache.Get(3f); //잠깐 대기
 
         List<UI_Bubble> bubbles = new List<UI_Bubble>();
+        float culmu = 0f;
         for (int i = 0; i < dialogues.Count; i++)
         {
-            Vector3 startPos = _player.transform.position + Vector3.up * _bubbleDropHeight;
-            Vector3 endPos = _player.transform.position + Vector3.up * (2.5f - i * 0.1f + i * _bubbleSize); // 머리 위 기본 높이
+            float interval = intervals[i];
 
+            Vector3 startPos = _player.transform.position + Vector3.up * _bubbleDropHeight;
+            Vector3 endPos = _player.transform.position + Vector3.up * (2.5f - i * 0.1f + i * _bubbleSize - culmu); // 머리 위 기본 높이
+
+            culmu += interval;
             UI_Bubble ui = Managers.UI.MakeSubItem<UI_Bubble>();
             ui.transform.position = startPos;
             ui.Init(dialogues[i], 0, false);
@@ -99,8 +123,9 @@ public class GiantController : MonoBehaviour
 
                         float pos = bubbles[j].transform.position.y;
                         Sequence seq = DOTween.Sequence();
-                        seq.Append(bubbles[j].transform.DOMoveY(pos - 0.3f, 0.05f).SetEase(Ease.InCubic));
-                        seq.Append(bubbles[j].transform.DOMoveY(pos - 0.1f, 0.05f).SetEase(Ease.OutBounce));
+                        Debug.Log(interval);
+                        seq.Append(bubbles[j].transform.DOMoveY(pos - (0.3f + interval), 0.05f).SetEase(Ease.InCubic));
+                        seq.Append(bubbles[j].transform.DOMoveY(pos - (0.1f + interval), 0.05f).SetEase(Ease.OutBounce));
                     }
                 }
             );
@@ -115,8 +140,26 @@ public class GiantController : MonoBehaviour
 
         StartCoroutine(Managers.Sound.FadeOutBGM(2f));
 
-        yield return WaitForSecondsCache.Get(3f);
+        bool isMoveEnd = false;
+        Camera.main.transform.DOMoveX(_playerEndingPosition.position.x, 1.7f).SetEase(Ease.Linear)
+            .OnComplete(() => isMoveEnd = true);
 
+        while (!isMoveEnd)
+        {
+            yield return null;
+        }
+
+        yield return WaitForSecondsCache.Get(1f);
+
+        for(int i = 0; i < _bubbles.Count; i++)
+        {
+            _bubbles[i].gameObject.SetActive(true);
+            yield return _bubbleTexts[i].CoTypingEffect(_buubleDialogue[i], 0.1f, true, "intro_type_short");
+            yield return WaitForSecondsCache.Get(1f);
+        }
+
+        yield return WaitForSecondsCache.Get(2f);
+        yield return _fadeImage.CoFadeOut(2f);
         Managers.World.MoveNextWorld();
 
         Managers.Scene.LoadScene(Scene.LibraryScene);
@@ -197,6 +240,7 @@ public class GiantController : MonoBehaviour
         {
             Debug.Log("Player collided with Giant");
             Managers.Sound.Play("feet_3", Sound.Effect, time : 0.45f);
+            Managers.Happy.ChangeHappiness(-3);
             collision.collider.GetComponent<MovementRigidbody2D>().Knockback(Vector2.left, 20f, 0.3f);
         }
     }

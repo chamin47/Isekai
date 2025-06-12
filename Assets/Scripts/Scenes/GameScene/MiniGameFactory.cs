@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -66,6 +67,8 @@ public class MiniGameFactory : MonoBehaviour
     private int successCount = 0;
     private bool _isFirstMiniGame = true;
 
+    private int _dialogIndexIter = 0;
+    private List<int> _randomDialogueIndex = new List<int>();
     public void Init()
     {
         // 월드 데이터 가져오기
@@ -80,7 +83,17 @@ public class MiniGameFactory : MonoBehaviour
         // 말풍선 위치 탐지 작업
         _gridSystem.Init(_target);
 
+        int dialogueCount = _worldInfo.dialog.Count;
+        //0 ~ dialogueCount - 1 까지의 인덱스 생성
+        _randomDialogueIndex = Enumerable.Range(0, dialogueCount).ToList();
+        ShuffleDialogueIndex();
+
         StartCoroutine(CreateMiniGame());
+    }
+
+    public void ShuffleDialogueIndex()
+    {
+        _randomDialogueIndex.Shuffle();
     }
     public bool IsBubbleEmpty
     {
@@ -119,10 +132,12 @@ public class MiniGameFactory : MonoBehaviour
                     Managers.Sound.Play("exclamation_mark", Sound.Effect);
                 }
             }
-            else if (_rightExclamation.activeInHierarchy == false)
+            
+            if (_rightExclamation.activeInHierarchy == false)
             {
                 if (isRight)
                 {
+                    Debug.Log("오른쪽에 미니게임이 있습니다.");
                     Managers.Sound.Play("exclamation_mark", Sound.Effect);
                 }
             }
@@ -171,7 +186,17 @@ public class MiniGameFactory : MonoBehaviour
             isLeft = isLeftSide
         };
 
-        MiniGameInfo miniGameInfo = _worldInfo.GetRandomMiniGameInfo();
+        int dialogueIndex = _randomDialogueIndex[_dialogIndexIter];
+        _dialogIndexIter++;
+
+        if (_dialogIndexIter >= _randomDialogueIndex.Count)
+        {
+            _dialogIndexIter = 0;
+            ShuffleDialogueIndex();
+        }
+
+        MiniGameInfo miniGameInfo = _worldInfo.GetRandomMiniGameInfo(dialogueIndex);
+        Debug.Log("dialogueIndex : " + dialogueIndex + ", dialog : " + miniGameInfo.dialog);
 
         UI_MiniGame miniGame = Instantiate(_miniGame, spawnInfo.position, Quaternion.identity);
         _miniGameQueue.Enqueue(miniGame);

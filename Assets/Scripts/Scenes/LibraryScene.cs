@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.UI;
 
 /// <summary>
 /// 도서관 씬 상의 책 관리
@@ -25,9 +26,10 @@ public class LibraryScene : BaseScene
     public event Action onEndTimeLineEnd;
 
     [Header("Background")]
-    [SerializeField] private MeshRenderer _background;
+    [SerializeField] private MeshRenderer[] _backgrounds;
     [SerializeField] private Material _lightOn;
     [SerializeField] private Material _lightOff;
+    public Image fadeImage; 
 
     [Header("PostProcessing")]
     [SerializeField] private Volume _volume;
@@ -121,13 +123,19 @@ public class LibraryScene : BaseScene
     #region BackgroundMethod
     public void SetLightOn()
     {
-        _background.material = _lightOn;
+        foreach (var _background in _backgrounds)
+        {
+            _background.material = _lightOn;
+        }
         EnableBookSelect();
     }
 
     public void SetLightOff()
     {
-        _background.material = _lightOff;
+        foreach (var _background in _backgrounds)
+        {
+            _background.material = _lightOff;
+        }
         DisableBookSelect();
     }
     #endregion

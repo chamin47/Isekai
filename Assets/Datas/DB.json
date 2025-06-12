@@ -5,14 +5,14 @@
             "worldType": 0,
             "tip": "이세계 안에서는 당신을 칭찬하는 말들로 가득해요!",
             "backgroundImage": {
-                "instanceID": 31390
+                "instanceID": 29594
             },
             "subImages": [
                 {
-                    "instanceID": 31376
+                    "instanceID": 29580
                 },
                 {
-                    "instanceID": 31682
+                    "instanceID": 33618
                 }
             ]
         },
@@ -21,16 +21,16 @@
             "worldType": 1,
             "tip": "더 깊은 이세계로 들어왔군요. 그만큼 난이도 상승! 집중해서 도전해보세요~",
             "backgroundImage": {
-                "instanceID": 31684
+                "instanceID": 33620
             },
             "subImages": []
         },
         {
             "name": "갱그릴의 세계",
             "worldType": 2,
-            "tip": "지금은 0년 0월 0일입니다.",
+            "tip": "행복만을 추구한 결과, 감정 민감 범위가 축소되었습니다",
             "backgroundImage": {
-                "instanceID": 31686
+                "instanceID": 33622
             },
             "subImages": []
         },
@@ -101,9 +101,9 @@
                 -20
             ],
             "limitTime": [
-                6,
-                6,
-                6
+                100,
+                100,
+                100
             ],
             "dialog": [
                 "역시 명문 가문의 품격을 갖춘 완벽한 인물이셔!",
@@ -155,9 +155,9 @@
                 -20
             ],
             "limitTime": [
-                8,
-                8,
-                8
+                100,
+                100,
+                100
             ],
             "dialog": [
                 "왜 아직 너를 위한 나라가 없는거야!!",
@@ -206,14 +206,14 @@
                 40
             ],
             "perDecreaseGauge": [
-                -7,
-                -7,
-                -7
+                -3,
+                -3,
+                -3
             ],
             "perIncreaseGauge": [
-                6,
-                6,
-                6
+                10,
+                10,
+                10
             ],
             "succedGauge": [
                 10,
@@ -221,9 +221,9 @@
                 10
             ],
             "failGauge": [
-                -10,
-                -10,
-                -10
+                -5,
+                -5,
+                -5
             ],
             "runGauge": [
                 0,
@@ -231,9 +231,9 @@
                 -10
             ],
             "limitTime": [
-                9,
-                9,
-                9
+                100,
+                100,
+                100
             ],
             "dialog": [
                 "너의 지혜와 재치는 그 누구도 따라올 수 없을 거야!",
@@ -287,14 +287,14 @@
                 40
             ],
             "perDecreaseGauge": [
-                -6,
-                -6,
-                -6
+                -3,
+                -3,
+                -3
             ],
             "perIncreaseGauge": [
-                5,
-                5,
-                5
+                8,
+                8,
+                8
             ],
             "succedGauge": [
                 2,
@@ -302,9 +302,9 @@
                 2
             ],
             "failGauge": [
-                -10,
-                -10,
-                -10
+                -5,
+                -5,
+                -5
             ],
             "runGauge": [
                 0,
@@ -312,9 +312,9 @@
                 -10
             ],
             "limitTime": [
-                12,
-                12,
-                12
+                100,
+                100,
+                100
             ],
             "dialog": [
                 "너의 존재만으로도 세상이 축복받은 것 같아.",

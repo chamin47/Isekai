@@ -360,7 +360,7 @@ public class UI_MiniGame : UI_Popup
         _isTextShowed = true;
 
         int textLength = _originalText.Length;
-        float totalDuration = 1.0f; // 전체 변환 시간
+        float totalDuration = 0.5f; // 전체 변환 시간
         float delayPerChar = totalDuration / textLength; // 각 글자당 딜레이
 
         StringBuilder currentText = new StringBuilder(_bubbleText.text);

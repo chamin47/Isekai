@@ -45,27 +45,30 @@ public class GameSceneEx : BaseScene
     private WorldType _worldType;
     protected override void Init()
 	{
-        player.GetComponent<PlayerController>().canMove = true;
+        SceneType = Scene.GameScene;   
+	}
 
-        SceneType = Scene.GameScene;
+    private void Start()
+    {
+        player.GetComponent<PlayerController>().canMove = true;
 
         _worldType = Managers.World.CurrentWorldType;
 
         Managers.Resource.Instantiate($"Background/{_worldType.ToString()}World");
         Managers.Happy.ChangeHappiness(20f);
 
-        if(Managers.Happy.Happiness < 40f && ( Managers.World.CurrentWorldType == WorldType.Pelmanus
+        if (Managers.Happy.Happiness < 40f && (Managers.World.CurrentWorldType == WorldType.Pelmanus
             || Managers.World.CurrentWorldType == WorldType.Gang))
         {
             Managers.Happy.Happiness = 40f;
         }
 
         StartCoroutine(GameStart());
-	}
+    }
 
     private IEnumerator GameStart()
     {
-        yield return StartCoroutine(_fadeImage.CoFadeIn(_fadeTime, waitAfter : _waitTimeAfterFade));
+        yield return _fadeImage.CoFadeIn(_fadeTime, waitAfter : _waitTimeAfterFade);
 
         // 배경음악 재생
         switch (_worldType)
@@ -88,8 +91,8 @@ public class GameSceneEx : BaseScene
         }
 
         // 미니게임 생성
-        _miniGameFactory.Init();
         _miniGameFactory.OnGameEnd += GameOver;
+        _miniGameFactory.Init();
     }
 
     /// <summary>
@@ -166,10 +169,13 @@ public class GameSceneEx : BaseScene
 
     private IEnumerator EnterEndingScene()
     {
+        player.GetComponent<PlayerController>().canMove = false;
+        Managers.Sound.StopBGM();
+        yield return WaitForSecondsCache.Get(1f);
         _fadeImage.gameObject.SetActive(true);
         _fadeImage.color = new Color(_fadeImage.color.r, _fadeImage.color.g, _fadeImage.color.b, 1);
 
-        yield return WaitForSecondsCache.Get(2f);
+        yield return WaitForSecondsCache.Get(4f);
 
         Managers.Scene.LoadScene(Scene.EndingScene);
     }

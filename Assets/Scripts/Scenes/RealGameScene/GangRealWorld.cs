@@ -32,11 +32,12 @@ public class GangRealWorld : MonoBehaviour
         cameraFollow.CanFollow = true;
         _player.canMove = true;
         _giant.ChangeState(GiantController.GiantState.Walk);
+        Managers.Sound.Play("slow_heart_1", Sound.Effect);
     }
 
     public void PlaySubBgm()
     {
-        Managers.Sound.Play("cinematic_boom", Sound.Effect, 0.2f);
+        Managers.Sound.Play("cinematic_boom", Sound.Effect);
     }
 
     public void StartSoundEffect()

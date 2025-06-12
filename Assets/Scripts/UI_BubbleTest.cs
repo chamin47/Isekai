@@ -16,13 +16,18 @@ public class UI_BubbleTest: MonoBehaviour
 
 	private bool _isTyping = false;
 	private bool _triggeredFadeOut = false;
-
+	private bool _canTrigger = true;
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
-		if (!collision.CompareTag("Player"))
+		if (!_canTrigger) return;
+
+        if (!collision.CompareTag("Player"))
 			return;
 
-		TriggerDialog();
+		_canTrigger = false;
+
+        Managers.Sound.Play("s1_say_impact3", Sound.Effect);
+        TriggerDialog();
 		Debug.Log("BubbleTest");
 	}
 
@@ -34,12 +39,13 @@ public class UI_BubbleTest: MonoBehaviour
 	public IEnumerator ShowText(float speed)
 	{
         _canvasGroup.alpha = 1;
-        yield return StartCoroutine(_text.CoTypingEffect(_dialogUnit.dialogs[0], speed, true));
+        yield return _text.CoTypingEffect(_dialogUnit.dialogs[0], speed, true);
     }
 
 	public void SetDialogUnit(DialogUnit unit)
 	{
-		_dialogUnit = unit;
+        _canTrigger = true;
+        _dialogUnit = unit;
 		_fadeCharacter = unit.fadeCharacter;
 
 		if (_rectTransformSize != null)
@@ -50,7 +56,7 @@ public class UI_BubbleTest: MonoBehaviour
 
 	public IEnumerator FadeAll(float time)
 	{
-        yield return StartCoroutine(CoFadeOut(2f));
+        yield return CoFadeOut(2f);
     }
 
 	private void TriggerDialog()
@@ -119,5 +125,5 @@ public class UI_BubbleTest: MonoBehaviour
 		}
 
 		_text.text = "";
-	}
+    }
 }

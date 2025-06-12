@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3866982041973002718}
   - component: {fileID: 7461040935423069803}
   m_Layer: 0
-  m_Name: "\uD3A0\uB9C8\uB204\uC2A4 2"
+  m_Name: 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -79,7 +79,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 2
-  m_Size: {x: 500, y: 11.25}
+  m_Size: {x: 10000, y: 11.25}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -112,7 +112,7 @@ GameObject:
   - component: {fileID: 1159056015776998079}
   - component: {fileID: 6785095777285750114}
   m_Layer: 0
-  m_Name: "\uD3A0\uB9C8\uB204\uC2A4 sky"
+  m_Name: sky
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -179,7 +179,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 2
-  m_Size: {x: 500, y: 11.25}
+  m_Size: {x: 10000, y: 11.25}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -233,7 +233,7 @@ Transform:
   - {fileID: 5582516115121943017}
   - {fileID: 3820166676975466296}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5928922264875739552
 GameObject:
@@ -246,7 +246,7 @@ GameObject:
   - component: {fileID: 867590626217085076}
   - component: {fileID: 4292723094423368555}
   m_Layer: 0
-  m_Name: "\uD3A0\uB9C8\uB204\uC2A41"
+  m_Name: 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -313,7 +313,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 2
-  m_Size: {x: 500, y: 11.25}
+  m_Size: {x: 10000, y: 11.25}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -331,7 +331,7 @@ GameObject:
   - component: {fileID: 60490381277199176}
   - component: {fileID: 6817373480146611942}
   m_Layer: 0
-  m_Name: "\uD3A0\uB9C8\uB204\uC2A4 ground"
+  m_Name: ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -398,7 +398,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 2
-  m_Size: {x: 500, y: 11.25}
+  m_Size: {x: 10000, y: 11.25}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -441,7 +441,7 @@ BoxCollider2D:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 31.4375, y: 11.25}
-    newSize: {x: 500, y: 11.25}
+    newSize: {x: 10000, y: 11.25}
     adaptiveTilingThreshold: 0.5
     drawMode: 2
     adaptiveTiling: 0
@@ -461,7 +461,7 @@ GameObject:
   - component: {fileID: 8851097094879881759}
   - component: {fileID: 6160958040410750511}
   m_Layer: 0
-  m_Name: "\uD3A0\uB9C8\uB204\uC2A4 3"
+  m_Name: 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -528,7 +528,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 2
-  m_Size: {x: 500, y: 11.25}
+  m_Size: {x: 10000, y: 11.25}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

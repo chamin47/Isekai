@@ -96,7 +96,7 @@ public class PlayerController : MonoBehaviour
 
 	public void PlayFootSound()
 	{
-		Managers.Sound.Play("all_s_walk2", Sound.Effect);
+		Managers.Sound.Play("all_s_walk2", Sound.Effect, 0.8f);
 	}
 
 	private void UpdateMove(float x)

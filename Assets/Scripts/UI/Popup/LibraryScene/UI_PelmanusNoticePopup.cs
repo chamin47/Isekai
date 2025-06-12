@@ -32,6 +32,7 @@ public class UI_PelmanusNoticePopup : UI_NoticePopup
         if (_popupIndex == 2)
         {
             _libraryScene = Managers.Scene.CurrentScene as LibraryScene;
+            ChangeBackground();
             MakeInfinityPopup(_position);
         }
         else

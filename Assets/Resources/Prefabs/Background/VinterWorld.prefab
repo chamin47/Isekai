@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4668567537959510850}
   - component: {fileID: 7748266796763052974}
   m_Layer: 0
-  m_Name: "\uACF5\uC791_1"
+  m_Name: 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -78,7 +78,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 2
-  m_Size: {x: 500, y: 11.25}
+  m_Size: {x: 10000, y: 11.25}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 3173678706350251959}
   - component: {fileID: 4272777583738608830}
   m_Layer: 0
-  m_Name: "\uACF5\uC791_3"
+  m_Name: 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -163,7 +163,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 2
-  m_Size: {x: 500, y: 11.25}
+  m_Size: {x: 10000, y: 11.25}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -196,7 +196,7 @@ GameObject:
   - component: {fileID: 175905303942320367}
   - component: {fileID: 659459221838862410}
   m_Layer: 0
-  m_Name: "\uACF5\uC791_2"
+  m_Name: 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -263,7 +263,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 2
-  m_Size: {x: 500, y: 11.25}
+  m_Size: {x: 10000, y: 11.25}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -296,7 +296,7 @@ GameObject:
   - component: {fileID: 8437795407988293582}
   - component: {fileID: 6474258005450617278}
   m_Layer: 0
-  m_Name: "\uACF5\uC791_sky"
+  m_Name: sky
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -363,7 +363,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 2
-  m_Size: {x: 500, y: 11.25}
+  m_Size: {x: 10000, y: 11.25}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -417,7 +417,7 @@ Transform:
   - {fileID: 4668567537959510850}
   - {fileID: 7362758772855827646}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5312611452015532329
 GameObject:
@@ -431,7 +431,7 @@ GameObject:
   - component: {fileID: 5753083838669292059}
   - component: {fileID: 8600894998883585952}
   m_Layer: 0
-  m_Name: "\uACF5\uC791_groung"
+  m_Name: ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -498,7 +498,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 2
-  m_Size: {x: 500, y: 11.25}
+  m_Size: {x: 10000, y: 11.25}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -541,7 +541,7 @@ BoxCollider2D:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 33.391304, y: 11.25}
-    newSize: {x: 500, y: 11.25}
+    newSize: {x: 10000, y: 11.25}
     adaptiveTilingThreshold: 0.5
     drawMode: 2
     adaptiveTiling: 0

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7496112713495962372}
   - component: {fileID: 507312114336709218}
   m_Layer: 0
-  m_Name: "\uAC31\uADF8\uB9B4light"
+  m_Name: ligth
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -78,7 +78,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 2
-  m_Size: {x: 500, y: 11.25}
+  m_Size: {x: 10000, y: 11.25}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 2525732784965210480}
   - component: {fileID: 8499388517396074413}
   m_Layer: 0
-  m_Name: "\uAC31\uADF8\uB9B4groung"
+  m_Name: ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -163,7 +163,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 2
-  m_Size: {x: 500, y: 11.25}
+  m_Size: {x: 10000, y: 11.25}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -206,7 +206,7 @@ BoxCollider2D:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 22.5, y: 11.25}
-    newSize: {x: 500, y: 11.25}
+    newSize: {x: 10000, y: 11.25}
     adaptiveTilingThreshold: 0.5
     drawMode: 2
     adaptiveTiling: 0
@@ -226,7 +226,7 @@ GameObject:
   - component: {fileID: 7714767334781757145}
   - component: {fileID: 7935695812253016281}
   m_Layer: 0
-  m_Name: "\uAC31\uADF8\uB9B42"
+  m_Name: 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -293,7 +293,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 2
-  m_Size: {x: 500, y: 11.25}
+  m_Size: {x: 10000, y: 11.25}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -325,7 +325,7 @@ GameObject:
   - component: {fileID: 6849823571984960487}
   - component: {fileID: 2189091484129327427}
   m_Layer: 0
-  m_Name: "\uAC31\uADF8\uB9B4 background"
+  m_Name: gang
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -392,7 +392,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 2
-  m_Size: {x: 500, y: 11.25}
+  m_Size: {x: 10000, y: 11.25}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -433,7 +433,7 @@ Transform:
   - {fileID: 5792325533461391391}
   - {fileID: 7496112713495962372}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4435047620474264809
 GameObject:
@@ -446,7 +446,7 @@ GameObject:
   - component: {fileID: 1380407317259732260}
   - component: {fileID: 2845418982694800805}
   m_Layer: 0
-  m_Name: "\uAC31\uADF8\uB9B41"
+  m_Name: 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -513,7 +513,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 2
-  m_Size: {x: 500, y: 11.25}
+  m_Size: {x: 10000, y: 11.25}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -531,7 +531,7 @@ GameObject:
   - component: {fileID: 1588379445577577061}
   - component: {fileID: 2042987665507238157}
   m_Layer: 0
-  m_Name: "\uAC31\uADF8\uB9B43"
+  m_Name: 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -598,7 +598,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 2
-  m_Size: {x: 500, y: 11.25}
+  m_Size: {x: 10000, y: 11.25}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

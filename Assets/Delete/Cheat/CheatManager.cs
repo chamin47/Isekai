@@ -17,15 +17,13 @@ public class CheatManager : MonoBehaviour
 
     private void Awake()
     {
-        DontDestroyOnLoad(gameObject);
-
         SetWorldButton.onClick.AddListener(SetWorld);
         sceneDropdown.ClearOptions();
         sceneType.ClearOptions();
         sceneDropdown.AddOptions(Enum.GetNames(typeof(WorldType)).ToList());
         sceneType.AddOptions(Enum.GetNames(typeof(Scene)).ToList());
-
-        cheatUI.SetActive(false);
+        Debug.Log("CheatManager Awake");
+        cheatUI?.SetActive(false);
     }
 
     private void SetWorld()
@@ -40,7 +38,7 @@ public class CheatManager : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Tab))
         {
-            cheatUI.SetActive(!cheatUI.activeSelf);
+            cheatUI?.SetActive(!cheatUI.activeSelf);
         }
     }
 }

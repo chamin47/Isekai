@@ -207,10 +207,14 @@ public static class Extension
     }
 
 
-    public static IEnumerator CoBlinkText(this TMP_Text text, int blinkCount, float blinkDuration)
+    public static IEnumerator CoBlinkText(this TMP_Text text, int blinkCount, float blinkDuration, string soundKey = "")
     {
         for (int i = 0; i < blinkCount; i++)
         {
+            if(soundKey != "")
+            {
+                Managers.Sound.Play(soundKey, Sound.Effect);
+            }
             yield return CoFadeIn(text, blinkDuration / 2);
             yield return CoFadeOut(text, blinkDuration / 2);
         }

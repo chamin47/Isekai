@@ -28,7 +28,7 @@ public class SoundManager
         _effectGroup = _audioMixer.FindMatchingGroups("Master/Effect")[0];
 
         _bgmAudio.outputAudioMixerGroup = _bgmGroup;
-        _subEffectAudio.outputAudioMixerGroup = _subEffectGroup;
+        _subEffectAudio.outputAudioMixerGroup = _effectGroup;
         for (int i = 0; i < MAX_EFFECT_COUNT; i++)
         {
             _effectAudio[i].outputAudioMixerGroup = _effectGroup;
@@ -83,7 +83,7 @@ public class SoundManager
 
 	private GameObject _root = null;
 
-    private const int MAX_EFFECT_COUNT = 10;
+    private const int MAX_EFFECT_COUNT = 15;
     public void Init()
 	{
 		if(_root != null)

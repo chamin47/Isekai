@@ -2,6 +2,7 @@ using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.UI;
@@ -49,41 +50,86 @@ public class DongMinTestScene : BaseScene
         StartCoroutine(EndingSequence());
     }
 
-    private IEnumerator EndingSequence()
+	[SerializeField] private List<TextMeshProUGUI> _bubbleTexts;
+	[SerializeField] private List<GameObject> _bubbles;
+    [SerializeField] private Image _fadeImagelast;
+    private List<string> _buubleDialogue = new List<string>()
+	{
+        "거기에선 안 아프고 행복하잖아.",
+        "여긴 너무 아파...",
+        "나 다시... 돌아갈래",
+    };
+
+
+	private IEnumerator EndingSequence()
     {
 		_playerController.canMove = false;
-		_playerController.SetLook(1);
 		_playerController.enabled = false;
         bool isMoveEnd = false;
+
+        Vector3 playerPos = _playerController.transform.position;
+        Vector3 targetPos = _playerTargetPosition.position;
+        float distance = Mathf.Abs(playerPos.x - targetPos.x);
+        float speed = 1f; // 원하는 이동 속도
+        float duration = distance / speed;
+
+        int lookDir = (playerPos.x > targetPos.x) ? -1 : 1;
+        _playerController.SetLook(lookDir);
+
         _playerAnimator.SetFloat("Speed", 1f);
-        _playerController.transform.DOMoveX(_playerTargetPosition.position.x, 2f).SetEase(Ease.Linear).OnComplete(() => { isMoveEnd = true; });
-		Coroutine coroutine = StartCoroutine(PlayFootsteps(2f));
+
+		Coroutine coroutine = StartCoroutine(PlayFootsteps(duration));
+        _playerController.transform.DOMoveX(_playerTargetPosition.position.x, duration).SetEase(Ease.Linear).OnComplete(() => { isMoveEnd = true; });
         while (!isMoveEnd)
 		{
             yield return null;
         }
         StopCoroutine(coroutine);
+        _playerController.SetLook(1);
         _playerAnimator.SetFloat("Speed", 0f);
 
 		yield return WaitForSecondsCache.Get(2f);
 		_bubbleA.SetPosition(_endingUnit.characterObject.transform.position);
-        yield return StartCoroutine(_bubbleA.ShowText(0.5f));
+        yield return _bubbleA.ShowText(0.3f);
 		
 		StartCoroutine(CoFadeOutCharacter(_endingUnit.characterObject, 2f));
-        yield return StartCoroutine(_bubbleA.FadeAll(2f));
+        yield return _bubbleA.FadeAll(2f);
 
-        yield return StartCoroutine(FadeToBlack());
+		_playerAnimator.Play("Player_frusted");
 
-        _playerAnimator.SetFloat("Speed", 1f);
-        coroutine = StartCoroutine(PlayFootsteps(3f));
-        _playerController.transform.DOMoveX(_playerController.transform.position.x + 12f, 4f).SetEase(Ease.Linear).OnComplete(() => { isMoveEnd = true; });
+        isMoveEnd = false;
+        yield return FadeToBlack();
+
+		Debug.Log("CameraPos" + Camera.main.transform.position.x + "PlayerPos" + _playerController.transform.position.x);
+        Camera.main.transform.DOMoveX(_playerController.transform.position.x, 1f).SetEase(Ease.Linear)
+			.OnComplete(() => isMoveEnd = true); 
 
         while (!isMoveEnd)
         {
             yield return null;
         }
-        StopCoroutine(coroutine);
-        _playerAnimator.SetFloat("Speed", 0f);
+
+        yield return WaitForSecondsCache.Get(1f);
+
+        for (int i = 0; i < _bubbles.Count; i++)
+        {
+            _bubbles[i].gameObject.SetActive(true);
+            yield return _bubbleTexts[i].CoTypingEffect(_buubleDialogue[i], 0.1f, true, "intro_type_short");
+            yield return WaitForSecondsCache.Get(1f);
+        }
+
+        yield return WaitForSecondsCache.Get(2f);
+        yield return _fadeImagelast.CoFadeOut(2f);
+        //_playerAnimator.SetFloat("Speed", 1f);
+        //coroutine = StartCoroutine(PlayFootsteps(3f));
+        //_playerController.transform.DOMoveX(_playerController.transform.position.x + 12f, 4f).SetEase(Ease.Linear).OnComplete(() => { isMoveEnd = true; });
+
+        //while (!isMoveEnd)
+        //{
+        //    yield return null;
+        //}
+        //StopCoroutine(coroutine);
+        //_playerAnimator.SetFloat("Speed", 0f);
 
         Managers.World.MoveNextWorld();
         Managers.Scene.LoadScene(Scene.LibraryScene);
@@ -92,7 +138,7 @@ public class DongMinTestScene : BaseScene
     private IEnumerator PlayFootsteps(float duration)
     {
         float timer = 0f;
-        float interval = 0.7f; // 발소리 간격
+        float interval = 0.66f; // 발소리 간격
         while (timer < duration)
         {
             Managers.Sound.Play("all_s_walk2", Sound.Effect);
@@ -108,8 +154,10 @@ public class DongMinTestScene : BaseScene
 		yield return PlayEnterTimeline();
 
 		yield return new WaitForSeconds(0.3f);
-		yield return _warningText.CoBlinkText(3, 0.5f);
-		yield return new WaitForSeconds(0.5f);
+        _warningText.gameObject.SetActive(true);
+        yield return _warningText.CoBlinkText(3, 0.5f, "warning");
+        _warningText.gameObject.SetActive(false);
+        yield return new WaitForSeconds(0.5f);
 
 		Managers.Sound.Play("bgm_real_world", Sound.Bgm);
 

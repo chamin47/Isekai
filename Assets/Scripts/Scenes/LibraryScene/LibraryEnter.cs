@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.U2D;
 using UnityEngine.Playables;
+using System;
 
 public class LibraryEnter : MonoBehaviour
 {
@@ -19,9 +20,10 @@ public class LibraryEnter : MonoBehaviour
 	private Vector3 triggerPlayerPosition;
 
 	[SerializeField] private GameObject _gauidLine;
-
-	private bool canUI = true;
-
+	[SerializeField] private GameObject _mouse;
+	[SerializeField] private GameObject _diary;
+    private bool canUI = true;
+	private Coroutine _mouseCoroutine;
 	private void Start()
 	{
 		mainCamera = Camera.main;
@@ -36,13 +38,36 @@ public class LibraryEnter : MonoBehaviour
 		{
 			Debug.LogError("메인 카메라를 찾을 수 없습니다!");
 		}
+        _mouseCoroutine = StartCoroutine(BlinkMouse());
     }
 
+    private IEnumerator BlinkMouse()
+    {
+		float interval = 0.5f;
+		while(true)
+		{
+            _mouse.SetActive(false);
+            yield return WaitForSecondsCache.Get(interval);
+            _mouse.SetActive(true);
+            yield return WaitForSecondsCache.Get(interval);
+        }
+    }
+
+	private bool isMouseVisible = true;
     public void Update()
     {
         if(canUI && Input.GetKeyDown(KeyCode.M))
 		{
             _gauidLine.SetActive(!_gauidLine.activeSelf);
+        }
+
+		Debug.Log("Diary Active: " + _diary.activeInHierarchy);
+
+        if (isMouseVisible && _diary.activeInHierarchy == false)
+		{
+			isMouseVisible = false;
+            StopCoroutine(_mouseCoroutine);
+            _mouse.SetActive(false);
         }
     }
 

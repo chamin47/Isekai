@@ -7,7 +7,7 @@ public class RealGameDiary : MonoBehaviour
     [SerializeField] private GameObject _diaryObject; // 일기장 오브젝트
     [SerializeField] private SpriteRenderer _diarySpriteRenderer;
     [SerializeField] private GameObject _diaryUI;
-
+    [SerializeField] private bool _diaryDisappear = true;
     bool _isDiaryShown = false;
     private void Update()
     {
@@ -28,7 +28,7 @@ public class RealGameDiary : MonoBehaviour
             }
         }
 
-        if(_isDiaryShown == false && _diarySpriteRenderer.isVisible)
+        if(_diaryDisappear && _isDiaryShown == false && _diarySpriteRenderer.isVisible)
         {
             _isDiaryShown = true;
             StartCoroutine(FadeThis());
@@ -55,7 +55,7 @@ public class RealGameDiary : MonoBehaviour
             yield return new WaitForSeconds(1.5f);
         }
         // 일기장 UI가 활성화되면 3초 후에 비활성화
-        yield return StartCoroutine(_diarySpriteRenderer.CoFadeIn(3f));
+        yield return StartCoroutine(_diarySpriteRenderer.CoFadeIn(5f));
         this.gameObject.SetActive(false);
     }
 }

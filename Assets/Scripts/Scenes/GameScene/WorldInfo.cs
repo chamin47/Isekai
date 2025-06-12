@@ -43,10 +43,15 @@ public class WorldInfo
         canPressConcurrent = gameSceneData.canPressConcurrent;
     }
 
-    public virtual MiniGameInfo GetRandomMiniGameInfo()
+    public virtual MiniGameInfo GetRandomMiniGameInfo(int dialogueIndex = -1)
     {
         // 랜덤 텍스트 결정
         int index = UnityEngine.Random.Range(0, dialog.Count);
+
+        if(dialogueIndex != -1)
+        {
+            index = dialogueIndex;
+        }
 
         // 랜덤 난이도 문제 결정
         int difficultyIndex = UnityEngine.Random.Range(0, dialog.Count);
@@ -95,9 +100,9 @@ public class ChaummWorldInfo : WorldInfo
     public ChaummWorldInfo(GameSceneData gameSceneData) : base(gameSceneData)
     {
     }
-    public override MiniGameInfo GetRandomMiniGameInfo()
+    public override MiniGameInfo GetRandomMiniGameInfo(int dialogueindex = -1)
     {
-        MiniGameInfo miniGameInfo = base.GetRandomMiniGameInfo();
+        MiniGameInfo miniGameInfo = base.GetRandomMiniGameInfo(dialogueindex);
 
         int keyCount = requiredKeyCount[(int)miniGameInfo.difficulty];
 
@@ -118,9 +123,9 @@ public class GangWorldInfo : WorldInfo
     public GangWorldInfo(GameSceneData gameSceneData) : base(gameSceneData)
     {
     }
-    public override MiniGameInfo GetRandomMiniGameInfo()
+    public override MiniGameInfo GetRandomMiniGameInfo(int dialogueindex = -1)
     {
-        MiniGameInfo miniGameInfo = base.GetRandomMiniGameInfo();
+        MiniGameInfo miniGameInfo = base.GetRandomMiniGameInfo(dialogueindex);
 
         int keyCount = requiredKeyCount[(int)miniGameInfo.difficulty];
 
@@ -149,9 +154,9 @@ public class PelmanusWorldInfo : WorldInfo
     public PelmanusWorldInfo(GameSceneData gameSceneData) : base(gameSceneData)
     {
     }
-    public override MiniGameInfo GetRandomMiniGameInfo()
+    public override MiniGameInfo GetRandomMiniGameInfo(int dialogueindex = -1)
     {
-        MiniGameInfo miniGameInfo = base.GetRandomMiniGameInfo();
+        MiniGameInfo miniGameInfo = base.GetRandomMiniGameInfo(dialogueindex);
 
         int keyCount = requiredKeyCount[(int)miniGameInfo.difficulty];
 

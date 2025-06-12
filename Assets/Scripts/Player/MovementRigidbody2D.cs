@@ -27,7 +27,7 @@ public class MovementRigidbody2D : MonoBehaviour
 		_rigid2D.gravityScale = _gravityScale;
     }
 
-	public void MoveTo(float x)
+    public void MoveTo(float x)
 	{
 		if(!isTestMode)
 		{

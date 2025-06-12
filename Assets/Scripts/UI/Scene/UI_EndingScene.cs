@@ -30,7 +30,8 @@ public class UI_EndingScene : UI_Scene
         StartCoroutine(PlayEndingSequence());
 	}
 
-	private IEnumerator PlayEndingSequence()
+    [SerializeField] WebGLVideoPlayer _webGLVideoPlayer; // WebGL에서 비디오 재생을 위한 컴포넌트
+    private IEnumerator PlayEndingSequence()
 	{
 		yield return new WaitForSeconds(0.5f);
         _bubbleImage.SetActive(true); // 말풍선 이미지 활성화
@@ -47,6 +48,7 @@ public class UI_EndingScene : UI_Scene
         }
 
         // 화면 fadeOut
+        _fadeImage.gameObject.SetActive(true);
         yield return StartCoroutine(_fadeImage.CoFadeOut(1f));
         
         yield return WaitForSecondsCache.Get(1f); // 1초 대기
@@ -60,12 +62,10 @@ public class UI_EndingScene : UI_Scene
         _finalText.text = "";
 
         yield return WaitForSecondsCache.Get(2f);
-
-        // 비디오 효과로 글리치 효과
-
-        _endingVideoPlayer.gameObject.SetActive(true); // 비디오 플레이어 활성화
+        _endingVideoPlayer.gameObject.SetActive(true); // Ending Video Player 활성화
+        _webGLVideoPlayer.PlayOverlayVideo("glitch.mp4"); // WebGL에서 비디오 재생
         Managers.Sound.Play("titleName", Sound.Effect);
-        yield return WaitForSecondsCache.Get(5f); // 0.5초 대기
+        yield return WaitForSecondsCache.Get(7f); // 0.5초 대기
 
         // 메인 화면으로 전환
         Managers.Scene.LoadScene(Scene.TitleScene); // Main Title Scene으로 전환
@@ -147,5 +147,5 @@ public class UI_EndingScene : UI_Scene
 
 		color.a = endAlpha;
 		textComponent.color = color;
-	}
+	}    
 }

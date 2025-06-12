@@ -60,8 +60,10 @@ public class UI_NoticePopup : UI_Popup
         }
     }
 
-    protected virtual void ClosePopup()
+    public virtual void ClosePopup()
     {
+        if (!_canHandle) return;
+
         _libraryScene.EnableBookSelect();
         _libraryScene.SetLightOn();
         if (_book != null)
@@ -83,20 +85,22 @@ public class UI_NoticePopup : UI_Popup
 
     protected virtual void ProcessWorldInteraction()
     {
+        _canHandle = false;
         _libraryScene.PlayEndTimeLine();
         StartCoroutine(CoFadeOut());
     }
 
     private IEnumerator CoFadeOut()
     {
-        _fadeImage.gameObject.SetActive(true);
+        LibraryScene scene = Managers.Scene.CurrentScene as LibraryScene;
+        scene.fadeImage.gameObject.SetActive(true);
         StartCoroutine(Managers.Sound.FadeOutBGM(2f));
-        StartCoroutine(_fadeImage.CoFadeOut(2f));
+        StartCoroutine(scene.fadeImage.CoFadeOut(2f));
         yield return WaitForSecondsCache.Get(1f);
         Managers.Sound.Play("s2_book1", Sound.Effect);
 
         yield return WaitForSecondsCache.Get(2f);
-        Managers.UI.CloseAllPopupUI();
+
         Managers.Scene.LoadScene(Scene.LoadingScene);
     }
 

@@ -25,6 +25,7 @@ public class PlayerAnimator : MonoBehaviour
 
 	public void SpriteFlipX(float x)
 	{
+		if(Time.timeScale == 0) return;
         _spriteRenderer.flipX = x < 0 ? true : false;
 
     }

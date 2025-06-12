@@ -1,7 +1,8 @@
-using UnityEngine.EventSystems;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class ClickSoundPlayer : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler
+public class ClickSoundHandler : MonoBehaviour
 {
     [SerializeField] private string _clickDownSound = "click_down";
     [SerializeField] private string _clickUpSound = "click_up";
@@ -9,31 +10,38 @@ public class ClickSoundPlayer : MonoBehaviour, IPointerDownHandler, IPointerUpHa
     private bool _pressedInside = false;
     private bool _isPointerOver = false;
 
-    public void OnPointerDown(PointerEventData eventData)
+    private void OnMouseDown()
     {
         _pressedInside = true;
 
         if (!string.IsNullOrEmpty(_clickDownSound))
+        {
             Managers.Sound.Play(_clickDownSound, Sound.Effect);
+            Debug.Log($"Play Sound: {_clickDownSound}");
+        }
     }
 
-    public void OnPointerUp(PointerEventData eventData)
+    private void OnMouseUp()
     {
+ 
         if (_pressedInside && _isPointerOver)
         {
             if (!string.IsNullOrEmpty(_clickUpSound))
+            {
                 Managers.Sound.Play(_clickUpSound, Sound.Effect);
+                Debug.Log($"Play Sound: {_clickUpSound}");
+            }
         }
 
         _pressedInside = false;
     }
 
-    public void OnPointerEnter(PointerEventData eventData)
+    private void OnMouseEnter()
     {
         _isPointerOver = true;
     }
 
-    public void OnPointerExit(PointerEventData eventData)
+    private void OnMouseExit()
     {
         _isPointerOver = false;
     }

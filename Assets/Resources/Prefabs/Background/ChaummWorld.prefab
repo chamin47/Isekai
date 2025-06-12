@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6630483555656791459}
   - component: {fileID: 5816964239156602367}
   m_Layer: 0
-  m_Name: "\uCC28\uC740\uC720-2"
+  m_Name: 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -79,7 +79,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 2
-  m_Size: {x: 500, y: 11.25}
+  m_Size: {x: 10000, y: 11.25}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -111,7 +111,7 @@ GameObject:
   - component: {fileID: 3379661939495171560}
   - component: {fileID: 8352732388107897115}
   m_Layer: 0
-  m_Name: "\uCC28\uC740\uC720_ground"
+  m_Name: ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -178,7 +178,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 2
-  m_Size: {x: 500, y: 11.25}
+  m_Size: {x: 10000, y: 11.25}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -196,7 +196,7 @@ GameObject:
   - component: {fileID: 3069586529585242808}
   - component: {fileID: 2783283963374522917}
   m_Layer: 0
-  m_Name: "\uCC28\uC740\uC720-3"
+  m_Name: 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -263,7 +263,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 2
-  m_Size: {x: 500, y: 11.25}
+  m_Size: {x: 10000, y: 11.25}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -294,7 +294,7 @@ GameObject:
   - component: {fileID: 3980569005962552794}
   - component: {fileID: 1058710593254360643}
   m_Layer: 0
-  m_Name: "\uCC28\uC740\uC720-1"
+  m_Name: 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -361,7 +361,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 2
-  m_Size: {x: 500, y: 11.25}
+  m_Size: {x: 10000, y: 11.25}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
