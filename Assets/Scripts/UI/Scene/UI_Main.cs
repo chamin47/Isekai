@@ -30,6 +30,7 @@ public class UI_Main : UI_Scene
 
     IEnumerator CoShowSceneUI()
     {
+        Debug.Log("CoShowSceneUI");
         _startButton.enabled = false;
         yield return _fadeImage.CoFadeOut(fadeTime, waitTimeAfterFade);
         Managers.UI.ShowSceneUI<UI_TitleScene>();

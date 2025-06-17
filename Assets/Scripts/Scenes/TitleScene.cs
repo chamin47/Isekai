@@ -5,15 +5,22 @@ using UnityEngine.Video;
 
 public class TitleScene : BaseScene
 {
-	//public VideoPlayer test;
+	[SerializeField] private GameObject _endingBackGround;
+	[SerializeField] private GameObject _commonBackGround;
 	protected override void Init()
-	{
-		//Screen.SetResolution(1920, 1080, true);
+	{ 
 		SceneType = Scene.TitleScene;
 
-		//fortest
-		//string path = System.IO.Path.Combine(Application.streamingAssetsPath, "glitch.mp4");
-		//test.url = path;
+		if(Managers.Game.IsShowEnding)
+		{
+			_endingBackGround.SetActive(true);
+            _commonBackGround.SetActive(false);
+        }
+		else
+		{
+            _endingBackGround.SetActive(false);
+            _commonBackGround.SetActive(true);
+        }
 
 		Managers.World.CurrentWorldType = (WorldType)PlayerPrefs.GetInt("WorldType", 0);
     }

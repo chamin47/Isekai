@@ -1296,7 +1296,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &226601519
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7855,6 +7855,7 @@ MonoBehaviour:
   _player: {fileID: 860080163}
   _fadeImage: {fileID: 514875358}
   _warningText: {fileID: 1971156085}
+  _diary: {fileID: 0}
 --- !u!1 &1215063847
 GameObject:
   m_ObjectHideFlags: 0
@@ -9014,7 +9015,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1373701447
 MonoBehaviour:
   m_ObjectHideFlags: 0

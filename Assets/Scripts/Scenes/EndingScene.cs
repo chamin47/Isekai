@@ -43,6 +43,10 @@ public class EndingScene : BaseScene
         _newsImage.SetActive(false);
 
         _mainCameraAni = Camera.main.GetComponent<Animator>();
+
+        // 엔딩 데이터 저장
+        Managers.Game.IsShowEnding = true;
+
         StartCoroutine(EndingSceneSequence());
     }
 
