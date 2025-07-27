@@ -652,7 +652,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29635a4101a0d5048a7b96b4badb694a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mouse: {fileID: 0}
+  _mouse: {fileID: 1815966035}
   _collider: {fileID: 286667079}
   _isClicked: 0
   _fingerBlinkSpeed: 0.8
@@ -1236,7 +1236,7 @@ MonoBehaviour:
   - {fileID: 595035450}
   _lightOn: {fileID: 2100000, guid: 1cd5f32dbb975f440b8e9f0ad1147046, type: 2}
   _lightOff: {fileID: 2100000, guid: 7753fb339cd31bf44b2947e8138e0187, type: 2}
-  _fadeImage: {fileID: 0}
+  _fadeImage: {fileID: 1651638529}
   _volume: {fileID: 1022091247}
   _HUDHappy: {fileID: 378438639}
 --- !u!1 &937309929
@@ -1541,7 +1541,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29635a4101a0d5048a7b96b4badb694a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mouse: {fileID: 0}
+  _mouse: {fileID: 477170671}
   _collider: {fileID: 1057986705}
   _isClicked: 0
   _fingerBlinkSpeed: 0.8
@@ -1807,6 +1807,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 857144197}
     m_Modifications:
+    - target: {fileID: 1130975414083750472, guid: 10723e3edd83a2248833965e7d4ad2cd, type: 3}
+      propertyPath: m_ReferencePixelsPerUnit
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 1203840288323021062, guid: 10723e3edd83a2248833965e7d4ad2cd, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -2445,7 +2449,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29635a4101a0d5048a7b96b4badb694a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mouse: {fileID: 0}
+  _mouse: {fileID: 247549915}
   _collider: {fileID: 2030263361}
   _isClicked: 0
   _fingerBlinkSpeed: 0.8
@@ -2608,7 +2612,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29635a4101a0d5048a7b96b4badb694a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mouse: {fileID: 0}
+  _mouse: {fileID: 1089894157}
   _collider: {fileID: 2045367022}
   _isClicked: 0
   _fingerBlinkSpeed: 0.8
