@@ -6,30 +6,35 @@ using static UnityEngine.Tilemaps.TilemapRenderer;
 
 public class UIManager
 {
-	Stack<UI_Popup> _popupStack = new Stack<UI_Popup>();
-	UI_Scene _sceneUI = null;
+	private Stack<UI_Popup> _popupStack = new Stack<UI_Popup>(); 
+	private UI_Scene _sceneUI = null;
 
-	private int _order = 10;
-	public UI_Scene SceneUI { get { return _sceneUI; } }
-	
-    public GameObject Root
-	{
+	private int _order = 10;                                        // popup 정렬
+    public UI_Scene SceneUI { get { return _sceneUI; } }
+
+	private GameObject _uiRoot = null;								
+    public GameObject Root                                          // UI 부모
+    {
 		get
 		{
-			GameObject root = GameObject.Find("@UI_Root");
-			if (root == null)
-				root = new GameObject { name = "@UI_Root" };
-			return root;
+			if(_uiRoot == null)
+			{
+				_uiRoot = new GameObject { name = "@UI_Root" };
+            }
+			return _uiRoot;
 		}
 	}
 
+	/// <summary>
+	/// sort = true 일 경우, 생성되는 UI를 앞에 배치해 준다.
+	/// </summary>
+	/// <param name="go">생성할 게임 오브젝트</param>
+	/// <param name="sort">화면 순서</param>
 	public void SetCanvas(GameObject go, bool sort)
 	{
-		var canvas = Util.GetOrAddComponent<Canvas>(go);
-		canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-		canvas.overrideSorting = true;
-
+		var canvas = Util.GetOrAddComponent<Canvas>(go);		
         var canvasScaler = Util.GetOrAddComponent<CanvasScaler>(go);
+
         canvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
         canvasScaler.referenceResolution = new Vector2(1920, 1080);
 
@@ -40,12 +45,18 @@ public class UIManager
         }
     }
 
-	public T MakeWorldSpaceUI<T>(Transform parent = null, string name = null) where T : UI_Base
+    /// <summary>
+    /// 클래스 이름과 실제 Prefab 이름을 매칭해 주어야 된다
+    /// 해당 이름의 Prefab을 월드 스페이스에 생성한다.
+    /// </summary>
+    /// <returns>해당 클래스</returns>
+    public T MakeWorldSpaceUI<T>(Transform parent = null, string name = null) where T : UI_Base
 	{
 		if (string.IsNullOrEmpty(name))
 			name = typeof(T).Name;
 
 		GameObject go = Managers.Resource.Instantiate($"UI/WorldSpace/{name}");
+
 		if (parent != null)
 			go.transform.SetParent(parent);
 
@@ -56,24 +67,34 @@ public class UIManager
 		return Util.GetOrAddComponent<T>(go);
 	}
 
+	/// <summary>
+	/// Sub UI를 생성한다. 주로 Toast형식으로 생성될 UI나 서브 목적의 UI를 생성한다.
+	/// </summary>
+	/// <returns>해당 클래스</returns>
 	public T MakeSubItem<T>(Transform parent = null, string name = null) where T : UI_Base
 	{
 		if (string.IsNullOrEmpty(name))
 			name = typeof(T).Name;
 
 		GameObject go = Managers.Resource.Instantiate($"UI/SubItem/{name}");
+
 		if (parent != null)
 			go.transform.SetParent(parent);
 
 		return Util.GetOrAddComponent<T>(go);
 	}
 
+	/// <summary>
+	/// 해당 Scene에 항상 존재하는 UI를 생성한다.
+	/// </summary>
+	/// <returns>해당 클래스</returns>
 	public T ShowSceneUI<T>(string name = null) where T : UI_Scene
 	{
 		if (string.IsNullOrEmpty(name))
 			name = typeof(T).Name;
 
 		GameObject go = Managers.Resource.Instantiate($"UI/Scene/{name}");
+
 		T sceneUI = Util.GetOrAddComponent<T>(go);
 		_sceneUI = sceneUI;
 

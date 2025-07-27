@@ -18,6 +18,7 @@ public class UI_Sound : MonoBehaviour
         {
             ToggleSoundSlider();
         });
+
         _masterSlider.value = Managers.Sound.GetVolume("MasterVolume");
         //_bgmSlider.value = Managers.Sound.GetVolume("BgmVolume");
         //_effectSlider.value = Managers.Sound.GetVolume("EffectVolume");

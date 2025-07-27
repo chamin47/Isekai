@@ -9,8 +9,10 @@ public class UI_GameOver : UI_Popup
 
     private bool _canPassOver = false;
 
-    private void Awake()
+    public override void Init()
     {
+        base.Init();
+
         StartCoroutine(ShowInfo());
     }
 

@@ -3,20 +3,25 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+/// <summary>
+/// 1. 비난 팝업 시작
+/// 2. CutScene 시작
+/// </summary>
 public class UI_BlamePopup : UI_Popup
 {
 	[SerializeField] private Image[] _talkBalloonImages;
 	[SerializeField] private TMP_Text[] _dialogueTexts;
 
-	private string[] _dialogues = {
+	[SerializeField] private float _glitchDuration = 1f; // 글리치 효과 지속 시간
+	[SerializeField] private float _textTypingSpeed = 0.05f; // 타자 치는 속도
+
+    private string[] _dialogues = {
 		"너만 뒤쳐지고 있는 거 아니야?",
 		"네 친구는 벌써 승진했다더라",
 		"왜 그 정도도 못하니?",
 		"다들 집 샀다던데, 너는 계획 있어?",
 		"너 진짜 혼자만 다르게 산다."
 	};
-
-	private float _glitchDuration = 1f; // 글리치 효과 지속 시간
 
 	public override void Init()
 	{
@@ -46,7 +51,7 @@ public class UI_BlamePopup : UI_Popup
 			yield return StartCoroutine(TypeEffect(_dialogueTexts[i], _dialogues[i], true, "intro_type_short"));
 
 			// 행복 게이지 감소
-			Managers.Happy.ChangeHappiness(-10f);
+			Managers.Happy.AddHappiness(-10f);
 
 			Managers.Sound.Play("s1_say_impact2", Sound.Effect);
 			// 카메라 흔들림 효과 적용 (더 역동적으로)
@@ -138,7 +143,7 @@ public class UI_BlamePopup : UI_Popup
 				}
 			}
 
-			yield return new WaitForSeconds(interval);
+			yield return WaitForSecondsCache.Get(interval);
 
 			// 변형된 값 복원
 			for (int i = 0; i < _talkBalloonImages.Length; i++)

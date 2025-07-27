@@ -12,9 +12,10 @@ public abstract class UI_Base : MonoBehaviour
 	/// </summary>
 	public abstract void Init();
 
-	private void Start()
+	protected virtual void Start()
 	{
-		Init();
+        Debug.Log($"UI_Base Start: {gameObject.name}");
+        Init();
 	}
 
 	/// <summary>

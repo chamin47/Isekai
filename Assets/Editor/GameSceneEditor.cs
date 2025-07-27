@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(GameSceneEx))]
-public class GameSceneExEditor : Editor
+[CustomEditor(typeof(GameScene))]
+public class GameSceneEditor : Editor
 {
-    private GameSceneEx _gameSceneEx;
+    private GameScene _gameSceneEx;
     private void OnEnable()
     {
-        _gameSceneEx = target as GameSceneEx; 
+        _gameSceneEx = target as GameScene; 
     }
 
     public override void OnInspectorGUI()

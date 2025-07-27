@@ -9,20 +9,22 @@ public class CameraShake : MonoBehaviour
     public int count = 6; // Èçµé¸®´Â È½¼ö
     private Vector3 _initialPosition;
 
+    private Coroutine _shakeCoroutine;
+
     private void Start()
     {
         _initialPosition = transform.localPosition;
     }
 
-    public void Shake()
+    public void Shake(float duration = 1f, float magnitude = 0.2f)
     {
-        StartCoroutine(CoShake());
+        if(_shakeCoroutine != null)
+            StopCoroutine(_shakeCoroutine);
+        _shakeCoroutine = StartCoroutine(CoShake());
     }
 
     private IEnumerator CoShake()
     {
-        StopCoroutine("CoShake");
-
         _initialPosition = transform.localPosition;
 
         for (int i = 0; i < count; i++)
@@ -32,7 +34,7 @@ public class CameraShake : MonoBehaviour
 
             transform.localPosition = _initialPosition + new Vector3(x, y, 0);
 
-            yield return new WaitForSeconds(duration / count); 
+            yield return WaitForSecondsCache.Get(duration / count); 
         }
 
         transform.localPosition = _initialPosition; 

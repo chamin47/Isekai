@@ -9,9 +9,9 @@ using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 
 /// <summary>
-/// 도서관 씬 상의 책 관리
-/// 도서관 씬에서의 타임라인 관리
-/// 배경 관리
+/// 1. 도서관 씬 상의 책 관리
+/// 2. 도서관 씬에서의 타임라인 관리
+/// 3. 배경 색 관리 
 /// </summary>
 public class LibraryScene : BaseScene
 {
@@ -29,18 +29,19 @@ public class LibraryScene : BaseScene
     [SerializeField] private MeshRenderer[] _backgrounds;
     [SerializeField] private Material _lightOn;
     [SerializeField] private Material _lightOff;
-    public Image fadeImage; 
+    [SerializeField] private Image _fadeImage; 
 
     [Header("PostProcessing")]
     [SerializeField] private Volume _volume;
+    private ColorAdjustments _colorAdjustments;
 
     [SerializeField] private GameObject _HUDHappy;
-    private ColorAdjustments _colorAdjustments;
+
+    private Color originColor = new Color(1f, 1f, 1f);
 
     protected override void Init()
 	{
         StartCoroutine(Managers.Sound.FadeInBGM("bgm_library_sketch_4", 3f));
-        //Managers.Sound.Play("bgm_library_sketch_4", Sound.Bgm);
 		
 		SceneType = Scene.LibraryScene;
 
@@ -51,19 +52,15 @@ public class LibraryScene : BaseScene
 				moveSpeed = new List<float> { 1f, 1f, 1f }
 			});
 
-        foreach (var book in _books)
-        {
-            book.GetComponent<LibraryBook>().Init();
-        }
-
         _startTimeLine.stopped += OnStartTimeLineEnd;
-        _endTimeLine.stopped += OnEndTimeLineEnd;        
+        _endTimeLine.stopped += OnEndTimeLineEnd;
+        
         _volume.profile.TryGet(out _colorAdjustments);
 
-        StartCoroutine(TempFakeFootSound());
+        StartCoroutine(CoFakeFootSound());
     }
 
-    private IEnumerator TempFakeFootSound()
+    private IEnumerator CoFakeFootSound()
     {
         yield return WaitForSecondsCache.Get(1f);
         float _footStepInterval = 0.63f;
@@ -81,9 +78,8 @@ public class LibraryScene : BaseScene
     private void OnStartTimeLineEnd(PlayableDirector director)
     {
         onStartTimeLineEnd?.Invoke();
-
         // 특정 책 만 켜주기
-        BookSwitch();
+        ActiveCurrentWorldBook();
     }
 
     private void OnEndTimeLineEnd(PlayableDirector director)
@@ -106,8 +102,8 @@ public class LibraryScene : BaseScene
     {
         _bookParent.SetActive(true);
     }
-    //현재월드에 해당하는 책만 상호작용이 가능하게 한다
-    private void BookSwitch()
+    
+    private void ActiveCurrentWorldBook()
     {
         EnableBookSelect();
 
@@ -115,8 +111,9 @@ public class LibraryScene : BaseScene
 
         int bookIndex = (int)currentWorldType;
         LibraryBook book = _books[bookIndex].GetComponent<LibraryBook>();
+
         book.StartFingerBlink();
-        book.SetCanClicked();
+        book.EnableClick();
     }
     #endregion
 
@@ -127,6 +124,7 @@ public class LibraryScene : BaseScene
         {
             _background.material = _lightOn;
         }
+
         EnableBookSelect();
     }
 
@@ -136,6 +134,7 @@ public class LibraryScene : BaseScene
         {
             _background.material = _lightOff;
         }
+
         DisableBookSelect();
     }
     #endregion
@@ -157,7 +156,6 @@ public class LibraryScene : BaseScene
         }
     }
 
-    private Color originColor = new Color(1f, 1f, 1f);
     private IEnumerator CoColorConversion(float blinkTime)
     {
 
@@ -170,10 +168,17 @@ public class LibraryScene : BaseScene
         yield return WaitForSecondsCache.Get(blinkTime);
     }
 
+    public IEnumerator FadeScene(float duration)
+    {
+        _fadeImage.gameObject.SetActive(true);
+        yield return _fadeImage.CoFadeOut(duration);
+    }
+
     public void DisableHUDHappy()
     {
         _HUDHappy.SetActive(false);
     }
+
     public override void Clear()
     {
     }

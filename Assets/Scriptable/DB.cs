@@ -13,6 +13,33 @@ public struct LoadingSceneData
 }
 
 [System.Serializable]
+public struct LoadingGameSceneData
+{
+    public WorldType worldType;
+    public List<string> todoList;
+    public string diary;
+    public string startDate;
+    public string endDate;
+    public string worldName;
+}
+
+
+[System.Serializable]
+public struct LibrarySceneData
+{
+    public WorldType worldType;
+    public LibraryBookData bookData;
+}
+
+[System.Serializable]
+public struct LibraryBookData
+{
+    public string title;
+    public string content;
+}
+
+
+[System.Serializable]
 public struct RealGameSceneData
 {
     public WorldType worldType;
@@ -44,22 +71,20 @@ public struct PlayerData
 }
 
 [System.Serializable]
-public struct LoadingGameSceneData
-{
-    public WorldType worldType;
-    public List<string> todoList;
-    public string diary;
-    public string startDate;
-    public string endDate;
-    public string worldName;
-}
-
-[System.Serializable]
 public struct EndingSceneData
 {
     public List<string> newsDialog;
     public List<string> finalDialog;
 }
+
+
+[System.Serializable]
+public struct HappinessLevel
+{
+    public float threshold; // 이 행복도 이상일 때 적용될 기준값
+    public Sprite sprite; // 해당 레벨의 표정 스프라이트
+}
+
 
 [CreateAssetMenu(fileName = "DB", menuName = "ScriptableObject/DB", order = 0)]
 public class DB : ScriptableObject
@@ -67,19 +92,25 @@ public class DB : ScriptableObject
     [SerializeField] private List<LoadingSceneData> loadingTipDataList = new();
     private Dictionary<WorldType, LoadingSceneData> loadingTipDataDic = new();
 
+    [SerializeField] private List<LoadingGameSceneData> loadingGameSceneDataList = new();
+    private Dictionary<WorldType, LoadingGameSceneData> loadingGameSceneDataDic = new();
+
     [SerializeField] private List<RealGameSceneData> realGameSceneDataList = new();
     private Dictionary<WorldType, RealGameSceneData> realGameSceneDataDic = new();
 
     [SerializeField] private List<GameSceneData> gameSceneDataList = new();
     private Dictionary<WorldType, WorldInfo> gameSceneDataDic = new();
 
-    [SerializeField] private PlayerData playerData = new();
-    private PlayerData _sudoPlayerData = new();
+    [SerializeField] private List<LibrarySceneData> librarySceneDataList = new();
+    private Dictionary<WorldType, LibrarySceneData> librarySceneDataDic = new();
 
-    [SerializeField] private List<LoadingGameSceneData> loadingGameSceneDataList = new();
-    private Dictionary<WorldType, LoadingGameSceneData> loadingGameSceneDataDic = new();
+    [SerializeField] private PlayerData playerData = new();
+    private PlayerData _gamePlayerData = new();
 
     [SerializeField] private EndingSceneData endingSceneData;
+
+    [SerializeField] private List<HappinessLevel> happinessLevels = new();
+    public List<HappinessLevel> HappinessLevels => happinessLevels;
 
     [SerializeField] private List<SoundData> soundDatas = new();
     private Dictionary<string, SoundData> soundDataDic = new();
@@ -129,6 +160,12 @@ public class DB : ScriptableObject
             }
         }
 
+        librarySceneDataDic.Clear();
+        foreach (var data in librarySceneDataList)
+        {
+            librarySceneDataDic.Add(data.worldType, data);
+        }
+
         loadingGameSceneDataDic.Clear();
         foreach (var data in loadingGameSceneDataList)
         {
@@ -136,7 +173,7 @@ public class DB : ScriptableObject
         }
 
         // 데이터 참조지역 추후 초기화
-        _sudoPlayerData = playerData;
+        _gamePlayerData = playerData;
     }
 
     public LoadingSceneData GetLoadingSceneData(WorldType worldType)
@@ -158,6 +195,15 @@ public class DB : ScriptableObject
         return new RealGameSceneData();
     }
 
+    public LibrarySceneData GetLibrarySceneData(WorldType worldType)
+    {
+        if (librarySceneDataDic.TryGetValue(worldType, out LibrarySceneData data))
+        {
+            return data;
+        }
+        return new LibrarySceneData();
+    }
+
     public EndingSceneData GetEndingSceneData()
     {
         return endingSceneData;
@@ -175,7 +221,7 @@ public class DB : ScriptableObject
 
     public PlayerData GetPlayerData()
     {
-        return _sudoPlayerData;
+        return _gamePlayerData;
     }
 
     public LoadingGameSceneData GetLoadingGameSceneData(WorldType worldType)
@@ -209,11 +255,11 @@ public class DB : ScriptableObject
 
     public void SetPlayerData(PlayerData data)
     {
-        _sudoPlayerData = data;
+        _gamePlayerData = data;
     }
 
     public void ResetPlayerData()
     {
-        _sudoPlayerData = playerData;
+        _gamePlayerData = playerData;
     }
 }

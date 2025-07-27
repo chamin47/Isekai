@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// ������ -> �̼��� GameLoadingUI
-/// ���Ǽ��� -> ������ UI_Loading
+/// 이세계 -> UI_GameLoading -> 현실세계
+/// 도서관 -> UI_Loading -> 이세계
 /// </summary>
 public class LoadingScene : BaseScene
 {
@@ -21,7 +21,7 @@ public class LoadingScene : BaseScene
 
     private void ShowLodingUI()
     {
-        if(Managers.Scene.prevSceneType != Scene.GameScene)
+        if(Managers.Scene.prevSceneType == Scene.LibraryScene)
         {
             Managers.UI.ShowSceneUI<UI_Loading>();  
         }
@@ -29,9 +29,6 @@ public class LoadingScene : BaseScene
         {
             Managers.UI.ShowSceneUI<UI_GameLoading>();
         }
-        
-        
-        
     }
 
     public override void Clear()

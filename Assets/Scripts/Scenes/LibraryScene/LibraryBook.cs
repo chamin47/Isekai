@@ -9,30 +9,24 @@ using UnityEngine.EventSystems;
 /// </summary>
 public class LibraryBook : MonoBehaviour
 {
-	[SerializeField] private SpriteRenderer _mouseRenderer;
+	[SerializeField] private GameObject _mouse;
     [SerializeField] private BoxCollider2D _collider;
 	[SerializeField] private bool _isClicked = false;           // 클릭되었는지 여부
     [SerializeField] private float _fingerBlinkSpeed = 0.8f;    // 손가락 깜박거림 대기시간
 
-    // 초기 책 상태 설정
-    public void Init()
-    {
-        _mouseRenderer.enabled = false;
-    }
-
     public void StartFingerBlink()
     {
-        StartCoroutine(CoFingerBlink());// ???
+        StartCoroutine(CoFingerBlink());
     }
 
     public void StopFingerBlink()
     {
         StopAllCoroutines();
-        _mouseRenderer.enabled = false;
+        _mouse.SetActive(false);
     }
 
     // 책 클릭 초기화
-    public void SetCanClicked()
+    public void EnableClick()
 	{
         _isClicked = false;
         _collider.enabled = true;
@@ -44,7 +38,14 @@ public class LibraryBook : MonoBehaviour
     {
         while (true)
         {
-            _mouseRenderer.enabled = !_mouseRenderer.enabled;
+            if(_mouse.activeSelf)
+            {
+                _mouse.SetActive(false);
+            }
+            else
+            {
+                _mouse.SetActive(true);
+            }
 
             yield return WaitForSecondsCache.Get(_fingerBlinkSpeed);
         }
@@ -54,26 +55,12 @@ public class LibraryBook : MonoBehaviour
     {
         if (!_isClicked)
         {
+            _isClicked = true;
+
             var ui = Managers.UI.MakeWorldSpaceUI<UI_BookSelectWorldSpace>();
             ui.Init(this);
 
             StopFingerBlink();
-            _isClicked = true;
-        }
-    }
-
-    // 초기화
-    private void Reset()
-    {
-        _collider = GetComponent<BoxCollider2D>();
-        foreach (Transform child in transform)
-        {
-            SpriteRenderer sr = child.GetComponent<SpriteRenderer>();
-            if (sr != null)
-            {
-                _mouseRenderer = sr;
-                break;
-            }
         }
     }
 }

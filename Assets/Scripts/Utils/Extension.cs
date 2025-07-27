@@ -375,6 +375,37 @@ public static class Extension
         if (waitAfter > 0f) yield return WaitForSecondsCache.Get(waitAfter);
     }
 
+    public static IEnumerator CoFadeIn(this CanvasGroup canvasGroup, float fadeTime, float waitBefore = 0f, float waitAfter = 0f)
+    {
+        if (waitBefore > 0f) yield return WaitForSecondsCache.Get(waitBefore);
+        float startAlpha = 1;
+        float targetAlpha = 0;
+        float elapsedTime = 0;
+        while (elapsedTime < fadeTime)
+        {
+            elapsedTime += Time.deltaTime;
+            canvasGroup.alpha = Mathf.Lerp(startAlpha, targetAlpha, elapsedTime / fadeTime);
+            yield return null;
+        }
+        canvasGroup.alpha = targetAlpha;
+        if (waitAfter > 0f) yield return WaitForSecondsCache.Get(waitAfter);
+    }
+
+    public static IEnumerator CoFadeOut(this CanvasGroup canvasGroup, float fadeTime, float waitBefore = 0f, float waitAfter = 0f)
+    {
+        if (waitBefore > 0f) yield return WaitForSecondsCache.Get(waitBefore);
+        float startAlpha = 0;
+        float targetAlpha = 1;
+        float elapsedTime = 0;
+        while (elapsedTime < fadeTime)
+        {
+            elapsedTime += Time.deltaTime;
+            canvasGroup.alpha = Mathf.Lerp(startAlpha, targetAlpha, elapsedTime / fadeTime);
+            yield return null;
+        }
+        canvasGroup.alpha = targetAlpha;
+        if (waitAfter > 0f) yield return WaitForSecondsCache.Get(waitAfter);
+    }
 
     public static IEnumerator CoFillImage(this Image image, float targetFill, float duration)
     {

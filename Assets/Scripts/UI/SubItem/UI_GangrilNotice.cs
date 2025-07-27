@@ -15,6 +15,10 @@ public class UI_GangrilNotice : UI_Base
 
     private int _index;
 
+    public override void Init()
+    {
+    }
+
     //Notice창의 크기는 0.7, 1.0, 1.3 순으로 되어있다 
     public void Init(int index)
     {
@@ -64,7 +68,6 @@ public class UI_GangrilNotice : UI_Base
     {
         if (!isOn) return;
 
-
         if (_index == 3)
         {
             StartCoroutine(EnterGameScene());
@@ -84,7 +87,5 @@ public class UI_GangrilNotice : UI_Base
         Managers.Scene.LoadScene(Scene.LoadingScene);
     }
 
-    public override void Init()
-    {
-    }
+    
 }

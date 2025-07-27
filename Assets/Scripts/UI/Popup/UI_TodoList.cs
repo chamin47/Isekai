@@ -17,14 +17,18 @@ public class UI_TodoList : MonoBehaviour
 
     [SerializeField] private List<Sub_Toggle> _toggles = new List<Sub_Toggle>();
     [SerializeField] private Image _fadeImage;
+
     int index = 0;
+
     public void Init(LoadingGameSceneData data)
     {
         _data = data;
+
         // 만약에 대화의 개수가 달라진다면 동적으로 생성 + 허용된 범위를 기준으로 알맞게 배치한다
         for(int i = 0; i < _data.todoList.Count; i++)
         {
             Sub_Toggle go = _toggles[i];
+
             go.Init(_data.todoList[i], i);
             go.Toggle.onValueChanged.AddListener((isOn) =>
             {
@@ -46,6 +50,7 @@ public class UI_TodoList : MonoBehaviour
 
         if (index == _toggles.Count)
         {
+            // 일기장 text 
             _diaryText.gameObject.SetActive(true);
             yield return WaitForSecondsCache.Get(1f);
             Managers.Sound.Play("writing", Sound.SubEffect);
@@ -53,18 +58,23 @@ public class UI_TodoList : MonoBehaviour
             Managers.Sound.StopSubEffect();
 
             yield return WaitForSecondsCache.Get(1f);
+
             Managers.Sound.Play("s2_book1", Sound.Effect);
             yield return StartCoroutine(_fadeImage.CoFadeOut(2f));
             Managers.Scene.LoadScene(Scene.RealGameScene);
         }
         else
         {
+            // 메모 text
             _toggles[index].gameObject.SetActive(true);
+
             Managers.Sound.Play("keyboard_long", Sound.SubEffect);
             yield return StartCoroutine(_toggles[index].Text.CoTypingEffect(_data.todoList[index], 0.07f));
             Managers.Sound.StopSubEffect();
+
             _toggles[index].BackGround.SetActive(true);
         }
+
         index++;
     }
 

@@ -42,6 +42,7 @@ public class UI_BookSelectWorldSpace : UI_Base, IPointerEnterHandler, IPointerEx
 	{
 		var ui = Managers.UI.ShowPopupUI<UI_BookPopup>();
 		ui.Init(_book);
+
         Managers.Resource.Destroy(gameObject);
 	}
 
@@ -49,6 +50,7 @@ public class UI_BookSelectWorldSpace : UI_Base, IPointerEnterHandler, IPointerEx
 	{
 		var ui = NoticePopupFactory.CreatePopup(Managers.World.CurrentWorldType);
         ui.Init(_book);
+
         Managers.Resource.Destroy(gameObject);
 	}
 

@@ -1,19 +1,16 @@
-using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 
-public class HappinessHUD : UI_Scene
+public class HappinessHUD : UI_Base
 {
-	
 	// 행복도에 따른 이미지 변경 요소
 	[SerializeField] private Image _gaugeBarImage;
 	[SerializeField] private Image _happyImage;
-	[SerializeField] List<Sprite> _happySprites;
 
+    [SerializeField] private List<HappinessLevel> _happinessLevels;
 
     [SerializeField] private Volume _volume;
 
@@ -21,14 +18,13 @@ public class HappinessHUD : UI_Scene
 
 	public override void Init()
 	{
-		base.Init();
-
         _volume.profile.TryGet(out _color);
 
         Canvas canvas = GetComponent<Canvas>();
         canvas.renderMode = RenderMode.ScreenSpaceCamera;
         canvas.worldCamera = Camera.main;
-		canvas.planeDistance = 1;
+
+        _happinessLevels = Managers.DB.HappinessLevels;
 
         _gaugeBarImage.fillAmount = Managers.Happy.Happiness / Managers.Happy.MaxHappiness;
 		UpdateHappinessUI(Managers.Happy.Happiness);		
@@ -44,41 +40,43 @@ public class HappinessHUD : UI_Scene
 		Managers.Happy.OnHappinessChanged -= UpdateHappinessUI;
 	}
 
-	public void UpdateHappinessUI(float happiness)
-	{
-        _gaugeBarImage.fillAmount = happiness / Managers.Happy.MaxHappiness;
+    public void UpdateHappinessUI(float happiness)
+    {
+        float normalizedHappiness = happiness / Managers.Happy.MaxHappiness;
 
-		
+        UpdateGaugeBar(normalizedHappiness);
+        UpdateEmotionSprite(normalizedHappiness); 
+        UpdateScreenSaturation(normalizedHappiness);
+    }
+    private void UpdateGaugeBar(float normalizedValue)
+    {
+        _gaugeBarImage.fillAmount = normalizedValue;
+    }
 
-		if (happiness >= 80f)
-		{
-			_happyImage.sprite = _happySprites[0];
-		}
-		else if(happiness >= 60f)
+    private void UpdateEmotionSprite(float normalizedHappiness)
+    {        
+        _happyImage.sprite = _happinessLevels[_happinessLevels.Count - 1].sprite;
+        foreach (var level in _happinessLevels)
         {
-            _happyImage.sprite = _happySprites[1];
+            if (normalizedHappiness >= level.threshold)
+            {
+                _happyImage.sprite = level.sprite;
+                break;
+            }
         }
-        else if (happiness >= 40f)
-        {
-            _happyImage.sprite = _happySprites[2];
-        }
-        else if (happiness >= 20f)
-        {
-            _happyImage.sprite = _happySprites[3];
-        }
-        else
-        {
-            _happyImage.sprite = _happySprites[4];
-        }
+    }
 
-		// 점점 회색빛으로 변경
-		if (_color != null)
-            _color.saturation.Override(-(1f - Managers.Happy.Happiness / Managers.Happy.MaxHappiness) * 100);
-
+    private void UpdateScreenSaturation(float normalizedValue)
+    {
+        if (_color != null)
+        {
+            float unhappinessRatio = 1f - normalizedValue;
+            _color.saturation.Override(-unhappinessRatio * 100f);
+        }
     }
 
     public void ChangeHappiness(float amount)
 	{
-		Managers.Happy.ChangeHappiness(amount);
+		Managers.Happy.AddHappiness(amount);
     }
 }

@@ -61,7 +61,7 @@ public class UI_BubbleTest: MonoBehaviour
 
 	private void TriggerDialog()
 	{
-		Managers.Happy.ChangeHappiness(_dialogUnit.happinessDelta);
+		Managers.Happy.AddHappiness(_dialogUnit.happinessDelta);
 		Camera.main.GetComponent<CameraShake>().Shake();
 
 		if (_isTyping)

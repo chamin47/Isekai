@@ -240,7 +240,7 @@ public class GiantController : MonoBehaviour
         {
             Debug.Log("Player collided with Giant");
             Managers.Sound.Play("feet_3", Sound.Effect, time : 0.45f);
-            Managers.Happy.ChangeHappiness(-3);
+            Managers.Happy.AddHappiness(-3);
             collision.collider.GetComponent<MovementRigidbody2D>().Knockback(Vector2.left, 20f, 0.3f);
         }
     }

@@ -6,6 +6,9 @@ using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.UI;
 
+/// <summary>
+/// libarary 씬에서 생성되는 Notice 팝업 그 외 용도로 사용하면 안된다
+/// </summary>
 public class UI_NoticePopup : UI_Popup
 {
     [SerializeField] protected Toggle _checkToggle;
@@ -14,6 +17,7 @@ public class UI_NoticePopup : UI_Popup
     [SerializeField] protected TMP_Text _noticeText;
 
     protected Canvas _canvas;
+
     protected LibraryScene _libraryScene;
     protected LibraryBook _book;
 
@@ -24,10 +28,15 @@ public class UI_NoticePopup : UI_Popup
     public override void Init()
     {
         base.Init();
-        _libraryScene = Managers.Scene.CurrentScene as LibraryScene;
 
-        _libraryScene.DisableBookSelect();
-        _libraryScene.SetLightOff();        
+        if (Managers.Scene.CurrentScene is LibraryScene)
+        {
+            _libraryScene = Managers.Scene.CurrentScene as LibraryScene;
+
+            _libraryScene.DisableBookSelect();
+            _libraryScene.SetLightOff();
+            return;
+        }
 
         _checkToggle.onValueChanged.AddListener(OnCheckToggleIsOn);
 
@@ -64,13 +73,18 @@ public class UI_NoticePopup : UI_Popup
     {
         if (!_canHandle) return;
 
-        _libraryScene.EnableBookSelect();
-        _libraryScene.SetLightOn();
+        if(_libraryScene != null)
+        {
+            _libraryScene.EnableBookSelect();
+            _libraryScene.SetLightOn();
+        }
+            
         if (_book != null)
         {
-            _book.SetCanClicked();
+            _book.EnableClick();
             _book.StartFingerBlink();
         }
+
         Managers.UI.ClosePopupUI(this);
     }
 
@@ -86,17 +100,20 @@ public class UI_NoticePopup : UI_Popup
     protected virtual void ProcessWorldInteraction()
     {
         _canHandle = false;
-        _libraryScene.PlayEndTimeLine();
+
+        if(_libraryScene != null)
+            _libraryScene.PlayEndTimeLine();
+
         StartCoroutine(CoFadeOut());
     }
 
     private IEnumerator CoFadeOut()
     {
-        LibraryScene scene = Managers.Scene.CurrentScene as LibraryScene;
-        scene.fadeImage.gameObject.SetActive(true);
         StartCoroutine(Managers.Sound.FadeOutBGM(2f));
-        StartCoroutine(scene.fadeImage.CoFadeOut(2f));
+        StartCoroutine(_libraryScene.FadeScene(2f));
+
         yield return WaitForSecondsCache.Get(1f);
+
         Managers.Sound.Play("s2_book1", Sound.Effect);
 
         yield return WaitForSecondsCache.Get(2f);

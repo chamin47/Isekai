@@ -26,9 +26,9 @@ public class Sub_Toggle : UI_Base
         _toggle.onValueChanged.AddListener(OnValueChanged);
     }
 
-    private void OnValueChanged(bool arg0)
+    private void OnValueChanged(bool isOn)
     {
-        if (arg0)
+        if (isOn)
         {
             _toggle.image.sprite = _onImage;
         }

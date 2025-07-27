@@ -19,10 +19,11 @@ using UnityEngine.UI;
 /// 4. postprocessing을 통한 효과 적용  
 /// 5. 엔딩 씬으로 이동시 이벤트
 /// </summary>
-public class GameSceneEx : BaseScene
+public class GameScene : BaseScene
 {
 
-	public Transform player;
+	[SerializeField] private PlayerController _player;
+    public PlayerController Player => _player;
 
     // 미니게임을 제조한다
 	[SerializeField] private MiniGameFactory _miniGameFactory;
@@ -50,13 +51,14 @@ public class GameSceneEx : BaseScene
 
     private void Start()
     {
-        player.GetComponent<PlayerController>().canMove = true;
+        _player.canMove = true;
 
         _worldType = Managers.World.CurrentWorldType;
 
         Managers.Resource.Instantiate($"Background/{_worldType.ToString()}World");
-        Managers.Happy.ChangeHappiness(20f);
+        Managers.Happy.AddHappiness(20f);
 
+        // 밸런싱
         if (Managers.Happy.Happiness < 40f && (Managers.World.CurrentWorldType == WorldType.Pelmanus
             || Managers.World.CurrentWorldType == WorldType.Gang))
         {
@@ -112,7 +114,7 @@ public class GameSceneEx : BaseScene
             }
 
 			GameObject go = Managers.Resource.Instantiate("Item/Portal");
-			Vector3 newPosition = player.position + new Vector3(_potalSpawnOffsetX, _potalSpawnOffsetY, 0);
+			Vector3 newPosition = _player.transform.position + new Vector3(_potalSpawnOffsetX, _potalSpawnOffsetY, 0);
             go.transform.position = newPosition;
 
             Portal portal = go.GetComponent<Portal>();
@@ -134,7 +136,6 @@ public class GameSceneEx : BaseScene
     // Film Grain, Vignette, Chromatic Aberration조절
     public void SetPostProcessing(int strength)
     {
-        
         switch (strength) 
         {
             case 2:
@@ -150,8 +151,7 @@ public class GameSceneEx : BaseScene
     }
 
     private void AdjustVolume(float filmIntensity, float vignetteIntensity, float chromaticAberrationIntensity)
-    {
-        Debug.Log("What");
+    {        
         _volume.gameObject.SetActive(true);
         if (_volume.profile.TryGet(out FilmGrain filmGrain))
         {
@@ -169,9 +169,11 @@ public class GameSceneEx : BaseScene
 
     private IEnumerator EnterEndingScene()
     {
-        player.GetComponent<PlayerController>().canMove = false;
+        _player.canMove = false;
+
         Managers.Sound.StopBGM();
         yield return WaitForSecondsCache.Get(1f);
+
         _fadeImage.gameObject.SetActive(true);
         _fadeImage.color = new Color(_fadeImage.color.r, _fadeImage.color.g, _fadeImage.color.b, 1);
 
@@ -180,12 +182,11 @@ public class GameSceneEx : BaseScene
         Managers.Scene.LoadScene(Scene.EndingScene);
     }
 
-    private void ClearEvent()
+    private IEnumerator ClearEvent()
 	{
-        StartCoroutine(_fadeImage.CoFadeOut(3f));
+        Managers.Sound.FadeOutBGM(3f);
+        yield return _fadeImage.CoFadeOut(3f);
     }
-
-
 
     public override void Clear()
 	{

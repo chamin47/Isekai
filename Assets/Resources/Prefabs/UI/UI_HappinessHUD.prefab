@@ -295,7 +295,7 @@ GameObject:
   - component: {fileID: 8072432044795425438}
   - component: {fileID: 1130975414083750472}
   - component: {fileID: 3804604755701353061}
-  - component: {fileID: 1361218398227797530}
+  - component: {fileID: 460968507463420093}
   m_Layer: 5
   m_Name: UI_HappinessHUD
   m_TagString: Untagged
@@ -318,7 +318,7 @@ RectTransform:
   - {fileID: 5674462354759406610}
   - {fileID: 1974394874217622294}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -388,7 +388,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &1361218398227797530
+--- !u!114 &460968507463420093
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -401,15 +401,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gaugeBarImage: {fileID: 8734506709395464381}
-  _happyImage: {fileID: 3055929339265520566}
-  _happySprites:
-  - {fileID: 21300000, guid: b8f323e667ff1214eae3a03d8579b479, type: 3}
-  - {fileID: 21300000, guid: 9d82619c636dc6a438213e98aa379a66, type: 3}
-  - {fileID: 21300000, guid: 658cad65b60add040967d9333faa9aa9, type: 3}
-  - {fileID: 21300000, guid: e9771dd00300d2d45a1ef6deb1d4b6ac, type: 3}
-  - {fileID: 21300000, guid: 46cad30269cac014594d304c625c9e6e, type: 3}
+  _happyImage: {fileID: 2824617970109504214}
+  _happinessLevels: []
   _volume: {fileID: 8800515560282799825}
-  _color: {fileID: 0}
 --- !u!1 &5933437597343934309
 GameObject:
   m_ObjectHideFlags: 0

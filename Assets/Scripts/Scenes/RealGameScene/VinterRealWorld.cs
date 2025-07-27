@@ -102,14 +102,15 @@ public class VinterRealWorld : MonoBehaviour
 
     private IEnumerator CoWaitAndStart()
     {
-        yield return new WaitForSeconds(2.0f);
+        yield return WaitForSecondsCache.Get(2.0f);
         AdjustTimelinePosition();
+        _player.GetComponent<PlayerController>().SetLook(1);
         _timeline.Play();
     }
 
     private IEnumerator CoFadeOut()
     {
-        yield return new WaitForSeconds(3.0f);
+        yield return WaitForSecondsCache.Get(3.0f);
 
         float fadeOutTime = 1.0f;
         float currentTime = 0.0f;
@@ -122,6 +123,8 @@ public class VinterRealWorld : MonoBehaviour
             _fadeImage.color = color;
             yield return null;
         }
+
+        yield return WaitForSecondsCache.Get(1f);
 
         Managers.World.MoveNextWorld();
 

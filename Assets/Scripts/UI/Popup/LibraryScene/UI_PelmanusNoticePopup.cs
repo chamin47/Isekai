@@ -12,6 +12,7 @@ public class UI_PelmanusNoticePopup : UI_NoticePopup
     [SerializeField] private Sprite _changeSprite;
     [SerializeField] private Image _backgroundImage;
     [SerializeField] private Toggle _toggle;
+
     // 이미지 pixcel에 맞춘 고정된 값
     private const float X_OFFSET = 70f;
     private const float Y_OFFSET = 50f;
@@ -39,6 +40,7 @@ public class UI_PelmanusNoticePopup : UI_NoticePopup
         {
             UI_PelmanusNoticePopup popup = Managers.UI.ShowPopupUI<UI_PelmanusNoticePopup>();
             popup.Init(_popupIndex + 1, false, _position + new Vector2(X_OFFSET, -Y_OFFSET));
+
             _canHandle = false;
             ChangeBackground();
         }
@@ -56,8 +58,7 @@ public class UI_PelmanusNoticePopup : UI_NoticePopup
         _toggle.interactable = false;
     }
 
-    
-
+    // 생성 로직
     private float minSpawnTime = 0.1f; // 최소 스폰 속도
     private float startSpawnTime = 1.0f; // 시작 속도
     private float acceleration = 0.8f; // 가속도 (1보다 작으면 점점 빨라짐)
@@ -126,7 +127,7 @@ public class UI_PelmanusNoticePopup : UI_NoticePopup
             Managers.Sound.Play("window_screen", Sound.Effect);
             SpawnPopup();
 
-            yield return new WaitForSeconds(currentSpawnTime);
+            yield return WaitForSecondsCache.Get(currentSpawnTime);
 
             // 가속 적용 (최소 속도보다 크면 계속 감소)
             if (currentSpawnTime > minSpawnTime)

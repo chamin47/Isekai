@@ -32,6 +32,7 @@ public class UI_GangrilNoticePopup : UI_NoticePopup
             Managers.UI.ClosePopupUI(this);
             Managers.UI.MakeSubItem<UI_GangrilNotice>().Init(1);
         });
+
         sequence.Play();
     }
 }

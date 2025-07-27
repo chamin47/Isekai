@@ -11,20 +11,14 @@ public class UI_LetterPopup : UI_Popup
 	public override void Init()
 	{
 		base.Init();
-		StartCoroutine(typingEffectCo(""));
+		StartCoroutine(WaitUntilProductionEnd());
 	}
 
-	private IEnumerator typingEffectCo(string dialogue)
+	private IEnumerator WaitUntilProductionEnd()
 	{
-		//foreach (char c in dialogue)
-		//{
-		//	_letterText.text += c;
-		//	yield return new WaitForSeconds(0.05f); // 타자 치는 속도 조절 가능
-		//}
+		yield return WaitForSecondsCache.Get(5.0f);
 
-		yield return new WaitForSeconds(5.0f);
 		Managers.UI.ShowPopupUI<UI_CutScene2Popup>();
-
 		gameObject.SetActive(false);
 	}
 }

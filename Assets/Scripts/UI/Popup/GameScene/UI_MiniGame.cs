@@ -75,6 +75,7 @@ public class UI_MiniGame : UI_Popup
     int _pressedKeyCount = 0;
 
     public event Action onMiniGameSucced;
+    public event Action onMiniGameDestroyed;
 
     public void Init(MiniGameInfo miniGameInfo, SpawnInfo spawnInfo, KeySpriteFactory keySpriteFactory)
     {
@@ -329,12 +330,12 @@ public class UI_MiniGame : UI_Popup
         {
             //Debug.Log("미니게임 성공! 행복도가 상승합니다.");
             Managers.Sound.Play("i_mini_game_success", Sound.Effect);
-            Managers.Happy.ChangeHappiness(_miniGameInfo.succedGauge);
+            Managers.Happy.AddHappiness(_miniGameInfo.succedGauge);
         }
         else
         {
             //Debug.Log("미니게임 실패! 행복도가 감소합니다.");
-            Managers.Happy.ChangeHappiness(_miniGameInfo.failGauge);
+            Managers.Happy.AddHappiness(_miniGameInfo.failGauge);
         }
 
         // 게임 종료 로직
@@ -431,5 +432,10 @@ public class UI_MiniGame : UI_Popup
     public override void Init()
     {
         // 추가 초기화가 필요한 경우 여기에 작성
+    }
+
+    private void OnDestroy()
+    {
+        onMiniGameDestroyed?.Invoke();
     }
 }

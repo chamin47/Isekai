@@ -8,6 +8,7 @@ public class PlayerPrefabsEditor : Editor
     [MenuItem("PlayerPref/DeleteAll")]
     public static void DeleteAll()
     {
+        PlayerPrefs.DeleteKey("IsShowEnding");
         PlayerPrefs.DeleteAll();
         Debug.Log("All PlayerPrefs have been deleted.");
     }

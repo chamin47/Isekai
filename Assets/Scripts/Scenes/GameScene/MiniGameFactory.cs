@@ -33,9 +33,7 @@ public struct SpawnInfo
 /// <summary>
 /// 1. 미니게임 생성
 /// 2. 정보 초기화
-/// 
 /// </summary>
-
 public class MiniGameFactory : MonoBehaviour
 {
     [SerializeField] private UI_MiniGame _miniGame;
@@ -69,32 +67,7 @@ public class MiniGameFactory : MonoBehaviour
 
     private int _dialogIndexIter = 0;
     private List<int> _randomDialogueIndex = new List<int>();
-    public void Init()
-    {
-        // 월드 데이터 가져오기
-        _worldInfo = Managers.World.GetWorldInfo();
 
-        Managers.Happy.OnHappinessChanged += CheckMiniGameEnd;
-
-        // 키 스프라이트 매칭 작업
-        _keySpriteFactory = new KeySpriteFactory();
-        _keySpriteFactory.Init();
-
-        // 말풍선 위치 탐지 작업
-        _gridSystem.Init(_target);
-
-        int dialogueCount = _worldInfo.dialog.Count;
-        //0 ~ dialogueCount - 1 까지의 인덱스 생성
-        _randomDialogueIndex = Enumerable.Range(0, dialogueCount).ToList();
-        ShuffleDialogueIndex();
-
-        StartCoroutine(CreateMiniGame());
-    }
-
-    public void ShuffleDialogueIndex()
-    {
-        _randomDialogueIndex.Shuffle();
-    }
     public bool IsBubbleEmpty
     {
         get
@@ -107,6 +80,34 @@ public class MiniGameFactory : MonoBehaviour
         }
     }
 
+    public void Init()
+    {
+        // 월드 데이터 가져오기
+        _worldInfo = Managers.World.GetWorldInfo();
+
+        Managers.Happy.OnHappinessChanged += CheckMiniGameEnd;
+
+        // 키 스프라이트 초기화
+        _keySpriteFactory = new KeySpriteFactory();
+        _keySpriteFactory.Init();
+
+        // 말풍선 위치 탐지 작업
+        _gridSystem.Init(_target);
+
+        int dialogueCount = _worldInfo.dialog.Count;
+
+        //0 ~ dialogueCount - 1 까지의 인덱스 생성
+        _randomDialogueIndex = Enumerable.Range(0, dialogueCount).ToList();
+        ShuffleDialogueIndex();
+
+        StartCoroutine(CreateMiniGame());
+    }
+
+    public void ShuffleDialogueIndex()
+    {
+        _randomDialogueIndex.Shuffle();
+    }
+   
     private void Update()
     {
         bool isLeft = false;
@@ -214,7 +215,7 @@ public class MiniGameFactory : MonoBehaviour
             {
                 successCount++;
 
-                GameSceneEx scene = Managers.Scene.CurrentScene as GameSceneEx;
+                GameScene scene = Managers.Scene.CurrentScene as GameScene;
                 scene.SetPostProcessing(successCount);
 
                 if (successCount == 5)

@@ -5,7 +5,18 @@ using UnityEngine.SceneManagement;
 
 public class SceneManagerEx
 {
-	public BaseScene CurrentScene { get { return GameObject.FindObjectOfType<BaseScene>(); } }
+	private BaseScene _currentScene;
+	public BaseScene CurrentScene { 
+		get
+		{
+			if(_currentScene == null)
+			{
+				_currentScene = GameObject.FindObjectOfType<BaseScene>();
+            }
+
+            return _currentScene;
+        }
+	}
 	public Scene prevSceneType { get; private set; } = Scene.Unknown;
 
     public void LoadScene(Scene type)
@@ -13,7 +24,9 @@ public class SceneManagerEx
 		Managers.Clear();
 
 		prevSceneType = CurrentScene?.SceneType ?? Scene.Unknown;
-		Managers.DB.ResetPlayerData();
+        _currentScene = null;
+
+        Managers.DB.ResetPlayerData();
         SceneManager.LoadScene(GetSceneName(type));
 	}
 
@@ -21,7 +34,6 @@ public class SceneManagerEx
 	{
 		string name = System.Enum.GetName(typeof(Scene), type);
 		return name;
-
     }
 
 	public void Clear()

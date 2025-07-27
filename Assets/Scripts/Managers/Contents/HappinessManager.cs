@@ -35,7 +35,7 @@ public class HappinessManager
 		// Managers.UI.UpdateBackgroundColor(_happiness);
 	}
 
-	public void ChangeHappiness(float amount)
+	public void AddHappiness(float amount)
 	{
 		Happiness += amount;
 	}

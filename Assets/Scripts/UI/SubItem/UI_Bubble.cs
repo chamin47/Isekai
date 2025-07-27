@@ -153,7 +153,7 @@ public class UI_Bubble : UI_Base
         {
             isFading = true;
             Managers.Sound.Play("s1_say_impact3", Sound.Effect);
-            Managers.Happy.ChangeHappiness(_score);
+            Managers.Happy.AddHappiness(_score);
             Camera.main.GetComponent<CameraShake>().Shake();
         }        
     }    

@@ -11,6 +11,7 @@ using UnityEngine;
 public class UI_GameLoading : UI_Scene
 {
     private Animator _animator;
+
     [SerializeField] private LoadingGameSceneData _data;
 
     [SerializeField] private UI_TodoList _todoList;
@@ -20,21 +21,26 @@ public class UI_GameLoading : UI_Scene
     private void Awake()
     {
         _animator = GetComponent<Animator>();
-        _animator.SetTrigger("StartAnimation");
-        _data = Managers.DB.GetLoadingGameSceneData(Managers.World.CurrentWorldType);
-        Debug.Log(Managers.World.CurrentWorldType);
+        
     }
 
-    private void Start()
+    public override void Init()
     {
+        base.Init();
+
+        _animator.SetTrigger("StartAnimation");
+        _data = Managers.DB.GetLoadingGameSceneData(Managers.World.CurrentWorldType);
+
         _totalDateText.text = "";
         _worldNameText.text = "";
+
         StartCoroutine(AnimateDateRange($"{_data.startDate} ~ {_data.endDate}", 1.5f));
     }
 
     IEnumerator AnimateDateRange(string range, float totalTime)
     {
         Managers.Sound.Play("counting",Sound.Effect);
+
         // 입력된 문자열을 파싱해서 시작/끝 날짜 가져오기
         string[] parts = range.Split('~');
         string[] startParts = parts[0].Trim().Split('.');
@@ -52,8 +58,15 @@ public class UI_GameLoading : UI_Scene
 
         // 년 월이 같다면 0
         // 년 월이 다르면 차이나는 달 만큼 
-        float timePerMonth = totalTime / (endDate.Year * 12 + endDate.Month - (currentDate.Year * 12 + currentDate.Month));
-        Debug.Log($"timePerMonth: {timePerMonth}");
+        int totalMonths = (endDate.Year * 12 + endDate.Month) - (currentDate.Year * 12 + currentDate.Month);
+
+        if(totalMonths == 0)
+        {
+            totalMonths = 1; // 최소 1개월로 설정
+        }
+
+        float timePerMonth = totalTime / totalMonths;
+
         while (currentDate < endDate)
         {
             // 진행할 일자 가져오기
@@ -85,7 +98,7 @@ public class UI_GameLoading : UI_Scene
         // 마지막 년.월 표시
         _curDateText.text = $"{endDate.Year}.{endDate.Month:D2}.{endDate.Day:D2}";
 
-        yield return new WaitForSeconds(0.5f);
+        yield return WaitForSecondsCache.Get(0.5f);
 
         OnAnimationEnd();
     }
@@ -98,12 +111,15 @@ public class UI_GameLoading : UI_Scene
     private IEnumerator ShowWorldNameText()
     {
         _worldNameText.gameObject.SetActive(true);
+
         Managers.Sound.Play("keyboard_long", Sound.SubEffect);
-        yield return StartCoroutine(_worldNameText.CoTypingEffect(_data.worldName, 0.1f));
+        yield return _worldNameText.CoTypingEffect(_data.worldName, 0.1f);
         Managers.Sound.StopSubEffect();
-        yield return new WaitForSeconds(1f);
-        yield return StartCoroutine(_totalDateText.CoTypingEffect($"{_data.startDate} ~ {_data.endDate}", 0.1f, true, "textbox"));
-        yield return new WaitForSeconds(1f);
+
+        yield return WaitForSecondsCache.Get(1f);
+        yield return _totalDateText.CoTypingEffect($"{_data.startDate} ~ {_data.endDate}", 0.1f, true, "textbox");
+        yield return WaitForSecondsCache.Get(1f);
+
         ShowToDoList();
     }
 
