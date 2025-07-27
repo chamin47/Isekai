@@ -112,6 +112,7 @@ public class LibraryScene : BaseScene
         int bookIndex = (int)currentWorldType;
         LibraryBook book = _books[bookIndex].GetComponent<LibraryBook>();
 
+        book.gameObject.SetActive(true);
         book.StartFingerBlink();
         book.EnableClick();
     }

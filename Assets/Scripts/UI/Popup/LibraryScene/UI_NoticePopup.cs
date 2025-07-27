@@ -29,13 +29,13 @@ public class UI_NoticePopup : UI_Popup
     {
         base.Init();
 
+
         if (Managers.Scene.CurrentScene is LibraryScene)
         {
             _libraryScene = Managers.Scene.CurrentScene as LibraryScene;
 
             _libraryScene.DisableBookSelect();
             _libraryScene.SetLightOff();
-            return;
         }
 
         _checkToggle.onValueChanged.AddListener(OnCheckToggleIsOn);
