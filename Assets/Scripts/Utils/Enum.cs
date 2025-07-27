@@ -20,6 +20,7 @@ public enum Scene
 	LoadingScene,
 	DongMinTestScene,
 	TestScene,
+	TrueEnding_NoRouteScene,
 }
 
 public enum Sound

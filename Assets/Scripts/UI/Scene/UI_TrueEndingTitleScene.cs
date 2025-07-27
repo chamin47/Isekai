@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 /// <summary>
-/// 엔딩을 본 뒤 진‑엔딩 루트로 넘어가는 전용 타이틀 UI<br/>
+/// 엔딩을 본 뒤 진‑엔딩 루트로 넘어가는 전용 타이틀 UI
 /// </summary>
 public class UI_TrueEndingTitleScene : UI_Scene
 {
@@ -14,6 +14,7 @@ public class UI_TrueEndingTitleScene : UI_Scene
 	[SerializeField] private CanvasGroup _inputCanvasGroup; // 장면2 UI용
 	[SerializeField] private TMP_InputField _inputField;
 
+	[Header("Intro‑2")]
 	[SerializeField] private CanvasGroup _intro2Group;
 	[SerializeField] private TMP_Text _intro2Text;   // 정방향
 	[SerializeField] private TMP_Text _mirrorText;   // 좌우 + 상하 Flip
@@ -23,10 +24,17 @@ public class UI_TrueEndingTitleScene : UI_Scene
 	[SerializeField] private TMP_Text _yesText;
 	[SerializeField] private TMP_Text _noText;
 
+	[Header("Bubble UI")]
+	[SerializeField] CanvasGroup _bubbleGroup;          // Bubble ‑ CanvasGroup
+	[SerializeField] TMP_Text _bubbleText;              // BubbleText
+
+	[Header("World Objects")]
+	[SerializeField] PlayerController _player;
+
 	[Header("Fade")]
 	[SerializeField] private float _fadeDuration = 1f;
 
-	// Internal State ──────────────────────────────────────────────────
+	// Internal State 
 	private Vector2 _intro2InitPos;
 	private int _choiceIndex;                       // 0 = YES / 1 = NO
 	private readonly Color _normalCol = new(0.33f, 0.33f, 0.33f, 1); // #555555
@@ -54,15 +62,18 @@ public class UI_TrueEndingTitleScene : UI_Scene
 	private const string _yesLineA = "이번에는 ... 꼭 행복해지길 :)";
 	private const string _yesLineB = "<color=#FF0000>이번에는 ... 꼭 실패하시길 :)</color>";
 
+	const string NO_BUBBLE = "이세계에 갇힌 나를 구해줘.";
+
 	public override void Init()
 	{
 		base.Init();
 
 		// UI 초기화
-		_intro2Group.alpha = 0;
+		_inputCanvasGroup.alpha = 0f;
+		_intro2Group.alpha = 0f;
+		_bubbleGroup.alpha = 0f;
 		_intro2InitPos = _intro2Text.rectTransform.anchoredPosition;
 
-		_inputCanvasGroup.alpha = 0f;
 		_inputField.characterLimit = 20;
 		_inputField.onSubmit.AddListener(OnInputSubmit);
 
@@ -81,7 +92,7 @@ public class UI_TrueEndingTitleScene : UI_Scene
 			_lastComposition = Input.compositionString;
 		}
 
-		// 2) 실제 입력 필드 텍스트 변경 감지
+		// 실제 입력 필드 텍스트 변경 감지
 		if (_inputField.text != _lastInputText)
 		{
 			OnInputFieldChanged();
@@ -179,7 +190,7 @@ public class UI_TrueEndingTitleScene : UI_Scene
 		}
 		else
 		{
-
+			yield return NoSequence();
 		}
 	}
 
@@ -209,6 +220,16 @@ public class UI_TrueEndingTitleScene : UI_Scene
 		yield return WaitForSecondsCache.Get(2f);       // 검정 유지 2 초
 
 		Managers.Scene.LoadScene(Scene.LibraryScene);
+	}
+
+	IEnumerator NoSequence()
+	{
+		/* 1) 암전 2 초 ─ 패널 꺼서 가림 해제 */
+		yield return FadeCanvas(_intro2Group, 0, 1f);
+		_intro2Group.gameObject.SetActive(false);
+		yield return WaitForSecondsCache.Get(1f);
+
+		Managers.Scene.LoadScene(Scene.TrueEnding_NoRouteScene);
 	}
 
 	private IEnumerator ShowInputField()
@@ -284,7 +305,7 @@ public class UI_TrueEndingTitleScene : UI_Scene
 
 	IEnumerator TypeWithEllipsis(TMP_Text txt, string full)
 	{
-		/* 0) <color=…></color> 태그 보호 --------------------------- */
+		/* 0) <color=…> 보호 -------------------------------------- */
 		string openTag = "", closeTag = "";
 		if (full.StartsWith("<"))
 		{
@@ -299,52 +320,46 @@ public class UI_TrueEndingTitleScene : UI_Scene
 			full = full[..c];
 		}
 
-		/* 1) pre / dots / post 분리 ------------------------------- */
+		/* 1) pre / dots / post 분리 ------------------------------ */
 		int idx = full.IndexOf("...");
 		string pre = idx > -1 ? full[..idx] : full;
 		string post = idx > -1 ? full[(idx + 3)..] : "";
 
-		/* 2‑A) pre : 0.075 s 타이핑 + 효과음 ----------------------- */
 		txt.text = openTag;
-		int tick = 0;
+
+		/* ── 2‑A) pre : 긴 타자음 + 0.075 s ──────────────────── */
+		Managers.Sound.Play("intro_typing2", Sound.SubEffect);   // 긴 타자음 ON
 		foreach (char ch in pre)
 		{
 			txt.text += ch;
-			if (ch != ' ' && ch != '\n')
-			{
-				if (++tick % 2 == 0)
-					Managers.Sound.Play("intro_type_short", Sound.Effect);
-			}
 			yield return WaitForSecondsCache.Get(0.075f);
 		}
 
 		if (pre.Length > 0)
 			yield return WaitForSecondsCache.Get(1f);
 
-		/* 2‑B) dots : 1 초 간격 3번 + 긴 타자음 ------------------- */
-		Managers.Sound.Play("intro_typing2", Sound.SubEffect);
+		/* ── 2‑B) dots “…”, 1 초 간격 + 짧은 타자음 ─────────── */
+		Managers.Sound.PauseSubEffect();                         // 긴 타자음 OFF
 		for (int i = 0; i < 3; ++i)
 		{
+			Managers.Sound.Play("intro_type_short", Sound.Effect);  // 짧은 효과음
 			txt.text += ".";
 			yield return WaitForSecondsCache.Get(1f);
 		}
-		Managers.Sound.PauseSubEffect();
 
-		/* 2‑C) post : 0.075 s 타이핑 + 효과음 ---------------------- */
-		tick = 0;
+		/* ── 2‑C) post : 다시 긴 타자음 + 0.075 s ───────────── */
+		Managers.Sound.UnPauseSubEffect();                       // 긴 타자음 재개
 		foreach (char ch in post)
 		{
 			txt.text += ch;
-			if (ch != ' ' && ch != '\n')
-			{
-				if (++tick % 2 == 0)
-					Managers.Sound.Play("intro_type_short", Sound.Effect);
-			}
 			yield return WaitForSecondsCache.Get(0.075f);
 		}
 
-		txt.text += closeTag;    // 닫힘 태그
+		Managers.Sound.PauseSubEffect();                         // 긴 타자음 종료
+		txt.text += closeTag;
 	}
+
+
 
 	IEnumerator FadeCanvas(CanvasGroup cg, float to, float time)
 	{
