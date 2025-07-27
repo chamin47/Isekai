@@ -72,11 +72,12 @@ public class MiniGameFactory : MonoBehaviour
     {
         get
         {
-            float height = Camera.main.orthographicSize * 2f;
-            float width = height * Camera.main.aspect;
+            //float height = Camera.main.orthographicSize * 2f;
+            //float width = height * Camera.main.aspect;
 
-            Collider2D col = Physics2D.OverlapBox(Camera.main.transform.position, new Vector2(width, height), 0, LayerMask.GetMask("UI"));
-            return col == null;
+            //Collider2D col = Physics2D.OverlapBox(Camera.main.transform.position, new Vector2(width, height), 0, LayerMask.GetMask("UI"));
+            //return col == null;
+            return true;
         }
     }
 
