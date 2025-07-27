@@ -121,8 +121,8 @@ public class MiniGameFactory : MonoBehaviour
             {
                 if (_miniGame.gameObject.activeSelf)
                 {
-                    isLeft |= _miniGame.transform.position.x < _target.position.x;
-                    isRight |= _miniGame.transform.position.x > _target.position.x;
+                    isLeft |= _miniGame.transform.position.x < _target.position.x - 15f;
+                    isRight |= _miniGame.transform.position.x > _target.position.x + 15f;
                 }
             }
 
