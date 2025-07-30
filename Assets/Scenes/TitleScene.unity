@@ -8449,15 +8449,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7546629805541537628, guid: 622e1a75a307a48489feb7b614b231bb, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7546629805541537628, guid: 622e1a75a307a48489feb7b614b231bb, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7546629805541537628, guid: 622e1a75a307a48489feb7b614b231bb, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7546629805541537628, guid: 622e1a75a307a48489feb7b614b231bb, type: 3}
       propertyPath: m_AnchoredPosition.x
