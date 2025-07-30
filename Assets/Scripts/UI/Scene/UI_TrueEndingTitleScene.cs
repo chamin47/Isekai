@@ -111,7 +111,6 @@ public class UI_TrueEndingTitleScene : UI_Scene
 		Managers.Sound.Play("intro_type_short", Sound.Effect);
 	}
 
-
 	private IEnumerator PlayIntroSequence2()
 	{
 		_inputField.textComponent.color = Color.red;
@@ -133,8 +132,8 @@ public class UI_TrueEndingTitleScene : UI_Scene
 		_intro2Text.text = "";
 		_mirrorText.text = "";
 
-		_intro2Text.rectTransform.localScale =
-		_mirrorText.rectTransform.localScale = Vector3.one;
+		//_intro2Text.rectTransform.localScale =
+		//_mirrorText.rectTransform.localScale = Vector3.one;
 
 		yield return FadeCanvas(_intro2Group, 1, _fadeDuration);
 
@@ -157,46 +156,78 @@ public class UI_TrueEndingTitleScene : UI_Scene
 
 		yield return TypeWithEllipsis(_intro2Text, _line6);
 
+		yield return WaitForSecondsCache.Get(2f);
+
 		yield return ShowChoice();
 	}
-
 
 	IEnumerator ShowChoice()
 	{
 		_choiceGroup.alpha = 1;
 		_choiceGroup.interactable = _choiceGroup.blocksRaycasts = true;
-		_choiceIndex = 0;
+
+		_choiceIndex = 0;               // 0 = YES, 1 = NO
 		RefreshChoiceUI();
+
+		int noPress = 0;            // NO 연타 횟수
+		float firstNoTime = 0f;         // 첫 NO 확정 시각
 
 		while (true)
 		{
+			/* ← / → 포커스 이동 ------------------------------------ */
 			if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow))
 			{
-				_choiceIndex = 1 - _choiceIndex;          // 0↔1 토글
+				_choiceIndex = 1 - _choiceIndex;    // 0↔1 토글
 				RefreshChoiceUI();
 				Managers.Sound.Play("intro_type_short", Sound.Effect);
+
+				/* ▶ 포커스를 NO 에서 벗어나면 카운터 리셋 */
+				if (_choiceIndex != 1)
+				{
+					noPress = 0;
+					firstNoTime = 0f;
+				}
 			}
+
 			if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space))
-				break;
+			{
+				if (_choiceIndex == 0)
+				{
+					yield return FadeCanvas(_choiceGroup, 0, _fadeDuration);
+					yield return YesSequence();
+					yield break;
+				}
 
+				if (_choiceIndex == 1)
+				{
+					if (noPress == 0)                       // 첫 번째 NO
+						firstNoTime = Time.time;
+
+					noPress++;
+					Managers.Sound.Play("intro_type_short", Sound.Effect);
+
+					/* 5 초 안에 5회 성공 시 */
+					if (noPress >= 5 && Time.time - firstNoTime <= 5f)
+					{
+						yield return FadeCanvas(_choiceGroup, 0, _fadeDuration);
+						yield return NoSequence();
+						yield break;
+					}
+
+					/* 제한 시간 초과 시 카운터 초기화 */
+					if (Time.time - firstNoTime > 5f)
+					{
+						noPress = 0;
+						firstNoTime = 0f;
+					}
+				}
+			}
 			yield return null;
-		}
-
-		yield return FadeCanvas(_choiceGroup, 0, _fadeDuration);
-
-		if (_choiceIndex == 0)          // YES 
-		{
-			yield return YesSequence();
-		}
-		else
-		{
-			yield return NoSequence();
 		}
 	}
 
 	void RefreshChoiceUI()
 	{
-		// 현재 포커스에만 화살표 + 밝은 색
 		_yesText.text = _choiceIndex == 0 ? "▶ YES" : "  YES";
 		_noText.text = _choiceIndex == 1 ? "▶ NO" : "  NO";
 
@@ -209,22 +240,20 @@ public class UI_TrueEndingTitleScene : UI_Scene
 		_intro2Text.rectTransform.anchoredPosition = _intro2InitPos;
 		_intro2Text.text = _mirrorText.text = "";
 
-		// ‘행복/실패’ 두 줄 동시 출력
 		Coroutine a = StartCoroutine(TypeWithEllipsis(_intro2Text, _yesLineA));
 		Coroutine b = StartCoroutine(TypeWithEllipsis(_mirrorText, _yesLineB));
 		yield return a; yield return b;
 
 		yield return WaitForSecondsCache.Get(2f);
 
-		yield return FadeCanvas(_intro2Group, 0, 1f);   // 1 초 fade out
-		yield return WaitForSecondsCache.Get(2f);       // 검정 유지 2 초
+		yield return FadeCanvas(_intro2Group, 0, 1f);   
+		yield return WaitForSecondsCache.Get(2f);       
 
 		Managers.Scene.LoadScene(Scene.LibraryScene);
 	}
 
 	IEnumerator NoSequence()
 	{
-		/* 1) 암전 2 초 ─ 패널 꺼서 가림 해제 */
 		yield return FadeCanvas(_intro2Group, 0, 1f);
 		_intro2Group.gameObject.SetActive(false);
 		yield return WaitForSecondsCache.Get(1f);
@@ -305,7 +334,7 @@ public class UI_TrueEndingTitleScene : UI_Scene
 
 	IEnumerator TypeWithEllipsis(TMP_Text txt, string full)
 	{
-		/* 0) <color=…> 보호 -------------------------------------- */
+		// <color> 보호 
 		string openTag = "", closeTag = "";
 		if (full.StartsWith("<"))
 		{
@@ -320,45 +349,45 @@ public class UI_TrueEndingTitleScene : UI_Scene
 			full = full[..c];
 		}
 
-		/* 1) pre / dots / post 분리 ------------------------------ */
 		int idx = full.IndexOf("...");
-		string pre = idx > -1 ? full[..idx] : full;
-		string post = idx > -1 ? full[(idx + 3)..] : "";
+		string pre = idx >= 0 ? full[..idx] : full;
+		string post = idx >= 0 ? full[(idx + 3)..] : "";
 
 		txt.text = openTag;
 
-		/* ── 2‑A) pre : 긴 타자음 + 0.075 s ──────────────────── */
-		Managers.Sound.Play("intro_typing2", Sound.SubEffect);   // 긴 타자음 ON
+		if (!string.IsNullOrEmpty(pre))
+			Managers.Sound.Play("intro_typing2", Sound.SubEffect);
+
 		foreach (char ch in pre)
 		{
 			txt.text += ch;
 			yield return WaitForSecondsCache.Get(0.075f);
 		}
 
-		if (pre.Length > 0)
-			yield return WaitForSecondsCache.Get(1f);
+		Managers.Sound.StopSubEffect();
 
-		/* ── 2‑B) dots “…”, 1 초 간격 + 짧은 타자음 ─────────── */
-		Managers.Sound.PauseSubEffect();                         // 긴 타자음 OFF
+		if (pre.Length > 0)
+			yield return WaitForSecondsCache.Get(1f);   
+
 		for (int i = 0; i < 3; ++i)
 		{
-			Managers.Sound.Play("intro_type_short", Sound.Effect);  // 짧은 효과음
+			Managers.Sound.Play("intro_type_short", Sound.Effect);
 			txt.text += ".";
 			yield return WaitForSecondsCache.Get(1f);
 		}
 
-		/* ── 2‑C) post : 다시 긴 타자음 + 0.075 s ───────────── */
-		Managers.Sound.UnPauseSubEffect();                       // 긴 타자음 재개
+		if (!string.IsNullOrEmpty(post))
+			Managers.Sound.Play("intro_typing2", Sound.SubEffect);
+
 		foreach (char ch in post)
 		{
 			txt.text += ch;
 			yield return WaitForSecondsCache.Get(0.075f);
 		}
+		Managers.Sound.StopSubEffect();
 
-		Managers.Sound.PauseSubEffect();                         // 긴 타자음 종료
 		txt.text += closeTag;
 	}
-
 
 
 	IEnumerator FadeCanvas(CanvasGroup cg, float to, float time)
