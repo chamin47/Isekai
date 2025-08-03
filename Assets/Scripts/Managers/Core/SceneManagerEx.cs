@@ -11,7 +11,8 @@ public class SceneManagerEx
 		{
 			if(_currentScene == null)
 			{
-				_currentScene = GameObject.FindObjectOfType<BaseScene>();
+                _currentScene = GameObject.FindObjectOfType<BaseScene>();
+				Managers.DebugInfo.LastSceneType = _currentScene?.SceneType ?? Scene.Unknown;
             }
 
             return _currentScene;

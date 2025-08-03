@@ -11,7 +11,7 @@ using UnityEngine.UI;
 /// </summary>
 public class UI_Loading : UI_Scene
 {
-    [SerializeField] private float _fadeTime = 3f;
+    [SerializeField] private float _fadeTime = 3f;  
     public float FadeTime => _fadeTime;
     [SerializeField] private float _waitTimeAfterFade = 1f;
     [SerializeField] private float _waitTimeBeforeFade = 1f;

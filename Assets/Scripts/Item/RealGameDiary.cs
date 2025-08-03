@@ -11,7 +11,7 @@ public class RealGameDiary : MonoBehaviour
     bool _isDiaryShown = false;
     private void Update()
     {
-        Debug.Log($"_diaryUI.activeInHierarchy: {_diaryUI.activeInHierarchy}, _diaryObject.IsCollidingWithPlayer: {_diaryObject.IsCollidingWithPlayer}, Input.GetKeyDown(KeyCode.Z): {Input.GetKeyDown(KeyCode.Z)}");
+        //Debug.Log($"_diaryUI.activeInHierarchy: {_diaryUI.activeInHierarchy}, _diaryObject.IsCollidingWithPlayer: {_diaryObject.IsCollidingWithPlayer}, Input.GetKeyDown(KeyCode.Z): {Input.GetKeyDown(KeyCode.Z)}");
         if (_diaryUI.activeInHierarchy == false && _diaryObject.IsCollidingWithPlayer && Input.GetKeyDown(KeyCode.Z)) 
         {
             Debug.Log("일기장 열기");

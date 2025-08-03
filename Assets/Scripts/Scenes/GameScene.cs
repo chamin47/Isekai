@@ -44,10 +44,22 @@ public class GameScene : BaseScene
     [SerializeField] private Volume _volume;
 
     private WorldType _worldType;
+
+    private float _totalTime = 0f;
+    private Coroutine _timeCheckerCoroutine;
     protected override void Init()
 	{
         SceneType = Scene.GameScene;   
 	}
+
+    IEnumerator TimeChecker()
+    {
+        while(true)
+        {
+            _totalTime += Time.deltaTime;
+            yield return null;
+        }
+    }
 
     private void Start()
     {
@@ -71,6 +83,7 @@ public class GameScene : BaseScene
     private IEnumerator GameStart()
     {
         yield return _fadeImage.CoFadeIn(_fadeTime, waitAfter : _waitTimeAfterFade);
+        _timeCheckerCoroutine = StartCoroutine(TimeChecker());
 
         // 배경음악 재생
         switch (_worldType)
@@ -105,7 +118,10 @@ public class GameScene : BaseScene
     /// </summary>
     public void GameOver(bool isWin)
 	{
-		if (isWin)
+        StopCoroutine(_timeCheckerCoroutine);
+        Managers.DebugInfo.SetClearTime(Managers.World.CurrentWorldType, _totalTime);
+
+        if (isWin)
         { 
             if(Managers.World.CurrentWorldType == WorldType.Pelmanus)
             {
@@ -125,6 +141,7 @@ public class GameScene : BaseScene
         }
 		else
 		{
+            Managers.DebugInfo.IncrementGameOverCount(Managers.World.CurrentWorldType);
             Managers.UI.ShowPopupUI<UI_GameOver>();
         }
 	}
@@ -185,6 +202,7 @@ public class GameScene : BaseScene
     private IEnumerator ClearEvent()
 	{
         Managers.Sound.FadeOutBGM(3f);
+        _fadeImage.gameObject.SetActive(true);
         yield return _fadeImage.CoFadeOut(3f);
     }
 

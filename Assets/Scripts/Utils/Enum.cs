@@ -61,5 +61,5 @@ public enum WorldType
     Gang,
     Pelmanus,
 
-	Max
+	None
 }

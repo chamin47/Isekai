@@ -14,7 +14,7 @@ public class WorldManager
     public void Init()
     {
         isWorldClear = new List<bool>();
-        for (int i = 0; i < (int)WorldType.Max; i++)
+        for (int i = 0; i < (int)WorldType.None; i++)
         {
             isWorldClear.Add(false);
         }

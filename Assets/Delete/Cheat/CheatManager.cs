@@ -10,6 +10,8 @@ public class CheatManager : MonoBehaviour
     public TMP_Dropdown sceneDropdown;
     public TMP_Dropdown sceneType;
     public Button SetWorldButton;
+    public Button SaveCurrentPlayerInfoButton;
+    public Button ResetAllInfoButton;
     
     public float playerSpeed = 10f;
 
@@ -22,6 +24,8 @@ public class CheatManager : MonoBehaviour
         sceneType.ClearOptions();
         sceneDropdown.AddOptions(Enum.GetNames(typeof(WorldType)).ToList());
         sceneType.AddOptions(Enum.GetNames(typeof(Scene)).ToList());
+        SaveCurrentPlayerInfoButton.onClick.AddListener(SaveCurrentPlayerInfo);
+        ResetAllInfoButton.onClick.AddListener(ResetAllInfo);
         Debug.Log("CheatManager Awake");
         cheatUI?.SetActive(false);
     }
@@ -32,6 +36,16 @@ public class CheatManager : MonoBehaviour
         Managers.Scene.LoadScene((Scene)sceneType.value);
     }
 
+    private void SaveCurrentPlayerInfo()
+    {
+        Managers.DebugInfo.SaveDebugInfo();
+    }
+
+    private void ResetAllInfo()
+    {
+        PlayerPrefs.DeleteAll();
+        Managers.Scene.LoadScene(Scene.TitleScene);
+    }
     
 
     public void Update()

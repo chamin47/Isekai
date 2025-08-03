@@ -10,10 +10,12 @@ public class Managers : MonoBehaviour
 	private HappinessManager _happy = new HappinessManager();
 	private WorldManager _world = new WorldManager();
     private DB _db;
+    private DebugInfoManager _debugInfo = new DebugInfoManager();
     public static GameManagerEx Game { get { return Instance._game; } }
 	public static HappinessManager Happy { get { return Instance._happy; } }
 	public static WorldManager World { get { return Instance._world; } }
 	public static DB DB { get { return Instance._db; } }
+	public static DebugInfoManager DebugInfo { get { return Instance._debugInfo; } }
     #endregion
 
     #region Core
@@ -48,8 +50,9 @@ public class Managers : MonoBehaviour
 			s_instance._sound.Init();
 			s_instance._happy.Init();
             s_instance._world.Init();
+			s_instance._debugInfo.Init();
 
-			if(s_instance._db == null)
+            if (s_instance._db == null)
 			{
 				// DB 불러오기
 				s_instance._db = s_instance._resource.Load<DB>("DB/DB");

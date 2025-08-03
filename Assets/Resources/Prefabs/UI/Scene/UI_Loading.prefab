@@ -1086,7 +1086,7 @@ GameObject:
   - component: {fileID: 1897723047335952553}
   - component: {fileID: 1449838777949310308}
   - component: {fileID: 2013829002553933774}
-  - component: {fileID: 6458463444553534026}
+  - component: {fileID: 2403763382516109858}
   m_Layer: 5
   m_Name: UI_Loading
   m_TagString: Untagged
@@ -1117,7 +1117,7 @@ RectTransform:
   - {fileID: 1521481436713525727}
   - {fileID: 2500503975905497701}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1187,7 +1187,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &6458463444553534026
+--- !u!114 &2403763382516109858
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1199,7 +1199,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e64a6fe94bb6b804fae003eb59ea3d86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _fadeTime: 2
+  _fadeTime: 3
   _waitTimeAfterFade: 1
   _waitTimeBeforeFade: 1
   _progressBar: {fileID: 4038425309082848977}
