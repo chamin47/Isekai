@@ -121,6 +121,7 @@ public class UI_TrueEndingTitleScene : UI_Scene
 	{
 		_inputField.textComponent.color = Color.red;
 		_inputField.placeholder.GetComponent<TextMeshProUGUI>().color = Color.red;
+		_intro2Text.alignment = TextAlignmentOptions.Center;
 
 		yield return new WaitForSeconds(2f);               // 블랙 유지
 
@@ -158,7 +159,8 @@ public class UI_TrueEndingTitleScene : UI_Scene
 
 		// 마지막 질문 한 줄
 		_intro2Text.rectTransform.anchoredPosition =
-			new Vector2(_intro2Text.rectTransform.anchoredPosition.x, 170f);
+			new Vector2(_intro2Text.rectTransform.anchoredPosition.x, 102.2f);
+		_intro2Text.alignment = TextAlignmentOptions.Top;
 
 		yield return TypeWithEllipsis(_intro2Text, _line6);
 
@@ -252,6 +254,8 @@ public class UI_TrueEndingTitleScene : UI_Scene
 		_intro2Text.text = _mirrorText.text = "";
 		yield return FadeCanvas(_intro2Group, 1f, 0f);
 
+
+		_intro2Text.alignment = TextAlignmentOptions.Center;
 		Coroutine a = StartCoroutine(TypeWithEllipsis(_intro2Text, _yesLineA));
 		Coroutine b = StartCoroutine(TypeWithEllipsis(_mirrorText, _yesLineB));
 		yield return a; yield return b;
@@ -263,6 +267,10 @@ public class UI_TrueEndingTitleScene : UI_Scene
 		_mirrorText.gameObject.SetActive(false);   
 		yield return FadeCanvas(_intro2Group, 1f, 2f);
 
+		_intro2Text.rectTransform.anchoredPosition = new Vector2(_intro2Text.rectTransform.anchoredPosition.x, 0f);
+
+		_intro2Text.alignment = TextAlignmentOptions.Center;
+
 		const float KEEP = 2f;                  
 		foreach (string line in _demoVersionLines)
 		{
@@ -271,7 +279,7 @@ public class UI_TrueEndingTitleScene : UI_Scene
 
 			yield return FadeCanvas(_intro2Group, 0f, _fadeDuration);
 			_intro2Text.text = "";
-			yield return FadeCanvas(_intro2Group, 1f, _fadeDuration);
+			yield return FadeCanvas(_intro2Group, 1f, 2f);
 		}
 
 		yield return WaitForSecondsCache.Get(2f);
