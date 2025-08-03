@@ -27,18 +27,10 @@ public class HappinessHUD : UI_Base
         _happinessLevels = Managers.DB.HappinessLevels;
 
         _gaugeBarImage.fillAmount = Managers.Happy.Happiness / Managers.Happy.MaxHappiness;
-		UpdateHappinessUI(Managers.Happy.Happiness);		
-	}
+		UpdateHappinessUI(Managers.Happy.Happiness);
 
-	private void OnEnable()
-	{
-		Managers.Happy.OnHappinessChanged += UpdateHappinessUI;
-	}
-
-	private void OnDisable()
-	{
-		Managers.Happy.OnHappinessChanged -= UpdateHappinessUI;
-	}
+        Managers.Happy.OnHappinessChanged += UpdateHappinessUI;
+    }
 
     public void UpdateHappinessUI(float happiness)
     {
@@ -78,5 +70,10 @@ public class HappinessHUD : UI_Base
     public void ChangeHappiness(float amount)
 	{
 		Managers.Happy.AddHappiness(amount);
+    }
+
+    public void OnDestroy()
+    {
+        Managers.Happy.OnHappinessChanged -= UpdateHappinessUI;
     }
 }

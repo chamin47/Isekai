@@ -12,8 +12,18 @@ public class UI_Sound : MonoBehaviour
     //[SerializeField] private Slider _bgmSlider;
     //[SerializeField] private Slider _effectSlider;
 
-    private void Start()
+    private void Awake()
     {
+        if (FindObjectsOfType<UI_Sound>().Length > 1)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        DontDestroyOnLoad(gameObject);
+    }
+    private void Start()
+    {        
         _soundToggleButton.onClick.AddListener(() =>
         {
             ToggleSoundSlider();
@@ -27,8 +37,6 @@ public class UI_Sound : MonoBehaviour
         //_bgmSlider.onValueChanged.AddListener(value => Managers.Sound.SetBgmVolume(value));
         //_effectSlider.onValueChanged.AddListener(value => Managers.Sound.SetEffectVolume(value));
         _masterSlider.gameObject.SetActive(false);
-
-        DontDestroyOnLoad(gameObject);
     }
 
     private void ToggleSoundSlider()

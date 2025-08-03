@@ -279,7 +279,8 @@ public class UI_TrueEndingTitleScene : UI_Scene
 		yield return FadeCanvas(_intro2Group, 0f, 1f);
 		yield return WaitForSecondsCache.Get(1f);
 
-		Managers.Scene.LoadScene(Scene.TitleScene);   // 처음으로
+		PlayerPrefs.DeleteAll();  // 모든 플레이어 정보 초기화
+        Managers.Scene.LoadScene(Scene.TitleScene);   // 처음으로
 	}
 
 

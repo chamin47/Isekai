@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Playables;
@@ -47,6 +48,7 @@ public class GameScene : BaseScene
 
     private float _totalTime = 0f;
     private Coroutine _timeCheckerCoroutine;
+
     protected override void Init()
 	{
         SceneType = Scene.GameScene;   
@@ -76,7 +78,7 @@ public class GameScene : BaseScene
         {
             Managers.Happy.Happiness = 40f;
         }
-
+        
         StartCoroutine(GameStart());
     }
 

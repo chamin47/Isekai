@@ -83,8 +83,8 @@ public class MiniGameController : MonoBehaviour
         // 월드 타입에 맞는 규칙을 생성/선택합니다.
         _currentRule = CreateRuleStrategy(Managers.World.CurrentWorldType);
 
-        if (_spawner != null) _spawner.OnMiniGameSpawned += HandleMiniGameSpawned;
-        Managers.Happy.OnHappinessChanged += CheckHappinessEndCondition;
+        //if (_spawner != null) _spawner.OnMiniGameSpawned += HandleMiniGameSpawned;
+        //Managers.Happy.OnHappinessChanged += CheckHappinessEndCondition;
 
         _indicatorUI?.Init(this); 
         _spawner?.BeginSpawning();
@@ -142,9 +142,9 @@ public class MiniGameController : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (_spawner != null) _spawner.OnMiniGameSpawned -= HandleMiniGameSpawned;
+        //if (_spawner != null) _spawner.OnMiniGameSpawned -= HandleMiniGameSpawned;
        
-        Managers.Happy.OnHappinessChanged -= CheckHappinessEndCondition;
+        //Managers.Happy.OnHappinessChanged -= CheckHappinessEndCondition;
     }
 }
 

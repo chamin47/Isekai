@@ -16,9 +16,8 @@ public class HappinessManager
 		{
 			_happiness = Mathf.Clamp(value, _minHappiness, _maxHappiness);
 			UpdateHappinessEffects();
-
-			OnHappinessChanged?.Invoke(_happiness);
-		}
+            OnHappinessChanged?.Invoke(_happiness);
+        }
 	}
 	public float MaxHappiness { get { return _maxHappiness; } }
 	public float MinHappiness { get { return _minHappiness; } }

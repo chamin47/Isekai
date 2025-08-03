@@ -8,7 +8,15 @@ public class CheatCode : MonoBehaviour
 
     private void Awake()
     {
-        DontDestroyOnLoad(gameObject);
+        if(FindObjectsOfType<CheatCode>().Length > 1)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        else
+        {
+            DontDestroyOnLoad(gameObject);
+        }
     }
     void Update()
     {

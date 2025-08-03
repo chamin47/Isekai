@@ -86,6 +86,7 @@ public class MiniGameFactory : MonoBehaviour
         // 월드 데이터 가져오기
         _worldInfo = Managers.World.GetWorldInfo();
 
+        Managers.Happy.OnHappinessChanged -= CheckMiniGameEnd;
         Managers.Happy.OnHappinessChanged += CheckMiniGameEnd;
 
         // 키 스프라이트 초기화
