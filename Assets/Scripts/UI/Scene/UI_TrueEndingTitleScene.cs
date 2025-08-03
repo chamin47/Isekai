@@ -62,7 +62,13 @@ public class UI_TrueEndingTitleScene : UI_Scene
 	private const string _yesLineA = "이번에는 ... 꼭 행복해지길 :)";
 	private const string _yesLineB = "<color=#FF0000>이번에는 ... 꼭 실패하시길 :)</color>";
 
-	const string NO_BUBBLE = "이세계에 갇힌 나를 구해줘.";
+	private readonly List<string> _demoVersionLines = new()
+	{
+		"지금까지 '이세계 증후군' 데모 버전을\n 플레이해주셔서 감사합니다.",
+		"주인공은 과연 이 세계의 나를 지켜낼 수 있을까요?",
+		"그 여정은 정식 버전을 통해 확인해보세요\n 감사합니다 :)",
+		"이세계 증후군"
+	};
 
 	public override void Init()
 	{
@@ -126,7 +132,7 @@ public class UI_TrueEndingTitleScene : UI_Scene
 		yield return c1; yield return c2;
 		Managers.Sound.PauseSubEffect();
 
-		yield return WaitForSecondsCache.Get(1f);
+		yield return WaitForSecondsCache.Get(2f);
 
 		yield return FadeCanvas(_intro2Group, 0f, _fadeDuration);   // 알파 0으로
 		_intro2Text.text = "";
@@ -193,7 +199,9 @@ public class UI_TrueEndingTitleScene : UI_Scene
 			{
 				if (_choiceIndex == 0)
 				{
-					yield return FadeCanvas(_choiceGroup, 0, _fadeDuration);
+					Coroutine c1 = StartCoroutine(FadeCanvas(_intro2Group, 0f, _fadeDuration));
+					Coroutine c2 = StartCoroutine(FadeCanvas(_choiceGroup, 0f, _fadeDuration));
+					yield return c1; yield return c2;
 					yield return YesSequence();
 					yield break;
 				}
@@ -209,7 +217,10 @@ public class UI_TrueEndingTitleScene : UI_Scene
 					/* 5 초 안에 5회 성공 시 */
 					if (noPress >= 5 && Time.time - firstNoTime <= 5f)
 					{
-						yield return FadeCanvas(_choiceGroup, 0, _fadeDuration);
+						Coroutine c1 = StartCoroutine(FadeCanvas(_intro2Group, 0f, _fadeDuration));
+						Coroutine c2 = StartCoroutine(FadeCanvas(_choiceGroup, 0f, _fadeDuration));
+						yield return c1; yield return c2;
+
 						yield return NoSequence();
 						yield break;
 					}
@@ -239,6 +250,7 @@ public class UI_TrueEndingTitleScene : UI_Scene
 	{
 		_intro2Text.rectTransform.anchoredPosition = _intro2InitPos;
 		_intro2Text.text = _mirrorText.text = "";
+		yield return FadeCanvas(_intro2Group, 1f, 0f);
 
 		Coroutine a = StartCoroutine(TypeWithEllipsis(_intro2Text, _yesLineA));
 		Coroutine b = StartCoroutine(TypeWithEllipsis(_mirrorText, _yesLineB));
@@ -246,11 +258,30 @@ public class UI_TrueEndingTitleScene : UI_Scene
 
 		yield return WaitForSecondsCache.Get(2f);
 
-		yield return FadeCanvas(_intro2Group, 0, 1f);   
-		yield return WaitForSecondsCache.Get(2f);       
+		yield return FadeCanvas(_intro2Group, 0f, 1f);
+		_intro2Text.text = _mirrorText.text = "";
+		_mirrorText.gameObject.SetActive(false);   
+		yield return FadeCanvas(_intro2Group, 1f, 2f);
 
-		Managers.Scene.LoadScene(Scene.LibraryScene);
+		const float KEEP = 2f;                  
+		foreach (string line in _demoVersionLines)
+		{
+			_intro2Text.text = line;               
+			yield return WaitForSecondsCache.Get(KEEP);
+
+			yield return FadeCanvas(_intro2Group, 0f, _fadeDuration);
+			_intro2Text.text = "";
+			yield return FadeCanvas(_intro2Group, 1f, _fadeDuration);
+		}
+
+		yield return WaitForSecondsCache.Get(2f);
+
+		yield return FadeCanvas(_intro2Group, 0f, 1f);
+		yield return WaitForSecondsCache.Get(1f);
+
+		Managers.Scene.LoadScene(Scene.TitleScene);   // 처음으로
 	}
+
 
 	IEnumerator NoSequence()
 	{

@@ -16,6 +16,7 @@ public class TrueEnding_NoRouteScene : BaseScene
 	[Header("Bubble")]
 	[SerializeField] private CanvasGroup _bubbleGroup;         // 말풍선 CanvasGroup (α 0)
 	[SerializeField] private TMP_Text _bubbleText;
+	[SerializeField] private BubbleFollow _bubbleFollow; 
 
 	private readonly Vector3 START_POS = new(-9.18f, -5f);     // 화면 왼쪽 밖
 	private readonly Vector3 STOP_POS = new(0f, -5f);     // 화면 중앙
@@ -47,6 +48,8 @@ public class TrueEnding_NoRouteScene : BaseScene
 		player.transform.position = START_POS;
 		player.gameObject.SetActive(true);
 		player.SetLook(+1);
+
+		_bubbleFollow.SetTarget(player.transform);
 
 		Animator anim = player.GetComponentInChildren<Animator>();
 
@@ -107,8 +110,10 @@ public class TrueEnding_NoRouteScene : BaseScene
 		}
 		yield return WaitForSecondsCache.Get(3f);
 
-		yield return FadeCanvas(_bubbleGroup, 0f, 1f);
-		yield return FadeCanvas(_fadeGroup, 1f, 1f);
+		Coroutine c1 = StartCoroutine(FadeCanvas(_bubbleGroup, 0f, 1f));
+		Coroutine c2 = StartCoroutine(FadeCanvas(_fadeGroup, 1f, 1f));
+		yield return c1; yield return c2;
+
 		Managers.Scene.LoadScene(Scene.TitleScene);
 	}
 
