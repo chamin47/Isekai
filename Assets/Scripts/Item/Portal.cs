@@ -38,7 +38,8 @@ public class Portal : MonoBehaviour
 
     private void OnEnterEvent()
     {
-        StartCoroutine(CoOnEnterEvent());
+        Managers.Scene.LoadScene(_nextScene);
+        //StartCoroutine(CoOnEnterEvent());
     }
 
     // 여러 이벤트가 발생했을때 가장 마지막에 이벤트가 끝나는 시점에 씬 이동
