@@ -8,7 +8,6 @@ using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.Timeline;
 using UnityEngine.UI;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 /// <summary>
 /// 1. 도서관 씬 상의 책 관리
@@ -83,7 +82,7 @@ public class LibraryScene : BaseScene
     private void OnStartTimeLineEnd(PlayableDirector director)
     {
         onStartTimeLineEnd?.Invoke();
-        // 특정 책 만 켜주기
+
         ActiveCurrentWorldBook();
     }
 

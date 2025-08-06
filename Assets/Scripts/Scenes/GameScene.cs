@@ -204,8 +204,9 @@ public class GameScene : BaseScene
     private IEnumerator ClearEvent()
 	{
         Managers.Sound.FadeOutBGM(3f);
-        _fadeImage.gameObject.SetActive(true);
-        yield return _fadeImage.CoFadeOut(3f);
+        //_fadeImage.gameObject.SetActive(true);
+        //yield return _fadeImage.CoFadeOut(3f);
+        yield return WaitForSecondsCache.Get(2f);
     }
 
     public override void Clear()
