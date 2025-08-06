@@ -91,7 +91,6 @@ public class SoundManager
 			return;
 		}
 
-		_root = GameObject.Find("@SoundRoot");
 		if (_root == null)
 		{
             _root = new GameObject { name = "@SoundRoot" };

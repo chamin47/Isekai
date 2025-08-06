@@ -15,6 +15,7 @@ public class UI_NoticePopup : UI_Popup
     [SerializeField] protected Image _fadeImage;
     [SerializeField] protected RectTransform _backgroundParent;
     [SerializeField] protected TMP_Text _noticeText;
+    [SerializeField] protected Button _closeButton;
 
     protected Canvas _canvas;
 
@@ -34,11 +35,12 @@ public class UI_NoticePopup : UI_Popup
         {
             _libraryScene = Managers.Scene.CurrentScene as LibraryScene;
 
-            _libraryScene.DisableBookSelect();
+            _libraryScene.DisableBooks();
             _libraryScene.SetLightOff();
         }
 
         _checkToggle.onValueChanged.AddListener(OnCheckToggleIsOn);
+        _closeButton.onClick.AddListener(ClosePopup);
 
         // postprocessing 효과를 위한 카메라 설정
         _canvas = GetComponent<Canvas>();
@@ -75,7 +77,7 @@ public class UI_NoticePopup : UI_Popup
 
         if(_libraryScene != null)
         {
-            _libraryScene.EnableBookSelect();
+            _libraryScene.EnableBooks();
             _libraryScene.SetLightOn();
         }
             
@@ -93,6 +95,7 @@ public class UI_NoticePopup : UI_Popup
         if (!isOn) return;
 
         _checkToggle.interactable = false;
+        _closeButton.enabled = false;
         // 각 월드 타입별 처리를 하위 클래스에서 구현
         ProcessWorldInteraction();
     }

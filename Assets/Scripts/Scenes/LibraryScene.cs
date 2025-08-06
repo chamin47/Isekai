@@ -6,7 +6,9 @@ using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.Timeline;
 using UnityEngine.UI;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 /// <summary>
 /// 1. 도서관 씬 상의 책 관리
@@ -15,6 +17,8 @@ using UnityEngine.UI;
 /// </summary>
 public class LibraryScene : BaseScene
 {
+    [SerializeField] private Transform _player;
+
     [Header("Book")]
     [SerializeField] private GameObject _bookParent;
     [SerializeField] private GameObject[] _books;
@@ -88,25 +92,42 @@ public class LibraryScene : BaseScene
         onEndTimeLineEnd?.Invoke();
     }
 
+    private void AdjustTimelinePosition()
+    {
+        Vector3 startPos = _player.position;
+
+        foreach (var track in _endTimeLine.playableAsset.outputs)
+        {
+            if (track.streamName == "PlayerPosition")
+            {
+                Debug.Log("Adjust Timeline Position");
+                Debug.Log($"Start Position: {startPos}");
+                AnimationTrack animationTrack = (AnimationTrack)track.sourceObject;
+                animationTrack.position = startPos;
+            }
+        }
+    }
+
     public void PlayEndTimeLine()
     {
+        AdjustTimelinePosition();
         _endTimeLine.Play();
     }
     #endregion
 
     #region BookMethod
-    public void DisableBookSelect()
+    public void DisableBooks()
     {
         _bookParent.SetActive(false);
     } 
-    public void EnableBookSelect()
+    public void EnableBooks()
     {
         _bookParent.SetActive(true);
     }
     
     private void ActiveCurrentWorldBook()
     {
-        EnableBookSelect();
+        EnableBooks();
 
         WorldType currentWorldType = Managers.World.CurrentWorldType;
 
@@ -127,7 +148,7 @@ public class LibraryScene : BaseScene
             _background.material = _lightOn;
         }
 
-        EnableBookSelect();
+        EnableBooks();
     }
 
     public void SetLightOff()
@@ -137,7 +158,7 @@ public class LibraryScene : BaseScene
             _background.material = _lightOff;
         }
 
-        DisableBookSelect();
+        DisableBooks();
     }
     #endregion
 

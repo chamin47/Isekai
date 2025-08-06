@@ -52,7 +52,7 @@ public class UI_BookPopup : UI_Popup
 	{
 		WorldType currentWorldType = Managers.World.CurrentWorldType;
 
-		_TitleText.text = Managers.DB.GetLibrarySceneData(currentWorldType).bookData.title;
+        _TitleText.text = Managers.DB.GetLibrarySceneData(currentWorldType).bookData.title;
         _letterText.text = Managers.DB.GetLibrarySceneData(currentWorldType).bookData.content;
     }
 }

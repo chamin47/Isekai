@@ -13,7 +13,7 @@ public class LibraryBook : MonoBehaviour
     [SerializeField] private BoxCollider2D _collider;
 	[SerializeField] private bool _isClicked = false;           // 클릭되었는지 여부
     [SerializeField] private float _fingerBlinkSpeed = 0.8f;    // 손가락 깜박거림 대기시간
-
+    
     public void StartFingerBlink()
     {
         StartCoroutine(CoFingerBlink());

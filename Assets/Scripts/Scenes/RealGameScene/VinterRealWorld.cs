@@ -110,12 +110,11 @@ public class VinterRealWorld : MonoBehaviour
 
     private IEnumerator CoFadeOut()
     {
-        yield return WaitForSecondsCache.Get(3.0f);
-
-        float fadeOutTime = 1.0f;
+        yield return WaitForSecondsCache.Get(1.0f);
+        _fadeImage.gameObject.SetActive(true);
+        float fadeOutTime = 2.0f;
         float currentTime = 0.0f;
         Color color = _fadeImage.color;
-
         while (currentTime < fadeOutTime)
         {
             currentTime += Time.deltaTime;

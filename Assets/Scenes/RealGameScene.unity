@@ -229,6 +229,17 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 42790018}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &47358812 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4441106427753912526, guid: 3620334cebd54624fa810decac2bab9a, type: 3}
+  m_PrefabInstance: {fileID: 1397882096}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9972555f5baad244b95cc49d241263b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &48273327
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2429,6 +2440,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 5d56a51d2916f6944ae0c7de17ee5e78, type: 3}
+    - target: {fileID: 7420479665199043071, guid: 3620334cebd54624fa810decac2bab9a, type: 3}
+      propertyPath: _diaryObject
+      value: 
+      objectReference: {fileID: 431293845}
     - target: {fileID: 8929267208410937090, guid: 3620334cebd54624fa810decac2bab9a, type: 3}
       propertyPath: m_Name
       value: Diary
@@ -2785,6 +2800,17 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 100, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &431293845 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4441106427753912526, guid: 3620334cebd54624fa810decac2bab9a, type: 3}
+  m_PrefabInstance: {fileID: 396206598}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9972555f5baad244b95cc49d241263b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &455952981
 GameObject:
   m_ObjectHideFlags: 0
@@ -3359,7 +3385,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &514875357
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3496,6 +3522,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: e9d8fddbac5d0b847835e8a8b1fb2b93, type: 3}
     - target: {fileID: 7420479665199043071, guid: 3620334cebd54624fa810decac2bab9a, type: 3}
+      propertyPath: _zButton
+      value: 
+      objectReference: {fileID: 912120363}
+    - target: {fileID: 7420479665199043071, guid: 3620334cebd54624fa810decac2bab9a, type: 3}
       propertyPath: _diaryObject
       value: 
       objectReference: {fileID: 279141063}
@@ -3517,7 +3547,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 5391888233272136202, guid: 3620334cebd54624fa810decac2bab9a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 912120365}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3620334cebd54624fa810decac2bab9a, type: 3}
 --- !u!4 &519569206 stripped
@@ -6280,6 +6313,90 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!1 &912120363
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 912120365}
+  - component: {fileID: 912120364}
+  m_Layer: 0
+  m_Name: z
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!212 &912120364
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 912120363}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 21300000, guid: 2ecbaf47cfc53cb47a9606ae1c2c498a, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 0.8125, y: 0.6875}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!4 &912120365
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 912120363}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.295, z: 0}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 519569206}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &925402407
 GameObject:
   m_ObjectHideFlags: 0
@@ -7833,7 +7950,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1213455714
 Transform:
   m_ObjectHideFlags: 0
@@ -8076,7 +8193,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1216565629
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9232,6 +9349,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 32caef98a89a8cf4cb89a8b62df92ebf, type: 3}
+    - target: {fileID: 7420479665199043071, guid: 3620334cebd54624fa810decac2bab9a, type: 3}
+      propertyPath: _diaryObject
+      value: 
+      objectReference: {fileID: 47358812}
     - target: {fileID: 8929267208410937090, guid: 3620334cebd54624fa810decac2bab9a, type: 3}
       propertyPath: m_Name
       value: Diary (1)
@@ -14651,6 +14772,8 @@ PlayableDirector:
     value: {fileID: 514875360}
   - key: {fileID: 5731929932644573505, guid: fbb6e940a5228e445a1cb13d30268763, type: 2}
     value: {fileID: 927821593}
+  - key: {fileID: 6573186373655923965, guid: fbb6e940a5228e445a1cb13d30268763, type: 2}
+    value: {fileID: 514875356}
   m_ExposedReferences:
     m_References: []
 --- !u!4 &2115461646

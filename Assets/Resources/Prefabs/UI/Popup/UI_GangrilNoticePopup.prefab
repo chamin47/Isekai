@@ -173,7 +173,7 @@ RectTransform:
   - {fileID: 4863221200004665787}
   - {fileID: 7058951376014426243}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -259,6 +259,7 @@ MonoBehaviour:
   _fadeImage: {fileID: 6344470768954409880}
   _backgroundParent: {fileID: 1786910356608964039}
   _noticeText: {fileID: 3208192096748692323}
+  _closeButton: {fileID: 2328146680341221912}
   _gangText: {fileID: 7492875165417257378}
 --- !u!1 &4851769332457405997
 GameObject:
@@ -458,19 +459,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 860947347661879176}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 6532281906210639873}
-        m_TargetAssemblyTypeName: UI_NoticePopup, Assembly-CSharp
-        m_MethodName: ClosePopup
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &5204335205761593016
 GameObject:
   m_ObjectHideFlags: 0

@@ -21,7 +21,7 @@ public class RealGameFactory : MonoBehaviour
     [SerializeField] private int _gameIndex = 0;
     [SerializeField] private int _gameCount = 0;
 
-    [SerializeField] private float _makeGameDelay = 1.0f;
+    [SerializeField] private float _makeGameDelay = 1.5f;
 
     [SerializeField] private Transform _target;
 
