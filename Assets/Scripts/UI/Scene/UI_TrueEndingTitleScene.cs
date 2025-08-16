@@ -34,6 +34,9 @@ public class UI_TrueEndingTitleScene : UI_Scene
 	[Header("Fade")]
 	[SerializeField] private float _fadeDuration = 1f;
 
+	[SerializeField] private float _errorFlashDuration = 0.12f;   // 번쩍 유지 시간
+	private int _flashCounter;
+
 	// Internal State 
 	private Vector2 _intro2InitPos;
 	private int _choiceIndex;                       // 0 = YES / 1 = NO
@@ -214,7 +217,9 @@ public class UI_TrueEndingTitleScene : UI_Scene
 						firstNoTime = Time.time;
 
 					noPress++;
-					Managers.Sound.Play("intro_type_short", Sound.Effect);
+					//Managers.Sound.Play("intro_type_short", Sound.Effect);
+					Managers.Sound.Play("click_error3", Sound.Effect);
+					StartCoroutine(CoFlashInvalid());
 
 					/* 5 초 안에 5회 성공 시 */
 					if (noPress >= 5 && Time.time - firstNoTime <= 5f)
@@ -237,6 +242,21 @@ public class UI_TrueEndingTitleScene : UI_Scene
 			}
 			yield return null;
 		}
+	}
+
+	IEnumerator CoFlashInvalid()
+	{
+		_flashCounter++;
+
+		// 전체 선택지 패널을 살짝 어둡게
+		const float DIM_ALPHA = 0.35f;
+		_choiceGroup.alpha = DIM_ALPHA;
+
+		yield return WaitForSecondsCache.Get(_errorFlashDuration);
+
+		_flashCounter--;
+		if (_flashCounter == 0)          // 마지막 플래시가 끝났을 때만 원복
+			_choiceGroup.alpha = 1f;
 	}
 
 	void RefreshChoiceUI()
