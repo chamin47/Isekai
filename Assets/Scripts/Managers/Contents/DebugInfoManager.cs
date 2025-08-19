@@ -49,6 +49,13 @@ public class DebugInfoManager
             File.WriteAllText(SaveFilePath, headerBuilder.ToString(), Encoding.UTF8);
         }
     }
+    
+    public void ResetData()
+    {
+        LastWorldType = WorldType.None;
+        LastSceneType = Scene.Unknown;
+        worldInfo.Clear();
+    }
 
     /// <summary>
     /// 현재 디버그 정보를 CSV 파일에 추가(저장)합니다.
@@ -66,10 +73,10 @@ public class DebugInfoManager
             StringBuilder lineBuilder = new StringBuilder();
             string timestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
 
-            // 1. 고정된 기본 정보 추가
+            // 고정된 기본 정보 추가
             lineBuilder.Append($"{timestamp},{LastWorldType},{LastSceneType}");
 
-            // 2. 헤더 순서와 동일하게 WorldType enum의 모든 값을 순회하며 데이터 추가
+            // 헤더 순서와 동일하게 WorldType enum의 모든 값을 순회하며 데이터 추가
             foreach (WorldType world in Enum.GetValues(typeof(WorldType)))
             {
                 if (world == WorldType.None) continue;
@@ -82,11 +89,11 @@ public class DebugInfoManager
                 }
                 else
                 {
-                    // 정보가 없으면 기본값(0)을 추가하여 열을 맞춤
+                    // 정보가 없으면 기본값을 추가
                     lineBuilder.Append(",0,0");
                 }
             }
-            lineBuilder.Append("\n"); // 줄바꿈 추가
+            lineBuilder.Append("\n"); 
 
             // 완성된 한 줄의 문자열을 파일의 끝에 추가합니다.
             File.AppendAllText(SaveFilePath, lineBuilder.ToString(), Encoding.UTF8);
@@ -98,6 +105,7 @@ public class DebugInfoManager
             Debug.LogError($"[DebugInfoManager] 파일 저장 중 오류 발생: {e.Message}");
         }
     }
+
     public void SetClearTime(WorldType worldType, float clearTime)
     {
         if (!worldInfo.ContainsKey(worldType))

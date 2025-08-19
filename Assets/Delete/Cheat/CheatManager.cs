@@ -44,6 +44,7 @@ public class CheatManager : MonoBehaviour
     private void ResetAllInfo()
     {
         PlayerPrefs.DeleteAll();
+        Managers.DebugInfo.ResetData();
         Managers.Scene.LoadScene(Scene.TitleScene);
     }
     
