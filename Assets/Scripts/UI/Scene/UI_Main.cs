@@ -56,7 +56,7 @@ public class UI_Main : UI_Scene
         yield return _fadeImage.CoFadeOut(_fadeTime, _waitTimeAfterFade);
 
         if (!Managers.Game.IsShowEnding)
-            Managers.UI.ShowSceneUI<UI_TitleScene>();
+            Managers.UI.ShowSceneUI<UI_IntroAskName>();
         else
             Managers.UI.ShowSceneUI<UI_TrueEndingTitleScene>();
 
