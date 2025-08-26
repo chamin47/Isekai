@@ -19,6 +19,7 @@ public class UI_MiniGame : UI_Popup
     [Header("말풍선")]
     [SerializeField] private Image _bubbleImage;            // 말풍선 이미지
     [SerializeField] private TextMeshProUGUI _bubbleText;   // 말풍선 텍스트
+    [SerializeField] private GameObject _tutorialIndicator;
 
 
     [SerializeField] private Image _minigameGaugeBar;       // 게임 게이지바
@@ -77,7 +78,7 @@ public class UI_MiniGame : UI_Popup
     public event Action onMiniGameSucced;
     public event Action onMiniGameDestroyed;
 
-    public void Init(MiniGameInfo miniGameInfo, SpawnInfo spawnInfo, KeySpriteFactory keySpriteFactory)
+    public void Init(MiniGameInfo miniGameInfo, SpawnInfo spawnInfo, KeySpriteFactory keySpriteFactory, bool isTutorial = false)
     {
         _keySpriteFactory = keySpriteFactory;
 
@@ -93,6 +94,11 @@ public class UI_MiniGame : UI_Popup
         
         // 사이즈를 자동으로 조정해 준다.
         FixBubbleSize();
+
+        if (Managers.World.CurrentWorldType == WorldType.Vinter && isTutorial)
+        {
+            _tutorialIndicator.SetActive(true);
+        }
 
         UpdateUI();
     }

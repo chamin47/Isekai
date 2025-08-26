@@ -172,14 +172,14 @@ public class MiniGameFactory : MonoBehaviour
                 _isFirstMiniGame = false;
                 // 첫 미니게임은 무조건 플레이어 위쪽에 생성
                 Vector2 spawnPos = new Vector2(_target.position.x, _target.position.y + 5.5f);
-                SpawnMiniGame(spawnPos);
+                SpawnMiniGame(spawnPos, true);
             }
 
             yield return WaitForSecondsCache.Get(_spawnDelay);
         }
     }
 
-    private void SpawnMiniGame(Vector2 spawnPosition)
+    private void SpawnMiniGame(Vector2 spawnPosition, bool isTutorial = false)
     {
         bool isLeftSide = spawnPosition.x < _target.position.x;
 
@@ -204,7 +204,7 @@ public class MiniGameFactory : MonoBehaviour
         UI_MiniGame miniGame = Instantiate(_miniGame, spawnInfo.position, Quaternion.identity);
         _miniGameQueue.Enqueue(miniGame);
 
-        miniGame.Init(miniGameInfo, spawnInfo, _keySpriteFactory);
+        miniGame.Init(miniGameInfo, spawnInfo, _keySpriteFactory, isTutorial);
 
         Managers.Sound.Play("i_mini_say1", Sound.Effect);
 
