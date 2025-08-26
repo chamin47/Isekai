@@ -1,13 +1,16 @@
-﻿using TMPro;
+﻿using System.Collections;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 public class UI_IntroBookPopup : UI_Popup
 {
 	[SerializeField] private TMP_Text _nameTextA;
 	[SerializeField] private SpriteRenderer _bookSprite;   // 반드시 할당
-	[SerializeField] private PolygonOutline _outline;      
+	[SerializeField] private PolygonOutline _outline;
+	[SerializeField] private Image _fadeImage;
 
 	private UI_EventHandler _evt;
 
@@ -22,13 +25,20 @@ public class UI_IntroBookPopup : UI_Popup
 	{
 		base.Init();
 
+		StartCoroutine(StartSequence());	
+	}
+
+	private IEnumerator StartSequence()
+	{
 		IntroRuntime.LoadIfEmptyFromPrefs();
 		if (_nameTextA) _nameTextA.text = IntroRuntime.PlayerName;
+
+		yield return _fadeImage.CoFadeIn(2f, 2f);
 
 		if (!_bookSprite)
 		{
 			Debug.LogError("[UI_IntroBookPopup] Book SpriteRenderer missing!");
-			return;
+			yield break;
 		}
 
 		if (!_outline)

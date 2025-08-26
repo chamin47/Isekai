@@ -23,7 +23,23 @@ public class UI_EditNamePopup : UI_Popup
 		base.Init();
 		_input.characterLimit = 4;
 		_input.text = IntroRuntime.PlayerName;
+
+		_input.lineType = TMP_InputField.LineType.SingleLine;
+		_input.contentType = TMP_InputField.ContentType.Standard;
+		_input.customCaretColor = true;
+		_input.caretColor = _input.textComponent.color;
+		_input.caretWidth = 2;
+
 		_input.onSubmit.AddListener(OnSubmit);
+
+		// 입력 중 공백 제거하고 한글 조합 안정성
+		_input.onValueChanged.AddListener(val =>
+		{
+			// 공백 제거
+			if (!string.IsNullOrEmpty(val) && val.Contains(" "))
+				_input.text = val.Replace(" ", "");
+		});
+
 		_input.Select();
 		_input.ActivateInputField();
 	}
