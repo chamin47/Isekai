@@ -53,12 +53,16 @@ public class UI_Main : UI_Scene
     {
         _startButton.enabled = false;
 
-        yield return _fadeImage.CoFadeOut(_fadeTime, _waitTimeAfterFade);
+        if (Managers.Game.IsShowEnding)
+            _fadeImage.color = new Color(0, 0, 0, 0);
 
-        if (!Managers.Game.IsShowEnding)
-            Managers.UI.ShowSceneUI<UI_IntroAskName>();
-        else
-            Managers.UI.ShowSceneUI<UI_TrueEndingTitleScene>();
+		yield return _fadeImage.CoFadeOut(_fadeTime, _waitTimeAfterFade);
+
+
+		if (!Managers.Game.IsShowEnding)
+			Managers.UI.ShowSceneUI<UI_IntroAskName>();
+		else
+			Managers.UI.ShowSceneUI<UI_TrueEndingTitleScene>();
 
 		this.gameObject.SetActive(false);
     }

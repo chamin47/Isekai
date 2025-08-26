@@ -134,8 +134,10 @@ public class LibraryScene : BaseScene
         LibraryBook book = _books[bookIndex].GetComponent<LibraryBook>();
 
         book.gameObject.SetActive(true);
-        book.StartFingerBlink();
-        book.EnableClick();
+        //book.StartFingerBlink();
+        book.EnableFinger();
+	
+		book.EnableClick();
     }
     #endregion
 

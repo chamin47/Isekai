@@ -32,9 +32,18 @@ public class LibraryBook : MonoBehaviour
         _collider.enabled = true;
     }
 
- 
-    // 손가락 깜박거림
-    private IEnumerator CoFingerBlink()
+	public void EnableFinger()
+	{
+		_mouse.SetActive(true);
+	}
+
+	private void DisableFinger()
+	{
+		_mouse.SetActive(false);
+	}
+
+	// 손가락 깜박거림
+	private IEnumerator CoFingerBlink()
     {
         while (true)
         {
@@ -60,7 +69,7 @@ public class LibraryBook : MonoBehaviour
             var ui = Managers.UI.MakeWorldSpaceUI<UI_BookSelectWorldSpace>();
             ui.Init(this);
 
-            StopFingerBlink();
-        }
+            DisableFinger();
+		}
     }
 }

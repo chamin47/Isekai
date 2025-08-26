@@ -84,7 +84,8 @@ public class UI_NoticePopup : UI_Popup
         if (_book != null)
         {
             _book.EnableClick();
-            _book.StartFingerBlink();
+            //_book.StartFingerBlink();
+            _book.EnableFinger();
         }
 
         Managers.UI.ClosePopupUI(this);
