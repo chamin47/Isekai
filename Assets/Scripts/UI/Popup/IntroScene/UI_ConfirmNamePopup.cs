@@ -73,7 +73,7 @@ public class UI_ConfirmNamePopup : UI_Popup
 		if (_isTransitioning) yield break;
 		_isTransitioning = true;
 
-	
+		GetComponentInChildren<Image>().gameObject.SetActive(false);
 		yield return _fadeImage.CoFadeOut(2f, 1f);
 
 		Managers.Sound.Play("s2_book1", Sound.Effect);

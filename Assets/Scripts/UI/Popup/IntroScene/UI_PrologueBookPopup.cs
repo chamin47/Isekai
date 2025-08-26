@@ -58,7 +58,7 @@ public class UI_PrologueBookPopup : UI_Popup
 		//	}
 		//}
 
-		yield return null;
+		yield return _fadeImage.CoFadeIn(2f, 2f);
 		_historyToggle.Toggle.interactable = true;
 		_historyToggle.BackGround.SetActive(true);
 	}
@@ -78,6 +78,9 @@ public class UI_PrologueBookPopup : UI_Popup
 	private IEnumerator GoToIntro2()
 	{
 		if (_fadeImage) yield return _fadeImage.CoFadeOut(2f, 1f);
+
+		yield return WaitForSecondsCache.Get(2f);
+
 		Managers.UI.ShowSceneUI<UI_Intro2Video>();   // 영상 재생 UI
 		Managers.UI.ClosePopupUI(this);
 	}

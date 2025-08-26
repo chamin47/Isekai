@@ -35,7 +35,7 @@ public class UI_IntroAskName : UI_Scene
 
 		// 초기 상태
 		_questionText.text = "";
-		_questionGroup.alpha = 1f;
+		_questionGroup.alpha = 0f;
 		_inputGroup.alpha = 0f;
 
 		// 괄호 고정 텍스트
@@ -68,8 +68,11 @@ public class UI_IntroAskName : UI_Scene
 
 	IEnumerator Flow()
 	{
+		yield return WaitForSecondsCache.Get(2f);
+
 		// 0001 : 질문 타이핑
 		Managers.Sound.Play("intro_typing2", Sound.SubEffect);
+		_questionGroup.alpha = 1f;
 		yield return _questionText.CoTypingEffect(LINE, 0.075f);
 		Managers.Sound.PauseSubEffect();
 
