@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
 	private PlayerAnimator _playerAnimator;
 	public bool canMove = false;
 
-	private string currentScene;
+	private string _currentScene;
 
 	[SerializeField] private float _footStepInterval = 1f;
 	[SerializeField] private float _maxSpeed = 7f;
@@ -25,8 +25,8 @@ public class PlayerController : MonoBehaviour
 
 	private void Start()
 	{
-		currentScene = SceneManager.GetActiveScene().name;
-		Debug.Log(currentScene);
+		_currentScene = SceneManager.GetActiveScene().name;
+		Debug.Log(_currentScene);
 	}
 
 	private void Update()

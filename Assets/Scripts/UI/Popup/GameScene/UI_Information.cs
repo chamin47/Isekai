@@ -17,6 +17,28 @@ public class UI_Information : UI_Popup
     [SerializeField] private bool _isNoFocused = false;
     [SerializeField] private bool _isKeyLocked = false;
     public event Action onYesEvent;
+
+    private PlayerController _player;
+    public PlayerController Player
+    {
+        get
+        {
+            if(_player == null)
+                _player = (Managers.Scene.CurrentScene as GameScene).Player;
+            return _player;
+        }
+    }
+
+    private void OnEnable()
+    {
+        if(Player != null)
+            Player.canMove = false;
+    }
+    private void OnDisable()
+    {
+        if (Player != null)
+            Player.canMove = true;
+    }
     public override void Init()
     {
         base.Init();

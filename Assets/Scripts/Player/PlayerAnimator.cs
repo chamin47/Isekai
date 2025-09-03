@@ -13,7 +13,17 @@ public class PlayerAnimator : MonoBehaviour
         _spriteRenderer = GetComponent<SpriteRenderer>();		
     }
 
-	public void UpdateAnimation(float x)
+    private void Start()
+    {
+        WorldType currentWorld = Managers.World.CurrentWorldType;
+		Scene currentScene = Managers.Scene.CurrentScene.SceneType;
+
+		_animator.SetBool("IdleWorld", currentScene != Scene.GameScene);
+		_animator.SetBool("VinterWorld", currentWorld == WorldType.Vinter);
+		_animator.SetBool("ChaumWorld", currentWorld == WorldType.Chaumm);
+    }
+
+    public void UpdateAnimation(float x)
 	{
 		if (x != 0)
 		{
