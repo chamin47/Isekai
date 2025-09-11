@@ -73,9 +73,10 @@ public class UI_IntroBookPopup : UI_Popup
 		var popup = FindAnyObjectByType<UI_ConfirmNamePopup>();
 
 		if (popup == null)
+		{
 			Managers.Sound.Play("click_down", Sound.Effect);
-
-		Managers.UI.ShowPopupUI<UI_ConfirmNamePopup>(); // 0004
+			Managers.UI.ShowPopupUI<UI_ConfirmNamePopup>(); // 0004
+		}
 	}
 
 	private void OnDestroy()
