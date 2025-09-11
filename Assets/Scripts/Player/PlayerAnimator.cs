@@ -21,7 +21,9 @@ public class PlayerAnimator : MonoBehaviour
 		_animator.SetBool("IdleWorld", currentScene != Scene.GameScene);
 		_animator.SetBool("VinterWorld", currentWorld == WorldType.Vinter);
 		_animator.SetBool("ChaumWorld", currentWorld == WorldType.Chaumm);
-    }
+		_animator.SetBool("GangWorld", currentWorld == WorldType.Gang);
+		_animator.SetBool("PelmanusWorld", currentWorld == WorldType.Pelmanus);
+	}
 
     public void UpdateAnimation(float x)
 	{

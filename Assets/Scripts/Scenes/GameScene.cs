@@ -94,13 +94,13 @@ public class GameScene : BaseScene
                 Managers.Sound.Play("bgm_isekai_world_bin", Sound.Bgm);
                 break;
             case WorldType.Chaumm:
-                Managers.Sound.Play("bgm_isekai_world_choi", Sound.Bgm);
+                Managers.Sound.Play("bgm_isekai_cha", Sound.Bgm);
                 break;
             case WorldType.Gang:
-                Managers.Sound.Play("bgm_isekai_world_gang", Sound.Bgm);
+                Managers.Sound.Play("bgm_isekai_gang", Sound.Bgm);
                 break;
             case WorldType.Pelmanus:
-                Managers.Sound.Play("bgm_isekai_world_pel", Sound.Bgm);
+                Managers.Sound.Play("bgm_isekai_pel", Sound.Bgm);
                 break;
             default:
                 Managers.Sound.Play("bgm_isekai_world_bin", Sound.Bgm);
