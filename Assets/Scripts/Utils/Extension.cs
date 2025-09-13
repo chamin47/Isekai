@@ -422,6 +422,16 @@ public static class Extension
         image.fillAmount = targetFill;
     }
 
-   
-
+	public static IEnumerator FadeCanvas(this CanvasGroup cg, float to, float time)
+	{
+		float from = cg.alpha;
+		float t = 0f;
+		while (t < time)
+		{
+			t += Time.deltaTime;
+			cg.alpha = Mathf.Lerp(from, to, t / time);
+			yield return null;
+		}
+		cg.alpha = to;
+	}
 }

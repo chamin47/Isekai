@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class UI_GuideBookHUD : UI_Base
 {
@@ -33,9 +34,6 @@ public class UI_GuideBookHUD : UI_Base
 	[SerializeField] private float _dimAlpha = 0.78f;          // 열렸을 때 알파
 	[SerializeField] private Button _outsideCloseButton;      // 책 바깥 클릭 → 닫기
 
-	[Header("튜토리얼(빈터발트 전용 1회만)")]
-	[SerializeField] private bool _enableVinterTutorial = true;
-
 	[Header("책장 넘김(조각 페이드)")]
 	[SerializeField, Tooltip("세로 조각 개수")]
 	private int _sliceCount = 5;
@@ -43,13 +41,12 @@ public class UI_GuideBookHUD : UI_Base
 	private float _sliceFadeTime = 0.08f;
 
 	// 내부 상태
+	private PlayerController _playerController;
 	private readonly List<Sprite> _pages = new();
 	private int _index;
 	private bool _isTransitioning;
 	private bool _isOpen;
-	private bool _tutorialMode; // 첫 진입(빈터발트)에서만 true
-
-	private string CurrentWorldAsString() => Managers.World.CurrentWorldType.ToString();
+	private bool _tutorialMode = false; 
 
 	public override void Init()
 	{
@@ -81,6 +78,8 @@ public class UI_GuideBookHUD : UI_Base
 		_isOpen = false;
 		_isTransitioning = false;
 
+		_playerController = FindAnyObjectByType<PlayerController>();
+
 		// 페이지 로딩
 		LoadPagesForCurrentWorld();
 		if (_pages.Count > 0)
@@ -92,16 +91,10 @@ public class UI_GuideBookHUD : UI_Base
 		// 시작은 닫혀 있으니 네비 비활성(시각/입력 모두)
 		SetNavInteractable(false);
 
-		// 튜토리얼 판정: 빈터발트만 1회
-		_tutorialMode = false;
-		if (_enableVinterTutorial)
+		if (Managers.World.CurrentWorldType == WorldType.Vinter)
 		{
-			var worldStr = CurrentWorldAsString();
-			if (worldStr == WorldType.Vinter.ToString())
-			{
-				_tutorialMode = true;
-				StartCoroutine(CoTutorialGate());
-			}
+			_tutorialMode = true;
+			StartCoroutine(CoTutorialGate());
 		}
 	}
 
@@ -116,7 +109,7 @@ public class UI_GuideBookHUD : UI_Base
 	private void LoadPagesForCurrentWorld()
 	{
 		_pages.Clear();
-		string world = CurrentWorldAsString();
+		string world = Managers.World.CurrentWorldType.ToString();
 		string path = $"{_resourcesRoot}/{world}"; // Resources/GuideBook/{World}/
 		var loaded = Resources.LoadAll<Sprite>(path);
 		if (loaded != null && loaded.Length > 0)
@@ -144,20 +137,21 @@ public class UI_GuideBookHUD : UI_Base
 			_dim.raycastTarget = true;
 		}
 		// 책갈피 깜빡임 시작
-		StartCoroutine(CoBlinkBookmarkCG(minAlpha: 0.1f));
+		StartCoroutine(CoBlinkBookmarkCG());
 
 		// 게임 정지
 		Time.timeScale = 0f;
+		_playerController.canMove = false;
 		yield break;
 	}
 
 	private IEnumerator CoBlinkBookmarkCG(
-		float minAlpha = 0.12f,
-		float maxAlpha = 1f,
-		float speed = 3f,
-		float lowHold = 0.08f,
-		float highHold = 0.02f
-	)
+	float minAlpha = 0.12f,
+	float maxAlpha = 1f,
+	float speed = 2f,
+	float lowHold = 0f,
+	float highHold = 0f
+)
 	{
 		if (_bookmarkGroup == null) yield break;
 
@@ -166,28 +160,31 @@ public class UI_GuideBookHUD : UI_Base
 		_bookmarkGroup.interactable = true;
 
 		float t = 0f;
-		bool hasPlayedAtMin = false; // 최소 알파에서 사운드 재생 여부
+		bool hasPlayedAtMax = false; // 최대 알파에서 사운드 재생 여부
+		const float eps = 0.02f;     // 임계값 여유
 
 		while (_tutorialMode)
 		{
 			t += Time.unscaledDeltaTime;
+
 			float p = Mathf.PingPong(t * speed, 1f);
 			float a01 = Mathf.SmoothStep(0f, 1f, p);
-			_bookmarkGroup.alpha = Mathf.Lerp(minAlpha, maxAlpha, a01);
+			float alpha = Mathf.Lerp(minAlpha, maxAlpha, a01);
+			_bookmarkGroup.alpha = alpha;
 
-			if (_bookmarkGroup.alpha <= minAlpha + 0.02f)
+			if (alpha >= maxAlpha - eps)
 			{
-				if (!hasPlayedAtMin)
+				if (!hasPlayedAtMax)
 				{
 					Managers.Sound.Play("ding-126626", Sound.Effect);
-					hasPlayedAtMin = true; // 이번 사이클에서는 더 이상 소리 안 나도록
+					hasPlayedAtMax = true; // 이번 사이클에서 재생 완료
 				}
-				yield return new WaitForSecondsRealtime(lowHold);
-			}
-			else if (_bookmarkGroup.alpha >= maxAlpha - 0.02f)
-			{
-				hasPlayedAtMin = false; // 한 사이클 끝났으니 다음에 다시 소리 가능
 				yield return new WaitForSecondsRealtime(highHold);
+			}
+			else if (alpha <= minAlpha + eps)
+			{
+				hasPlayedAtMax = false; // 사이클 리셋 → 다음 최대에서 재생 가능
+				yield return new WaitForSecondsRealtime(lowHold);
 			}
 			else
 			{
@@ -197,7 +194,6 @@ public class UI_GuideBookHUD : UI_Base
 
 		_bookmarkGroup.alpha = 1f;
 	}
-
 
 	private void OnClickBookmark()
 	{
@@ -245,6 +241,7 @@ public class UI_GuideBookHUD : UI_Base
 		UpdateNavInteractable();
 
 		Time.timeScale = 0f;
+		_playerController.canMove = false;
 
 		if (_tutorialMode)
 		{
@@ -272,6 +269,7 @@ public class UI_GuideBookHUD : UI_Base
 		SetNavInteractable(false);
 
 		Time.timeScale = 1f;
+		_playerController.canMove = true;
 	}
 
 	private void OnClickPrev()

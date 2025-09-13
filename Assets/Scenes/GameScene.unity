@@ -2728,7 +2728,6 @@ MonoBehaviour:
   _dim: {fileID: 3440289629532367845}
   _dimAlpha: 0.78
   _outsideCloseButton: {fileID: 5849244497583595851}
-  _enableVinterTutorial: 1
   _sliceCount: 5
   _sliceFadeTime: 0.08
 --- !u!222 &8064348089440381036
@@ -2760,7 +2759,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: -1844098091
-  m_SortingOrder: 50
+  m_SortingOrder: 51
   m_TargetDisplay: 0
 --- !u!114 &9104232857312629980
 MonoBehaviour:

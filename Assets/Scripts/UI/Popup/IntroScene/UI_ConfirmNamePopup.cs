@@ -8,26 +8,61 @@ public class UI_ConfirmNamePopup : UI_Popup
 {
 	[Header("Texts")]
 	[SerializeField] private TMP_Text _questionText;   
-	[SerializeField] private Button _yesButton;
-	[SerializeField] private Button _noButton;
+	[SerializeField] private TMP_Text _yesText;
+	[SerializeField] private TMP_Text _noText;
 
 	[Header("FX")]
-	[SerializeField] private Image _fadeImage;         
-	[SerializeField] private Color _hoverColor = Color.red;
+	[SerializeField] private Image _fadeImage;
+
+	[SerializeField] private GameObject _infoImage;
 
 
-	private bool _isTransitioning;
+	private Color _initColor;
+
+	private bool _isTransitioning = false;
+	private bool _isYesFocused = false;
+	private bool _isNoFocused = false;
 
 	public override void Init()
 	{
 		base.Init();
 
-		_isTransitioning = false;
-		
+		_initColor = _yesText.color;
+
 		_questionText.text = "당신의 이름이 맞나요?";
 
-		_yesButton.onClick.AddListener(OnClickYesButton);
-		_noButton.onClick.AddListener(OnClickNoButton);
+		UI_EventHandler _yesTextEvent = _yesText.GetComponent<UI_EventHandler>(); 
+		_yesTextEvent.OnPointerEnterHandler += (PointerEventData data) => { OnTextFocus(_yesText); OffTextFocus(_noText);
+			_isYesFocused = true;
+			_isNoFocused = false;
+		};
+		_yesTextEvent.OnPointerExitHandler += (PointerEventData data) => { OffTextFocus(_yesText); OffTextFocus(_noText); 
+			_isYesFocused = false;
+			_isNoFocused = false;
+		};
+		_yesTextEvent.OnPointerUpHandler += (PointerEventData data) =>
+		{
+			_infoImage.SetActive(false);
+			OnClickYesButton();
+		};
+
+		UI_EventHandler _noTextEvent = _noText.GetComponent<UI_EventHandler>();
+		_noTextEvent.OnPointerEnterHandler += (PointerEventData data) =>
+		{
+			OnTextFocus(_noText); OffTextFocus(_yesText);
+			_isYesFocused = true;
+			_isNoFocused = false;
+		};
+		_noTextEvent.OnPointerExitHandler += (PointerEventData data) =>
+		{
+			OffTextFocus(_noText); OffTextFocus(_noText);
+			_isYesFocused = false;
+			_isNoFocused = false;
+		};
+		_noTextEvent.OnPointerUpHandler += (PointerEventData data) =>
+		{
+			OnClickNoButton();
+		};
 	}
 
 	private void OnClickYesButton()
@@ -57,7 +92,9 @@ public class UI_ConfirmNamePopup : UI_Popup
 		_isTransitioning = true;
 
 		GetComponentInChildren<Image>().gameObject.SetActive(false);
-		yield return _fadeImage.CoFadeOut(2f, 1f);
+
+		var popup = FindAnyObjectByType<UI_IntroBookPopup>();
+		yield return popup._canvasGroup.FadeCanvas(0f, 3f);
 
 		Managers.Sound.Play("s2_book1", Sound.Effect);
 
@@ -67,9 +104,6 @@ public class UI_ConfirmNamePopup : UI_Popup
 		Managers.UI.ShowPopupUI<UI_PrologueBookPopup>(); // 0005
 	}
 
-	private void OnDestroy()
-	{
-		_yesButton.onClick.RemoveListener(OnClickYesButton);
-		_noButton.onClick.RemoveListener(OnClickNoButton);
-	}
+	public void OnTextFocus(TMP_Text text) => text.color = Color.red;
+	public void OffTextFocus(TMP_Text text) => text.color = _initColor;
 }

@@ -449,7 +449,6 @@ public class UI_TrueEndingTitleScene : UI_Scene
 		txt.text += closeTag;
 	}
 
-
 	IEnumerator FadeCanvas(CanvasGroup cg, float to, float time)
 	{
 		float from = cg.alpha;

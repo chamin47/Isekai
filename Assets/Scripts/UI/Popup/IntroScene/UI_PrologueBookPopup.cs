@@ -14,7 +14,9 @@ public class UI_PrologueBookPopup : UI_Popup
 
 	[Header("FX")]
 	[SerializeField] private Image _fadeImage;  // 화면 전체 페이드
-	[SerializeField] private Sprite _onImage;  
+	[SerializeField] private Sprite _onImage;
+
+	[SerializeField] private CanvasGroup _canvasGroup;
 
 	private bool _isNavigating;
 
@@ -58,7 +60,10 @@ public class UI_PrologueBookPopup : UI_Popup
 		//	}
 		//}
 
-		yield return _fadeImage.CoFadeIn(2f, 2f);
+		//yield return _fadeImage.CoFadeIn(2f, 2f);
+
+		yield return _canvasGroup.FadeCanvas(1f, 3f);
+
 		_historyToggle.Toggle.interactable = true;
 		_historyToggle.BackGround.SetActive(true);
 	}
@@ -77,7 +82,7 @@ public class UI_PrologueBookPopup : UI_Popup
 
 	private IEnumerator GoToIntro2()
 	{
-		if (_fadeImage) yield return _fadeImage.CoFadeOut(2f, 1f);
+		yield return _canvasGroup.FadeCanvas(0f, 3f);
 
 		yield return WaitForSecondsCache.Get(2f);
 
