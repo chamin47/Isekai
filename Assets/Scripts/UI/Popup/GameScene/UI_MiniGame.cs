@@ -58,12 +58,12 @@ public class UI_MiniGame : UI_Popup
             if (_currentGaugeValue >= 100f)
             {
                 EndMiniGame(true);
-                onMiniGameSucced?.Invoke();
+                //onMiniGameSucced?.Invoke();
             }
         }
     }
 
-    private string _originalText;
+	private string _originalText;
 
     private List<KeyButton> _requiredKeys = new List<KeyButton>();
 
@@ -77,6 +77,9 @@ public class UI_MiniGame : UI_Popup
 
     public event Action onMiniGameSucced;
     public event Action onMiniGameDestroyed;
+    public event Action onSpawned;
+
+	public bool TailIsLeft => _spawnInfo.isLeft;
 
     public void Init(MiniGameInfo miniGameInfo, SpawnInfo spawnInfo, KeySpriteFactory keySpriteFactory, bool isTutorial = false)
     {
@@ -101,6 +104,8 @@ public class UI_MiniGame : UI_Popup
         }
 
         UpdateUI();
+
+        onSpawned?.Invoke();
     }
 
     // 인스펙터창 테스트 용
@@ -337,7 +342,9 @@ public class UI_MiniGame : UI_Popup
             //Debug.Log("미니게임 성공! 행복도가 상승합니다.");
             Managers.Sound.Play("i_mini_game_success", Sound.Effect);
             Managers.Happy.AddHappiness(_miniGameInfo.succedGauge);
-        }
+
+			onMiniGameSucced?.Invoke();
+		}
         else
         {
             //Debug.Log("미니게임 실패! 행복도가 감소합니다.");

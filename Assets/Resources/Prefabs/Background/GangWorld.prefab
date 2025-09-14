@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 5792325533461391391}
   - component: {fileID: 2525732784965210480}
   - component: {fileID: 8499388517396074413}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -210,7 +210,7 @@ BoxCollider2D:
     adaptiveTilingThreshold: 0.5
     drawMode: 2
     adaptiveTiling: 0
-  m_AutoTiling: 0
+  m_AutoTiling: 1
   serializedVersion: 2
   m_Size: {x: 500, y: 1.3680754}
   m_EdgeRadius: 0
