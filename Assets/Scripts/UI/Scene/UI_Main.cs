@@ -27,12 +27,16 @@ public class UI_Main : UI_Scene
         // 엔딩 유무에 따른 배경 이미지 설정
         if (Managers.Game.IsShowEnding)
         {
+			Managers.Sound.Play("tv_noise", Sound.Bgm);
+			
             _endingBackGround.SetActive(true);
             _commonBackGround.SetActive(false);
         }
         else
         {
-            _endingBackGround.SetActive(false);
+			Managers.Sound.Play("bgm_isekai_world_bin", Sound.Bgm);
+
+			_endingBackGround.SetActive(false);
             _commonBackGround.SetActive(true);
         }
 

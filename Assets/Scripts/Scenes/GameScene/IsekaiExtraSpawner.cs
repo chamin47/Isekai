@@ -5,9 +5,9 @@ using UnityEngine.UI;
 
 /// <summary>
 /// 미니게임(말풍선) 스폰 시 세계별 엑스트라를 즉시 생성하고,
-/// 말풍선의 실제 렌더 크기에 따라 "좌/우 가장자리 + 패딩 + 추가 오프셋(X,Y)" 지점에
+/// 말풍선의 실제 렌더 크기에 따라 "좌/우 가장자리 + 패딩 + 오프셋" 지점에
 /// 항상 정렬되도록 매 프레임 보정한다.
-/// ExtraSpawnConfig를 프리팹에 붙이면 그 설정(오프셋/지면/페이싱/호버)을 개별로 오버라이드 가능.
+/// ExtraSpawnConfig.groundMode로 개별 배치정책을 간단히 선택(Inherit / BubbleSpace / SnapToGround)
 /// </summary>
 [DisallowMultipleComponent]
 public class IsekaiExtraSpawner : MonoBehaviour
@@ -16,22 +16,22 @@ public class IsekaiExtraSpawner : MonoBehaviour
 	[SerializeField] private RectTransform _bubbleRect;
 	[SerializeField] private Canvas _bubbleCanvas; // 말풍선이 속한 Canvas(비워도 자동)
 
-	[Header("정렬/여백/오프셋 (월드 단위)")]
+	[Header("전역 오프셋/패딩 (월드 단위)")]
 	[Tooltip("말풍선 가장자리에서 엑스트라까지 기본 패딩(좌/우 공통, X+)")]
 	[SerializeField] private float _edgePaddingWorld = 0.3f;
 
-	[Tooltip("왼쪽 꼬리일 때 추가 미세 오프셋 (월드 단위, X/Y)")]
+	[Tooltip("왼쪽 꼬리일 때 기본 오프셋 (월드 단위, X/Y)")]
 	[SerializeField] private Vector2 _extraOffsetLeftWorld = Vector2.zero;
 
-	[Tooltip("오른쪽 꼬리일 때 추가 미세 오프셋 (월드 단위, X/Y)")]
+	[Tooltip("오른쪽 꼬리일 때 기본 오프셋 (월드 단위, X/Y)")]
 	[SerializeField] private Vector2 _extraOffsetRightWorld = Vector2.zero;
 
-	[Header("지면 붙이기")]
+	[Header("전역 지면 스냅")]
 	[SerializeField] private bool _projectToGround = true;
 	[SerializeField] private LayerMask _groundMask;
 	[SerializeField] private float _rayUp = 5f;
 	[SerializeField] private float _rayDown = 20f;
-	[SerializeField] private float _groundYOffset = 0f;
+	[SerializeField] private float _groundYOffset = 0f; // Inherit 모드에서 사용
 	[SerializeField] private float _worldZ = 0f; // 2D면 0
 
 	[Header("사라질 때 페이드")]
@@ -51,19 +51,10 @@ public class IsekaiExtraSpawner : MonoBehaviour
 
 	private UI_MiniGame _miniGame;
 	private GameObject _spawned;
-	private bool _isFading;
 	private Camera _uiCam;
 
-	private bool _ovrOffsets = false;
-	private Vector2 _ovrOffsetLeft;
-	private Vector2 _ovrOffsetRight;
-
-	private bool _ovrProject = false;
-	private bool _ovrProjectToGround = true;
-
-	private bool _ovrFaceDefault = false;
-	private bool _ovrFacesRightDefault = true;
-
+	// per-instance config (읽어서 보관)
+	private ExtraSpawnConfig _cfg;
 	private bool _hover = false;
 	private float _hoverAmp = 0.15f;
 	private float _hoverSpeed = 1.2f;
@@ -142,49 +133,24 @@ public class IsekaiExtraSpawner : MonoBehaviour
 
 		_spawned = Instantiate(prefab);
 
-		// 프리팹 내 ExtraSpawnConfig 확인(오버라이드 흡수)
-		ReadOverridesFromPrefab(_spawned);
+		// 개별 설정 읽기
+		_cfg = _spawned.GetComponentInChildren<ExtraSpawnConfig>(true);
+		if (_cfg && _cfg.enableHover)
+		{
+			_hover = true;
+			_hoverAmp = Mathf.Max(0f, _cfg.hoverAmplitude);
+			_hoverSpeed = Mathf.Max(0f, _cfg.hoverSpeed);
+			_hoverPhase = 0f;
+		}
+		else
+		{
+			_hover = false;
+		}
 
 		// 최초 위치 & 방향 세팅
 		bool tailLeft = GetTailIsLeft();
 		_spawned.transform.position = ComputeWorldEdgePosition(tailLeft);
 		if (_flipTowardBubble) SetFacing(_spawned, tailLeft);
-	}
-
-	private void ReadOverridesFromPrefab(GameObject go)
-	{
-		// 기본값 리셋
-		_ovrOffsets = false;
-		_ovrProject = false;
-		_ovrFaceDefault = false;
-		_hover = false;
-		_hoverPhase = 0f;
-
-		var cfg = go.GetComponentInChildren<ExtraSpawnConfig>(true);
-		if (!cfg) return;
-
-		// offsets
-		if (cfg.overrideOffsets)
-		{
-			_ovrOffsets = true;
-			_ovrOffsetLeft = cfg.offsetLeftWorld;
-			_ovrOffsetRight = cfg.offsetRightWorld;
-		}
-
-		// project-to-ground
-		if (cfg.overrideProjectToGround)
-		{
-			_ovrProject = true;
-			_ovrProjectToGround = cfg.projectToGround;
-		}
-
-		// hover
-		if (cfg.enableHover)
-		{
-			_hover = true;
-			_hoverAmp = Mathf.Max(0f, cfg.hoverAmplitude);
-			_hoverSpeed = Mathf.Max(0f, cfg.hoverSpeed);
-		}
 	}
 
 	private void HandleSuccess()
@@ -196,10 +162,8 @@ public class IsekaiExtraSpawner : MonoBehaviour
 		if (!fader) fader = _spawned.AddComponent<FadeOutAndDestroy>();
 		fader.Play(_fadeOutDuration);
 
-		// 스포너는 참조만 끊어둠
 		_spawned = null;
 	}
-
 
 	private void InstantCleanup()
 	{
@@ -207,7 +171,6 @@ public class IsekaiExtraSpawner : MonoBehaviour
 		{
 			Destroy(_spawned);
 			_spawned = null;
-			_isFading = false;
 		}
 	}
 
@@ -229,20 +192,50 @@ public class IsekaiExtraSpawner : MonoBehaviour
 		float edgeX_Px = centerPx.x + dir * (widthPx * 0.5f);
 		Vector3 edgeWorld = ScreenToWorldAtPlaneZ(new Vector3(edgeX_Px, centerPx.y, 0f), cam, _worldZ);
 
-		// 3) 패딩 + 추가 오프셋(X,Y)
+		// 3) 오프셋 계산 (X는 항상 적용, Y는 모드에 따라 다르게)
 		Vector2 baseExtra = tailLeft ? _extraOffsetLeftWorld : _extraOffsetRightWorld;
-		Vector2 instExtra = tailLeft ? _ovrOffsetLeft : _ovrOffsetRight;
-		Vector2 finalExtra = _ovrOffsets ? instExtra : baseExtra;
+		Vector2 cfgExtra = (_cfg ? (tailLeft ? _cfg.offsetLeftWorld : _cfg.offsetRightWorld) : Vector2.zero);
 
-		edgeWorld += new Vector3(dir * _edgePaddingWorld + finalExtra.x, finalExtra.y, 0f);
+		// 우선순위: _cfg가 있고 groundMode != Inherit 이면 cfgExtra 사용, 아니면 전역 baseExtra 사용
+		Vector2 finalExtra = (_cfg && _cfg.groundMode != GroundMode.Inherit) ? cfgExtra : baseExtra;
 
-		// 4) 지면 투영(전역 또는 오버라이드)
-		bool useGround = _ovrProject ? _ovrProjectToGround : _projectToGround;
+		// X는 공통 적용(패딩 + 오프셋.X)
+		edgeWorld.x += dir * _edgePaddingWorld + finalExtra.x;
+
+		// 4) 지면 스냅 여부 결정
+		bool useGround = _projectToGround; // 전역 기본
+		float groundYOff = _groundYOffset; // 전역 기본
+
+		if (_cfg)
+		{
+			if (_cfg.groundMode == GroundMode.BubbleSpace) useGround = false;
+			else if (_cfg.groundMode == GroundMode.SnapToGround)
+			{
+				useGround = true;
+				groundYOff = _cfg.groundYOffset; // 개별 Y 오프셋 사용
+			}
+			// Inherit면 전역값 그대로
+		}
+
 		if (useGround)
 		{
+			// 지면 기준: Y는 groundYOffset로 고정 (finalExtra.y 무시)
 			Vector3 origin = new(edgeWorld.x, edgeWorld.y + _rayUp, _worldZ);
 			var hit = Physics2D.Raycast(origin, Vector2.down, _rayUp + _rayDown, _groundMask);
-			if (hit.collider) edgeWorld.y = hit.point.y + _groundYOffset;
+			if (hit.collider)
+			{
+				edgeWorld.y = hit.point.y + groundYOff;
+			}
+			else
+			{
+				// 안전망: 지면을 못 맞추면 버블 기준 Y 보정
+				edgeWorld.y += finalExtra.y;
+			}
+		}
+		else
+		{
+			// 버블 기준: Y 오프셋 사용
+			edgeWorld.y += finalExtra.y;
 		}
 
 		edgeWorld.z = _worldZ;
@@ -290,9 +283,8 @@ public class IsekaiExtraSpawner : MonoBehaviour
 	// 엑스트라가 말풍선을 바라보게(좌/우) — flipX만 사용 (부모 스케일 영향 없음)
 	private void SetFacing(GameObject root, bool tailLeft)
 	{
-		// 말풍선을 '바라보게' → 왼쪽 꼬리면 엑스트라는 '왼쪽'을, 오른쪽 꼬리면 '오른쪽'을 보게
 		bool wantRight = !tailLeft; // tailLeft=true → 왼쪽, false → 오른쪽
-		bool baseRight = _ovrFaceDefault ? _ovrFacesRightDefault : _prefabFacesRightByDefault;
+		bool baseRight = _prefabFacesRightByDefault;
 		bool flip = (baseRight != wantRight);
 
 		var srs = root.GetComponentsInChildren<SpriteRenderer>(true);

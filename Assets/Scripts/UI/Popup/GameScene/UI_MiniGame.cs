@@ -81,7 +81,9 @@ public class UI_MiniGame : UI_Popup
 
 	public bool TailIsLeft => _spawnInfo.isLeft;
 
-    public void Init(MiniGameInfo miniGameInfo, SpawnInfo spawnInfo, KeySpriteFactory keySpriteFactory, bool isTutorial = false)
+	private CanvasGroup _rootCanvasGroup;
+
+	public void Init(MiniGameInfo miniGameInfo, SpawnInfo spawnInfo, KeySpriteFactory keySpriteFactory, bool isTutorial = false)
     {
         _keySpriteFactory = keySpriteFactory;
 
@@ -344,18 +346,47 @@ public class UI_MiniGame : UI_Popup
             Managers.Happy.AddHappiness(_miniGameInfo.succedGauge);
 
 			onMiniGameSucced?.Invoke();
+
+            StartCoroutine(CoFadeOutAndDisable(0.6f));
 		}
         else
         {
             //Debug.Log("미니게임 실패! 행복도가 감소합니다.");
             Managers.Happy.AddHappiness(_miniGameInfo.failGauge);
-        }
 
-        // 게임 종료 로직
-        gameObject.SetActive(false);
+			// 게임 종료 로직
+			gameObject.SetActive(false);
+		}
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+	private IEnumerator CoFadeOutAndDisable(float duration)
+	{
+		_rootCanvasGroup = gameObject.AddComponent<CanvasGroup>();
+
+		float from = _rootCanvasGroup.alpha;
+		float to = 0f;
+
+		if (duration <= 0f)
+		{
+			_rootCanvasGroup.alpha = 0f;
+			gameObject.SetActive(false);
+			yield break;
+		}
+
+		float t = 0f;
+		while (t < duration)
+		{
+			t += Time.deltaTime;
+			float a = Mathf.Lerp(from, to, t / duration);
+			_rootCanvasGroup.alpha = a;
+			yield return null;
+		}
+
+		_rootCanvasGroup.alpha = 0f;
+		gameObject.SetActive(false);
+	}
+
+	private void OnTriggerEnter2D(Collider2D collision)
     {
         if (_isGameStart) return;
 

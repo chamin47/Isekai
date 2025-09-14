@@ -471,6 +471,13 @@ MonoBehaviour:
   _fadeImage: {fileID: 6793428990631082590}
   _onImage: {fileID: 21300000, guid: 9b93eeab4e8b50e4283952b1954b95f0, type: 3}
   _canvasGroup: {fileID: 7335334123695816319}
+  _checkmark: {fileID: 2726802248398345851}
+  _blinkMinAlpha: 0.12
+  _blinkMaxAlpha: 1
+  _blinkSpeed: 1
+  _blinkLowHold: 0
+  _blinkHighHold: 0
+  _blinkUseUnscaledTime: 1
 --- !u!1 &7927362695723382561
 GameObject:
   m_ObjectHideFlags: 0

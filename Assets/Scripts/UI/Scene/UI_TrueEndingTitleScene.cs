@@ -67,10 +67,10 @@ public class UI_TrueEndingTitleScene : UI_Scene
 
 	private readonly List<string> _demoVersionLines = new()
 	{
-		"지금까지 '이세계 증후군' 데모 버전을\n 플레이해주셔서 감사합니다.",
+		"지금까지 '이 세계 증후군' 데모 버전을\n 플레이해주셔서 감사합니다.",
 		"주인공은 과연 이 세계의 나를 지켜낼 수 있을까요?",
 		"그 여정은 정식 버전을 통해 확인해보세요\n 감사합니다 :)",
-		"이세계 증후군"
+		"이 세계 증후군"
 	};
 
 	public override void Init()

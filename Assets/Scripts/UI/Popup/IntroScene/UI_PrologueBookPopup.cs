@@ -18,7 +18,19 @@ public class UI_PrologueBookPopup : UI_Popup
 
 	[SerializeField] private CanvasGroup _canvasGroup;
 
+	[Header("Blink Target")]
+	[SerializeField] private Image _checkmark;  // 깜빡일 이미지
+
+	// 체크마크 블링크 파라미터
+	[SerializeField] private float _blinkMinAlpha = 0.12f;
+	[SerializeField] private float _blinkMaxAlpha = 1f;
+	[SerializeField] private float _blinkSpeed = 2f;
+	[SerializeField] private float _blinkLowHold = 0f;
+	[SerializeField] private float _blinkHighHold = 0f;
+	[SerializeField] private bool _blinkUseUnscaledTime = true;
+
 	private bool _isNavigating;
+	private Coroutine _blinkRoutine;
 
 	private void Awake()
 	{
@@ -32,40 +44,42 @@ public class UI_PrologueBookPopup : UI_Popup
 		_historyToggle.Toggle.onValueChanged.AddListener(OnToggleChanged);
 		_historyToggle.Toggle.SetIsOnWithoutNotify(false);
 		_historyToggle.Toggle.interactable = false;
-		_historyToggle.Toggle.onValueChanged.Invoke(false); 
+		_historyToggle.Toggle.onValueChanged.Invoke(false);
+
+		// 체크마크 보장(토글 off여도 이미지 자체는 보이도록)
+		if (_checkmark)
+		{
+			_checkmark.raycastTarget = false;
+			SetImageAlpha(_checkmark, 0f); // 시작은 투명
+			_checkmark.enabled = true;
+		}
 
 		StartCoroutine(TypeLabelThenEnable());
 	}
 
 	private IEnumerator TypeLabelThenEnable()
 	{
-		//yield return WaitForSecondsCache.Get(1f);
-
-		//// 라벨 타이핑(문자마다 효과음)
-		//if (_historyToggle.Text != null)
-		//{
-		//	_historyToggle.Text.text = string.Empty;
-		//	int hit = 0;
-		//	foreach (char ch in _label)
-		//	{
-		//		_historyToggle.Text.text += ch;
-
-		//		if (ch != ' ' && ch != '\n')
-		//		{
-		//			hit++;
-		//			if (hit % 2 == 0)
-		//				Managers.Sound.Play("intro_type_short", Sound.Effect);
-		//		}
-		//		yield return WaitForSecondsCache.Get(_charInterval);
-		//	}
-		//}
-
-		//yield return _fadeImage.CoFadeIn(2f, 2f);
-
 		yield return _canvasGroup.FadeCanvas(1f, 3f);
 
+		_checkmark.raycastTarget = true;
 		_historyToggle.Toggle.interactable = true;
 		_historyToggle.BackGround.SetActive(true);
+
+		// 여기서 체크마크 깜빡임 시작 (UI_Image 알파 조절 방식)
+		if (_checkmark)
+		{
+			StopBlink();
+			_blinkRoutine = StartCoroutine(CoBlinkImageAlpha(
+				_checkmark,
+				_blinkMinAlpha,
+				_blinkMaxAlpha,
+				_blinkSpeed,
+				_blinkLowHold,
+				_blinkHighHold,
+				_blinkUseUnscaledTime
+			));
+		}
+
 	}
 
 	private void OnToggleChanged(bool on)
@@ -74,8 +88,16 @@ public class UI_PrologueBookPopup : UI_Popup
 
 		_isNavigating = true;
 		_historyToggle.Toggle.interactable = false;
-	
-			_historyToggle.Toggle.image.sprite = _onImage;
+		_checkmark.raycastTarget = false;
+
+		_historyToggle.Toggle.image.sprite = _onImage;
+
+		// 토글되면 깜빡임 정지 + 알파 1로 고정
+		if (_checkmark)
+		{
+			StopBlink();
+			SetImageAlpha(_checkmark, 1f);
+		}
 
 		StartCoroutine(GoToIntro2());
 	}
@@ -83,10 +105,9 @@ public class UI_PrologueBookPopup : UI_Popup
 	private IEnumerator GoToIntro2()
 	{
 		yield return _canvasGroup.FadeCanvas(0f, 3f);
-
 		yield return WaitForSecondsCache.Get(2f);
 
-		Managers.UI.ShowSceneUI<UI_Intro2Video>();   // 영상 재생 UI
+		Managers.UI.ShowSceneUI<UI_Intro2Video>();
 		Managers.UI.ClosePopupUI(this);
 	}
 
@@ -94,5 +115,66 @@ public class UI_PrologueBookPopup : UI_Popup
 	{
 		if (_historyToggle != null && _historyToggle.Toggle != null)
 			_historyToggle.Toggle.onValueChanged.RemoveListener(OnToggleChanged);
+
+		StopBlink();
+	}
+
+	private void StopBlink()
+	{
+		if (_blinkRoutine != null)
+		{
+			StopCoroutine(_blinkRoutine);
+			_blinkRoutine = null;
+		}
+	}
+
+	private void SetImageAlpha(Image img, float a)
+	{
+		if (!img) return;
+		var c = img.color; c.a = a; img.color = c;
+	}
+
+	/// <summary>
+	/// Image.color.a를 min~max로 부드럽게 왕복(핑퐁)시키는 깜빡임.
+	/// </summary>
+	private IEnumerator CoBlinkImageAlpha(
+		Image img,
+		float minAlpha,
+		float maxAlpha,
+		float speed,
+		float lowHold,
+		float highHold,
+		bool unscaled
+	)
+	{
+		if (!img) yield break;
+
+		float t = 0f;
+		const float eps = 0.02f;
+
+		while (true)
+		{
+			t += unscaled ? Time.unscaledDeltaTime : Time.deltaTime;
+
+			float p = Mathf.PingPong(t * speed, 1f);
+			float a01 = Mathf.SmoothStep(0f, 1f, p);
+			float alpha = Mathf.Lerp(minAlpha, maxAlpha, a01);
+			SetImageAlpha(img, alpha);
+
+			if (alpha >= maxAlpha - eps)
+			{
+				if (highHold > 0f)
+					yield return unscaled ? new WaitForSecondsRealtime(highHold) : new WaitForSeconds(highHold);
+			}
+			else if (alpha <= minAlpha + eps)
+			{
+				if (lowHold > 0f)
+					yield return unscaled ? new WaitForSecondsRealtime(lowHold) : new WaitForSeconds(lowHold);
+			}
+			else
+			{
+				yield return null;
+			}
+		}
 	}
 }

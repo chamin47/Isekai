@@ -74,7 +74,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 5538801471731838404, guid: 0c6f2c1ec2c8b984c822e6d01786bcad, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -119,13 +119,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c08b0680e74b5147a6c567d337337c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  overrideOffsets: 0
-  offsetLeftWorld: {x: 0, y: 0}
-  offsetRightWorld: {x: 0, y: 0}
-  overrideProjectToGround: 1
-  projectToGround: 0
-  overrideFacesRightDefault: 0
-  facesRightDefault: 1
+  groundMode: 1
+  offsetLeftWorld: {x: 0.5, y: -3}
+  offsetRightWorld: {x: -0.5, y: -3}
+  groundYOffset: 0
   enableHover: 0
   hoverAmplitude: 0.15
   hoverSpeed: 1.2

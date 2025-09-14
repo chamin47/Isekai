@@ -40,6 +40,8 @@ public class UI_GuideBookHUD : UI_Base
 	[SerializeField, Tooltip("조각 하나가 1→0으로 페이드되는 시간(초)")]
 	private float _sliceFadeTime = 0.08f;
 
+	[SerializeField] private GameObject _newBadge;
+
 	// 내부 상태
 	private PlayerController _playerController;
 	private readonly List<Sprite> _pages = new();
@@ -90,6 +92,8 @@ public class UI_GuideBookHUD : UI_Base
 
 		// 시작은 닫혀 있으니 네비 비활성(시각/입력 모두)
 		SetNavInteractable(false);
+
+		SetNewBadge();
 
 		if (Managers.World.CurrentWorldType == WorldType.Vinter)
 		{
@@ -236,6 +240,8 @@ public class UI_GuideBookHUD : UI_Base
 
 		_isOpen = true;
 		_isTransitioning = false;
+
+		_newBadge.SetActive(false);
 
 		// 열렸으니 네비 버튼 상태 갱신(여기서 켜짐)
 		UpdateNavInteractable();
@@ -441,5 +447,26 @@ public class UI_GuideBookHUD : UI_Base
 			yield return null;
 		}
 		p.x = toX; rt.anchoredPosition = p;
+	}
+
+	private void SetNewBadge()
+	{
+		WorldType world = Managers.World.CurrentWorldType;
+
+		switch (world)
+		{
+			case WorldType.Vinter:
+				_newBadge.SetActive(true);
+				break;
+			case WorldType.Chaumm:
+				_newBadge.SetActive(true);
+				break;
+			case WorldType.Gang:
+				_newBadge.SetActive(true);
+				break;
+			case WorldType.Pelmanus:
+				_newBadge.SetActive(false);
+				break;
+		}
 	}
 }
