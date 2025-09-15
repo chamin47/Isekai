@@ -345,9 +345,12 @@ public class UI_MiniGame : UI_Popup
             Managers.Sound.Play("i_mini_game_success", Sound.Effect);
             Managers.Happy.AddHappiness(_miniGameInfo.succedGauge);
 
-			onMiniGameSucced?.Invoke();
-
-            StartCoroutine(CoFadeOutAndDisable(0.6f));
+            onMiniGameSucced?.Invoke();
+            
+            if (gameObject.activeSelf == true)
+            {
+				StartCoroutine(CoFadeOutAndDisable(0.6f));
+			}
 		}
         else
         {

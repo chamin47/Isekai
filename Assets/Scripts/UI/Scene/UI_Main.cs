@@ -60,8 +60,10 @@ public class UI_Main : UI_Scene
         if (Managers.Game.IsShowEnding)
             _fadeImage.color = new Color(0, 0, 0, 0);
 
-		yield return _fadeImage.CoFadeOut(_fadeTime, _waitTimeAfterFade);
+        Coroutine c1 = StartCoroutine(_fadeImage.CoFadeOut(_fadeTime, _waitTimeAfterFade));
+        Coroutine c2 = StartCoroutine(Managers.Sound.FadeOutBGM(3f));
 
+		yield return c1; yield return c2;
 
 		if (!Managers.Game.IsShowEnding)
 			Managers.UI.ShowSceneUI<UI_IntroAskName>();
