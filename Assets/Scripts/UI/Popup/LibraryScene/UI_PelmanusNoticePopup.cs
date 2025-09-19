@@ -144,20 +144,29 @@ public class UI_PelmanusNoticePopup : UI_NoticePopup
             }
         }
 
-        StartCoroutine(_lastPopup.BlackOutAndSetText());
+        StartCoroutine(_lastPopup.BlackOutAndCutScene());
     }
 
-    private IEnumerator BlackOutAndSetText()
+    private IEnumerator BlackOutAndCutScene()
     {
-        _fadeImage.gameObject.SetActive(true);
-        _fadeImage.color = new Color(0, 0, 0, 1);
+		//_fadeImage.gameObject.SetActive(true);
+		//_fadeImage.color = new Color(0, 0, 0, 1);
+
+		GameObject fadeGo = GameObject.Find("UI_Fade");
+        Image fadeImage = fadeGo.GetComponentInChildren<Image>();
+        fadeImage.color = new Color(0, 0, 0, 1);
+
         yield return WaitForSecondsCache.Get(2f);
 
-        yield return StartCoroutine(_warningText.CoTypingEffectPerChar("거기서 당장 나", 0.5f, true, "getout_short",true));
-        yield return StartCoroutine(_warningText.CoTypingEffectPerChar("와!", 0.5f, true, "getout_long", true, false));
-        yield return WaitForSecondsCache.Get(2f);
+        GameObject go = Managers.Resource.Instantiate("Cutscene/door cutscene");
+        go.GetComponent<DoorCutScene>().FadeImage = fadeImage;
 
-        Managers.Scene.LoadScene(Scene.GameScene);
+
+        //yield return StartCoroutine(_warningText.CoTypingEffectPerChar("거기서 당장 나", 0.5f, true, "getout_short",true));
+        //yield return StartCoroutine(_warningText.CoTypingEffectPerChar("와!", 0.5f, true, "getout_long", true, false));
+        //yield return WaitForSecondsCache.Get(2f);
+
+        //Managers.Scene.LoadScene(Scene.GameScene);
     }
 
     /// <summary>
