@@ -29,8 +29,8 @@ public class EndingScene : BaseScene
         _newsImage.SetActive(true);
         yield return WaitForSecondsCache.Get(2f);
         _mainCameraAni.SetTrigger("CloseOut");
-        Managers.Sound.StopSubEffect();
         yield return WaitForSecondsCache.Get(2f);
+        
         Managers.UI.ShowSceneUI<UI_EndingScene>();
     }
 

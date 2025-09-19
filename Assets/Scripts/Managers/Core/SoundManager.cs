@@ -326,6 +326,26 @@ public class SoundManager
         _subEffectAudio.clip = null;
     }
 
+    public IEnumerator FadeOutSubEffect(float duration)
+    {
+        if (_subEffectAudio.clip = null)
+            yield break;
+
+        float startVolume = _subEffectAudio.volume;
+        float targetVolume = 0f;
+        float time = 0f;
+
+        while (time < duration)
+        {
+            time += Time.deltaTime;
+            float t = time / duration;
+            _subEffectAudio.volume = Mathf.Lerp(startVolume, targetVolume, t);
+            yield return null;
+        }
+        _subEffectAudio.Stop();
+        _subEffectAudio.volume = 1f;
+    }
+
     private void LoadAudioClip(string key, Action<AudioClip> callback)
     {
         AudioClip audioClip = null;
@@ -347,8 +367,4 @@ public class SoundManager
 
         callback?.Invoke(audioClip);
     }
-
-
-    
-   
 }

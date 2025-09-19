@@ -47,11 +47,16 @@ public class UI_EndingScene : UI_Scene
             yield return _newsText.CoTypeEffectWithRichText(_sceneData.newsDialog[i], 0.1f, "keyboard_oneshot2");
         }
 
-        // 화면 fadeOut
-        _fadeImage.gameObject.SetActive(true);
-        yield return StartCoroutine(_fadeImage.CoFadeOut(1f));
+		Managers.Sound.StopSubEffect();
+
+		// 화면 fadeOut
+		_fadeImage.gameObject.SetActive(true);
+
+        Coroutine c1 = StartCoroutine(Managers.Sound.FadeOutSubEffect(2f));
+        Coroutine c2 = StartCoroutine(_fadeImage.CoFadeOut(1f, 0f, 1f));
+        yield return c1; yield return c2;
         
-        yield return WaitForSecondsCache.Get(1f); // 1초 대기
+        //yield return WaitForSecondsCache.Get(1f); // 1초 대기
 
         // 검은 화면상의 텍스트 출력
         foreach (var finalDialogue in _sceneData.finalDialog)
