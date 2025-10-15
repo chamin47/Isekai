@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -49,6 +48,20 @@ public class IsekaiExtraSpawner : MonoBehaviour
 	[Tooltip("프리팹 기본 아트가 '오른쪽'을 바라보는 경우 체크, '왼쪽'이면 해제")]
 	[SerializeField] private bool _prefabFacesRightByDefault = true;
 
+	[Header("대화 트리거(대화모드일 때만 자동 부착)")]
+	[SerializeField] private bool _attachTalkTrigger = true;
+
+
+	private Vector2 _triggerOffset = new(0f, 1f);   // 수동 사이즈
+	private Vector2 _triggerSize = new(5.5f, 2.65f);   // 수동 오프셋
+
+	// 트리거 동작 조건
+	[SerializeField] private bool _requireShiftToStart = true;
+	[SerializeField] private string _playerTag = "Player";
+
+	// 물리 충돌 요건(둘 중 하나는 Rigidbody2D 필요)
+	[SerializeField] private bool _addKinematicRbIfMissing = true;
+
 	private UI_MiniGame _miniGame;
 	private GameObject _spawned;
 	private Camera _uiCam;
@@ -59,6 +72,8 @@ public class IsekaiExtraSpawner : MonoBehaviour
 	private float _hoverAmp = 0.15f;
 	private float _hoverSpeed = 1.2f;
 	private float _hoverPhase = 0f;
+
+	UILetterboxOverlay _letterbox;
 
 	private void Awake()
 	{
@@ -74,6 +89,8 @@ public class IsekaiExtraSpawner : MonoBehaviour
 		{
 			_miniGame.onSpawned += OnMiniGameSpawned;
 			_miniGame.onMiniGameSucced += HandleSuccess;
+			_letterbox = UILetterboxOverlay.GetOrCreate();
+			_letterbox.OnBackgroundClicked += HandleSuccess;
 			_miniGame.onMiniGameDestroyed += InstantCleanup;
 		}
 	}
@@ -84,6 +101,8 @@ public class IsekaiExtraSpawner : MonoBehaviour
 		{
 			_miniGame.onSpawned -= OnMiniGameSpawned;
 			_miniGame.onMiniGameSucced -= HandleSuccess;
+			_letterbox = UILetterboxOverlay.GetOrCreate();
+			_letterbox.OnBackgroundClicked += HandleSuccess;
 			_miniGame.onMiniGameDestroyed -= InstantCleanup;
 		}
 		InstantCleanup();
@@ -151,6 +170,9 @@ public class IsekaiExtraSpawner : MonoBehaviour
 		bool tailLeft = GetTailIsLeft();
 		_spawned.transform.position = ComputeWorldEdgePosition(tailLeft);
 		if (_flipTowardBubble) SetFacing(_spawned, tailLeft);
+
+		if (_miniGame != null && _miniGame.IsDialogueMode && _attachTalkTrigger)
+			EnsureTalkTriggerOnExtra(_spawned);
 	}
 
 	private void HandleSuccess()
@@ -320,5 +342,35 @@ public class IsekaiExtraSpawner : MonoBehaviour
 				return _bubbleCanvas.worldCamera ? _bubbleCanvas.worldCamera : Camera.main;
 		}
 		return Camera.main;
+	}
+
+	private void EnsureTalkTriggerOnExtra(GameObject root)
+	{
+		if (!root) return;
+
+		// Rigidbody2D 없으면(옵션) 키네마틱으로 추가
+		if (_addKinematicRbIfMissing && !root.TryGetComponent<Rigidbody2D>(out var rb))
+		{
+			rb = root.AddComponent<Rigidbody2D>();
+			rb.isKinematic = true;
+			rb.simulated = true;
+			rb.gravityScale = 0f;
+		}
+
+		// BoxCollider2D (Trigger) 세팅
+		var box = root.GetComponent<BoxCollider2D>();
+		if (!box) box = root.AddComponent<BoxCollider2D>();
+		box.isTrigger = true;
+
+		// 수동 값 사용
+		box.size = _triggerSize;
+		box.offset = _triggerOffset;
+
+		// 트리거 스크립트 부착/바인드
+		var trig = root.GetComponent<NpcTalkTrigger>();
+		if (!trig) trig = root.AddComponent<NpcTalkTrigger>();
+		trig.RequireShift = _requireShiftToStart;
+		trig.PlayerTag = _playerTag;
+		trig.Bind(_miniGame);
 	}
 }

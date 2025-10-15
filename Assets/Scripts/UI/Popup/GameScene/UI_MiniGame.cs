@@ -25,10 +25,15 @@ public class UI_MiniGame : UI_Popup
     [SerializeField] private Image _minigameGaugeBar;       // 게임 게이지바
     [SerializeField] private Transform _keyBoardTransform;  // 키입력 생성 위치
 
-    //[Header("타이머 텍스트")]
-    //[SerializeField] private TextMeshProUGUI _remainTimeText;
+	[Header("루트 오브젝트 참조")]
+	[SerializeField] private GameObject _gaugeRoot;
+	[SerializeField] private GameObject _bubbleRoot;
+	[SerializeField] private GameObject _tutorial;
 
-    [Header("미니게임 설정")]
+	//[Header("타이머 텍스트")]
+	//[SerializeField] private TextMeshProUGUI _remainTimeText;
+
+	[Header("미니게임 설정")]
     [SerializeField] private float _keyPositionGap = 0.1f;
     [SerializeField] private float _mosaicRemoveSpeed = 1.0f;
 
@@ -83,7 +88,15 @@ public class UI_MiniGame : UI_Popup
 
 	private CanvasGroup _rootCanvasGroup;
 
-	public void Init(MiniGameInfo miniGameInfo, SpawnInfo spawnInfo, KeySpriteFactory keySpriteFactory, bool isTutorial = false)
+	[SerializeField] private bool _useDialogueMode = false;
+	public bool IsDialogueMode => _useDialogueMode;
+
+	private bool _dialogueRunning = false;                     // 실제 진행 중 여부
+	private UILetterboxOverlay _letterbox;
+
+	public void SetDialogueMode(bool on) => _useDialogueMode = on;
+
+    public void Init(MiniGameInfo miniGameInfo, SpawnInfo spawnInfo, KeySpriteFactory keySpriteFactory, bool isTutorial = false)
     {
         _keySpriteFactory = keySpriteFactory;
 
@@ -96,7 +109,7 @@ public class UI_MiniGame : UI_Popup
 
         SetMiniGameInfo(miniGameInfo);
         SetKeyPressButton();
-        
+
         // 사이즈를 자동으로 조정해 준다.
         FixBubbleSize();
 
@@ -108,10 +121,93 @@ public class UI_MiniGame : UI_Popup
         UpdateUI();
 
         onSpawned?.Invoke();
+
+        if (_useDialogueMode)
+        {
+            // 시작 땐 아무것도 안 띄움
+            _bubbleRoot.SetActive(false);
+            _gaugeRoot.SetActive(false);
+			_tutorial.SetActive(false);
+
+			_canSpacePress = false;
+        }
     }
 
-    // 인스펙터창 테스트 용
-    [ContextMenu("FixBubbleSize")]
+	// 대화 모드를 위한 사전 준비
+	public void PrepareDialogue(SpawnInfo spawn, string line, bool tailIsLeft)
+	{
+		_spawnInfo = spawn;
+		// 말풍선 방향(좌/우)
+		if (!tailIsLeft) _bubbleImage.transform.rotation = Quaternion.Euler(0, 180, 0);
+		else _bubbleImage.transform.rotation = Quaternion.identity;
+
+		_originalText = line ?? "……";
+		_bubbleText.text = _originalText.GetRandomMaskedText();
+		_isTextShowed = false;
+	}
+
+	public void StartDialogue()
+	{
+		if (_dialogueRunning) return;
+		_dialogueRunning = true;
+		Managers.Game.DialogueActive = true;
+
+		// 플레이어 움직임 금지
+		var gameScene = Managers.Scene.CurrentScene as GameScene;
+		var player = gameScene?.Player;
+		if (player) player.canMove = false;
+
+		StartCoroutine(CoLetterboxInThenShowBubble());
+	}
+
+	private IEnumerator CoLetterboxInThenShowBubble()
+	{
+		_letterbox = UILetterboxOverlay.GetOrCreate();
+		_letterbox.OnBackgroundClicked += OnBackgroundClickedToClose;
+
+		float baseH = Screen.height * 0.1f;  
+		float overshoot = baseH;
+		float settle = baseH * 0.7f;        // 10 → 7 느낌으로 70%
+
+		yield return _letterbox.OpenOvershoot(settle, overshoot, 100f);
+
+		_bubbleRoot.SetActive(true);
+		// 텍스트 랜덤 인덱스 복원
+		if (!_isTextShowed) StartCoroutine(ShowText());
+	}
+
+	private void OnBackgroundClickedToClose()
+	{
+		if (!_dialogueRunning) return;
+		StartCoroutine(CoHideBubbleThenLetterboxOut());
+	}
+
+	private IEnumerator CoHideBubbleThenLetterboxOut()
+	{
+		_bubbleRoot.SetActive(false);
+
+		if (_letterbox != null)
+		{
+			_letterbox.OnBackgroundClicked -= OnBackgroundClickedToClose;
+
+			float baseH = Screen.height * 0.1f;  // 네가 쓰던 기준
+			float overshoot = baseH;
+			float settle = baseH * 0.7f;        // 10 → 7 느낌으로 70%
+
+			yield return _letterbox.CloseOvershoot(settle, overshoot, 100f);
+		}
+
+		// 플레이어 언락 & 전역 잠금 해제
+		var gameScene = Managers.Scene.CurrentScene as GameScene;
+		var player = gameScene?.Player;
+		if (player) player.canMove = true;
+
+		_dialogueRunning = false;
+		Managers.Game.DialogueActive = false;
+	}
+
+	// 인스펙터창 테스트 용
+	[ContextMenu("FixBubbleSize")]
     private void FixBubbleSize()
     {
         float preferWidth = Mathf.Max(_bubbleText.preferredWidth + 3f, 10f);
@@ -269,7 +365,12 @@ public class UI_MiniGame : UI_Popup
 
     private void Update()
     {
-        if (_isGameEnd) return;
+		if (Managers.Game.DialogueActive) return;
+
+		// 대화 모드에서 아직 Shift로 시작 안 했으면(대기상태) 루프 멈춤
+		if (_useDialogueMode && !_dialogueRunning) return;
+
+		if (_isGameEnd) return;
 
         // 시간 감소
         _remainTime -= Time.deltaTime;
@@ -484,5 +585,7 @@ public class UI_MiniGame : UI_Popup
     private void OnDestroy()
     {
         onMiniGameDestroyed?.Invoke();
-    }
+		if (_letterbox != null)
+			_letterbox.OnBackgroundClicked -= OnBackgroundClickedToClose;
+	}
 }

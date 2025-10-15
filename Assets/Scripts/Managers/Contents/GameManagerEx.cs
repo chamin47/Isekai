@@ -13,10 +13,12 @@ public class GameManagerEx
         get { return PlayerPrefs.GetInt("IsShowEnding", 0) == 1; }
         set { PlayerPrefs.SetInt("IsShowEnding", value ? 1 : 0); }
     }
+
+	// 현재 미니게임이 대화모드인지 아닌지 체크
+	public bool DialogueActive { get; set; } = false;
+
     public void Init()
     {
 
     }
-
-
 }

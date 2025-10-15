@@ -53,7 +53,11 @@ public class MiniGameFactory : MonoBehaviour
     [SerializeField] private float _maxBubbleYPos = 2f;
     [SerializeField] private float _spawnDelay = 4f;
 
-    [SerializeField] private float _waitBeforeGameStartTime = 1f;       // 미니게임 생성전 대기시간
+	[Header("Dialogue Mode (Test)")]
+	[SerializeField] private bool _useDialogueMode = true;               // 대화모드 켜기
+	[SerializeField] private bool _pauseSpawningWhileDialogue = true;     // 대화 중 스폰 정지
+
+	[SerializeField] private float _waitBeforeGameStartTime = 1f;       // 미니게임 생성전 대기시간
 
     private Queue<UI_MiniGame> _miniGameQueue = new Queue<UI_MiniGame>();
 
@@ -68,7 +72,7 @@ public class MiniGameFactory : MonoBehaviour
     private int _dialogIndexIter = 0;
     private List<int> _randomDialogueIndex = new List<int>();
 
-    public bool IsBubbleEmpty
+	public bool IsBubbleEmpty
     {
         get
         {
@@ -163,7 +167,14 @@ public class MiniGameFactory : MonoBehaviour
 
         while (true)
         {
-            if(!_isFirstMiniGame && TryGetRandomPosition(out Vector2 randomPos))
+			// 대화 중이면 스폰 대기
+			if (_pauseSpawningWhileDialogue && Managers.Game.DialogueActive)
+			{
+				yield return null;
+				continue;
+			}
+
+			if (!_isFirstMiniGame && TryGetRandomPosition(out Vector2 randomPos))
             {
                 SpawnMiniGame(randomPos);
             }
@@ -175,8 +186,17 @@ public class MiniGameFactory : MonoBehaviour
                 SpawnMiniGame(spawnPos, true);
             }
 
-            yield return WaitForSecondsCache.Get(_spawnDelay);
-        }
+            // yield return WaitForSecondsCache.Get(_spawnDelay);
+
+			// 대화시에는 다음 사이클까지 충분히 대기
+			float t = 0f;
+			while (t < _spawnDelay)
+			{
+				if (_pauseSpawningWhileDialogue && Managers.Game.DialogueActive) break;
+				t += Time.deltaTime;
+				yield return null;
+			}
+		}
     }
 
     private void SpawnMiniGame(Vector2 spawnPosition, bool isTutorial = false)
@@ -204,9 +224,17 @@ public class MiniGameFactory : MonoBehaviour
         UI_MiniGame miniGame = Instantiate(_miniGame, spawnInfo.position, Quaternion.identity);
         _miniGameQueue.Enqueue(miniGame);
 
-        miniGame.Init(miniGameInfo, spawnInfo, _keySpriteFactory, isTutorial);
+		if (_useDialogueMode)
+			miniGame.SetDialogueMode(true);
 
-        Managers.Sound.Play("i_mini_say1", Sound.Effect);
+		miniGame.Init(miniGameInfo, spawnInfo, _keySpriteFactory, isTutorial);
+
+		if (_useDialogueMode)
+		{			
+			miniGame.PrepareDialogue(spawnInfo, miniGameInfo.dialog, spawnInfo.isLeft);
+		}
+
+		Managers.Sound.Play("i_mini_say1", Sound.Effect);
 
         // 이 부분이 심히 거슬린다
         // 세계가 바뀌면?
@@ -226,9 +254,9 @@ public class MiniGameFactory : MonoBehaviour
                 }
             };
         }
-    }
+	}
 
-    private bool TryGetRandomPosition(out Vector2 randomPos)
+	private bool TryGetRandomPosition(out Vector2 randomPos)
     {
         float randomY = UnityEngine.Random.Range(_minBubbleYPos, _maxBubbleYPos);
 

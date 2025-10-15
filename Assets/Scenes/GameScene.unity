@@ -366,6 +366,8 @@ MonoBehaviour:
   _minBubbleYPos: 0
   _maxBubbleYPos: 2
   _spawnDelay: 4
+  _useDialogueMode: 1
+  _pauseSpawningWhileDialogue: 1
   _waitBeforeGameStartTime: 1
 --- !u!114 &184603175
 MonoBehaviour:
@@ -2647,7 +2649,6 @@ GameObject:
   - component: {fileID: 8064348089440381036}
   - component: {fileID: 3402416404206718173}
   - component: {fileID: 4846559885532683975}
-  - component: {fileID: 8064348089440381037}
   m_Layer: 5
   m_Name: Bookmark
   m_TagString: Untagged
@@ -2882,18 +2883,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6137336553840746557}
   m_CullTransparentMesh: 1
---- !u!114 &8064348089440381037
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6137336553840746557}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9ad0829a0073a1478f3dc582087d00a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!223 &8333640537222431350
 Canvas:
   m_ObjectHideFlags: 0

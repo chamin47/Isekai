@@ -17,7 +17,11 @@ public class MiniGameSpawner : MonoBehaviour
     [SerializeField] private float _spawnDelay = 4f;
     [SerializeField] private float _waitBeforeGameStartTime = 1f;
 
-    public event Action<UI_MiniGame> OnMiniGameSpawned;
+	[Header("Dialogue Mode (Test)")]
+	[SerializeField] private bool _useDialogueMode = true;
+	[SerializeField] private bool _pauseSpawningWhileDialogue = true;
+
+	public event Action<UI_MiniGame> OnMiniGameSpawned;
 
     private Coroutine _spawnCoroutine;
     private WorldInfo _worldInfo;
@@ -91,9 +95,18 @@ public class MiniGameSpawner : MonoBehaviour
         MiniGameInfo miniGameInfo = _worldInfo.GetRandomMiniGameInfo(GetNextDialogueIndex());
         SpawnInfo spawnInfo = new SpawnInfo { position = spawnPosition, isLeft = spawnPosition.x < _target.position.x };
 
-        miniGameInstance.Init(miniGameInfo, spawnInfo, _keySpriteFactory);
+		if (_useDialogueMode)
+			miniGameInstance.SetDialogueMode(true);
 
-        OnMiniGameSpawned?.Invoke(miniGameInstance);
+		miniGameInstance.Init(miniGameInfo, spawnInfo, _keySpriteFactory);
+
+		if (_useDialogueMode)
+		{
+			// 말풍선/텍스트만 준비(숨김 상태). 실제 시작은 Shift로.
+			miniGameInstance.PrepareDialogue(spawnInfo, miniGameInfo.dialog, spawnInfo.isLeft);
+		}
+
+		OnMiniGameSpawned?.Invoke(miniGameInstance);
         Managers.Sound.Play("i_mini_say1", Sound.Effect);
     }
 

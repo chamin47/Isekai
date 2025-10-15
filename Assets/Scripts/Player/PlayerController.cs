@@ -40,11 +40,11 @@ public class PlayerController : MonoBehaviour
 		{
 			float x = 0f;
 
-			if (Input.GetKey(KeyCode.LeftArrow))
+			if (Input.GetKey(KeyCode.A))
 			{
 				x = -1f;
 			}
-			else if (Input.GetKey(KeyCode.RightArrow))
+			else if (Input.GetKey(KeyCode.D))
 			{
 				x = 1f;
 			}

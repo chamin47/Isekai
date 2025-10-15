@@ -622,8 +622,12 @@ MonoBehaviour:
   _tutorialIndicator: {fileID: 4974055619091188330}
   _minigameGaugeBar: {fileID: 3852245650422302410}
   _keyBoardTransform: {fileID: 3801208920577190320}
+  _gaugeRoot: {fileID: 240216777827162446}
+  _bubbleRoot: {fileID: 4883271356879157668}
+  _tutorial: {fileID: 4974055619091188330}
   _keyPositionGap: 0.1
   _mosaicRemoveSpeed: 1
+  _useDialogueMode: 0
 --- !u!61 &5505001869256885618
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -713,6 +717,10 @@ MonoBehaviour:
   - {fileID: 162897706658630790, guid: 5dad64e25a80ab1418466b671dadd1d0, type: 3}
   _flipTowardBubble: 1
   _prefabFacesRightByDefault: 1
+  _attachTalkTrigger: 1
+  _requireShiftToStart: 1
+  _playerTag: Player
+  _addKinematicRbIfMissing: 1
 --- !u!1 &4883271356879157668
 GameObject:
   m_ObjectHideFlags: 0
