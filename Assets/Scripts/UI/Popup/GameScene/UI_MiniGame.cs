@@ -167,9 +167,9 @@ public class UI_MiniGame : UI_Popup
 
 		float baseH = Screen.height * 0.1f;  
 		float overshoot = baseH;
-		float settle = baseH * 0.7f;        // 10 → 7 느낌으로 70%
+		float settle = baseH * 0.85f;        // 10 → 7 느낌으로 70%
 
-		yield return _letterbox.OpenOvershoot(settle, overshoot, 100f);
+		yield return _letterbox.OpenOvershoot(settle, overshoot, 250f);
 
 		_bubbleRoot.SetActive(true);
 		// 텍스트 랜덤 인덱스 복원
@@ -192,9 +192,9 @@ public class UI_MiniGame : UI_Popup
 
 			float baseH = Screen.height * 0.1f;  // 네가 쓰던 기준
 			float overshoot = baseH;
-			float settle = baseH * 0.7f;        // 10 → 7 느낌으로 70%
+			float settle = baseH * 0.85f;        // 10 → 7 느낌으로 70%
 
-			yield return _letterbox.CloseOvershoot(settle, overshoot, 100f);
+			yield return _letterbox.CloseOvershoot(settle, overshoot, 170f);
 		}
 
 		// 플레이어 언락 & 전역 잠금 해제
