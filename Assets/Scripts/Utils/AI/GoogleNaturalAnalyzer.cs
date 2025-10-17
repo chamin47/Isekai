@@ -1,4 +1,3 @@
-using Codice.Client.Common;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -56,6 +55,8 @@ public class SentimentAnalyzer : MonoBehaviour
     private int playerScore = 0;
 
     private string currentLanguage = "ko";
+
+    public string TestText = "나는 너무 행복해";
 
     void Start()
     {
