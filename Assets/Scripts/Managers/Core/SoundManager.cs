@@ -151,7 +151,7 @@ public class SoundManager
         });
     }
 
-    public AudioSource Play(string key, Sound type, float volume = 1f, float pitch = 1.0f, float time = 0f)
+    public void Play(string key, Sound type, float volume = 1f, float pitch = 1.0f, float time = 0f)
     {
         AudioSource audioSource = null;
 
@@ -184,7 +184,7 @@ public class SoundManager
             if (audioSource == null)
             {
                 Debug.Log("모든 효과음 소스가 사용중입니다.");
-                return null;
+                return;
             }
 
             LoadAudioClip(key, (audioClip) =>
@@ -215,7 +215,7 @@ public class SoundManager
             });
         }
 
-        return audioSource;
+        return;
     }
     public IEnumerator ChangeEffectVolume(float start, float target, float duration)
     {

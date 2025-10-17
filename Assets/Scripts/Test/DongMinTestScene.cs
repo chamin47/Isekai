@@ -111,10 +111,12 @@ public class DongMinTestScene : BaseScene
 
         yield return WaitForSecondsCache.Get(1f);
 
+		Action cache = () => { Managers.Sound.Play("intro_type_short", Sound.Effect); };
+
         for (int i = 0; i < _bubbles.Count; i++)
         {
             _bubbles[i].gameObject.SetActive(true);
-            yield return _bubbleTexts[i].CoTypingEffect(_buubleDialogue[i], 0.1f, true, "intro_type_short");
+            yield return _bubbleTexts[i].CoTypingEffect(_buubleDialogue[i], 0.1f, cache);
             yield return WaitForSecondsCache.Get(1f);
         }
 
@@ -155,7 +157,7 @@ public class DongMinTestScene : BaseScene
 
 		yield return new WaitForSeconds(0.3f);
         _warningText.gameObject.SetActive(true);
-        yield return _warningText.CoBlinkText(3, 0.5f, "warning");
+        yield return _warningText.CoBlinkText(3, 0.5f, () => Managers.Sound.Play("warning", Sound.Effect));
         _warningText.gameObject.SetActive(false);
         yield return new WaitForSeconds(0.5f);
 

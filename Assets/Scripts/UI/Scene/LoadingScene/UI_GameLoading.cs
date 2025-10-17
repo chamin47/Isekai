@@ -117,7 +117,7 @@ public class UI_GameLoading : UI_Scene
         Managers.Sound.StopSubEffect();
 
         yield return WaitForSecondsCache.Get(1f);
-        yield return _totalDateText.CoTypingEffect($"{_data.startDate} ~ {_data.endDate}", 0.1f, true, "textbox");
+        yield return _totalDateText.CoTypingEffect($"{_data.startDate} ~ {_data.endDate}", 0.1f, () => Managers.Sound.Play("textbox", Sound.Effect));
         yield return WaitForSecondsCache.Get(1f);
 
         ShowToDoList();

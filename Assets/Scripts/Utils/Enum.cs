@@ -25,9 +25,9 @@ public enum Scene
 
 public enum Sound
 {
-	Bgm, // 배경음악 
-	Effect,// 한번만 실행되는 효과음
-	SubEffect, // 멈췄다 다시 실행 가능한 효과음
+	Bgm, 
+	Effect,
+	SubEffect, 
 	MaxCount,
 }
 

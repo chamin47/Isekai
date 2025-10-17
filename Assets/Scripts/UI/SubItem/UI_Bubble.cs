@@ -15,12 +15,12 @@ public class UI_Bubble : UI_Base
     
     [SerializeField] private float _textSize = 0.3f;
     [SerializeField] private float _dropSpeed = 2.0f;
+
     private int _score;
-    public string testText = "평범하기 짝이 없으면서 어딜 나서려고 하는 거야?";
 
     public event Action OnCollisionEvent;
 
-    public float test;
+    public float dropSpeed;
 
     public void Init(string text, int score, bool drop = true)
     {
@@ -63,7 +63,7 @@ public class UI_Bubble : UI_Base
 
         while (elapsedTime < dropTime)
         {
-            elapsedTime += Time.deltaTime * test;
+            elapsedTime += Time.deltaTime * dropSpeed;
             transform.position = Vector3.Lerp(startPos, targetPos, elapsedTime / dropTime);
             yield return null;
         }

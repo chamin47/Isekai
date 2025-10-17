@@ -154,7 +154,7 @@ public class GiantController : MonoBehaviour
         for(int i = 0; i < _bubbles.Count; i++)
         {
             _bubbles[i].gameObject.SetActive(true);
-            yield return _bubbleTexts[i].CoTypingEffect(_buubleDialogue[i], 0.1f, true, "intro_type_short");
+            yield return _bubbleTexts[i].CoTypingEffect(_buubleDialogue[i], 0.1f, () => Managers.Sound.Play("intro_type_short", Sound.Effect));
             yield return WaitForSecondsCache.Get(1f);
         }
 

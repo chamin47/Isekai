@@ -22,7 +22,7 @@ public class VinterRealWorld : MonoBehaviour
         yield return WaitForSecondsCache.Get(0.3f);
 
         _warningText.gameObject.SetActive(true);
-        yield return _warningText.CoBlinkText(3, 0.5f, "warning");
+        yield return _warningText.CoBlinkText(3, 0.5f, () => Managers.Sound.Play("warning", Sound.Effect));
         _warningText.gameObject.SetActive(false);
 
         yield return WaitForSecondsCache.Get(0.5f);

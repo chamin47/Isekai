@@ -42,19 +42,6 @@ public static class Extension
 		return Util.GetOrAddComponent<T>(go);
 	}
 
-    /// <summary>
-    /// 기본으로 클릭 이벤트를 추가합니다.
-    /// </summary>
-	public static void BindEvent(this GameObject go, Action<PointerEventData> action, UIEvent type = UIEvent.Click)
-	{
-		UI_Base.BindEvent(go, action, type);
-	}
-
-	public static bool IsValid(this GameObject go)
-	{
-		return go != null && go.activeSelf;
-	}
-
     #region ListUtill
     /// <summary>
     /// 리스트를 랜덤으로 섞는다
@@ -90,7 +77,7 @@ public static class Extension
     /// <summary>
     /// text를 마스킹된 문자로 변경한다
     /// </summary>
-    public static string GetRandomMaskedText(int length, string maskCharacters = "#*@$%&!")
+    public static string GetRandomMaskedText(int length, in string maskCharacters = "#*@$%&!")
     {
         StringBuilder randomText = new StringBuilder(length);
         for (int i = 0; i < length; i++)
@@ -105,7 +92,7 @@ public static class Extension
     /// </summary>
     /// <param name="text"></param>
 
-    public static string GetRandomMaskedText(this string text, string maskCharacters = "#*@$%&!")
+    public static string GetRandomMaskedText(this string text, in string maskCharacters = "#*@$%&!")
     {
         return GetRandomMaskedText(text.Length, maskCharacters);
     }
@@ -113,7 +100,7 @@ public static class Extension
     /// <summary>
     /// text에서 랜덤으로 n개 만큼 마스킹된 문자로 변경한다
     /// </summary>
-    public static string GetNRandomMaskedText(this string text, int n, string maskCharacters = "#*@$%&!")
+    public static string GetNRandomMaskedText(this string text, int n, in string maskCharacters = "#*@$%&!")
     {
         StringBuilder stringBuilder = new StringBuilder(text);
         List<int> randomIndices = Enumerable.Range(0, text.Length).ToList();
@@ -128,20 +115,23 @@ public static class Extension
     }
 
     //Rich Text 태그를 포함한 문자열을 타이핑 효과로 출력하는 코루틴
-    public static IEnumerator CoTypeEffectWithRichText(this TMP_Text textComponent, string content, float typingSpeed)
+    public static IEnumerator CoTypeEffectWithRichText(this TMP_Text textComponent, string content, float typingSpeed, float waitTime = 0.5f)
     {
         textComponent.text = ""; // 초기화
 
         int stringIndex = 0;
+
+        WaitForSeconds typeInterval = WaitForSecondsCache.Get(typingSpeed);
+
         while (stringIndex < content.Length)
         {
             char c = content[stringIndex];
 
-            if (c == '<') // Rich Text 태그 시작
+            if (c == '<')
             {
                 int closeIndex = content.IndexOf('>', stringIndex);
-                if (closeIndex == -1) // 태그가 정상적으로 닫히지 않음
-                {
+
+                if (closeIndex == -1){ // 태그가 아닌경우 연속 태그를 고려하면 수정해 줘야되긴한다
                     textComponent.text += c;
                 }
                 else
@@ -156,18 +146,21 @@ public static class Extension
             }
 
             stringIndex++;
-            yield return new WaitForSeconds(typingSpeed);
+            yield return typeInterval;
         }
 
-        yield return new WaitForSeconds(0.5f); // 효과 마무리 시간
+        yield return WaitForSecondsCache.Get(waitTime); // 효과 마무리 시간
     }
 
-    public static IEnumerator CoTypeEffectWithRichText(this TMP_Text textComponent, string content, float typingSpeed, string soundKey = null)
+    public static IEnumerator CoTypeEffectWithRichText(this TMP_Text textComponent, string content, float typingSpeed, Action soundAction, float waitTime = 0.5f)
     {
         int typingCount = 0;
         textComponent.text = ""; // 초기화
 
         int stringIndex = 0;
+
+        WaitForSeconds typeInterval = WaitForSecondsCache.Get(typingSpeed);
+
         while (stringIndex < content.Length)
         {
             char c = content[stringIndex];
@@ -190,36 +183,34 @@ public static class Extension
                 textComponent.text += c;
             }
 
-            if (soundKey != null && (c != ' ' || c != '\n'))
+            if (c != ' ' || c != '\n')
             {
                 typingCount += 1;
                 if (typingCount % 2 == 0)
                 {
-                    Managers.Sound.Play(soundKey, Sound.Effect);
+                    soundAction?.Invoke();
                 }
             }
 
             stringIndex++;
-            yield return new WaitForSeconds(typingSpeed);
+            yield return typeInterval;
         }
 
-        yield return new WaitForSeconds(0.5f); // 효과 마무리 시간
+        yield return WaitForSecondsCache.Get(waitTime); // 효과 마무리 시간
     }
 
 
-    public static IEnumerator CoBlinkText(this TMP_Text text, int blinkCount, float blinkDuration, string soundKey = "")
+    public static IEnumerator CoBlinkText(this TMP_Text text, int blinkCount, float blinkDuration, Action soundAction)
     {
         for (int i = 0; i < blinkCount; i++)
         {
-            if(soundKey != "")
-            {
-                Managers.Sound.Play(soundKey, Sound.Effect);
-            }
+            soundAction?.Invoke();
+
             yield return CoFadeIn(text, blinkDuration / 2);
             yield return CoFadeOut(text, blinkDuration / 2);
         }
     }
-    public static IEnumerator CoTypingEffect(this TMP_Text text, string message, float textSpeed, bool playSound, string soundKey)
+    public static IEnumerator CoTypingEffect(this TMP_Text text, string message, float textSpeed,Action soundAction)
     {
         int typingCount = 0;
 
@@ -227,19 +218,19 @@ public static class Extension
         foreach (char c in message)
         {
             text.text += c;
-            if (playSound && (c != ' ' && c != '\n'))
+            if (c != ' ' && c != '\n')
             {
                 typingCount += 1;
                 if (typingCount % 2 == 0)
                 {
-                    Managers.Sound.Play(soundKey, Sound.Effect);
+                    soundAction?.Invoke();
                 }
             }
             yield return WaitForSecondsCache.Get(textSpeed); // 타자 치는 속도 조절 가능
         }
     }
 
-    public static IEnumerator CoTypingEffectPerChar(this TMP_Text text, string message, float textSpeed, bool playSound, string soundKey, bool spaceSkip = false, bool resetText = true)
+    public static IEnumerator CoTypingEffectPerChar(this TMP_Text text, string message, float textSpeed, bool playSound, Action soundAction, bool spaceSkip = false, bool resetText = true)
     {
         int typingCount = 0;
         if(resetText)
@@ -250,8 +241,7 @@ public static class Extension
             if (playSound && (c != ' ' && c != '\n'))
             {
                 typingCount += 1;
-                Managers.Sound.Play(soundKey, Sound.Effect);
-                
+                soundAction?.Invoke();
             }
             if (spaceSkip && c == ' ')
             {
