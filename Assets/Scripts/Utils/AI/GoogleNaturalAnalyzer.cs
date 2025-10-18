@@ -50,7 +50,7 @@ public class GoogleNaturalAnalyzer : MonoBehaviour
     public TMP_Text resultText;
     public TMP_Text scoreText;
 
-    private string apiKey = "AIzaSyA9HG7PWq93f7pFs69FRfhRULQhjQZaAgs"; // 1단계에서 발급받은 API 키
+    private string apiKey = ""; // 1단계에서 발급받은 API 키
     private string apiUrl = "https://language.googleapis.com/v2/documents:analyzeSentiment?key=";
     private int playerScore = 0;
 
