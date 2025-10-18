@@ -43,7 +43,7 @@ public class DocumentSentiment
     public float magnitude;
 }
 
-public class SentimentAnalyzer : MonoBehaviour
+public class GoogleNaturalAnalyzer : MonoBehaviour
 {
     // UI 요소 연결
     public TMP_InputField chatInputField;
