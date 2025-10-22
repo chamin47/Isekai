@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a563149a8f386d64f90410573ddc35f3, type: 3}
+  m_Name: BranchTable
+  m_EditorClassIdentifier: 
+  rows:
+  - BranchID: BR_HAPPINESS
+    InputType: Positive
+    ResultDialogueID: 2001009
+  - BranchID: BR_HAPPINESS
+    InputType: Ambiguous
+    ResultDialogueID: 2001011
+  - BranchID: BR_HAPPINESS
+    InputType: Negative
+    ResultDialogueID: 2001013

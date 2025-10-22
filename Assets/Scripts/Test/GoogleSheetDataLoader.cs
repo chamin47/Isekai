@@ -77,11 +77,13 @@ public class GoogleSheetDataLoader : EditorWindow
             data.eventName = values[3];
             data.eventParam = values[4];
             data.nextID = values[5];
-            data.nextFalseID = values[6];
-            data.script = values[7];
+            //data.nextFalseID = values[6];
+            //data.script = values[7];
+            data.script = values[6];
+			data.script = values[7];
 
-            // 파일 이름은 고유한 ID로 지정.
-            string assetPath = $"{SAVE_PATH}{data.id}.asset";
+			// 파일 이름은 고유한 ID로 지정.
+			string assetPath = $"{SAVE_PATH}{data.id}.asset";
             AssetDatabase.CreateAsset(data, assetPath);
         }
 

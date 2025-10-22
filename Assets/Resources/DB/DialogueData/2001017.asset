@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81fac1d9414d3c84398e6b84bf6b706a, type: 3}
+  m_Name: 2001017
+  m_EditorClassIdentifier: 
+  id: 2001017
+  speaker: "\uC0AC\uC11C"
+  animName: 
+  eventName: ShowText
+  eventParam: null
+  nextID: 2001018
+  script: "\uC774\uC138\uACC4 \uC548\uC5D0\uC11C \uB2F9\uC2E0\uC740 \uBB34\uC870\uAC74
+    \uD589\uBCF5\uD574\uC9C8 \uC218 \uC788\uC744\uAC70\uC57C."
+  descript: 

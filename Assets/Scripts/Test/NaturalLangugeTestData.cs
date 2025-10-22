@@ -12,6 +12,7 @@ public class DialogueData : ScriptableObject
     public string eventName;
     public string eventParam;
     public string nextID;
-    public string nextFalseID;
+    //public string nextFalseID;
     public string script;
+    public string descript;
 }
