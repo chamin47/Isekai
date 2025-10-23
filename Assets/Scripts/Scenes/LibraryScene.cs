@@ -131,9 +131,9 @@ public class LibraryScene : BaseScene
         WorldType currentWorldType = Managers.World.CurrentWorldType;
 
         int bookIndex = (int)currentWorldType;
-        LibraryBook book = _books[bookIndex].GetComponent<LibraryBook>();
+        LibraryBook book = _books[bookIndex].GetComponent<LibraryBook>(); // 빈터발트
 
-        book.gameObject.SetActive(true);
+        book.gameObject.SetActive(true);               // 빈터발트 오브젝트
         //book.StartFingerBlink();
         book.EnableFinger();
 	

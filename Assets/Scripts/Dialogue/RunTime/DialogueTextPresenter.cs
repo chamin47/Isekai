@@ -1,47 +1,45 @@
 using System.Collections;
-using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class DialogueTextPresenter : MonoBehaviour, ITextPresenter
 {
-	[Header("Febucci Typewriter")]
-	public Febucci.UI.Core.TypewriterCore typewriter; // 없으면 null 허용
+	[Header("Resolver")]
+	[SerializeField] MonoBehaviour anchorResolverBehaviour; // 드래그로 주입
+	ISpeakerAnchorResolver _resolver;
 
-	[Header("Fallback UI")]
-	public TMP_Text nameLabel;
-	public TMP_Text textLabel;
+	public float charSpeed = 0.03f;
 
-	public UnityEvent onLineStart;    // 효과음/표시 등
-	public UnityEvent onLineEnd;      // 클릭 가능 표시 등
+	public IActorDirector actor; // Runner에서 주입
 
-	public IActorDirector actor;      // 선택(없으면 포즈 무시)
+	void Awake() => _resolver = anchorResolverBehaviour as ISpeakerAnchorResolver;
 
 	public IEnumerator ShowText(string speaker, string text, string animName)
 	{
 		if (actor != null && !string.IsNullOrEmpty(animName))
 			actor.SetPose(speaker, animName);
 
-		if (nameLabel) nameLabel.text = speaker ?? "";
+		var anchor = ResolveAnchorSafe(speaker);
 
-		onLineStart?.Invoke();
+		var balloon = Managers.UI.MakeWorldSpaceUI<UI_DialogueBalloon>();
+		balloon.Init(anchor);
+		yield return balloon.CoPresent(text ?? "", charSpeed);
+	}
 
-		if (typewriter != null)
+	Transform ResolveAnchorSafe(string speaker)
+	{
+		// 우선 순위 1: 외부에서 주입된 리졸버
+		if (_resolver != null)
 		{
-			bool shown = false;
-			typewriter.onTextShowed.RemoveAllListeners();
-			typewriter.onTextShowed.AddListener(() => shown = true);
-			typewriter.ShowText(text ?? "");
-			yield return new WaitUntil(() => shown);
+			var t = _resolver.ResolveAnchor(speaker);
+			if (t) return t;
 		}
-		else
+		// acotr director가 리졸버도 겸한다면 그걸 사용
+		if (actor is ISpeakerAnchorResolver a2)
 		{
-			if (textLabel) textLabel.text = text ?? "";
+			var t = a2.ResolveAnchor(speaker);
+			if (t) return t;
 		}
-
-		onLineEnd?.Invoke();
-
-		// 아무 키/클릭 대기
-		while (!Input.GetMouseButtonDown(0) && !Input.anyKeyDown) yield return null;
+		// 최후: 카메라 중심 근처 등, 프로젝트 규약에 맞는 기본 앵커
+		return Camera.main ? Camera.main.transform : transform;
 	}
 }

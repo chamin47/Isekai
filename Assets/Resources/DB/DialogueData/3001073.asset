@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81fac1d9414d3c84398e6b84bf6b706a, type: 3}
+  m_Name: 3001073
+  m_EditorClassIdentifier: 
+  id: 3001073
+  speaker: "\uAF43 \uC0C1\uC778"
+  animName: Flower_Vendor_idle
+  eventName: ShowText
+  eventParam: null
+  nextID: 3001074
+  script: "{fade}\uC9C0\uAE08 \uAC00\uC7A5 \uC544\uB984\uB2F5\uAC8C \uD540 \uB8E8\uB4DC\uBCA0\uD0A4\uC544\uB97C
+    \uC544\uB984\uB2E4\uC6B4 \uACF5\uC791\uB2D8\uAED8 \uB4DC\uB9B4\uAC8C\uC694."
+  descript: 

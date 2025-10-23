@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 2001016
   speaker: "\uC0AC\uC11C"
-  animName: 
+  animName: Library_ch_idle
   eventName: ShowText
   eventParam: null
-  nextID: 2001017
-  script: "\uC774 \uC138\uACC4\uC5D0 \uC9C0\uCE5C \uC0AC\uB78C\uB4E4\uC744 \uC774\uC138\uACC4\uB85C
-    \uCD08\uB300\uD558\uB294 \uACF3\uC774\uC9C0."
+  nextID: 2001021
+  script: "{fade}\uD558\uC9C0\uB9CC <waitfor=0.5>.<waitfor=0.5>.<waitfor=0.5>. \uB354
+    \uD589\uBCF5\uD574\uC9C8 \uC218 \uC788\uB294 \uBC29\uBC95\uC774 \uC788\uB2E4\uB124!!"
   descript: 

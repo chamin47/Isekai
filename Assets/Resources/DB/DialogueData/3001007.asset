@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81fac1d9414d3c84398e6b84bf6b706a, type: 3}
+  m_Name: 3001007
+  m_EditorClassIdentifier: 
+  id: 3001007
+  speaker: "\uC601\uC560 2"
+  animName: Ladies_jump_2, Ladies_1, Ladies_3
+  eventName: ShowText
+  eventParam: null
+  nextID: 3001008
+  script: "{fade}\uC800\uB294 \uCCB8\uD2B8\uB780\uD2B8 \uB0A8\uC791\uAC00\uC758 \uC7A5\uB140,
+    \uD074\uB77C\uB9AC\uC0AC \uCCB8\uD2B8\uB780\uD2B8\uC785\uB2C8\uB2E4."
+  descript: 

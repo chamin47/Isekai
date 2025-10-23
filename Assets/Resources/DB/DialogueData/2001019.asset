@@ -14,10 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 2001019
   speaker: "\uC0AC\uC11C"
-  animName: Library_ch_smile
+  animName: Library_ch_idle
   eventName: ShowText
   eventParam: null
   nextID: 2001020
-  script: "\uC5B4\uB5A4\uAC00? \uC0C1\uC0C1\uB9CC\uC73C\uB85C\uB3C4 \uB9C9 \uAE30\uB300\uAC00
-    \uB418\uC9C0 \uC54A\uB294\uAC00?"
+  script: "{fade}\uC800\uB7F0\u2026 \uADF8\uB9AC \uD589\uBCF5\uD558\uC9C0 \uC54A\uC740\uAC00\uBCF4\uAD70!"
   descript: 

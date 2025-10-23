@@ -38,5 +38,15 @@ public interface IActorDirector
 	// 말하는 순간 포즈/표정 적용(있으면)
 	void SetPose(string speaker, string animName);
 	// PlayAnim 이벤트로 N초짜리 단발 동작
-	IEnumerator PlayOnce(string speaker, string animName, float durationSec);
+	IEnumerator PlayOnce(string speaker, string animName, float? durationSec = null);
+}
+
+public interface IDialogueHookProvider
+{
+	IEnumerator OnPreEnter(string id);
+}
+
+public interface ISpeakerAnchorResolver
+{
+	Transform ResolveAnchor(string speaker);
 }

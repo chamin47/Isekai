@@ -41,4 +41,39 @@ public static class ParamParser
 		var b = p.Length > 1 ? ToFloat(p[1], db) : db;
 		return (a, b);
 	}
+
+	public static (float scale, float dur, string anchor) Zoom3(string param, float dScale, float dDur, string dAnchor)
+	{
+		if (string.IsNullOrWhiteSpace(param)) return (dScale, dDur, dAnchor);
+		// NBSP 제거 및 트림
+		var clean = param.Replace('\u00A0', ' ').Trim();
+		var parts = clean.Split(',');
+		float s = dScale, t = dDur;
+		string a = dAnchor;
+
+		if (parts.Length >= 1 && float.TryParse(parts[0].Trim(), NumberStyles.Float, Invariant, out var s0)) s = s0;
+		if (parts.Length >= 2 && float.TryParse(parts[1].Trim(), NumberStyles.Float, Invariant, out var t0)) t = t0;
+		if (parts.Length >= 3) a = parts[2].Trim();
+
+		return (s, t, a);
+	}
+
+	public static float? NullableFloat(string param)
+	{
+		if (string.IsNullOrWhiteSpace(param)) 
+			return null;
+
+		// NBSP 제거 + 트림
+		var s = param.Replace('\u00A0', ' ').Trim();
+
+		// "null" 문자열은 명시적 null
+		if (s.Equals("null", StringComparison.OrdinalIgnoreCase)) 
+			return null;
+
+		// 단일 값만 파싱
+		if (float.TryParse(s, NumberStyles.Float, Invariant, out var v))
+			return v;
+
+		return null;
+	}
 }

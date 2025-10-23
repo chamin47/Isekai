@@ -17,35 +17,50 @@ public class DialogueRunner : MonoBehaviour
 	public SimpleChoiceUI choiceUI;
 	public SimpleInputPrompt inputPrompt;
 	public KeywordBranchResolver branchResolver;
-	public ActorDirectorStub actorDirector; // 선택
+	public ActorDirectorSimple actorDirector; // 선택
+
+	[Header("Hooks")]
+	[SerializeField] MonoBehaviour hookProviderBehaviour;
+	IDialogueHookProvider _hooks;
 
 	Coroutine runCo;
 
 	void Awake()
 	{
-		if (!database) database = gameObject.AddComponent<DialogueDatabaseRuntime>();
+		if (database == null) 
+			database = gameObject.AddComponent<DialogueDatabaseRuntime>();
+
 		database.LoadAllFromResources();
 
-		if (textPresenter && actorDirector && textPresenter.actor == null)
+		if (textPresenter != null && actorDirector != null && textPresenter.actor == null)
 			textPresenter.actor = actorDirector;
+
+		_hooks = hookProviderBehaviour as IDialogueHookProvider;
 	}
 
 	public void Play(string id)
 	{
-		if (runCo != null) StopCoroutine(runCo);
+		if (runCo != null) 
+			StopCoroutine(runCo);
+
 		runCo = StartCoroutine(Run(id));
 	}
-	public void Play() => Play(startID);
-
+	public void Play()
+	{
+		Play(startID);
+	}
 	IEnumerator Start()
 	{
-		if (!string.IsNullOrEmpty(startID)) Play(startID);
+		if (!string.IsNullOrEmpty(startID)) 
+			Play(startID);
+
 		yield break;
 	}
 
 	void Fire(IEnumerator fx)
 	{
-		if (fx != null) StartCoroutine(fx); // 병렬 실행, 여기서는 대기하지 않음
+		if (fx != null) 
+			StartCoroutine(fx); // 병렬 실행, 여기서는 대기하지 않음
 	}
 
 	IEnumerator Run(string id)
@@ -58,6 +73,11 @@ public class DialogueRunner : MonoBehaviour
 				yield break;
 			}
 
+			Debug.Log(id);
+
+			if (_hooks != null)
+				yield return _hooks.OnPreEnter(id);
+
 			var evt = row.eventName?.Trim();
 			var param = row.eventParam?.Trim();
 
@@ -69,7 +89,7 @@ public class DialogueRunner : MonoBehaviour
 
 				case "ShowText":
 					{
-						yield return textPresenter.ShowText(row.speaker, row.script, row.animName);
+						yield return textPresenter?.ShowText(row.speaker, row.script, row.animName);
 						id = row.nextID;
 						break;
 					}
@@ -84,13 +104,16 @@ public class DialogueRunner : MonoBehaviour
 
 				case "CameraZoomIn":
 					{
-						// 예: "2.5,0.8" -> (목표스케일, 지속시간)
-						var (target, dur) = ParamParser.Floats2(param, 1f, 0.5f);
-						if (cameraService) Fire(cameraService.ZoomTo(target, dur));
+						var (scale, dur, anchor) = ParamParser.Zoom3(param, 1f, 0.5f, null);
+						if (cameraService != null)
+							Fire(cameraService.ZoomTo(scale, dur, anchor)); // 병렬
 
-						// 텍스트가 있으면 정상적으로 출력/클릭 대기 (그 사이 카메라 연출은 병렬로 진행)
+						// AnimName이 있으면 대사 유무와 관계없이 애니 동시 재생
+						if (!string.IsNullOrWhiteSpace(row.animName) && actorDirector != null)
+							Fire(actorDirector.PlayOnce(row.speaker, row.animName)); // 루프/포즈 유지형
+
 						if (!string.IsNullOrWhiteSpace(row.script))
-							yield return textPresenter.ShowText(row.speaker, row.script, row.animName);
+							yield return textPresenter?.ShowText(row.speaker, row.script, row.animName); // 병렬 중 텍스트만 대기
 
 						id = row.nextID;
 						break;
@@ -98,11 +121,15 @@ public class DialogueRunner : MonoBehaviour
 
 				case "CameraZoomOut":
 					{
-						var (target, dur) = ParamParser.Floats2(param, 1f, 0.5f);
-						if (cameraService) Fire(cameraService.ZoomOutTo(target, dur));
+						var (scale, dur, anchor) = ParamParser.Zoom3(param, 1f, 0.5f, null);
+						if (cameraService != null)
+							Fire(cameraService?.ZoomOutTo(scale, dur, anchor)); // 병렬
+
+						if (!string.IsNullOrWhiteSpace(row.animName) && actorDirector != null)
+							Fire(actorDirector.PlayOnce(row.speaker, row.animName)); // 병렬
 
 						if (!string.IsNullOrWhiteSpace(row.script))
-							yield return textPresenter.ShowText(row.speaker, row.script, row.animName);
+							yield return textPresenter?.ShowText(row.speaker, row.script, row.animName);
 
 						id = row.nextID;
 						break;
@@ -111,10 +138,11 @@ public class DialogueRunner : MonoBehaviour
 				case "CameraShake":
 					{
 						var (mag, dur) = ParamParser.Floats2(param, 0.2f, 0.4f);
-						if (cameraService) Fire(cameraService.Shake(mag, dur));
+						if (cameraService != null)
+							Fire(cameraService?.Shake(mag, dur));
 
 						if (!string.IsNullOrWhiteSpace(row.script))
-							yield return textPresenter.ShowText(row.speaker, row.script, row.animName);
+							yield return textPresenter?.ShowText(row.speaker, row.script, row.animName);
 
 						id = row.nextID;
 						break;
@@ -122,12 +150,19 @@ public class DialogueRunner : MonoBehaviour
 
 				case "PlayAnim":
 					{
-						// eventParam에는 지속시간만: "0.6"
-						var (dur, _) = ParamParser.Floats2(row.eventParam, 0.5f, 0f);
-						if (actorDirector) Fire(actorDirector.PlayOnce(row.speaker, row.animName, dur));
+						Debug.Log("PlayAnim");
+						// null 허용: null이면 클립 길이로 대기
+						float? dur = ParamParser.NullableFloat(row.eventParam); // null 또는 숫자
+						IEnumerator co = null;
+						if (actorDirector != null)
+							co = actorDirector.PlayOnce(row.speaker, row.animName, dur); // 내부에서 dur null이면 클립길이 사용
 
-						if (!string.IsNullOrWhiteSpace(row.script))
-							yield return textPresenter.ShowText(row.speaker, row.script, row.animName);
+						if (string.IsNullOrWhiteSpace(row.script) || row.script == "null")
+						{
+							// 대사 없으면 애니 끝까지 기다렸다가 다음으로
+							if (co != null) 
+								yield return co;
+						}
 
 						id = row.nextID;
 						break;
@@ -157,7 +192,7 @@ public class DialogueRunner : MonoBehaviour
 						}
 
 						int sel = -1;
-						yield return choiceUI.ShowChoices(choice, i => sel = i);
+						yield return choiceUI?.ShowChoices(choice, i => sel = i);
 						if (0 <= sel && sel < choice.options.Count)
 							id = choice.options[sel].nextID;
 						else
@@ -169,8 +204,8 @@ public class DialogueRunner : MonoBehaviour
 					{
 						// EventParam = BranchID
 						string userText = "";
-						yield return inputPrompt.Prompt(row.script, s => userText = s);
-						var type = branchResolver ? branchResolver.Classify(userText) : "Ambiguous";
+						yield return inputPrompt?.Prompt(row.script, s => userText = s);
+						var type = branchResolver ? branchResolver?.Classify(userText) : "Ambiguous";
 						var next = branchTable ? branchTable.Resolve(param, type) : null;
 
 						id = next;

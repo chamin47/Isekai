@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81fac1d9414d3c84398e6b84bf6b706a, type: 3}
+  m_Name: 2001024
+  m_EditorClassIdentifier: 
+  id: 2001024
+  speaker: "\uC0AC\uC11C"
+  animName: Library_ch_idle
+  eventName: ShowText
+  eventParam: null
+  nextID: 2001025
+  script: "{fade}\uC5EC\uAE30 \uAF42\uD600\uC788\uB294 \uCC45\uB4E4 \uC911 \uD55C
+    \uAD8C\uC744 \uAEBC\uB0B4 \uC77D\uC73C\uBA74 \uADF8\uB300\uB294 \uC774\uC138\uACC4
+    \uC548\uC758 \uC778\uBB3C\uC774 \uB418\uC5B4 \uADF8\uC758 \uC0B6\uC744 \uC0B4\uC544\uAC04\uB2E4\uB124."
+  descript: "\uD574\uB2F9 \uB300\uC0AC \uB098\uC62C \uB54C 4\uAC1C\uC758 \uCC45\uC5D0
+    \uB2E4 \uB9C8\uC6B0\uC2A4 \uD45C\uC2DC \uB728\uAC8C \uD558\uAE30"

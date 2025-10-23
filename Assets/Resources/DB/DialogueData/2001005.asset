@@ -14,11 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 2001005
   speaker: "\uC0AC\uC11C"
-  animName: Library_ch_hug
-  eventName: CameraZoomOut
-  eventParam: 1.0, 0.7
+  animName: Library_ch_idle
+  eventName: ShowText
+  eventParam: null
   nextID: 2001006
-  script: "\u2018\uC774\uC138\uACC4 \uB3C4\uC11C\uAD00\u2019\uC5D0 \uC628 \uAC83\uC744
-    \uD658\uC601\uD55C\uB2E4\uB124!"
-  descript: "\uC784\uC758\uB85C \uAC12\uC744 \uC801\uC5B4\uB450\uAE34 \uD588\uB294\uB370
-    \uC6D0\uB798 \uD06C\uAE30\uB300\uB85C \uB3CC\uC544\uC624\uAC8C \uD558\uAE30"
+  script: "{fade} \uC624 \uC0C8\uB85C\uC6B4 \uC190\uB2D8\uC774\uAD70!"
+  descript: 

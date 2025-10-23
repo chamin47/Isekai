@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 2001002
   speaker: "\uC0AC\uC11C"
-  animName: 
-  eventName: ShowText
+  animName: Library_ch_surprise
+  eventName: PlayAnim
   eventParam: null
   nextID: 2001003
-  script: "\uBC18\uAC11\uB124!"
-  descript: 
+  script: null
+  descript: "* \uD50C\uB808\uC774\uC5B4\uAC00 (1)\uC704\uCE58\uC5D0 \uC624\uBA74
+    play / \uD55C \uBC88 \uC7AC\uC0DD \uD6C4 2001003 \uC774\uB3D9"

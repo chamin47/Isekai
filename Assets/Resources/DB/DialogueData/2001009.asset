@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 2001009
   speaker: "\uC0AC\uC11C"
-  animName: 
-  eventName: ShowText
-  eventParam: null
+  animName: Library_ch_hug
+  eventName: CameraZoomOut
+  eventParam: "1.0,\_0.8"
   nextID: 2001010
-  script: "\uC9C0\uAE08 \uD589\uBCF5\uD558\uB2E4\uB2C8, \uB2E4\uD589\uC774\uAD70."
-  descript: 
+  script: "{horiexp} <bounce a=0.2>\u2018\uC774\uC138\uACC4 \uB3C4\uC11C\uAD00\u2019</bounce>\uC5D0
+    \uC628 \uAC83\uC744 \uD658\uC601\uD55C\uB2E4\uB124!"
+  descript: "\uB9C8\uC9C0\uB9C9 \uBAA8\uC158 \uACE0\uC815"
