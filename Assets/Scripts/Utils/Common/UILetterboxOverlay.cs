@@ -87,7 +87,7 @@ public class UILetterboxOverlay : MonoBehaviour
 
 	public IEnumerator Open(float duration, float targetHeight)
 	{
-		_blocker.gameObject.SetActive(true);
+		//_blocker.gameObject.SetActive(true);
 		yield return Animate(to: targetHeight, duration);
 	}
 
@@ -112,24 +112,24 @@ public class UILetterboxOverlay : MonoBehaviour
 	}
 
 	/// <summary>
-	/// 열기(오버슈트): current → overshoot → settle (같은 '속도' 유지)
-	/// 예: 0 → 10 → 9
+	/// ????(????????): current ?? overshoot ?? settle (???? '????' ????)
+	/// ??: 0 ?? 10 ?? 9
 	/// </summary>
 	public IEnumerator OpenOvershoot(float settleHeight, float overshootHeight, float pixelsPerSecond)
 	{
-		_blocker.gameObject.SetActive(true);
-		float start = _top.sizeDelta.y; // 보통 0
+		//_blocker.gameObject.SetActive(true);
+		float start = _top.sizeDelta.y; // ???? 0
 		yield return AnimateBySpeed(start, overshootHeight, pixelsPerSecond);
 		yield return AnimateBySpeed(overshootHeight, settleHeight, pixelsPerSecond);
 	}
 
 	/// <summary>
-	/// 닫기(오버슈트): current(=settle) → overshoot → 0 (같은 '속도' 유지)
-	/// 예: 9 → 10 → 0
+	/// ????(????????): current(=settle) ?? overshoot ?? 0 (???? '????' ????)
+	/// ??: 9 ?? 10 ?? 0
 	/// </summary>
 	public IEnumerator CloseOvershoot(float settleHeight, float overshootHeight, float pixelsPerSecond)
 	{
-		float start = _top.sizeDelta.y; // 보통 settleHeight
+		float start = _top.sizeDelta.y; // ???? settleHeight
 		yield return AnimateBySpeed(start, overshootHeight, pixelsPerSecond);
 		yield return AnimateBySpeed(overshootHeight, 0f, pixelsPerSecond);
 		_blocker.gameObject.SetActive(false);

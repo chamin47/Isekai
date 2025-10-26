@@ -15,10 +15,10 @@ MonoBehaviour:
   rows:
   - BranchID: BR_HAPPINESS
     InputType: Positive
-    ResultDialogueID: 2001009
+    ResultDialogueID: 2001015
   - BranchID: BR_HAPPINESS
     InputType: Ambiguous
-    ResultDialogueID: 2001011
+    ResultDialogueID: 2001017
   - BranchID: BR_HAPPINESS
     InputType: Negative
-    ResultDialogueID: 2001013
+    ResultDialogueID: 2001019

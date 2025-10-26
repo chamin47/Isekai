@@ -7,7 +7,7 @@ public class DialogueRunner : MonoBehaviour
 	public string startID;
 
 	[Header("Data")]
-	public DialogueDatabaseRuntime database;   // 자동 로딩
+	public DialogueDatabaseRuntime database;   // ???? ????
 	public BranchTable branchTable;
 	public ChoiceTable choiceTable;
 
@@ -17,7 +17,7 @@ public class DialogueRunner : MonoBehaviour
 	public SimpleChoiceUI choiceUI;
 	public SimpleInputPrompt inputPrompt;
 	public KeywordBranchResolver branchResolver;
-	public ActorDirectorSimple actorDirector; // 선택
+	public ActorDirectorSimple actorDirector; // ????
 
 	[Header("Hooks")]
 	[SerializeField] MonoBehaviour hookProviderBehaviour;
@@ -60,7 +60,7 @@ public class DialogueRunner : MonoBehaviour
 	void Fire(IEnumerator fx)
 	{
 		if (fx != null) 
-			StartCoroutine(fx); // 병렬 실행, 여기서는 대기하지 않음
+			StartCoroutine(fx); // ???? ????, ???????? ???????? ????
 	}
 
 	IEnumerator Run(string id)
@@ -84,7 +84,7 @@ public class DialogueRunner : MonoBehaviour
 			switch (evt)
 			{
 				default:
-					// (이벤트가 비어있으면 ShowText 취급)
+					// (???????? ?????????? ShowText ????)
 					goto case "ShowText";
 
 				case "ShowText":
@@ -106,14 +106,14 @@ public class DialogueRunner : MonoBehaviour
 					{
 						var (scale, dur, anchor) = ParamParser.Zoom3(param, 1f, 0.5f, null);
 						if (cameraService != null)
-							Fire(cameraService.ZoomTo(scale, dur, anchor)); // 병렬
+							Fire(cameraService.ZoomTo(scale, dur, anchor)); // ????
 
-						// AnimName이 있으면 대사 유무와 관계없이 애니 동시 재생
+						// AnimName?? ?????? ???? ?????? ???????? ???? ???? ????
 						if (!string.IsNullOrWhiteSpace(row.animName) && actorDirector != null)
-							Fire(actorDirector.PlayOnce(row.speaker, row.animName)); // 루프/포즈 유지형
+							Fire(actorDirector.PlayOnce(row.speaker, row.animName)); // ????/???? ??????
 
 						if (!string.IsNullOrWhiteSpace(row.script))
-							yield return textPresenter?.ShowText(row.speaker, row.script, row.animName); // 병렬 중 텍스트만 대기
+							yield return textPresenter?.ShowText(row.speaker, row.script, row.animName); // ???? ?? ???????? ????
 
 						id = row.nextID;
 						break;
@@ -123,10 +123,10 @@ public class DialogueRunner : MonoBehaviour
 					{
 						var (scale, dur, anchor) = ParamParser.Zoom3(param, 1f, 0.5f, null);
 						if (cameraService != null)
-							Fire(cameraService?.ZoomOutTo(scale, dur, anchor)); // 병렬
+							Fire(cameraService?.ZoomOutTo(scale, dur, anchor)); // ????
 
 						if (!string.IsNullOrWhiteSpace(row.animName) && actorDirector != null)
-							Fire(actorDirector.PlayOnce(row.speaker, row.animName)); // 병렬
+							Fire(actorDirector.PlayOnce(row.speaker, row.animName)); // ????
 
 						if (!string.IsNullOrWhiteSpace(row.script))
 							yield return textPresenter?.ShowText(row.speaker, row.script, row.animName);
@@ -151,15 +151,15 @@ public class DialogueRunner : MonoBehaviour
 				case "PlayAnim":
 					{
 						Debug.Log("PlayAnim");
-						// null 허용: null이면 클립 길이로 대기
-						float? dur = ParamParser.NullableFloat(row.eventParam); // null 또는 숫자
+						// null ????: null???? ???? ?????? ????
+						float? dur = ParamParser.NullableFloat(row.eventParam); // null ???? ????
 						IEnumerator co = null;
 						if (actorDirector != null)
-							co = actorDirector.PlayOnce(row.speaker, row.animName, dur); // 내부에서 dur null이면 클립길이 사용
+							co = actorDirector.PlayOnce(row.speaker, row.animName, dur); // ???????? dur null???? ???????? ????
 
 						if (string.IsNullOrWhiteSpace(row.script) || row.script == "null")
 						{
-							// 대사 없으면 애니 끝까지 기다렸다가 다음으로
+							// ???? ?????? ???? ?????? ?????????? ????????
 							if (co != null) 
 								yield return co;
 						}
@@ -177,6 +177,16 @@ public class DialogueRunner : MonoBehaviour
 				case "EndScript":
 					{
 						Debug.Log("Dialogue ended.");
+
+						FindAnyObjectByType<PlayerController>().canMove = true;
+
+						var letterbox = UILetterboxOverlay.GetOrCreate();
+
+						float baseH = Screen.height * 0.1f;  // ???? ???? ????
+						float overshoot = baseH;
+						float settle = baseH * 0.85f;        // 10 ?? 7 ???????? 70%
+
+						yield return letterbox.CloseOvershoot(settle, overshoot, 170f);
 						yield break;
 					}
 
@@ -196,7 +206,7 @@ public class DialogueRunner : MonoBehaviour
 						if (0 <= sel && sel < choice.options.Count)
 							id = choice.options[sel].nextID;
 						else
-							id = row.nextID; // 혹시 모를 fallback
+							id = row.nextID; // ???? ???? fallback
 						break;
 					}
 
@@ -213,7 +223,7 @@ public class DialogueRunner : MonoBehaviour
 					}
 			}
 
-			// 안전장치: 무한루프 방지
+			// ????????: ???????? ????
 			yield return null;
 		}
 	}

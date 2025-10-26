@@ -1,29 +1,21 @@
 using System;
 using System.Collections;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class SimpleInputPrompt : MonoBehaviour, IInputPrompt
 {
-	public CanvasGroup group;
-	public TMP_Text promptLabel;
-	public TMP_InputField inputField;
-	public Button confirmButton;
+    [Header("Anchors")]
+    public Transform playerAnchor;     // 플레이어 머리 위 빈 오브젝트 등
 
-	public IEnumerator Prompt(string prompt, Action<string> onDone)
-	{
-		group.alpha = 1; group.interactable = true; group.blocksRaycasts = true;
-		if (promptLabel) promptLabel.text = prompt ?? "";
-		inputField.text = "";
-		string captured = null;
+    public IEnumerator Prompt(string prompt, Action<string> onDone)
+    {
+        // 월드 스페이스 입력 말풍선 생성
+        var ui = Managers.UI.MakeWorldSpaceUI<UI_InputBalloon>();
+        ui.Init(playerAnchor);
 
-		confirmButton.onClick.RemoveAllListeners();
-		confirmButton.onClick.AddListener(() => captured = inputField.text);
+        string captured = "";
+        yield return ui.CoPrompt(prompt, s => captured = s);
 
-		yield return new WaitUntil(() => captured != null);
-
-		group.alpha = 0; group.interactable = false; group.blocksRaycasts = false;
-		onDone?.Invoke(captured);
-	}
+        onDone?.Invoke(captured);
+    }
 }
