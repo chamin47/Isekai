@@ -1,41 +1,45 @@
 using System.Collections;
 using UnityEngine;
 
+/// <summary>
+/// 대화 실행기.
+/// DialogueData의 event/script/nextID를 해석하여 텍스트/카메라/애니/선택지/입력/을 실행한다.
+/// </summary>
 public class DialogueRunner : MonoBehaviour
 {
 	[Header("Entry")]
-	public string startID;
+	[SerializeField] private string _startID;
 
 	[Header("Data")]
-	public DialogueDatabaseRuntime database;   // ???? ????
-	public BranchTable branchTable;
-	public ChoiceTable choiceTable;
+	[SerializeField] private DialogueDatabaseRuntime _database;
+	[SerializeField] private BranchTable _branchTable;
+	[SerializeField] private ChoiceTable _choiceTable;
 
 	[Header("Services")]
-	public DialogueTextPresenter textPresenter;
-	public CameraService cameraService;
-	public SimpleChoiceUI choiceUI;
-	public SimpleInputPrompt inputPrompt;
-	public KeywordBranchResolver branchResolver;
-	public ActorDirectorSimple actorDirector; // ????
+	[SerializeField] private DialogueTextPresenter _textPresenter;
+	[SerializeField] private CameraService _cameraService;
+	[SerializeField] private SimpleChoiceUI _choiceUI;
+	[SerializeField] private SimpleInputPrompt _inputPrompt;
+	[SerializeField] private KeywordBranchResolver _branchResolver;
+	[SerializeField] private ActorDirectorSimple _actorDirector; 
 
 	[Header("Hooks")]
-	[SerializeField] MonoBehaviour hookProviderBehaviour;
-	IDialogueHookProvider _hooks;
+	[SerializeField] private MonoBehaviour _hookProviderBehaviour;
+	private IDialogueHookProvider _hooks;
 
-	Coroutine runCo;
+	private Coroutine runCo;
 
 	void Awake()
 	{
-		if (database == null) 
-			database = gameObject.AddComponent<DialogueDatabaseRuntime>();
+		if (_database == null) 
+			_database = gameObject.AddComponent<DialogueDatabaseRuntime>();
 
-		database.LoadAllFromResources();
+		_database.LoadAllFromResources();
 
-		if (textPresenter != null && actorDirector != null && textPresenter.actor == null)
-			textPresenter.actor = actorDirector;
+		if (_textPresenter != null && _actorDirector != null && _textPresenter.actor == null)
+			_textPresenter.actor = _actorDirector;
 
-		_hooks = hookProviderBehaviour as IDialogueHookProvider;
+		_hooks = _hookProviderBehaviour as IDialogueHookProvider;
 	}
 
 	public void Play(string id)
@@ -47,12 +51,12 @@ public class DialogueRunner : MonoBehaviour
 	}
 	public void Play()
 	{
-		Play(startID);
+		Play(_startID);
 	}
 	IEnumerator Start()
 	{
-		if (!string.IsNullOrEmpty(startID)) 
-			Play(startID);
+		if (!string.IsNullOrEmpty(_startID)) 
+			Play(_startID);
 
 		yield break;
 	}
@@ -60,14 +64,14 @@ public class DialogueRunner : MonoBehaviour
 	void Fire(IEnumerator fx)
 	{
 		if (fx != null) 
-			StartCoroutine(fx); // ???? ????, ???????? ???????? ????
+			StartCoroutine(fx); 
 	}
 
 	IEnumerator Run(string id)
 	{
 		while (!string.IsNullOrEmpty(id))
 		{
-			if (!database.TryGet(id, out var row))
+			if (!_database.TryGet(id, out var row))
 			{
 				Debug.LogError($"Dialogue id not found: {id}");
 				yield break;
@@ -84,12 +88,23 @@ public class DialogueRunner : MonoBehaviour
 			switch (evt)
 			{
 				default:
-					// (???????? ?????????? ShowText ????)
 					goto case "ShowText";
 
 				case "ShowText":
 					{
-						yield return textPresenter?.ShowText(row.speaker, row.script, row.animName);
+						if (!string.IsNullOrEmpty(row.script))
+							yield return _textPresenter?.ShowText(row.speaker, row.script, row.animName);
+
+						id = row.nextID;
+						break;
+					}
+
+				case "ShowTextStacked":
+					{
+						if (!string.IsNullOrEmpty(row.script))
+							yield return (_textPresenter as DialogueTextPresenter)
+								?.ShowTextStacked(row.speaker, row.script, row.animName);
+
 						id = row.nextID;
 						break;
 					}
@@ -105,15 +120,14 @@ public class DialogueRunner : MonoBehaviour
 				case "CameraZoomIn":
 					{
 						var (scale, dur, anchor) = ParamParser.Zoom3(param, 1f, 0.5f, null);
-						if (cameraService != null)
-							Fire(cameraService.ZoomTo(scale, dur, anchor)); // ????
+						if (_cameraService != null)
+							Fire(_cameraService.ZoomTo(scale, dur, anchor)); 
 
-						// AnimName?? ?????? ???? ?????? ???????? ???? ???? ????
-						if (!string.IsNullOrWhiteSpace(row.animName) && actorDirector != null)
-							Fire(actorDirector.PlayOnce(row.speaker, row.animName)); // ????/???? ??????
+						if (!string.IsNullOrWhiteSpace(row.animName) && _actorDirector != null)
+							Fire(_actorDirector.PlayAnim(row.speaker, row.animName)); 
 
 						if (!string.IsNullOrWhiteSpace(row.script))
-							yield return textPresenter?.ShowText(row.speaker, row.script, row.animName); // ???? ?? ???????? ????
+							yield return _textPresenter?.ShowText(row.speaker, row.script, row.animName); // ???? ?? ???????? ????
 
 						id = row.nextID;
 						break;
@@ -122,14 +136,14 @@ public class DialogueRunner : MonoBehaviour
 				case "CameraZoomOut":
 					{
 						var (scale, dur, anchor) = ParamParser.Zoom3(param, 1f, 0.5f, null);
-						if (cameraService != null)
-							Fire(cameraService?.ZoomOutTo(scale, dur, anchor)); // ????
+						if (_cameraService != null)
+							Fire(_cameraService?.ZoomOutTo(scale, dur, anchor)); 
 
-						if (!string.IsNullOrWhiteSpace(row.animName) && actorDirector != null)
-							Fire(actorDirector.PlayOnce(row.speaker, row.animName)); // ????
+						if (!string.IsNullOrWhiteSpace(row.animName) && _actorDirector != null)
+							Fire(_actorDirector.PlayAnim(row.speaker, row.animName)); 
 
-						if (!string.IsNullOrWhiteSpace(row.script))
-							yield return textPresenter?.ShowText(row.speaker, row.script, row.animName);
+						if (!string.IsNullOrWhiteSpace(row.script) && row.script != "null")
+							yield return _textPresenter?.ShowText(row.speaker, row.script, row.animName);
 
 						id = row.nextID;
 						break;
@@ -138,11 +152,11 @@ public class DialogueRunner : MonoBehaviour
 				case "CameraShake":
 					{
 						var (mag, dur) = ParamParser.Floats2(param, 0.2f, 0.4f);
-						if (cameraService != null)
-							Fire(cameraService?.Shake(mag, dur));
+						if (_cameraService != null)
+							Fire(_cameraService?.Shake(mag, dur));
 
 						if (!string.IsNullOrWhiteSpace(row.script))
-							yield return textPresenter?.ShowText(row.speaker, row.script, row.animName);
+							yield return _textPresenter?.ShowText(row.speaker, row.script, row.animName);
 
 						id = row.nextID;
 						break;
@@ -151,15 +165,13 @@ public class DialogueRunner : MonoBehaviour
 				case "PlayAnim":
 					{
 						Debug.Log("PlayAnim");
-						// null ????: null???? ???? ?????? ????
-						float? dur = ParamParser.NullableFloat(row.eventParam); // null ???? ????
+						float? dur = ParamParser.NullableFloat(row.eventParam); 
 						IEnumerator co = null;
-						if (actorDirector != null)
-							co = actorDirector.PlayOnce(row.speaker, row.animName, dur); // ???????? dur null???? ???????? ????
+						if (_actorDirector != null)
+							co = _actorDirector.PlayAnim(row.speaker, row.animName, dur); 
 
 						if (string.IsNullOrWhiteSpace(row.script) || row.script == "null")
 						{
-							// ???? ?????? ???? ?????? ?????????? ????????
 							if (co != null) 
 								yield return co;
 						}
@@ -182,9 +194,9 @@ public class DialogueRunner : MonoBehaviour
 
 						var letterbox = UILetterboxOverlay.GetOrCreate();
 
-						float baseH = Screen.height * 0.1f;  // ???? ???? ????
+						float baseH = Screen.height * 0.1f;  
 						float overshoot = baseH;
-						float settle = baseH * 0.85f;        // 10 ?? 7 ???????? 70%
+						float settle = baseH * 0.85f;        
 
 						yield return letterbox.CloseOvershoot(settle, overshoot, 170f);
 						yield break;
@@ -193,7 +205,7 @@ public class DialogueRunner : MonoBehaviour
 				case "ShowChoice":
 					{
 						// EventParam = ChoiceID
-						var choice = choiceTable ? choiceTable.Get(param) : null;
+						var choice = _choiceTable ? _choiceTable.Get(param) : null;
 						if (choice == null)
 						{
 							Debug.LogError($"Choice not found: {param}");
@@ -202,11 +214,11 @@ public class DialogueRunner : MonoBehaviour
 						}
 
 						int sel = -1;
-						yield return choiceUI?.ShowChoices(choice, i => sel = i);
+						yield return _choiceUI?.ShowChoices(choice, i => sel = i);
 						if (0 <= sel && sel < choice.options.Count)
 							id = choice.options[sel].nextID;
 						else
-							id = row.nextID; // ???? ???? fallback
+							id = row.nextID; 
 						break;
 					}
 
@@ -214,16 +226,17 @@ public class DialogueRunner : MonoBehaviour
 					{
 						// EventParam = BranchID
 						string userText = "";
-						yield return inputPrompt?.Prompt(row.script, s => userText = s);
-						var type = branchResolver ? branchResolver?.Classify(userText) : "Ambiguous";
-						var next = branchTable ? branchTable.Resolve(param, type) : null;
+						yield return _inputPrompt?.Prompt(row.script, s => userText = s);
+						var type = _branchResolver ? _branchResolver?.Classify(userText) : "Ambiguous";
+						var next = _branchTable ? _branchTable.Resolve(param, type) : null;
+
+						yield return (_textPresenter as DialogueTextPresenter)?.ClearAllStacked(0.12f);
 
 						id = next;
 						break;
 					}
 			}
 
-			// ????????: ???????? ????
 			yield return null;
 		}
 	}

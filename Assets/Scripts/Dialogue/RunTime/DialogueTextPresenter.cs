@@ -1,45 +1,77 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 대사 표시 담당 프레젠터.
+/// 말풍선 생성·표시, 스택형 말풍선의 누적 배치/해제, 안전한 앵커 해석을 수행한다.
+/// </summary>
 public class DialogueTextPresenter : MonoBehaviour, ITextPresenter
 {
-	[Header("Resolver")]
-	[SerializeField] MonoBehaviour anchorResolverBehaviour; // 드래그로 주입
-	ISpeakerAnchorResolver _resolver;
-
-	public float charSpeed = 0.03f;
+	public float _charSpeed = 0.03f;
 
 	public IActorDirector actor; // Runner에서 주입
 
-	void Awake() => _resolver = anchorResolverBehaviour as ISpeakerAnchorResolver;
+	const float StackSpacingPx = 150f;
+
+	readonly Dictionary<Transform, List<UI_DialogueBalloon>> _stacked = new();
 
 	public IEnumerator ShowText(string speaker, string text, string animName)
 	{
 		if (actor != null && !string.IsNullOrEmpty(animName))
-			actor.SetPose(speaker, animName);
+			StartCoroutine(actor.PlayAnim(speaker, animName));
 
 		var anchor = ResolveAnchorSafe(speaker);
 
 		var balloon = Managers.UI.MakeWorldSpaceUI<UI_DialogueBalloon>();
 		balloon.Init(anchor);
-		yield return balloon.CoPresent(text ?? "", charSpeed);
+		yield return balloon.CoPresent(text ?? "", _charSpeed);
 	}
 
-	Transform ResolveAnchorSafe(string speaker)
+	public IEnumerator ShowTextStacked(string speaker, string text, string animName)
 	{
-		// 우선 순위 1: 외부에서 주입된 리졸버
-		if (_resolver != null)
+		if (actor != null && !string.IsNullOrEmpty(animName))
+			StartCoroutine(actor.PlayAnim(speaker, animName));
+
+		var anchor = ResolveAnchorSafe(speaker);
+
+		if (!_stacked.TryGetValue(anchor, out var list))
 		{
-			var t = _resolver.ResolveAnchor(speaker);
-			if (t) return t;
+			list = new List<UI_DialogueBalloon>();
+			_stacked[anchor] = list;
 		}
+
+		for (int i = 0; i < list.Count; i++)
+			if (list[i]) list[i].AddStackOffset(StackSpacingPx);
+
+		var balloon = Managers.UI.MakeWorldSpaceUI<UI_DialogueBalloon>();
+		balloon.Init(anchor);
+
+		yield return balloon.CoPresentStacked(text ?? "", _charSpeed);
+
+		list.Add(balloon);
+	}
+
+	public IEnumerator ClearAllStacked(float fadeOut = 0.12f)
+	{
+		foreach (var kv in _stacked)
+		{
+			var list = kv.Value;
+			for (int i = 0; i < list.Count; i++)
+				if (list[i]) yield return list[i].FadeOutAndDestroy(fadeOut);
+		}
+		_stacked.Clear();
+	}
+
+	private Transform ResolveAnchorSafe(string speaker)
+	{		
 		// acotr director가 리졸버도 겸한다면 그걸 사용
 		if (actor is ISpeakerAnchorResolver a2)
 		{
-			var t = a2.ResolveAnchor(speaker);
-			if (t) return t;
+			var transform = a2.ResolveAnchor(speaker);
+			return transform;
 		}
-		// 최후: 카메라 중심 근처 등, 프로젝트 규약에 맞는 기본 앵커
+
 		return Camera.main ? Camera.main.transform : transform;
 	}
 }

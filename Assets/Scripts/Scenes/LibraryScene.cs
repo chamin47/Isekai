@@ -83,7 +83,7 @@ public class LibraryScene : BaseScene
     {
         onStartTimeLineEnd?.Invoke();
 
-        ActiveCurrentWorldBook();
+        //ActiveCurrentWorldBook();
     }
 
     private void OnEndTimeLineEnd(PlayableDirector director)
@@ -124,7 +124,7 @@ public class LibraryScene : BaseScene
         _bookParent.SetActive(true);
     }
     
-    private void ActiveCurrentWorldBook()
+    public void ActiveCurrentWorldBook()
     {
         EnableBooks();
 
@@ -138,6 +138,26 @@ public class LibraryScene : BaseScene
         book.EnableFinger();
 	
 		book.EnableClick();
+    }
+
+    public void AllBooksEnableFinger()
+    {
+        EnableBooks();
+
+        foreach (var book in _books)
+        {
+            book.gameObject.SetActive(true);
+
+            book.GetComponent<LibraryBook>().EnableFinger();
+        }
+    }
+
+    public void AllBooksDisableFinger()
+    {
+        foreach (var book in _books)
+        {
+            book.GetComponent<LibraryBook>().DisableFinger();
+		}
     }
     #endregion
 

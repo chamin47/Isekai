@@ -4,6 +4,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// 테스트용. 실제 구현 시 새로 만들어야 함.
+/// </summary>
 public class SimpleChoiceUI : MonoBehaviour, IChoiceUI
 {
 	[Serializable] public class ButtonBind { public Button button; public TMP_Text label; }

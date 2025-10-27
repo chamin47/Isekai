@@ -2,82 +2,92 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 도서관 씬 전용 대화 훅 집합.
+/// 특정 대화 ID 진입 전에 레터박스/캐릭터 이동/책 상호작용 등을 트리거한다.
+/// </summary>
 public class LibraryIDHooks : MonoBehaviour, IDialogueHookProvider
 {
 	[Header("Scene refs")]
-	public LibraryScene library;        // (???? ???? ?? ????????)
-	public PlayerController player;     // ????????
-	public Transform librarian;         // ???? Transform
+	[SerializeField] private LibraryScene _library;
+	[SerializeField] private PlayerController _player;
+	[SerializeField] private Transform _librarian;         
 
 	[Header("Anchors")]
-	public Vector3 pos2 = new Vector3(22.23f, -4.46f, 0);              // ?????? ????(2)??
-	public Vector3 pos3 = new Vector3(25.32f, -4.46f, 0);               // ?????? ????(3)??
+	[SerializeField] private Vector3 _pos2 = new Vector3(22.23f, -4.86f, 0);
+	[SerializeField] private Vector3 _pos3 = new Vector3(25.32f, -4.86f, 0);               
 
 	[Header("Move settings")]
-	public float walkSpeed = 2.2f;
-	public float arriveEps = 0.05f;
+	[SerializeField] private float _walkSpeed = 2.2f;
+	[SerializeField] private float _arriveEps = 0.05f;
 
-	UILetterboxOverlay _letterbox;
-	bool _startTimelineEnded;
-	Coroutine _moveCo;
+	private UILetterboxOverlay _letterbox;
+	private bool _startTimelineEnded;
+	private Coroutine _moveCo;
 
-	void Awake()
+	private void Awake()
 	{
-		if (library == null) 
-			library = FindAnyObjectByType<LibraryScene>();
-
-		if (player == null) 
-			player = FindAnyObjectByType<PlayerController>();
+		if (_library == null) 
+			_library = FindAnyObjectByType<LibraryScene>();
+			
+		if (_player == null) 
+			_player = FindAnyObjectByType<PlayerController>();
 
 		_letterbox = UILetterboxOverlay.GetOrCreate();
 
-		if (library != null)
-			library.onStartTimeLineEnd += () => _startTimelineEnded = true;
+		if (_library != null)
+			_library.onStartTimeLineEnd += () => _startTimelineEnded = true;
 	}
 
 	public IEnumerator OnPreEnter(string id)
 	{
 		switch (id)
 		{
-			// 2001001: ????????(=???????? 1?? ???? ????)???? ???? ?? ???????? Out + ????????
 			case "2001001":
 				
-				librarian.GetComponentInChildren<Animator>().CrossFade("Library_ch_sit_idle", 0.01f);
+				_librarian.GetComponentInChildren<Animator>().CrossFade("Library_ch_sit_idle", 0.01f);
 
-				// ???????? ???? ????
 				yield return new WaitUntil(() => _startTimelineEnded);
 
-				// ???? ???? ???? ????
-				if (player != null)
-					player.canMove = false;
+				if (_player != null)
+					_player.canMove = false;
 
 				float baseH = Screen.height * 0.1f;
 				float overshoot = baseH;
-				float settle = baseH * 0.85f;        // 10 ?? 7 ???????? 70%
+				float settle = baseH * 0.85f;        
 
 				yield return _letterbox.OpenOvershoot(settle, overshoot, 250f);
 
 				yield break;
 
-			// 2001004: ?????? 3??2?? ???? ????(???? ???? ???? ?? ???????? ?????? ??????)
 			case "2001004":
-				// ???? ????: 3(???? ???? ????) -> 2??
-				if (librarian != null)
+				if (_librarian != null)
 				{
-					// ???? ???????? ?????? ????
 					if (_moveCo != null) 
 						StopCoroutine(_moveCo);
 
-					_moveCo = StartCoroutine(CoMoveTo(librarian, pos2, walkSpeed, arriveEps));
+					_moveCo = StartCoroutine(CoMoveTo(_librarian, _pos2, _walkSpeed, _arriveEps));
 				}
 				yield break;
 
-			// 2001005: ?????? ?????? ?????? ???? ?????? ????
 			case "2001005":
 				if (_moveCo != null) 
 					yield return _moveCo;
 				yield break;
 
+
+			case "2001024":
+				_library.AllBooksEnableFinger();
+				yield break;
+
+			case "2001025":
+				_library.AllBooksDisableFinger();
+				yield break;
+
+			case "2001026":
+				_library.ActiveCurrentWorldBook();
+				yield break;
+				
 			default:
 				yield break;
 		}
@@ -88,7 +98,6 @@ public class LibraryIDHooks : MonoBehaviour, IDialogueHookProvider
 		if (who == null) 
 			yield break;
 
-		// Z ????(2D)
 		target.z = who.position.z;
 
 		while (true)

@@ -37,7 +37,7 @@ public class LibraryBook : MonoBehaviour
 		_mouse.SetActive(true);
 	}
 
-	private void DisableFinger()
+	public void DisableFinger()
 	{
 		_mouse.SetActive(false);
 	}

@@ -4,24 +4,27 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// 월드 스페이스 입력 말풍선.
+/// TMP_InputField를 표시해 사용자의 텍스트 입력을 수집하고 페이드/위치 갱신을 수행한다.
+/// </summary>
 public class UI_InputBalloon : UI_Base
-{
-    [Header("Refs")]
-    [SerializeField] RectTransform root;     // 말풍선 루트(배경 포함)
-    [SerializeField] CanvasGroup cg;
-    [SerializeField] TMP_Text promptLabel;
-    [SerializeField] TMP_InputField inputField;
+{   
+    [SerializeField] private RectTransform root;     // 말풍선 루트(배경 포함)
+    [SerializeField] private CanvasGroup cg;
+    [SerializeField] private TMP_Text promptLabel;
+    [SerializeField] private TMP_InputField inputField;
 
     [Header("Layout")]
-    [SerializeField] Vector2 screenOffset = new Vector2(0, 80f);
-    [SerializeField] bool rebuildWhileTyping = true;
+    [SerializeField] private Vector2 screenOffset = new Vector2(0, 80f);
+    [SerializeField] private bool rebuildWhileTyping = true;
 
     [Header("Behavior")]
-    [SerializeField] float fadeIn = 0.15f;
-    [SerializeField] float fadeOut = 0.12f;
-    [SerializeField] float caretBlinkRate = 0.6f;
+    [SerializeField] private float fadeIn = 0.15f;
+    [SerializeField] private float fadeOut = 0.12f;
+    [SerializeField] private float caretBlinkRate = 0.6f;
 
-    Transform _anchor;
+	private Transform _anchor;
     private const int _charLimit = 15;
 
     public void Init(Transform anchor)
@@ -42,14 +45,17 @@ public class UI_InputBalloon : UI_Base
         }
     }
 
-    IEnumerator ActivateNextFrame()
+	private IEnumerator ActivateNextFrame()
     {
-        yield return null;
-        inputField?.ActivateInputField();
-        inputField?.Select();
+        while (true)
+        {
+			yield return null;
+			inputField?.ActivateInputField();
+			inputField?.Select();
+		}        
     }
 
-    void LateUpdate()
+	private void LateUpdate()
     {
         if (_anchor == null)
             return;
@@ -96,6 +102,7 @@ public class UI_InputBalloon : UI_Base
             yield return cg.FadeCanvas(0f, fadeOut);
 
         onDone?.Invoke(result ?? "");
+        Destroy(gameObject);
     }
 
     public override void Init() {  }

@@ -2,48 +2,68 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Febucci.UI.Core;
 
+/// <summary>
+/// 월드 스페이스 대화 말풍선.
+/// 대사타이핑 연출/스킵/클릭 대기와 페이드 인·아웃, 대사 스택 배치용 추가 오프셋을 관리한다.
+/// </summary>
 public class UI_DialogueBalloon : UI_Base
 {
-	[SerializeField] RectTransform root;   // 말풍선 루트
-	[SerializeField] TMP_Text label;
-	[SerializeField] CanvasGroup cg;
-	[SerializeField] Vector2 screenOffset = new Vector2(0, 80f);
+	[SerializeField] private RectTransform _root;   // 말풍선 루트
+	[SerializeField] private TMP_Text _label;
+	[SerializeField] private CanvasGroup _cg;
+	[SerializeField] private Vector2 _screenOffset = new Vector2(0, 80f);
 
-	Transform _anchor;
+	[SerializeField] private TAnimCore _textAnimator;       
+	[SerializeField] private TypewriterCore _typewriter;
+
+	private Transform _anchor;
+
+	private float _extraOffsetY = 0f;
+
+	public void AddStackOffset(float dy) => _extraOffsetY += dy;
 
 	public void Init(Transform anchor)
 	{
 		_anchor = anchor;
-		cg.alpha = 0f;
+
+		_cg.alpha = 0f;
 	}
 
-	void LateUpdate()
+	private void LateUpdate()
 	{
-		if (_anchor == null) return;
-		var cam = Camera.main;
+		if (_anchor == null) 
+			return;
+		var cam = Camera.main; 
+		if (cam == null) 
+			return;
+
 		var baseWorld = cam.ScreenToWorldPoint(Vector3.zero);
-		var offWorld = cam.ScreenToWorldPoint(new Vector3(screenOffset.x, screenOffset.y, 0f)) - baseWorld;
+		var offWorld = cam.ScreenToWorldPoint(
+			new Vector3(_screenOffset.x, _screenOffset.y + _extraOffsetY, 0f)) - baseWorld;
 
 		var pos = _anchor.position + offWorld;
 		pos.z = _anchor.position.z; // 2D면 z 고정
-		root.position = pos;
+		_root.position = pos;
 	}
-
 
 	public IEnumerator CoPresent(string text, float typeSpeed = 0.03f)
 	{
 		// 페이드 인
-		yield return cg.FadeCanvas(1f, 0.15f);
+		yield return _cg.FadeCanvas(1f, 0.15f);
 
-		// 간단 타자 효과 (원하면 Febucci 붙여도 됨)
-		label.text = "";
-		foreach (var ch in text)
+		if (_typewriter && _textAnimator)
 		{
-			label.text += ch;
-			yield return WaitForSecondsCache.Get(typeSpeed);
-			// 클릭시 스킵
-			if (Input.GetMouseButtonDown(0)) { label.text = text; break; }
+			_typewriter.ShowText(text); // Start Mode : OnShowText로 설정해둬야 됨.
+
+			// 진행 중 클릭/스페이스로 스킵
+			while (_typewriter.isShowingText)
+			{
+				if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
+					_typewriter.SkipTypewriter(); // 즉시 전부 표시
+				yield return null;
+			}
 		}
 
 		// 전체 출력 후 클릭/Space 대기
@@ -51,11 +71,38 @@ public class UI_DialogueBalloon : UI_Base
 			yield return null;
 
 		// 페이드 아웃
-		yield return cg.FadeCanvas(0f, 0.12f);
+		yield return _cg.FadeCanvas(0f, 0.12f);
+		Destroy(gameObject);
 	}
 
-	public override void Init()
+	public IEnumerator CoPresentStacked(string text, float typeSpeed = 0.03f)
 	{
-		
+		yield return _cg.FadeCanvas(1f, 0.15f);
+
+		if (_typewriter && _textAnimator)
+		{
+			_typewriter.ShowText(text);
+			while (_typewriter.isShowingText)
+			{
+				if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
+					_typewriter.SkipTypewriter();
+				yield return null;
+			}
+		}
+
+		// 전체 출력 후 클릭/Space 대기
+		while (!Input.GetMouseButtonDown(0) && !Input.GetKeyDown(KeyCode.Space))
+			yield return null;
+
+		// 여기서 종료: 파괴하지 않고 남겨둠
 	}
+
+	public IEnumerator FadeOutAndDestroy(float duration = 0.12f)
+	{
+		if (_cg != null) 
+			yield return _cg.FadeCanvas(0f, duration);
+		Destroy(gameObject);
+	}
+
+	public override void Init() { }
 }

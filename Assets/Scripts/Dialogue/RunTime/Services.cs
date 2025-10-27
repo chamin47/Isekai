@@ -4,7 +4,7 @@ using UnityEngine;
 
 public interface ITextPresenter
 {
-	// animName은 대사 중 ‘포즈/감정 유지’ 용(있으면 적용)
+	// animName은 대사 중 애니메이션 출력용
 	IEnumerator ShowText(string speaker, string text, string animName);
 }
 
@@ -35,10 +35,8 @@ public interface IBranchResolver
 
 public interface IActorDirector
 {
-	// 말하는 순간 포즈/표정 적용(있으면)
-	void SetPose(string speaker, string animName);
-	// PlayAnim 이벤트로 N초짜리 단발 동작
-	IEnumerator PlayOnce(string speaker, string animName, float? durationSec = null);
+	// 에디터에서 클립의 Loop Time 체크 여부로 루프 or 한번 재생 결정
+	IEnumerator PlayAnim(string speaker, string animName, float? durationSec = null);
 }
 
 public interface IDialogueHookProvider

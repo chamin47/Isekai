@@ -12,53 +12,53 @@ using UnityEngine;
 /// </summary>
 public class CameraService : MonoBehaviour, ICameraService
 {
-	[Header("Target")]
-	public Camera target;
+	[SerializeField] private Camera _target;
 
 	[Header("Anchors/Targets")]
-	public Transform player;
+	[SerializeField] private Transform _player;
 
 	// "middle_2" 계산용 타깃 두 개
-	public Transform middle2A;
-	public Transform middle2B;
+	[SerializeField] private Transform _middle2A;
+	[SerializeField] private Transform _middle2B;
 
-	[Header("Scale Clamp (optional)")]
-	public bool clampScale = true;
-	public float minScale = 0.25f;
-	public float maxScale = 4f;
+	[Header("Scale Clamp")]
+	[SerializeField] private bool _clampScale = true;
+	[SerializeField] private float _minScale = 0.25f;
+	[SerializeField] private float _maxScale = 4f;
 
 	// 기준값(초기 상태)
-	float baseOrthoSize;
-	Vector3 basePos;
+	private float baseOrthoSize;
+	private Vector3 basePos;
 
 	void Awake()
 	{
-		if (target == null) 
-			target = Camera.main;
+		if (_target == null)
+			_target = Camera.main;
 
-		if (target == null) 
+		if (_target == null) 
 			return;
 
 		// 2D 전용
-		target.orthographic = true;
+		_target.orthographic = true;
 
-		baseOrthoSize = target.orthographicSize;
-		basePos = target.transform.position;
+		baseOrthoSize = _target.orthographicSize;
+		basePos = _target.transform.position;
 	}
 
 	/// <summary>현재 상태를 기준값으로 재설정</summary>
 	public void SetBaseFromCurrent()
 	{
-		if (!target) return;
-		baseOrthoSize = target.orthographicSize;
-		basePos = target.transform.position;
+		if (_target == null) 
+			return;
+		baseOrthoSize = _target.orthographicSize;
+		basePos = _target.transform.position;
 	}
 
 	/// <summary>middle_2용 타깃 지정</summary>
 	public void SetMiddle2Targets(Transform a, Transform b)
 	{
-		middle2A = a;
-		middle2B = b;
+		_middle2A = a;
+		_middle2B = b;
 	}
 
 	// 간편 오버로드(앵커 없음)
@@ -73,16 +73,17 @@ public class CameraService : MonoBehaviour, ICameraService
 	/// </summary>
 	public IEnumerator ZoomTo(float targetScale, float duration, string anchorKey)
 	{
-		if (!target) yield break;
+		if (_target == null) 
+			yield break;
 
 		// 배율 클램프/보정
-		if (clampScale) targetScale = Mathf.Clamp(targetScale, minScale, maxScale);
+		if (_clampScale) targetScale = Mathf.Clamp(targetScale, _minScale, _maxScale);
 		else targetScale = Mathf.Max(0.0001f, targetScale);
 
-		float startSize = target.orthographicSize;
+		float startSize = _target.orthographicSize;
 		float endSize = baseOrthoSize / targetScale;
 
-		Vector3 startPos = target.transform.position;
+		Vector3 startPos = _target.transform.position;
 		Vector3 endPos = startPos; // 기본: 위치 이동 없음
 
 		if (!string.IsNullOrWhiteSpace(anchorKey) && TryResolveAnchor(anchorKey, out var anchorPos))
@@ -93,14 +94,14 @@ public class CameraService : MonoBehaviour, ICameraService
 		{
 			t += Time.deltaTime;
 			float p = duration > 0f ? Mathf.Clamp01(t / duration) : 1f;
-			target.orthographicSize = Mathf.Lerp(startSize, endSize, p);
-			target.transform.position = Vector3.Lerp(startPos, endPos, p);
+			_target.orthographicSize = Mathf.Lerp(startSize, endSize, p);
+			_target.transform.position = Vector3.Lerp(startPos, endPos, p);
 			yield return null;
 		}
 
 		// 스냅
-		target.orthographicSize = endSize;
-		target.transform.position = endPos;
+		_target.orthographicSize = endSize;
+		_target.transform.position = endPos;
 	}
 
 	/// <summary>
@@ -116,17 +117,18 @@ public class CameraService : MonoBehaviour, ICameraService
 
 	public IEnumerator Shake(float magnitude, float duration)
 	{
-		if (!target) yield break;
+		if (_target == null) 
+			yield break;
 
-		Vector3 origin = target.transform.localPosition;
+		Vector3 origin = _target.transform.localPosition;
 		float t = 0f;
 		while (t < duration)
 		{
 			t += Time.deltaTime;
-			target.transform.localPosition = origin + (Vector3)Random.insideUnitCircle * magnitude;
+			_target.transform.localPosition = origin + (Vector3)Random.insideUnitCircle * magnitude;
 			yield return null;
 		}
-		target.transform.localPosition = origin;
+		_target.transform.localPosition = origin;
 	}
 
 	/// <summary>
@@ -152,9 +154,9 @@ public class CameraService : MonoBehaviour, ICameraService
 		// 플레이어
 		if (string.Equals(key, "player", System.StringComparison.OrdinalIgnoreCase))
 		{
-			if (player)
+			if (_player != null)
 			{
-				pos = player.position;
+				pos = _player.position;
 				return true;
 			}
 		}
@@ -162,9 +164,9 @@ public class CameraService : MonoBehaviour, ICameraService
 		// middle_2 (두 타깃의 중간점)
 		if (string.Equals(key, "middle_2", System.StringComparison.OrdinalIgnoreCase))
 		{
-			if (middle2A != null && middle2B != null)
+			if (_middle2A != null && _middle2B != null)
 			{
-				pos = (middle2A.position + middle2B.position) * 0.5f;
+				pos = (_middle2A.position + _middle2B.position) * 0.5f;
 				return true;
 			}
 		}

@@ -1,6 +1,11 @@
 using System.Linq;
 using UnityEngine;
 
+/// <summary>
+/// 키워드 기반 간단 분류기.
+/// 입력 문자열을 Positive/Negative/Ambiguous로 태그한다.
+/// 추후 ai 기반 감정 분석으로 대체할 것.
+/// </summary>
 public class KeywordBranchResolver : MonoBehaviour, IBranchResolver
 {
 	[Header("간단 키워드 분류 예시")]
