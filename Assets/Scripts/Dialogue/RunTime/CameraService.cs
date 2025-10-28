@@ -1,73 +1,199 @@
 using System.Collections;
 using UnityEngine;
 
+/// <summary>
+/// 2D(Orthographic) 전용 카메라 서비스
+/// - 배율(scale)은 '기준(초기값)' 대비 절대 배율입니다. (ex. 1.4 = 1.4배 줌인)
+/// - anchorKey:
+///   * "base"   : 초기 위치로 이동
+///   * "player" : 플레이어 Transform 위치로 이동
+///   * "middle_2": middle2A와 middle2B의 중간점으로 이동
+///   * null/빈 문자열/알 수 없는 키: 위치 이동 없음(현재 위치 유지)
+/// </summary>
 public class CameraService : MonoBehaviour, ICameraService
 {
-	public Camera target;
+	[SerializeField] private Camera _target;
 
-	// 최초 기준값(“scale = 1.0”이 의미하는 값)
-	float baseFov;
-	float baseOrthoSize;
+	[Header("Anchors/Targets")]
+	[SerializeField] private Transform _player;
+
+	// "middle_2" 계산용 타깃 두 개
+	[SerializeField] private Transform _middle2A;
+	[SerializeField] private Transform _middle2B;
+
+	[Header("Scale Clamp")]
+	[SerializeField] private bool _clampScale = true;
+	[SerializeField] private float _minScale = 0.25f;
+	[SerializeField] private float _maxScale = 4f;
+
+	// 기준값(초기 상태)
+	private float baseOrthoSize;
+	private Vector3 basePos;
 
 	void Awake()
 	{
-		if (!target) target = Camera.main;
-		if (target)
-		{
-			baseFov = target.fieldOfView;
-			baseOrthoSize = target.orthographicSize;
-		}
+		if (_target == null)
+			_target = Camera.main;
+
+		if (_target == null) 
+			return;
+
+		// 2D 전용
+		_target.orthographic = true;
+
+		baseOrthoSize = _target.orthographicSize;
+		basePos = _target.transform.position;
 	}
 
-	// targetScale: 기준값에 대한 "절대 배율" (예: 2.5면 기준에서 2.5배 줌인)
-	public IEnumerator ZoomTo(float targetScale, float duration)
+	/// <summary>현재 상태를 기준값으로 재설정</summary>
+	public void SetBaseFromCurrent()
 	{
-		if (!target) yield break;
+		if (_target == null) 
+			return;
+		baseOrthoSize = _target.orthographicSize;
+		basePos = _target.transform.position;
+	}
 
-		bool ortho = target.orthographic;
-		float start = ortho ? target.orthographicSize : target.fieldOfView;
+	/// <summary>middle_2용 타깃 지정</summary>
+	public void SetMiddle2Targets(Transform a, Transform b)
+	{
+		_middle2A = a;
+		_middle2B = b;
+	}
 
-		// 핵심 수정: 'start'가 아니라 '기준값'을 기준으로 목표 계산
-		float end = (ortho ? baseOrthoSize : baseFov) / Mathf.Max(0.0001f, targetScale);
+	// 간편 오버로드(앵커 없음)
+	public IEnumerator ZoomTo(float targetScale, float duration)
+		=> ZoomTo(targetScale, duration, null);
 
-		float t = 0;
+	public IEnumerator ZoomOutTo(float targetScale, float duration)
+		=> ZoomOutTo(targetScale, duration, null);
+
+	/// <summary>
+	/// 기준 대비 절대 배율로 줌(앵커 옵션)
+	/// </summary>
+	public IEnumerator ZoomTo(float targetScale, float duration, string anchorKey, EasingType easingType = EasingType.InCubic)
+	{
+		if (_target == null) 
+			yield break;
+
+		// 배율 클램프/보정
+		if (_clampScale) targetScale = Mathf.Clamp(targetScale, _minScale, _maxScale);
+		else targetScale = Mathf.Max(0.0001f, targetScale);
+
+		float startSize = _target.orthographicSize;
+		float endSize = baseOrthoSize / targetScale;
+
+		Vector3 startPos = _target.transform.position;
+		Vector3 endPos = startPos; // 기본: 위치 이동 없음
+
+		if (!string.IsNullOrWhiteSpace(anchorKey) && TryResolveAnchor(anchorKey, out var anchorPos))
+			endPos = new Vector3(anchorPos.x, anchorPos.y, startPos.z); // z 고정
+
+		float t = 0f;
 		while (t < duration)
 		{
 			t += Time.deltaTime;
-			float v = Mathf.Lerp(start, end, Mathf.Clamp01(t / duration));
-			if (ortho) target.orthographicSize = v; else target.fieldOfView = v;
+			float p = duration > 0f ? Mathf.Clamp01(t / duration) : 1f;
+
+			float eased = EvaluateEasing(easingType, p);
+
+			_target.orthographicSize = Mathf.Lerp(startSize, endSize, eased);
+			_target.transform.position = Vector3.Lerp(startPos, endPos, eased);
 			yield return null;
 		}
 
-		// 마무리 스냅(드리프트 방지)
-		if (ortho) target.orthographicSize = end; else target.fieldOfView = end;
+		// 스냅
+		_target.orthographicSize = endSize;
+		_target.transform.position = endPos;
 	}
 
-	public IEnumerator ZoomOutTo(float targetScale, float duration)
+	/// <summary>
+	/// 1.0으로 요청 + 앵커 미지정 시, 자동으로 'base' 위치로 복귀
+	/// </summary>
+	public IEnumerator ZoomOutTo(float targetScale, float duration, string anchorKey, EasingType easingType = EasingType.OutCubic)
 	{
-		// 관용적으로 targetScale = 1.0 이면 "기준값으로 복귀"
-		yield return ZoomTo(targetScale, duration);
+		if (string.IsNullOrWhiteSpace(anchorKey) && Mathf.Approximately(targetScale, 1f))
+			anchorKey = "center";
+
+		yield return ZoomTo(targetScale, duration, anchorKey, easingType);
 	}
 
 	public IEnumerator Shake(float magnitude, float duration)
 	{
-		if (!target) yield break;
-		Vector3 origin = target.transform.localPosition;
-		float t = 0;
+		if (_target == null) 
+			yield break;
+
+		Vector3 origin = _target.transform.localPosition;
+		float t = 0f;
 		while (t < duration)
 		{
 			t += Time.deltaTime;
-			target.transform.localPosition = origin + (Vector3)Random.insideUnitCircle * magnitude;
+			_target.transform.localPosition = origin + (Vector3)Random.insideUnitCircle * magnitude;
 			yield return null;
 		}
-		target.transform.localPosition = origin;
+		_target.transform.localPosition = origin;
 	}
 
-	// 필요시 런타임 중 현 상태를 기준값으로 재설정하고 싶을 때 호출
-	public void SetBaseFromCurrent()
+	/// <summary>
+	/// 앵커 키 → 월드 좌표 변환
+	/// - 알 수 없는 키면 false(위치 이동 없음)
+	/// </summary>
+	bool TryResolveAnchor(string key, out Vector3 pos)
 	{
-		if (!target) return;
-		baseFov = target.fieldOfView;
-		baseOrthoSize = target.orthographicSize;
+		key = key?.Trim();
+		if (string.IsNullOrEmpty(key))
+		{
+			pos = default;
+			return false;
+		}
+
+		// 초기 위치
+		if (string.Equals(key, "center", System.StringComparison.OrdinalIgnoreCase))
+		{
+			pos = basePos;
+			return true;
+		}
+
+		// 플레이어
+		if (string.Equals(key, "player", System.StringComparison.OrdinalIgnoreCase))
+		{
+			if (_player != null)
+			{
+				pos = _player.position;
+				return true;
+			}
+		}
+
+		// middle_2 (두 타깃의 중간점)
+		if (string.Equals(key, "middle_2", System.StringComparison.OrdinalIgnoreCase))
+		{
+			if (_middle2A != null && _middle2B != null)
+			{
+				pos = (_middle2A.position + _middle2B.position) * 0.5f;
+				return true;
+			}
+		}
+
+		// 알 수 없는 키 → 이동 없음
+		pos = default;
+		return false;
+
+		// 만약 "모르는 키면 base로 이동"을 원하면 아래처럼 바꾸면 됨:
+		// pos = basePos;
+		// return true;
+	}
+
+	private float EvaluateEasing(EasingType type, float t)
+	{
+		switch (type)
+		{
+			case EasingType.InCubic: return t * t * t;
+			case EasingType.OutCubic: return 1f - Mathf.Pow(1f - t, 3f);
+			case EasingType.InOutCubic:
+				return t < 0.5f
+					? 4f * t * t * t
+					: 1f - Mathf.Pow(-2f * t + 2f, 3f) / 2f;
+			default: return t; // Linear
+		}
 	}
 }

@@ -13,10 +13,12 @@ MonoBehaviour:
   m_Name: 2001014
   m_EditorClassIdentifier: 
   id: 2001014
-  speaker: "\uC0AC\uC11C"
-  animName: 
-  eventName: ShowText
-  eventParam: null
-  nextID: 2001015
-  script: "\uADF8\uB807\uB2E4\uBA74 \uC774\uACF3\uC744 \uC798 \uCC3E\uC544\uC654\uB124!!"
-  descript: 
+  speaker: System
+  animName: null
+  eventName: WaitForInput
+  eventParam: BR_HAPPINESS
+  nextID: null
+  script: null
+  descript: "* \uD14D\uC2A4\uD2B8 \uC785\uB825 \uB300\uAE30 / \uC785\uB825 \uD6C4
+    BR_HAPPINESS \uBD84\uAE30\uB85C \uC774\uB3D9/\uBD84\uAE30 \uC885\uB8CC \uD6C4
+    \uACF5\uD1B5 \uC2A4\uD06C\uB9BD\uD2B8 2001021\uB85C \uC774\uB3D9"

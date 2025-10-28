@@ -13,12 +13,10 @@ MonoBehaviour:
   m_Name: 2001008
   m_EditorClassIdentifier: 
   id: 2001008
-  speaker: System
-  animName: 
-  eventName: WaitForInput
-  eventParam: BR_HAPPINESS
-  nextID: null
-  script: null
-  descript: "\uD14D\uC2A4\uD2B8 \uC785\uB825 \uB300\uAE30 / \uC785\uB825 \uD6C4 BR_HAPPINESS
-    \uBD84\uAE30\uB85C \uC774\uB3D9/\uBD84\uAE30 \uC885\uB8CC \uD6C4 \uACF5\uD1B5
-    \uC2A4\uD06C\uB9BD\uD2B8 2001015\uB85C \uC774\uB3D9"
+  speaker: "\uC0AC\uC11C"
+  animName: Library_ch_idle
+  eventName: CameraZoomIn
+  eventParam: 1.1 ,0.8, center
+  nextID: 2001009
+  script: "{fade}\uBAA8\uB450\uAC00 \uC990\uAC70\uC6B8 \uC218 \uC788\uB294!"
+  descript: 

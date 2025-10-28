@@ -1,47 +1,78 @@
 using System.Collections;
-using TMPro;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
+/// <summary>
+/// 대사 표시 담당 프레젠터.
+/// 말풍선 생성·표시, 스택형 말풍선의 누적 배치/해제, 안전한 앵커 해석을 수행한다.
+/// </summary>
 public class DialogueTextPresenter : MonoBehaviour, ITextPresenter
 {
-	[Header("Febucci Typewriter")]
-	public Febucci.UI.Core.TypewriterCore typewriter; // 없으면 null 허용
+	public float _charSpeed = 0.03f;
 
-	[Header("Fallback UI")]
-	public TMP_Text nameLabel;
-	public TMP_Text textLabel;
+	public IActorDirector actor; // Runner에서 주입
 
-	public UnityEvent onLineStart;    // 효과음/표시 등
-	public UnityEvent onLineEnd;      // 클릭 가능 표시 등
+	const float StackSpacingPx = 150f;
 
-	public IActorDirector actor;      // 선택(없으면 포즈 무시)
+	readonly Dictionary<Transform, List<UI_DialogueBalloon>> _stacked = new();
 
 	public IEnumerator ShowText(string speaker, string text, string animName)
 	{
 		if (actor != null && !string.IsNullOrEmpty(animName))
-			actor.SetPose(speaker, animName);
+			StartCoroutine(actor.PlayAnim(speaker, animName));
 
-		if (nameLabel) nameLabel.text = speaker ?? "";
+		var anchor = ResolveAnchorSafe(speaker);
 
-		onLineStart?.Invoke();
+		var balloon = Managers.UI.MakeWorldSpaceUI<UI_DialogueBalloon>();
+		balloon.Init(anchor);
+		yield return balloon.CoPresent(text ?? "", _charSpeed);
+	}
 
-		if (typewriter != null)
+	public IEnumerator ShowTextStacked(string speaker, string text, string animName)
+	{
+		if (actor != null && !string.IsNullOrEmpty(animName))
+			StartCoroutine(actor.PlayAnim(speaker, animName));
+
+		var anchor = ResolveAnchorSafe(speaker);
+
+		if (!_stacked.TryGetValue(anchor, out var list))
 		{
-			bool shown = false;
-			typewriter.onTextShowed.RemoveAllListeners();
-			typewriter.onTextShowed.AddListener(() => shown = true);
-			typewriter.ShowText(text ?? "");
-			yield return new WaitUntil(() => shown);
+			list = new List<UI_DialogueBalloon>();
+			_stacked[anchor] = list;
 		}
-		else
+
+		for (int i = 0; i < list.Count; i++)
+			if (list[i]) list[i].AddStackOffset(StackSpacingPx);
+
+		var balloon = Managers.UI.MakeWorldSpaceUI<UI_DialogueBalloon>();
+		balloon.Init(anchor);
+
+		yield return balloon.CoPresentStacked(text ?? "", _charSpeed);
+
+		list.Add(balloon);
+	}
+
+	public void ClearAllStacked()
+	{
+		foreach (var kv in _stacked)
 		{
-			if (textLabel) textLabel.text = text ?? "";
+			var list = kv.Value;
+			for (int i = 0; i < list.Count; i++)
+				if (list[i]) 
+					Destroy(list[i].gameObject);
+		}
+		_stacked.Clear();
+	}
+
+	private Transform ResolveAnchorSafe(string speaker)
+	{		
+		// acotr director가 리졸버도 겸한다면 그걸 사용
+		if (actor is ISpeakerAnchorResolver a2)
+		{
+			var transform = a2.ResolveAnchor(speaker);
+			return transform;
 		}
 
-		onLineEnd?.Invoke();
-
-		// 아무 키/클릭 대기
-		while (!Input.GetMouseButtonDown(0) && !Input.anyKeyDown) yield return null;
+		return Camera.main ? Camera.main.transform : transform;
 	}
 }

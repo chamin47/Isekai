@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 2001015
   speaker: "\uC0AC\uC11C"
-  animName: Library_ch_hug
+  animName: Library_ch_smile
   eventName: ShowText
   eventParam: null
   nextID: 2001016
-  script: "\uC774\uACF3\uC740 \u2018\uC774\uC138\uACC4 \uB3C4\uC11C\uAD00\u2019!!"
+  script: "{fade}\uC9C0\uAE08 \uD589\uBCF5\uD558\uB2E4\uB2C8, \uB2E4\uD589\uC774\uAD70."
   descript: 

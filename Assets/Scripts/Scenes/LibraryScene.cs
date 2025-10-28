@@ -42,6 +42,8 @@ public class LibraryScene : BaseScene
 
     private Color originColor = new Color(1f, 1f, 1f);
 
+    public GameObject[] Books => _books;
+
     protected override void Init()
 	{
         Managers.DebugInfo.LastWorldType = Managers.World.CurrentWorldType;
@@ -83,7 +85,7 @@ public class LibraryScene : BaseScene
     {
         onStartTimeLineEnd?.Invoke();
 
-        ActiveCurrentWorldBook();
+        //ActiveCurrentWorldBook();
     }
 
     private void OnEndTimeLineEnd(PlayableDirector director)
@@ -124,20 +126,40 @@ public class LibraryScene : BaseScene
         _bookParent.SetActive(true);
     }
     
-    private void ActiveCurrentWorldBook()
+    public void ActiveCurrentWorldBook()
     {
         EnableBooks();
 
         WorldType currentWorldType = Managers.World.CurrentWorldType;
 
         int bookIndex = (int)currentWorldType;
-        LibraryBook book = _books[bookIndex].GetComponent<LibraryBook>();
+        LibraryBook book = _books[bookIndex].GetComponent<LibraryBook>(); // 빈터발트
 
-        book.gameObject.SetActive(true);
+        book.gameObject.SetActive(true);               // 빈터발트 오브젝트
         //book.StartFingerBlink();
         book.EnableFinger();
 	
 		book.EnableClick();
+    }
+
+    public void AllBooksEnableFinger()
+    {
+        EnableBooks();
+
+        foreach (var book in _books)
+        {
+            book.gameObject.SetActive(true);
+
+            book.GetComponent<LibraryBook>().EnableFinger();
+        }
+    }
+
+    public void AllBooksDisableFinger()
+    {
+        foreach (var book in _books)
+        {
+            book.GetComponent<LibraryBook>().DisableFinger();
+		}
     }
     #endregion
 

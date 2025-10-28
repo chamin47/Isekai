@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81fac1d9414d3c84398e6b84bf6b706a, type: 3}
+  m_Name: 3001054
+  m_EditorClassIdentifier: 
+  id: 3001054
+  speaker: Poor_boy
+  animName: Poor_boy_quiver
+  eventName: ShowText
+  eventParam: null
+  nextID: 3001055
+  script: "{fade}\uB8E8\uD0A4\uAC00 \uB204\uAD6C\uB0D0\uACE0\uC694? \uC81C \uC0AC\uB791\uC2A4\uB7EC\uC6B4
+    \uAC15\uC544\uC9C0\uB78D\uB2C8\uB2E4!!!"
+  descript: 

@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: 2001011
   m_EditorClassIdentifier: 
   id: 2001011
-  speaker: "\uC0AC\uC11C"
-  animName: 
-  eventName: ShowText
-  eventParam: null
+  speaker: System
+  animName: null
+  eventName: WaitTimer
+  eventParam: 2
   nextID: 2001012
-  script: "\uC74C \uADF8\uB807\uAD70."
+  script: null
   descript: 

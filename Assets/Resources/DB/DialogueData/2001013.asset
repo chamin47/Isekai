@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 2001013
   speaker: "\uC0AC\uC11C"
-  animName: 
-  eventName: ShowText
+  animName: Library_ch_idle
+  eventName: ShowTextStacked
   eventParam: null
   nextID: 2001014
-  script: "\uC800\uB7F0\u2026 \uADF8\uB9AC \uD589\uBCF5\uD558\uC9C0 \uC54A\uC740\uAC00\uBCF4\uAD70!"
-  descript: 
+  script: "{fade}\uADF8\uB300\uC758 \uAC10\uC815\uC774 \uC5B4\uB5A4\uC9C0 \uB4E3\uACE0
+    \uC2F6\uAD70."
+  descript: '*'

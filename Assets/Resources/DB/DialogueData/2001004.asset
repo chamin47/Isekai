@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 2001004
   speaker: "\uC0AC\uC11C"
-  animName: 
-  eventName: CameraZoomIn
-  eventParam: 1.4 , 0.8
+  animName: Library_ch_walk
+  eventName: PlayAnim
+  eventParam: null
   nextID: 2001005
-  script: "\uBAA8\uB450\uAC00 \uC990\uAC70\uC6B8 \uC218 \uC788\uB294!"
-  descript: 
+  script: null
+  descript: "* \uD50C\uB808\uC774\uC5B4 \uC55E\uAE4C\uC9C0 walk "
