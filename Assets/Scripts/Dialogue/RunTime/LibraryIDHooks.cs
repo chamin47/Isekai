@@ -11,7 +11,8 @@ public class LibraryIDHooks : MonoBehaviour, IDialogueHookProvider
 	[Header("Scene refs")]
 	[SerializeField] private LibraryScene _library;
 	[SerializeField] private PlayerController _player;
-	[SerializeField] private Transform _librarian;         
+	[SerializeField] private Transform _librarian;
+	[SerializeField] private HappinessHUD _hud;
 
 	[Header("Anchors")]
 	[SerializeField] private Vector3 _pos2 = new Vector3(22.23f, -4.86f, 0);
@@ -44,7 +45,7 @@ public class LibraryIDHooks : MonoBehaviour, IDialogueHookProvider
 		switch (id)
 		{
 			case "2001001":
-				
+
 				_librarian.GetComponentInChildren<Animator>().CrossFade("Library_ch_sit_idle", 0.01f);
 
 				yield return new WaitUntil(() => _startTimelineEnded);
@@ -52,18 +53,21 @@ public class LibraryIDHooks : MonoBehaviour, IDialogueHookProvider
 				if (_player != null)
 					_player.canMove = false;
 
-				float baseH = Screen.height * 0.1f;
-				float overshoot = baseH;
-				float settle = baseH * 0.85f;        
+				if (_hud != null)
+					_hud.gameObject.SetActive(false);
 
-				yield return _letterbox.OpenOvershoot(settle, overshoot, 250f);
+				//float baseH = Screen.height * 0.1f;
+				//float overshoot = baseH;
+				//float settle = baseH * 0.85f;        
+
+				//yield return _letterbox.OpenOvershoot(settle, overshoot, 250f);
 
 				yield break;
 
 			case "2001004":
 				if (_librarian != null)
 				{
-					if (_moveCo != null) 
+					if (_moveCo != null)
 						StopCoroutine(_moveCo);
 
 					_moveCo = StartCoroutine(CoMoveTo(_librarian, _pos2, _walkSpeed, _arriveEps));
@@ -71,7 +75,7 @@ public class LibraryIDHooks : MonoBehaviour, IDialogueHookProvider
 				yield break;
 
 			case "2001005":
-				if (_moveCo != null) 
+				if (_moveCo != null)
 					yield return _moveCo;
 				yield break;
 
@@ -85,9 +89,34 @@ public class LibraryIDHooks : MonoBehaviour, IDialogueHookProvider
 				yield break;
 
 			case "2001026":
-				_library.ActiveCurrentWorldBook();
+				{
+					_library.EnableBooks();
+					WorldType currentWorldType = Managers.World.CurrentWorldType;
+
+					int bookIndex = (int)currentWorldType;
+					LibraryBook book = _library.Books[bookIndex].GetComponent<LibraryBook>(); // 빈터발트
+					book.gameObject.SetActive(true);               // 빈터발트 오브젝트
+
+					book.EnableFinger();
+				}
 				yield break;
-				
+
+			case "2001029":
+				if (_hud != null)
+					_hud.gameObject.SetActive(true);
+				{
+					WorldType currentWorldType = Managers.World.CurrentWorldType;
+
+					int bookIndex = (int)currentWorldType;
+					LibraryBook book = _library.Books[bookIndex].GetComponent<LibraryBook>(); // 빈터발트
+					book.gameObject.SetActive(true);               // 빈터발트 오브젝트
+
+					book.EnableClick();
+
+				}
+
+				yield break;
+
 			default:
 				yield break;
 		}

@@ -192,13 +192,13 @@ public class DialogueRunner : MonoBehaviour
 
 						FindAnyObjectByType<PlayerController>().canMove = true;
 
-						var letterbox = UILetterboxOverlay.GetOrCreate();
+						//var letterbox = UILetterboxOverlay.GetOrCreate();
 
-						float baseH = Screen.height * 0.1f;  
-						float overshoot = baseH;
-						float settle = baseH * 0.85f;        
+						//float baseH = Screen.height * 0.1f;  
+						//float overshoot = baseH;
+						//float settle = baseH * 0.85f;        
 
-						yield return letterbox.CloseOvershoot(settle, overshoot, 170f);
+						//yield return letterbox.CloseOvershoot(settle, overshoot, 170f);
 						yield break;
 					}
 
@@ -230,7 +230,7 @@ public class DialogueRunner : MonoBehaviour
 						var type = _branchResolver ? _branchResolver?.Classify(userText) : "Ambiguous";
 						var next = _branchTable ? _branchTable.Resolve(param, type) : null;
 
-						yield return (_textPresenter as DialogueTextPresenter)?.ClearAllStacked(0.12f);
+						(_textPresenter as DialogueTextPresenter)?.ClearAllStacked();
 
 						id = next;
 						break;

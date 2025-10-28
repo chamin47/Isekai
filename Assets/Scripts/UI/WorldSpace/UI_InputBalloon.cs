@@ -97,10 +97,6 @@ public class UI_InputBalloon : UI_Base
             yield return null;
         }
 
-        // 페이드 아웃
-        if (cg != null)
-            yield return cg.FadeCanvas(0f, fadeOut);
-
         onDone?.Invoke(result ?? "");
         Destroy(gameObject);
     }

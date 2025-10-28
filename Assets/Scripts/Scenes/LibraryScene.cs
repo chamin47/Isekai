@@ -42,6 +42,8 @@ public class LibraryScene : BaseScene
 
     private Color originColor = new Color(1f, 1f, 1f);
 
+    public GameObject[] Books => _books;
+
     protected override void Init()
 	{
         Managers.DebugInfo.LastWorldType = Managers.World.CurrentWorldType;

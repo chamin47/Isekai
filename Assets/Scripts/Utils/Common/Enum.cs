@@ -63,3 +63,11 @@ public enum WorldType
 
 	None
 }
+
+public enum EasingType
+{
+	Linear,
+	InCubic,
+	OutCubic,
+	InOutCubic
+}

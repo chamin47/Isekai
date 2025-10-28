@@ -370,7 +370,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 240133383}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 25.32, y: -4.86, z: 0}
+  m_LocalPosition: {x: 25.32, y: -4.54, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2024,7 +2024,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1169558093}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 25.36, y: -3.4, z: 0}
+  m_LocalPosition: {x: 25.36, y: -3.08, z: 0}
   m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -2258,6 +2258,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1203840288323021062, guid: 10723e3edd83a2248833965e7d4ad2cd, type: 3}
   m_PrefabInstance: {fileID: 1225160031}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1225160033 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 460968507463420093, guid: 10723e3edd83a2248833965e7d4ad2cd, type: 3}
+  m_PrefabInstance: {fileID: 1225160031}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 378438639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82384d2ccf4361546b2506d913dd338f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1623266546
 GameObject:
   m_ObjectHideFlags: 0
@@ -2290,8 +2301,9 @@ MonoBehaviour:
   _library: {fileID: 857144198}
   _player: {fileID: 1786195234}
   _librarian: {fileID: 240133384}
-  _pos2: {x: 22.23, y: -4.46, z: 0}
-  _pos3: {x: 25.32, y: -4.46, z: 0}
+  _hud: {fileID: 1225160033}
+  _pos2: {x: 22.23, y: -4.54, z: 0}
+  _pos3: {x: 25.32, y: -4.54, z: 0}
   _walkSpeed: 2.2
   _arriveEps: 0.05
 --- !u!4 &1623266548
@@ -2514,7 +2526,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1786195229}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 21.72, y: -4.86, z: 0}
+  m_LocalPosition: {x: 21.72, y: -4.54, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3884,7 +3896,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.1875, y: 0.875}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0

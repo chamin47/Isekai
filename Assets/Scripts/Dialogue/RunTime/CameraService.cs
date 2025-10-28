@@ -71,7 +71,7 @@ public class CameraService : MonoBehaviour, ICameraService
 	/// <summary>
 	/// 기준 대비 절대 배율로 줌(앵커 옵션)
 	/// </summary>
-	public IEnumerator ZoomTo(float targetScale, float duration, string anchorKey)
+	public IEnumerator ZoomTo(float targetScale, float duration, string anchorKey, EasingType easingType = EasingType.InCubic)
 	{
 		if (_target == null) 
 			yield break;
@@ -94,8 +94,11 @@ public class CameraService : MonoBehaviour, ICameraService
 		{
 			t += Time.deltaTime;
 			float p = duration > 0f ? Mathf.Clamp01(t / duration) : 1f;
-			_target.orthographicSize = Mathf.Lerp(startSize, endSize, p);
-			_target.transform.position = Vector3.Lerp(startPos, endPos, p);
+
+			float eased = EvaluateEasing(easingType, p);
+
+			_target.orthographicSize = Mathf.Lerp(startSize, endSize, eased);
+			_target.transform.position = Vector3.Lerp(startPos, endPos, eased);
 			yield return null;
 		}
 
@@ -107,12 +110,12 @@ public class CameraService : MonoBehaviour, ICameraService
 	/// <summary>
 	/// 1.0으로 요청 + 앵커 미지정 시, 자동으로 'base' 위치로 복귀
 	/// </summary>
-	public IEnumerator ZoomOutTo(float targetScale, float duration, string anchorKey)
+	public IEnumerator ZoomOutTo(float targetScale, float duration, string anchorKey, EasingType easingType = EasingType.OutCubic)
 	{
 		if (string.IsNullOrWhiteSpace(anchorKey) && Mathf.Approximately(targetScale, 1f))
-			anchorKey = "base";
+			anchorKey = "center";
 
-		yield return ZoomTo(targetScale, duration, anchorKey);
+		yield return ZoomTo(targetScale, duration, anchorKey, easingType);
 	}
 
 	public IEnumerator Shake(float magnitude, float duration)
@@ -145,7 +148,7 @@ public class CameraService : MonoBehaviour, ICameraService
 		}
 
 		// 초기 위치
-		if (string.Equals(key, "base", System.StringComparison.OrdinalIgnoreCase))
+		if (string.Equals(key, "center", System.StringComparison.OrdinalIgnoreCase))
 		{
 			pos = basePos;
 			return true;
@@ -178,5 +181,19 @@ public class CameraService : MonoBehaviour, ICameraService
 		// 만약 "모르는 키면 base로 이동"을 원하면 아래처럼 바꾸면 됨:
 		// pos = basePos;
 		// return true;
+	}
+
+	private float EvaluateEasing(EasingType type, float t)
+	{
+		switch (type)
+		{
+			case EasingType.InCubic: return t * t * t;
+			case EasingType.OutCubic: return 1f - Mathf.Pow(1f - t, 3f);
+			case EasingType.InOutCubic:
+				return t < 0.5f
+					? 4f * t * t * t
+					: 1f - Mathf.Pow(-2f * t + 2f, 3f) / 2f;
+			default: return t; // Linear
+		}
 	}
 }

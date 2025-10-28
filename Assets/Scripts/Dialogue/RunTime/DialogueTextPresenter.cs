@@ -52,13 +52,14 @@ public class DialogueTextPresenter : MonoBehaviour, ITextPresenter
 		list.Add(balloon);
 	}
 
-	public IEnumerator ClearAllStacked(float fadeOut = 0.12f)
+	public void ClearAllStacked()
 	{
 		foreach (var kv in _stacked)
 		{
 			var list = kv.Value;
 			for (int i = 0; i < list.Count; i++)
-				if (list[i]) yield return list[i].FadeOutAndDestroy(fadeOut);
+				if (list[i]) 
+					Destroy(list[i].gameObject);
 		}
 		_stacked.Clear();
 	}

@@ -53,25 +53,56 @@ public class UI_DialogueBalloon : UI_Base
 		// 페이드 인
 		yield return _cg.FadeCanvas(1f, 0.15f);
 
+
 		if (_typewriter && _textAnimator)
 		{
 			_typewriter.ShowText(text); // Start Mode : OnShowText로 설정해둬야 됨.
 
 			// 진행 중 클릭/스페이스로 스킵
 			while (_typewriter.isShowingText)
-			{
+			{		
+				// 입력 감지
 				if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
+				{
+					// 마우스 클릭 시에만 사운드 재생
+					if (Input.GetMouseButtonDown(0))
+						Managers.Sound.Play("click_down", Sound.Effect);
+
 					_typewriter.SkipTypewriter(); // 즉시 전부 표시
+				}
+
 				yield return null;
+			}
+
+			// 루프 종료 후 한 프레임 동안 Up 감지
+			if (Input.GetMouseButton(0))
+			{
+				yield return new WaitUntil(() => Input.GetMouseButtonUp(0));
+				Managers.Sound.Play("click_up", Sound.Effect);
 			}
 		}
 
-		// 전체 출력 후 클릭/Space 대기
-		while (!Input.GetMouseButtonDown(0) && !Input.GetKeyDown(KeyCode.Space))
-			yield return null;
+		// 전체 출력 후 클릭/스페이스 대기
+		while (true)
+		{
+			// 입력 감지 (Space 또는 Mouse)
+			if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
+			{
+				// 사운드는 마우스 클릭일 때만
+				if (Input.GetMouseButtonDown(0))
+				{
+					Managers.Sound.Play("click_down", Sound.Effect);
+					yield return new WaitUntil(() => Input.GetMouseButtonUp(0));
+					Managers.Sound.Play("click_up", Sound.Effect);
+				}
+				break;
+			}
 
-		// 페이드 아웃
-		yield return _cg.FadeCanvas(0f, 0.12f);
+			yield return null;
+		}
+
+		//// 페이드 아웃
+		//yield return _cg.FadeCanvas(0f, 0.12f);
 		Destroy(gameObject);
 	}
 
