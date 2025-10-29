@@ -16,7 +16,7 @@ MonoBehaviour:
   speaker: "\uC601\uC560 3"
   animName: Ladies_jump_3, Ladies_1, Ladies_2
   eventName: ShowText
-  eventParam: 1.08, 0.8
+  eventParam: null
   nextID: 3001013
   script: "<wiggle>\uC548\uB155\uD558\uC138\uC694!!!!!!!!!!</>"
   descript: 

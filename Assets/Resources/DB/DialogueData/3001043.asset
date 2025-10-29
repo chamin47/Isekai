@@ -15,8 +15,8 @@ MonoBehaviour:
   id: 3001043
   speaker: System
   animName: null
-  eventName: ModifyHappyGauge
-  eventParam: +15
+  eventName: EndScript
+  eventParam: null
   nextID: null
   script: null
   descript: 

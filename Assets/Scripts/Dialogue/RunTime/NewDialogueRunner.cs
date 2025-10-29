@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -15,6 +16,7 @@ public class NewDialogueRunner : MonoBehaviour
     [SerializeField] private DialogueDatabaseRuntime _database;
     [SerializeField] private BranchTable _branchTable;
     [SerializeField] private ChoiceTable _choiceTable;
+    [SerializeField] private ClickTargetTable _clickTargetTable;
 
     [Header("Services")]
     [SerializeField] private DialogueTextPresenter _textPresenter;
@@ -50,7 +52,7 @@ public class NewDialogueRunner : MonoBehaviour
         OnDialogueEnd += endEvent;
         _actorDirector = actorDirector;
 
-        if (_textPresenter != null && _actorDirector != null && _textPresenter.actor == null)
+        if (_textPresenter != null && _actorDirector != null)
             _textPresenter.actor = _actorDirector;
 
         runCo = StartCoroutine(Run(id));
@@ -208,16 +210,28 @@ public class NewDialogueRunner : MonoBehaviour
                 case "WaitClick":
                     {
                         string eventParam = row.eventParam?.Trim().ToLower();
+                        int sel = -1;
                         if (eventParam == "click_flower")
                         {
                             var ui = Managers.UI.ShowPopupUI<UI_Click_Flower>();
-                            yield return ui.ClickFlower();
+                            yield return ui.ClickFlower((i) => sel = i);
                         }
-                        else
+                        else if(eventParam == "click_lady")
                         {
-
+                            var ladiesController = _actorDirector.GetComponent<LadiesController>();
+                            yield return ladiesController.ClickLady((i) => sel = i);
                         }
-                        id = row.nextID;
+
+                        yield return null;
+                        var choice = _clickTargetTable ? _clickTargetTable.Get(param) : null;
+                        if(choice == null)
+                        {
+                            Debug.LogError($"Click Target not found: {param}");
+                            id = row.nextID; // fallback
+                            break;
+                        }
+                        Debug.Log(sel);
+                        id = choice.options[sel].nextID;
                         break;
                     }
                 case "ShowChoice":
@@ -230,6 +244,14 @@ public class NewDialogueRunner : MonoBehaviour
                             id = row.nextID; // fallback
                             break;
                         }
+
+                        var player = FindAnyObjectByType<PlayerController>();
+
+                        bool isLeft = player.transform.position.x < _actorDirector.transform.position.x;
+                        if (!isLeft)
+                            _choiceUI.transform.position = player.transform.position + new Vector3(0, 1.7f, 0) + new Vector3(2f, 0, 0);
+                        else
+                            _choiceUI.transform.position = player.transform.position + new Vector3(0, 1.7f, 0) + new Vector3(-2f, 0, 0);
 
                         int sel = -1;
                         yield return _choiceUI?.ShowChoices(choice, i => sel = i);

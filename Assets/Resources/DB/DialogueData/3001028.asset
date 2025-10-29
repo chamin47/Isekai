@@ -18,5 +18,5 @@ MonoBehaviour:
   eventName: ShowText
   eventParam: null
   nextID: 3001029
-  script: "{fade}\uC544\u2026\uC544\uBB34\uAC83\uB3C4 \uC544\uB2D9\uB2C8\uB2E4!!!"
+  script: "{fade}<size=120%>\uC544\u2026\uC544\uBB34\uAC83\uB3C4 \uC544\uB2D9\uB2C8\uB2E4!!!"
   descript: "* \uAE30\uBCF8 \uAE00\uC528\uBCF4\uB2E4 \uD06C\uAC8C"

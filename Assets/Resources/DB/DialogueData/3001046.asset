@@ -18,5 +18,5 @@ MonoBehaviour:
   eventName: ShowText
   eventParam: null
   nextID: 3001047
-  script: "{fade}\uC0AC\u2026\uC0AC\u2026\uC0AC.<waitfor=0.5>.<waitfor=0.5>.<waitfor=0.5>"
+  script: "{fade}<size=60%>\uC0AC\u2026\uC0AC\u2026\uC0AC.<waitfor=0.5>.<waitfor=0.5>.<waitfor=0.5>"
   descript: "* \uAE00\uC528 \uAE30\uBCF8\uBCF4\uB2E4 \uB354 \uC791\uAC8C"

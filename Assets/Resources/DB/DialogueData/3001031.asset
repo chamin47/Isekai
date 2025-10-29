@@ -16,7 +16,7 @@ MonoBehaviour:
   speaker: System
   animName: Ladies_1, Ladies_2, Ladies_3
   eventName: CameraZoomOut
-  eventParam: 1.0, 0.8
+  eventParam: 1.0, 0.8,player
   nextID: 3001032
   script: null
   descript: "\uC601\uC560\uB4E4 \uC560\uB2C8\uBA54\uC774\uC158 \uAC00\uB9CC\uD788

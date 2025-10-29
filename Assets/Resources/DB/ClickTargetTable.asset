@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 425d45410a455ba4f9141993afb31092, type: 3}
+  m_Name: ClickTargetTable
+  m_EditorClassIdentifier: 
+  targets:
+  - ChoiceID: Click_Lady
+    options:
+    - targetName: Lady_1
+      nextID: 3001021
+    - targetName: Lady_2
+      nextID: 3001006
+    - targetName: Lady_3
+      nextID: 3001012
+  - ChoiceID: Click_Flower
+    options:
+    - targetName: Flower_1
+      nextID: 3001082
+    - targetName: Flower_2
+      nextID: 3001087

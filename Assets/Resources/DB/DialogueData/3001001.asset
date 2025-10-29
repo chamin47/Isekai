@@ -14,10 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 3001001
   speaker: "\uC601\uC560 3"
-  animName: Ladies_jump_3, Ladies_1, Ladies_2
-  eventName: ShowText
-  eventParam: null
-  nextID: 3001002
-  script: "{fade}<wiggle> \uAE84\uC57C\uC57C\uC57C\uC544\uC545!!! \uACF5\uC791\uB2D8
-    \uC544\uB2C8\uC138\uC694?!</>"
+  animName: Ladies_jump_3
+  eventName: PlayAnim
+  eventParam: 0
+  nextID: 3001032
+  script: null
   descript: 

@@ -2,18 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
-public class OutlineSelectImage : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+public class OutlineSelectSprite : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
-    private Material _material;
-    private MaterialPropertyBlock materialPropertyBlock;
+    [SerializeField] private int _index;
+    private Material _material;    
     public event System.Action<int> OnSelected;
 
-    [SerializeField] private int _index;
     private void Awake()
     {
-        Image image = GetComponent<Image>();
+        SpriteRenderer image = GetComponent<SpriteRenderer>();
         var material = image.material;
         _material = new Material(material);
         image.material = _material;
@@ -21,6 +19,7 @@ public class OutlineSelectImage : MonoBehaviour, IPointerEnterHandler, IPointerE
 
     public void OnPointerEnter(UnityEngine.EventSystems.PointerEventData eventData)
     {
+        Debug.Log("OutlineSelectSprite Pointer Enter: " + _index);
         _material.SetFloat("_AlphaCutoff", 1f);
     }
 
@@ -31,6 +30,7 @@ public class OutlineSelectImage : MonoBehaviour, IPointerEnterHandler, IPointerE
 
     public void OnPointerClick(UnityEngine.EventSystems.PointerEventData eventData)
     {
+        Debug.Log("OutlineSelectSprite Clicked: " + _index);
         OnSelected?.Invoke(_index);
     }
 }

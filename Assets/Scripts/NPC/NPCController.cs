@@ -58,7 +58,7 @@ public abstract class NPCController : MonoBehaviour
     }
 
 
-    public void LookTarget(Vector3 targetPosition)
+    public virtual void LookTarget(Vector3 targetPosition)
     {
         _sprite.flipX = targetPosition.x > transform.position.x;
     }
