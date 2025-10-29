@@ -11,8 +11,12 @@ public class SimpleInputPrompt : MonoBehaviour, IInputPrompt
     [Header("Anchors")]
     [SerializeField] private Transform _playerAnchor;     // 플레이어 머리 위 빈 오브젝트 등
 
+    [SerializeField] private DialogueTextPresenter _textPresenter;
+
     public IEnumerator Prompt(string prompt, Action<string> onDone)
     {
+        _textPresenter.AllStacksUp();
+
         // 월드 스페이스 입력 말풍선 생성
         var ui = Managers.UI.MakeWorldSpaceUI<UI_InputBalloon>();
         ui.Init(_playerAnchor);

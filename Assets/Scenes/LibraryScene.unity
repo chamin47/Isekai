@@ -812,6 +812,7 @@ MonoBehaviour:
   _collider: {fileID: 286667079}
   _isClicked: 0
   _fingerBlinkSpeed: 0.8
+  _fadeDuration: 0.5
 --- !u!114 &286667081
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1757,6 +1758,7 @@ MonoBehaviour:
   _collider: {fileID: 1057986705}
   _isClicked: 0
   _fingerBlinkSpeed: 0.8
+  _fadeDuration: 0.5
 --- !u!61 &1057986705
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2755,6 +2757,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerAnchor: {fileID: 1208274801}
+  _textPresenter: {fileID: 1797702976}
 --- !u!114 &1797702975
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2768,6 +2771,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _target: {fileID: 0}
+  _cameraController: {fileID: 0}
   _player: {fileID: 131068099}
   _middle2A: {fileID: 131068099}
   _middle2B: {fileID: 2074121577}
@@ -3012,6 +3016,7 @@ MonoBehaviour:
   _collider: {fileID: 2030263361}
   _isClicked: 0
   _fingerBlinkSpeed: 0.8
+  _fadeDuration: 0.5
 --- !u!61 &2030263361
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3175,6 +3180,7 @@ MonoBehaviour:
   _collider: {fileID: 2045367022}
   _isClicked: 0
   _fingerBlinkSpeed: 0.8
+  _fadeDuration: 0.5
 --- !u!61 &2045367022
 BoxCollider2D:
   m_ObjectHideFlags: 0
