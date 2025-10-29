@@ -102,7 +102,7 @@ public class UI_DialogueBalloon : UI_Base
 		Debug.Log($"Length: {_label.text.Length} Width: {_label.preferredWidth} Height: {_label.preferredHeight}");
 
 		float preferWidth = Mathf.Clamp(_label.preferredWidth + 0.5f, 1f, 4.4f);
-		float preferHeight = Mathf.Max(_label.preferredHeight + 0.5f, 0.8f);
+		float preferHeight = Mathf.Max(_label.preferredHeight * 1.1f, 0.8f);
 
 		Vector2 preferSize = new Vector2(preferWidth, preferHeight);
 

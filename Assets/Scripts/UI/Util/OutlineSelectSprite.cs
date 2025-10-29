@@ -19,18 +19,17 @@ public class OutlineSelectSprite : MonoBehaviour, IPointerEnterHandler, IPointer
 
     public void OnPointerEnter(UnityEngine.EventSystems.PointerEventData eventData)
     {
-        Debug.Log("OutlineSelectSprite Pointer Enter: " + _index);
-        _material.SetFloat("_AlphaCutoff", 1f);
+        _material.SetFloat("_Thickness", 0.02f);
     }
 
     public void OnPointerExit(UnityEngine.EventSystems.PointerEventData eventData)
     {
-        _material.SetFloat("_AlphaCutoff", 0f);
+        _material.SetFloat("_Thickness", 0f);
     }
 
     public void OnPointerClick(UnityEngine.EventSystems.PointerEventData eventData)
     {
-        Debug.Log("OutlineSelectSprite Clicked: " + _index);
         OnSelected?.Invoke(_index);
+        _material.SetFloat("_Thickness", 0f);
     }
 }

@@ -9,13 +9,13 @@ public class ScholarController : NPCController
 
     private void Start()
     {
-        _dialogueBalloon.Init(dialoguePos, "{fade}역시!! 미천한 제 뇌로는 이해하지 못하겠네요.");
+        _dialogueBalloon.Init(dialoguePos, "{fade}공작님의 의견이 그렇다면야!");
         State = NPCState.Idle;
     }
 
     public override void ShowDialogue()
     {
-        _dialogueBalloon.AppearAndFade("{fade}역시!! 미천한 제 뇌로는 이해하지 못하겠네요.");
+        _dialogueBalloon.AppearAndFade("{fade}공작님의 의견이 그렇다면야!");
     }
 
 

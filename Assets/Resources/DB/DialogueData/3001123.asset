@@ -15,9 +15,8 @@ MonoBehaviour:
   id: 3001123
   speaker: System
   animName: null
-  eventName: WaitForInput
-  eventParam: BR_DUMMY
+  eventName: ShowChoice
+  eventParam: CHOICE_3001123
   nextID: null
   script: null
-  descript: "\uD50C\uB808\uC774\uC5B4\uC5D0\uAC8C \uC785\uB825\uC744 \uBC1B\uACE0
-    BR_DUMMY \uADDC\uCE59\uC5D0 \uB530\uB77C \uB85C \uC774\uB3D9"
+  descript: "\uB098\uC911\uC5D0 inputfield\uB85C \uBCC0\uD658"

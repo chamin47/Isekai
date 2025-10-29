@@ -25,3 +25,9 @@ MonoBehaviour:
       nextID: 3001057
     - text: "\uBC1B\uC9C0 \uC54A\uB294\uB2E4."
       nextID: 3001066
+  - ChoiceID: CHOICE_3001123
+    options:
+    - text: "\uBA4B\uC9C0\uAD70"
+      nextID: 3001124
+    - text: "\uBCC4\uB85C\uAD70"
+      nextID: 3001124

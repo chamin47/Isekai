@@ -24,7 +24,8 @@ public class NewDialogueRunner : MonoBehaviour
     [SerializeField] private SimpleChoiceUI _choiceUI;
     [SerializeField] private SimpleInputPrompt _inputPrompt;
     [SerializeField] private ActorDirectorSimple _actorDirector;
-    [SerializeField] private HappinessManager _happinessManager;
+    [SerializeField] private HappinessHUD _happiness;
+    [SerializeField] private UI_LetterBox _letterBox;
 
     [Header("Hooks")]
     [SerializeField] private MonoBehaviour _hookProviderBehaviour;
@@ -66,6 +67,10 @@ public class NewDialogueRunner : MonoBehaviour
 
     IEnumerator Run(string id)
     {
+        if(_happiness != null)
+            _happiness.gameObject.SetActive(false);
+
+        yield return _letterBox.ShowLetterBox();
         while (!string.IsNullOrEmpty(id))
         {
             if (!_database.TryGet(id, out var row))
@@ -205,6 +210,9 @@ public class NewDialogueRunner : MonoBehaviour
                         //yield return letterbox.CloseOvershoot(settle, overshoot, 170f);
                         OnDialogueEnd?.Invoke();
                         OnDialogueEnd = null;
+
+                        _happiness.gameObject.SetActive(true);
+                        yield return _letterBox.HideLetterBox();
                         yield break;
                     }
                 case "WaitClick":
@@ -266,8 +274,11 @@ public class NewDialogueRunner : MonoBehaviour
                 case "ModifyHappyGauge":
                     {
                         float amount = ParamParser.ToFloat(param, 0f);
-                        if (_happinessManager != null)
-                            _happinessManager.AddHappiness(amount);
+                        if (_happiness != null)
+                        {
+                            _happiness.gameObject.SetActive(true);
+                            _happiness.ChangeHappiness(amount);
+                        }
 
                         id = row.nextID;
                         break;

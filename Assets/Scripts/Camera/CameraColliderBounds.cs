@@ -1,14 +1,12 @@
 using UnityEngine;
 
-public class CameraColliderBounds : MonoBehaviour, IRuntimeCamera
+public class CameraColliderBounds : MonoBehaviour
 {
     [Tooltip("경계로 사용할 콜라이더 (씬에 있는 BoxCollider2D 오브젝트 권장)")]
     public Collider2D boundingShape;
 
     private Camera _cam;
     private Bounds _mapBounds;
-
-    public bool UpdateCamera { get; set; } = true;
 
     void Awake()
     {
@@ -24,11 +22,8 @@ public class CameraColliderBounds : MonoBehaviour, IRuntimeCamera
         _mapBounds = boundingShape.bounds;
     }
 
-    void LateUpdate()
+    public void UpdateCamera()
     {
-        if(UpdateCamera == false)
-            return;
-
         // 경계 콜라이더가 할당되지 않았으면 아무것도 하지 않음
         if (boundingShape == null || !_cam.orthographic)
         {

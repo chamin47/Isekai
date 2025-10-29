@@ -14,7 +14,9 @@ public class Click_Lady : MonoBehaviour
     private int _clickedIndex = -1;
     private void Awake()
     {
-        
+        _lady1.enabled = false;
+        _lady2.enabled = false;
+        _lady3.enabled = false;
         _lady1.OnSelected += OnClickLady;
         _lady2.OnSelected += OnClickLady;
         _lady3.OnSelected += OnClickLady;

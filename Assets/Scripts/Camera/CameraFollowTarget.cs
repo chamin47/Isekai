@@ -12,6 +12,8 @@ public class CameraFollowTarget: MonoBehaviour, IRuntimeCamera
     public float smoothTime = 0.3f;
     private Vector3 _velocity = Vector3.zero;
 
+    [SerializeField] private CameraColliderBounds _cameraColliderBounds;
+
     public bool UpdateCamera { get; set; } = true;
     private void LateUpdate()
 	{
@@ -32,6 +34,11 @@ public class CameraFollowTarget: MonoBehaviour, IRuntimeCamera
                 smoothTime
             );
             //transform.position = targetPosition;
+        }
+
+        if(_cameraColliderBounds != null)
+        {
+            _cameraColliderBounds.UpdateCamera();
         }
     }
 

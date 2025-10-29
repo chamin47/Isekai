@@ -18,7 +18,8 @@ public class HappinessHUD : UI_Base
 
 	public override void Init()
 	{
-        _volume.profile.TryGet(out _color);
+        if(_volume != null)
+            _volume.profile.TryGet(out _color);
 
         Canvas canvas = GetComponent<Canvas>();
         canvas.renderMode = RenderMode.ScreenSpaceCamera;
