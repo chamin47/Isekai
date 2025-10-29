@@ -10,7 +10,7 @@ public class ArtistController : NPCController
 
     private void Start()
     {
-        _dialogueBalloon.Init(dialoguePos);
+        _dialogueBalloon.Init(dialoguePos, "대대손손 보관해주세요오오옹~~");
         State = NPCState.Idle;
     }
 

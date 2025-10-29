@@ -9,7 +9,7 @@ public class PoorboyController : NPCController
 
     private void Start()
     {
-        _dialogueBalloon.Init(dialoguePos);
+        _dialogueBalloon.Init(dialoguePos, "{fade}저도 언젠가 꼭 공작님처럼 훌륭한 어른이 될 거예요…!!");
         State = NPCState.Idle;
     }
 

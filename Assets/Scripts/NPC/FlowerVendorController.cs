@@ -25,7 +25,7 @@ public class FlowerVendorController : NPCController
 
     private void Start()
     {
-        _dialogueBalloon.Init(dialoguePos);
+        _dialogueBalloon.Init(dialoguePos, "<bounce a=0.2>²É »ç¼¼¿ä~!</>");
         _showDialogue = StartCoroutine(ShowDialogue());
     }
 

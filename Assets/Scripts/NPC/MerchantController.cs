@@ -9,7 +9,7 @@ public class MerchantController : NPCController
 
     private void Start()
     {
-        _dialogueBalloon.Init(dialoguePos);
+        _dialogueBalloon.Init(dialoguePos, "{fade}그 분 덕분에 이 영지가 얼마나 평화로운지!!");
         State = NPCState.Idle;
     }
 
