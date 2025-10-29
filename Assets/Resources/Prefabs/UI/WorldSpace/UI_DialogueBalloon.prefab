@@ -37,10 +37,10 @@ RectTransform:
   m_Father: {fileID: 1792161381655896755}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0.6165}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -0.000000014901161, y: 0.064606}
+  m_SizeDelta: {x: 3.9552, y: 0.8708}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &554402451718608936
 CanvasRenderer:
@@ -70,7 +70,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: "{fade}\uADF8\uB798, \uC774\uACF3\uC5D0 \uCC3E\uC544\uC628 \uB2F9\uC2E0\uC740
+    \uC9C0\uAE08 \uD589\uBCF5\uD55C\uAC00? \uC544\uB2C8\uBA74 \uBD88\uD589\uD55C\uAC00?"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: fb10db488cf2a634a984678fd5e09aae, type: 2}
   m_sharedMaterial: {fileID: -6534315385618460736, guid: fb10db488cf2a634a984678fd5e09aae, type: 2}
@@ -159,11 +160,11 @@ MonoBehaviour:
   referenceFontSize: 10
   isResettingTimeOnNewText: 1
   useDefaultDatabases: 1
-  databaseBehaviors: {fileID: 0}
-  databaseAppearances: {fileID: 0}
+  databaseBehaviors: {fileID: 11400000, guid: 845b9cafc5e8054439490879c6d327ea, type: 2}
+  databaseAppearances: {fileID: 11400000, guid: 573304d5afbe0ab4dbb90dfc6013580b, type: 2}
   useDefaultStyleSheet: 1
   styleSheet: {fileID: 0}
-  databaseActions: {fileID: 0}
+  databaseActions: {fileID: 11400000, guid: 41df8f8a5c2e4c74aae21f9e59ef4e72, type: 2}
   defaultAppearancesTags:
   - size
   defaultDisappearancesTags:
@@ -244,8 +245,6 @@ GameObject:
   - component: {fileID: 1792161381655896755}
   - component: {fileID: 8056624260907361298}
   - component: {fileID: 1717849089509815065}
-  - component: {fileID: 4445106316646426927}
-  - component: {fileID: 630536399614290005}
   m_Layer: 5
   m_Name: BubbleImage
   m_TagString: Untagged
@@ -272,7 +271,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0.7}
+  m_SizeDelta: {x: 6.93, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8056624260907361298
 CanvasRenderer:
@@ -302,7 +301,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 472fe9cc089e9364a8fc35cc3cedb509, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f6ed3be298db8ee4f9bba3461db4cadb, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -311,47 +310,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 8
---- !u!114 &4445106316646426927
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6789241912876929624}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_HorizontalFit: 2
-  m_VerticalFit: 0
---- !u!114 &630536399614290005
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6789241912876929624}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30649d3a9faa99c48a7b1166b86bf2a0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Padding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
-  m_ChildAlignment: 1
-  m_Spacing: 0
-  m_ChildForceExpandWidth: 0
-  m_ChildForceExpandHeight: 0
-  m_ChildControlWidth: 1
-  m_ChildControlHeight: 0
-  m_ChildScaleWidth: 0
-  m_ChildScaleHeight: 0
-  m_ReverseArrangement: 0
+  m_PixelsPerUnitMultiplier: 70
 --- !u!1 &8412114872095214106
 GameObject:
   m_ObjectHideFlags: 0
@@ -615,6 +574,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _root: {fileID: 6947575982856551122}
+  _image: {fileID: 1717849089509815065}
   _label: {fileID: 448987903608550724}
   _cg: {fileID: 2939526636791371535}
   _screenOffset: {x: 0, y: 80}

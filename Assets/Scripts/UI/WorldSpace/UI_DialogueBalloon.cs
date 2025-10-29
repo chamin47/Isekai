@@ -11,6 +11,7 @@ using Febucci.UI.Core;
 public class UI_DialogueBalloon : UI_Base
 {
 	[SerializeField] private RectTransform _root;   // 말풍선 루트
+	[SerializeField] private Image _image;
 	[SerializeField] private TMP_Text _label;
 	[SerializeField] private CanvasGroup _cg;
 	[SerializeField] private Vector2 _screenOffset = new Vector2(0, 80f);
@@ -22,31 +23,79 @@ public class UI_DialogueBalloon : UI_Base
 
 	private float _extraOffsetY = 0f;
 
-	public void AddStackOffset(float dy) => _extraOffsetY += dy;
+	public void AddStackOffset(float dy)
+	{
+		_extraOffsetY += dy;
+		SetPosition(); 
+	}
 
-	public void Init(Transform anchor)
+	public void Init(Transform anchor, string text)
 	{
 		_anchor = anchor;
 
 		_cg.alpha = 0f;
+
+		Color color = _label.color;
+		color.a = 0f;           // 알파를 0으로 설정
+		_label.color = color;
+
+		_label.text = text.RemoveRichTags();
+
+		FixBubbleSize();
+		
+		SetPosition();
 	}
 
-	private void LateUpdate()
+	[ContextMenu("FixBubbleSize")]
+	private void FixBubbleSize()
 	{
-		if (_anchor == null) 
+		Debug.Log($"Length: {_label.text.Length} Width: {_label.preferredWidth} Height: {_label.preferredHeight}");
+
+		float preferWidth = Mathf.Clamp(_label.preferredWidth + 1f, 2f, 4.4f);
+		float preferHeight = Mathf.Max(_label.preferredHeight * 2.8f, 0.8f);
+
+		Vector2 preferSize = new Vector2(preferWidth, preferHeight);
+
+		_image.rectTransform.sizeDelta = preferSize;
+	}
+
+	private void SetPosition()
+	{
+		if (_anchor == null)
 			return;
-		var cam = Camera.main; 
-		if (cam == null) 
+		var cam = Camera.main;
+		if (cam == null)
 			return;
 
 		var baseWorld = cam.ScreenToWorldPoint(Vector3.zero);
 		var offWorld = cam.ScreenToWorldPoint(
 			new Vector3(_screenOffset.x, _screenOffset.y + _extraOffsetY, 0f)) - baseWorld;
 
+		float bubbleHalfWidth = _image.rectTransform.sizeDelta.x * 0.5f;
+
 		var pos = _anchor.position + offWorld;
-		pos.z = _anchor.position.z; // 2D면 z 고정
+		pos.x += bubbleHalfWidth * _root.lossyScale.x; // 스케일 반영
+		pos.z = _anchor.position.z;
+
 		_root.position = pos;
 	}
+
+	//private void LateUpdate()
+	//{
+	//	if (_anchor == null) 
+	//		return;
+	//	var cam = Camera.main; 
+	//	if (cam == null) 
+	//		return;
+
+	//	var baseWorld = cam.ScreenToWorldPoint(Vector3.zero);
+	//	var offWorld = cam.ScreenToWorldPoint(
+	//		new Vector3(_screenOffset.x, _screenOffset.y + _extraOffsetY, 0f)) - baseWorld;
+
+	//	var pos = _anchor.position + offWorld;
+	//	pos.z = _anchor.position.z; // 2D면 z 고정
+	//	_root.position = pos;
+	//}
 
 	public IEnumerator CoPresent(string text, float typeSpeed = 0.03f)
 	{
@@ -56,6 +105,10 @@ public class UI_DialogueBalloon : UI_Base
 
 		if (_typewriter && _textAnimator)
 		{
+			Color color = _label.color;
+			color.a = 1f;           // 알파를 1으로 설정
+			_label.color = color;
+
 			_typewriter.ShowText(text); // Start Mode : OnShowText로 설정해둬야 됨.
 
 			// 진행 중 클릭/스페이스로 스킵
@@ -112,6 +165,10 @@ public class UI_DialogueBalloon : UI_Base
 
 		if (_typewriter && _textAnimator)
 		{
+			Color color = _label.color;
+			color.a = 1f;           // 알파를 1으로 설정
+			_label.color = color;
+
 			_typewriter.ShowText(text);
 			while (_typewriter.isShowingText)
 			{
@@ -126,13 +183,6 @@ public class UI_DialogueBalloon : UI_Base
 			yield return null;
 
 		// 여기서 종료: 파괴하지 않고 남겨둠
-	}
-
-	public IEnumerator FadeOutAndDestroy(float duration = 0.12f)
-	{
-		if (_cg != null) 
-			yield return _cg.FadeCanvas(0f, duration);
-		Destroy(gameObject);
 	}
 
 	public override void Init() { }
