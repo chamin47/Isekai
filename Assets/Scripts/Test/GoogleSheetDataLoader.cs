@@ -5,8 +5,10 @@ using Unity.VisualScripting.FullSerializer;
 using UnityEditor;
 using UnityEngine;
 
+#if UNITY_EDITOR
 public class GoogleSheetDataLoader : EditorWindow
 {
+
     // 1단계에서 복사한 구글 시트 CSV 게시 링크를 여기에 붙여넣으세요.
     private const string SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSu3maz3r9J5g6g_Zu-i_YbVZ44nTIdZV7oHSUad8-sTfwtsrgUXmb4_IsbcncK-kMXd50_3rX49osN/pub?output=csv";
 
@@ -127,3 +129,4 @@ public class GoogleSheetDataLoader : EditorWindow
         return parts.ToArray();
     }
 }
+#endif
