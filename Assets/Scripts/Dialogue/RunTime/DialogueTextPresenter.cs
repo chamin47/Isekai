@@ -12,7 +12,7 @@ public class DialogueTextPresenter : MonoBehaviour, ITextPresenter
 
 	public IActorDirector actor; // Runner에서 주입
 
-	const float StackSpacingPx = 180f;
+	public const float StackSpacingPx = 180f;
 
 	readonly Dictionary<Transform, List<UI_DialogueBalloon>> _stacked = new();
 
@@ -52,6 +52,24 @@ public class DialogueTextPresenter : MonoBehaviour, ITextPresenter
 		yield return balloon.CoPresentStacked(text ?? "", _charSpeed);
 
 		list.Add(balloon);
+	}
+
+	public void AllStacksUp()
+	{
+		foreach (var kv in _stacked)
+		{
+			var list = kv.Value;
+			for (int i = list.Count - 1; i >= 0; --i)
+			{
+				var balloon = list[i];
+				if (balloon == null)
+				{
+					list.RemoveAt(i);
+					continue;
+				}
+				balloon.AddStackOffset(StackSpacingPx);
+			}
+		}
 	}
 
 	public void ClearAllStacked()
