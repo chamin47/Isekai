@@ -26,10 +26,10 @@ public class FlowerVendorController : NPCController
     private void Start()
     {
         _dialogueBalloon.Init(dialoguePos, "<bounce a=0.2>²É »ç¼¼¿ä~!</>");
-        _showDialogue = StartCoroutine(ShowDialogue());
+        _showDialogue = StartCoroutine(CoShowDialogue());
     }
 
-    private IEnumerator ShowDialogue()
+    private IEnumerator CoShowDialogue()
     {
         while(true)
         {
@@ -92,6 +92,6 @@ public class FlowerVendorController : NPCController
     public override void OnEventEnd()
     {
         State = NPCState.Idle;
-        _showDialogue = StartCoroutine(ShowDialogue());
+        _showDialogue = StartCoroutine(CoShowDialogue());
     }
 }

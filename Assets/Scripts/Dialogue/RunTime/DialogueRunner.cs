@@ -132,8 +132,24 @@ public class DialogueRunner : MonoBehaviour
 						id = row.nextID;
 						break;
 					}
+				case "SCameraZoomIn":
+					{
+                        var (scale, dur, anchor) = ParamParser.Zoom3(param, 1f, 0.5f, null);
+                        if (_cameraService != null)
+                            Fire(_cameraService.ZoomTo(scale, dur, anchor));
 
-				case "CameraZoomOut":
+                        if (!string.IsNullOrWhiteSpace(row.animName) && _actorDirector != null)
+                            Fire(_actorDirector.PlayAnim(row.speaker, row.animName));
+
+                        if (!string.IsNullOrWhiteSpace(row.script))
+                            yield return _textPresenter?.ShowTextStacked(row.speaker, row.script, row.animName); // ???? ?? ???????? ????
+
+                        id = row.nextID;
+                        break;
+                    }
+
+
+                case "CameraZoomOut":
 					{
 						var (scale, dur, anchor) = ParamParser.Zoom3(param, 1f, 0.5f, null);
 						if (_cameraService != null)

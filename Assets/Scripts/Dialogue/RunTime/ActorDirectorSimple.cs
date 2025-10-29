@@ -21,7 +21,6 @@ public class SpeakerBindingSimple
 public class ActorDirectorSimple : MonoBehaviour, IActorDirector, ISpeakerAnchorResolver
 {
 	[SerializeField] List<SpeakerBindingSimple> bindings = new();
-
 	// 전체 바인딩을 찾는 헬퍼 (앵커/배우 둘 다 필요할 때 사용)
 	SpeakerBindingSimple FindBind(string speaker)
 	{

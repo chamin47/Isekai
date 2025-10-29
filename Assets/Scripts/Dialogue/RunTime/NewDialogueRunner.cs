@@ -237,6 +237,8 @@ public class NewDialogueRunner : MonoBehaviour
                             id = choice.options[sel].nextID;
                         else
                             id = row.nextID;
+
+                        (_textPresenter as DialogueTextPresenter)?.ClearAllStacked();
                         break;
                     }
                 case "ModifyHappyGauge":
@@ -254,7 +256,7 @@ public class NewDialogueRunner : MonoBehaviour
                         // EventParam = BranchID
                         string userText = "";
                         yield return _inputPrompt?.Prompt(row.script, s => userText = s);
-
+                        var next = _branchTable ? _branchTable.Resolve(param, "Default") : null;
                         (_textPresenter as DialogueTextPresenter)?.ClearAllStacked();
                         break;
                     }

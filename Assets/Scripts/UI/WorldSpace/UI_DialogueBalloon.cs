@@ -36,7 +36,7 @@ public class UI_DialogueBalloon : UI_Base
 		_cg.alpha = 0f;
 
 		Color color = _label.color;
-		color.a = 0f;           // ���ĸ� 0���� ����
+		color.a = 0f;           
 		_label.color = color;
 
 		_label.text = text.RemoveRichTags();
@@ -48,10 +48,10 @@ public class UI_DialogueBalloon : UI_Base
 
 	public void Appear(string text)
 	{
-		if (_typewriter.isShowingText == false)
-			return;
-
 		this.gameObject.SetActive(true);
+        Color color = _label.color;
+        color.a = 1f;
+        _label.color = color;
         _cg.alpha = 1f;
 		_typewriter.ShowText(text);
     }
@@ -63,6 +63,9 @@ public class UI_DialogueBalloon : UI_Base
 			return;
 
         this.gameObject.SetActive(true);
+        Color color = _label.color;
+        color.a = 1f;
+        _label.color = color;
         _cg.alpha = 1f;
 		_typewriter.ShowText(text);
 
@@ -84,8 +87,7 @@ public class UI_DialogueBalloon : UI_Base
 			elapsed += Time.deltaTime;
         }
 
-		_cg.alpha = 0f;
-		this.gameObject.SetActive(false);
+		Disappear();
     }
 
 	public void Disappear()
@@ -99,8 +101,8 @@ public class UI_DialogueBalloon : UI_Base
 	{
 		Debug.Log($"Length: {_label.text.Length} Width: {_label.preferredWidth} Height: {_label.preferredHeight}");
 
-		float preferWidth = Mathf.Clamp(_label.preferredWidth + 1f, 2f, 4.4f);
-		float preferHeight = Mathf.Max(_label.preferredHeight * 2.8f, 0.8f);
+		float preferWidth = Mathf.Clamp(_label.preferredWidth + 0.5f, 1f, 4.4f);
+		float preferHeight = Mathf.Max(_label.preferredHeight + 0.5f, 0.8f);
 
 		Vector2 preferSize = new Vector2(preferWidth, preferHeight);
 
