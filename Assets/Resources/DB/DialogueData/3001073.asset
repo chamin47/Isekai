@@ -16,7 +16,7 @@ MonoBehaviour:
   speaker: System
   animName: Flower_Vendor_walk
   eventName: SetInteraction
-  eventParam: NPC_Flower, 3001063
+  eventParam: NPC_Flower, 3001075
   nextID: 3001074
   script: null
   descript: "Shift \uC0C1\uD638\uC791\uC6A9 \uC131\uACF5 \uC2DC, 3001063\uB85C \uC774\uB3D9"

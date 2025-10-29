@@ -17,7 +17,7 @@ MonoBehaviour:
   animName: Scholar_talk
   eventName: ShowText
   eventParam: null
-  nextID: 3001116
+  nextID: 3001123
   script: "{fade}\uC544 \uACF5\uC791\uB2D8! \uADF8\uB54C \uB0A8\uAE30\uC2E0 \uB17C\uBB38\uC740
     \uC798 \uD655\uC778\uD588\uC2B5\uB2C8\uB2E4!!"
   descript: 
