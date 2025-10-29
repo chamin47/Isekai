@@ -64,6 +64,12 @@ public class LibraryIDHooks : MonoBehaviour, IDialogueHookProvider
 
 				yield break;
 
+			case "2001002":
+
+				Managers.Sound.Play("librarian1", Sound.Effect);
+
+				yield break;
+
 			case "2001004":
 				if (_librarian != null)
 				{
@@ -71,6 +77,8 @@ public class LibraryIDHooks : MonoBehaviour, IDialogueHookProvider
 						StopCoroutine(_moveCo);
 
 					_moveCo = StartCoroutine(CoMoveTo(_librarian, _pos2, _walkSpeed, _arriveEps));
+
+					StartCoroutine(CoLibrarianFootSound());
 				}
 				yield break;
 
@@ -79,13 +87,18 @@ public class LibraryIDHooks : MonoBehaviour, IDialogueHookProvider
 					yield return _moveCo;
 				yield break;
 
+			case "2001009":
+
+				Managers.Sound.Play("isekai_library", Sound.Effect);
+
+				yield break;
 
 			case "2001024":
-				_library.AllBooksEnableFinger();
+				//_library.AllBooksEnableFinger();
 				yield break;
 
 			case "2001025":
-				_library.AllBooksDisableFinger();
+				//_library.AllBooksDisableFinger();
 				yield break;
 
 			case "2001026":
@@ -97,10 +110,16 @@ public class LibraryIDHooks : MonoBehaviour, IDialogueHookProvider
 					LibraryBook book = _library.Books[bookIndex].GetComponent<LibraryBook>(); // 빈터발트
 					book.gameObject.SetActive(true);               // 빈터발트 오브젝트
 
-					book.EnableFinger();
+					StartCoroutine(book.FadeInMouse());
 				}
 				yield break;
 
+
+			case "2001027":
+
+				Managers.Sound.Play("positive", Sound.Effect);
+
+				yield break;
 			case "2001029":
 				if (_hud != null)
 					_hud.gameObject.SetActive(true);
@@ -145,4 +164,20 @@ public class LibraryIDHooks : MonoBehaviour, IDialogueHookProvider
 			yield return null;
 		}
 	}
+
+	private IEnumerator CoLibrarianFootSound()
+	{
+		const float STEP_INTERVAL = 0.63f;   // 걸음 간격
+		const int STEP_COUNT = 3;           // 총 발걸음 횟수
+		float curVolume = 0.55f;             // 시작 볼륨
+		const float VOL_STEP = 0.2f;        // 한 걸음당 볼륨 증가량
+
+		for (int i = 0; i < STEP_COUNT; i++)
+		{
+			Managers.Sound.Play("all_s_walk2", Sound.Effect, curVolume);
+			curVolume = Mathf.Min(curVolume + VOL_STEP, 1f); 
+			yield return WaitForSecondsCache.Get(STEP_INTERVAL);
+		}
+	}
+
 }

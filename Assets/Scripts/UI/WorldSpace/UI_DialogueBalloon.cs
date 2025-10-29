@@ -5,12 +5,13 @@ using UnityEngine.UI;
 using Febucci.UI.Core;
 
 /// <summary>
-/// ¿ùµå ½ºÆäÀÌ½º ´ëÈ­ ¸»Ç³¼±.
-/// ´ë»çÅ¸ÀÌÇÎ ¿¬Ãâ/½ºÅµ/Å¬¸¯ ´ë±â¿Í ÆäÀÌµå ÀÎ¡¤¾Æ¿ô, ´ë»ç ½ºÅÃ ¹èÄ¡¿ë Ãß°¡ ¿ÀÇÁ¼ÂÀ» °ü¸®ÇÑ´Ù.
+/// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½È­ ï¿½ï¿½Ç³ï¿½ï¿½.
+/// ï¿½ï¿½ï¿½Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½/ï¿½ï¿½Åµ/Å¬ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìµï¿½ ï¿½Î¡ï¿½ï¿½Æ¿ï¿½, ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ß°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
 /// </summary>
 public class UI_DialogueBalloon : UI_Base
 {
-	[SerializeField] private RectTransform _root;   // ¸»Ç³¼± ·çÆ®
+	[SerializeField] private RectTransform _root;   // ï¿½ï¿½Ç³ï¿½ï¿½ ï¿½ï¿½Æ®
+	[SerializeField] private Image _image;
 	[SerializeField] private TMP_Text _label;
 	[SerializeField] private CanvasGroup _cg;
 	[SerializeField] private Vector2 _screenOffset = new Vector2(0, 80f);
@@ -22,13 +23,27 @@ public class UI_DialogueBalloon : UI_Base
 
 	private float _extraOffsetY = 0f;
 
-	public void AddStackOffset(float dy) => _extraOffsetY += dy;
+	public void AddStackOffset(float dy)
+	{
+		_extraOffsetY += dy;
+		SetPosition(); 
+	}
 
-	public void Init(Transform anchor)
+	public void Init(Transform anchor, string text)
 	{
 		_anchor = anchor;
 
 		_cg.alpha = 0f;
+
+		Color color = _label.color;
+		color.a = 0f;           // ï¿½ï¿½ï¿½Ä¸ï¿½ 0ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+		_label.color = color;
+
+		_label.text = text.RemoveRichTags();
+
+		FixBubbleSize();
+		
+		SetPosition();
 	}
 
 	public void Appear(string text)
@@ -79,52 +94,90 @@ public class UI_DialogueBalloon : UI_Base
 		this.gameObject.SetActive(false);
     }
 
-    private void LateUpdate()
+	[ContextMenu("FixBubbleSize")]
+	private void FixBubbleSize()
 	{
-		if (_anchor == null) 
+		Debug.Log($"Length: {_label.text.Length} Width: {_label.preferredWidth} Height: {_label.preferredHeight}");
+
+		float preferWidth = Mathf.Clamp(_label.preferredWidth + 1f, 2f, 4.4f);
+		float preferHeight = Mathf.Max(_label.preferredHeight * 2.8f, 0.8f);
+
+		Vector2 preferSize = new Vector2(preferWidth, preferHeight);
+
+		_image.rectTransform.sizeDelta = preferSize;
+	}
+
+	private void SetPosition()
+	{
+		if (_anchor == null)
 			return;
-		var cam = Camera.main; 
-		if (cam == null) 
+		var cam = Camera.main;
+		if (cam == null)
 			return;
 
 		var baseWorld = cam.ScreenToWorldPoint(Vector3.zero);
 		var offWorld = cam.ScreenToWorldPoint(
 			new Vector3(_screenOffset.x, _screenOffset.y + _extraOffsetY, 0f)) - baseWorld;
 
+		float bubbleHalfWidth = _image.rectTransform.sizeDelta.x * 0.5f;
+
 		var pos = _anchor.position + offWorld;
-		pos.z = _anchor.position.z; // 2D¸é z °íÁ¤
+		pos.x += bubbleHalfWidth * _root.lossyScale.x; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ý¿ï¿½
+		pos.z = _anchor.position.z;
+
 		_root.position = pos;
 	}
 
+	//private void LateUpdate()
+	//{
+	//	if (_anchor == null) 
+	//		return;
+	//	var cam = Camera.main; 
+	//	if (cam == null) 
+	//		return;
+
+	//	var baseWorld = cam.ScreenToWorldPoint(Vector3.zero);
+	//	var offWorld = cam.ScreenToWorldPoint(
+	//		new Vector3(_screenOffset.x, _screenOffset.y + _extraOffsetY, 0f)) - baseWorld;
+
+	//	var pos = _anchor.position + offWorld;
+	//	pos.z = _anchor.position.z; // 2Dï¿½ï¿½ z ï¿½ï¿½ï¿½ï¿½
+	//	_root.position = pos;
+	//}
+
 	public IEnumerator CoPresent(string text, float typeSpeed = 0.03f)
 	{
-		// ÆäÀÌµå ÀÎ
+		// ï¿½ï¿½ï¿½Ìµï¿½ ï¿½ï¿½
 		yield return _cg.FadeCanvas(1f, 0.15f);
 
 
 		if (_typewriter && _textAnimator)
 		{
 			this.gameObject.SetActive(true);
-            _typewriter.ShowText(text); // Start Mode : OnShowText·Î ¼³Á¤ÇØµÖ¾ß µÊ.
+            
+			Color color = _label.color;
+			color.a = 1f;           // ï¿½ï¿½ï¿½Ä¸ï¿½ 1ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+			_label.color = color;
 
+			_typewriter.ShowText(text); // Start Mode : OnShowTextï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ØµÖ¾ï¿½ ï¿½ï¿½.
 
-			// ÁøÇà Áß Å¬¸¯/½ºÆäÀÌ½º·Î ½ºÅµ
+			// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ Å¬ï¿½ï¿½/ï¿½ï¿½ï¿½ï¿½ï¿½Ì½ï¿½ï¿½ï¿½ ï¿½ï¿½Åµ
 			while (_typewriter.isShowingText)
 			{		
-				// ÀÔ·Â °¨Áö
+				// ï¿½Ô·ï¿½ ï¿½ï¿½ï¿½ï¿½
 				if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
 				{
-					// ¸¶¿ì½º Å¬¸¯ ½Ã¿¡¸¸ »ç¿îµå Àç»ý
+					// ï¿½ï¿½ï¿½ì½º Å¬ï¿½ï¿½ ï¿½Ã¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 					if (Input.GetMouseButtonDown(0))
 						Managers.Sound.Play("click_down", Sound.Effect);
 
-					_typewriter.SkipTypewriter(); // Áï½Ã ÀüºÎ Ç¥½Ã
+					_typewriter.SkipTypewriter(); // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ç¥ï¿½ï¿½
 				}
 
 				yield return null;
 			}
 
-			// ·çÇÁ Á¾·á ÈÄ ÇÑ ÇÁ·¹ÀÓ µ¿¾È Up °¨Áö
+			// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Up ï¿½ï¿½ï¿½ï¿½
 			if (Input.GetMouseButton(0))
 			{
 				yield return new WaitUntil(() => Input.GetMouseButtonUp(0));
@@ -132,13 +185,13 @@ public class UI_DialogueBalloon : UI_Base
 			}
 		}
 
-		// ÀüÃ¼ Ãâ·Â ÈÄ Å¬¸¯/½ºÆäÀÌ½º ´ë±â
+		// ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ ï¿½ï¿½ Å¬ï¿½ï¿½/ï¿½ï¿½ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½ï¿½
 		while (true)
 		{
-			// ÀÔ·Â °¨Áö (Space ¶Ç´Â Mouse)
+			// ï¿½Ô·ï¿½ ï¿½ï¿½ï¿½ï¿½ (Space ï¿½Ç´ï¿½ Mouse)
 			if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
 			{
-				// »ç¿îµå´Â ¸¶¿ì½º Å¬¸¯ÀÏ ¶§¸¸
+				// ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ì½º Å¬ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 				if (Input.GetMouseButtonDown(0))
 				{
 					Managers.Sound.Play("click_down", Sound.Effect);
@@ -151,7 +204,7 @@ public class UI_DialogueBalloon : UI_Base
 			yield return null;
 		}
 
-		//// ÆäÀÌµå ¾Æ¿ô
+		//// ï¿½ï¿½ï¿½Ìµï¿½ ï¿½Æ¿ï¿½
 		//yield return _cg.FadeCanvas(0f, 0.12f);
 		Destroy(gameObject);
 	}
@@ -162,6 +215,10 @@ public class UI_DialogueBalloon : UI_Base
 
 		if (_typewriter && _textAnimator)
 		{
+			Color color = _label.color;
+			color.a = 1f;           // ï¿½ï¿½ï¿½Ä¸ï¿½ 1ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+			_label.color = color;
+
 			_typewriter.ShowText(text);
 			while (_typewriter.isShowingText)
 			{
@@ -171,18 +228,11 @@ public class UI_DialogueBalloon : UI_Base
 			}
 		}
 
-		// ÀüÃ¼ Ãâ·Â ÈÄ Å¬¸¯/Space ´ë±â
+		// ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ ï¿½ï¿½ Å¬ï¿½ï¿½/Space ï¿½ï¿½ï¿½
 		while (!Input.GetMouseButtonDown(0) && !Input.GetKeyDown(KeyCode.Space))
 			yield return null;
 
-		// ¿©±â¼­ Á¾·á: ÆÄ±«ÇÏÁö ¾Ê°í ³²°ÜµÒ
-	}
-
-	public IEnumerator FadeOutAndDestroy(float duration = 0.12f)
-	{
-		if (_cg != null) 
-			yield return _cg.FadeCanvas(0f, duration);
-		Destroy(gameObject);
+		// ï¿½ï¿½ï¿½â¼­ ï¿½ï¿½ï¿½ï¿½: ï¿½Ä±ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê°ï¿½ ï¿½ï¿½ï¿½Üµï¿½
 	}
 
 	public override void Init() { }

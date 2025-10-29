@@ -82,7 +82,7 @@ public class CameraService : MonoBehaviour, ICameraService
 	/// <summary>
 	/// 기준 대비 절대 배율로 줌(앵커 옵션)
 	/// </summary>
-	public IEnumerator ZoomTo(float targetScale, float duration, string anchorKey, EasingType easingType = EasingType.InCubic)
+	public IEnumerator ZoomTo(float targetScale, float duration, string anchorKey, EasingType easingType = EasingType.OutCubic)
 	{
 		if (_target == null) 
 			yield break;

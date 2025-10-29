@@ -15,12 +15,12 @@ MonoBehaviour:
   loadingTipDataList:
   - name: "\uBE48\uD130\uBC1C\uD2B8\uC758 \uC138\uACC4"
     worldType: 0
-    tip: "\uC774\uC138\uACC4 \uC548\uC5D0\uC11C\uB294 \uB2F9\uC2E0\uC744 \uCE6D\uCC2C\uD558\uB294
-      \uB9D0\uB4E4\uB85C \uAC00\uB4DD\uD574\uC694!"
-    backgroundImage: {fileID: 21300000, guid: 5dba7e181718f404a80a201ddefe4fdb, type: 3}
+    tip: "Shift\uD0A4\uB97C \uB20C\uB7EC \uC774\uC138\uACC4 \uB0B4\uC758 \uC778\uBB3C\uB4E4\uACFC
+      \uB300\uD654\uB97C \uB098\uB220\uBCF4\uC138\uC694!"
+    backgroundImage: {fileID: 21300000, guid: 88cbd9b9539f1eb47af9a60441304538, type: 3}
     subImages:
-    - {fileID: 21300000, guid: 3bdbd69efa0272a4eb55fc6e8ea6a192, type: 3}
-    - {fileID: 21300000, guid: 560ad52cc2ea3024dbe7cfdd5ea1b5f5, type: 3}
+    - {fileID: 21300000, guid: b5c76255f9a339744b3844678110a58c, type: 3}
+    - {fileID: 21300000, guid: e0a1564ab21902541aff76f24de62aa0, type: 3}
   - name: "\uCC28\uC740\uC720\uC758 \uC138\uACC4"
     worldType: 1
     tip: "\uB354 \uAE4A\uC740 \uC774\uC138\uACC4\uB85C \uB4E4\uC5B4\uC654\uAD70\uC694.

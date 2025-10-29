@@ -264,14 +264,41 @@ public static class Extension
             yield return WaitForSecondsCache.Get(typingSpeed);
         }
     }
-    #endregion
+	#endregion
 
+	#region TextAnimator
+	/// <summary>
+	/// Text Animator 전용 리치태그 제거기 '{}' 와 '<>'를 포함한 태그 안의 모든 글자를 제거한다.
+	/// </summary>
+	public static string RemoveRichTags(this string input)
+	{
+		if (string.IsNullOrEmpty(input))
+			return string.Empty;
 
+		System.Text.StringBuilder sb = new();
+		bool insideCurly = false;
+		bool insideAngle = false;
 
-    /// <summary>
-    /// 알파값을 감소시킨다
-    /// </summary>
-    public static IEnumerator CoFadeIn(this Graphic graphic, float fadeTime, float waitBefore = 0f, float waitAfter = 0f)
+		foreach (char c in input)
+		{
+			if (c == '{') { insideCurly = true; continue; }
+			if (c == '}') { insideCurly = false; continue; }
+			if (c == '<') { insideAngle = true; continue; }
+			if (c == '>') { insideAngle = false; continue; }
+
+			// 태그 영역이 아닐 때만 문자 추가
+			if (!insideCurly && !insideAngle)
+				sb.Append(c);
+		}
+
+		return sb.ToString().Trim();
+	}
+	#endregion
+
+	/// <summary>
+	/// 알파값을 감소시킨다
+	/// </summary>
+	public static IEnumerator CoFadeIn(this Graphic graphic, float fadeTime, float waitBefore = 0f, float waitAfter = 0f)
     {
         if (waitBefore > 0f) yield return WaitForSecondsCache.Get(waitBefore);
 
