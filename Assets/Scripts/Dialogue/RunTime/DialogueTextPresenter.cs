@@ -26,6 +26,8 @@ public class DialogueTextPresenter : MonoBehaviour, ITextPresenter
 		var balloon = Managers.UI.MakeWorldSpaceUI<UI_DialogueBalloon>();
 		balloon.Init(anchor);
 		yield return balloon.CoPresent(text ?? "", _charSpeed);
+
+		yield return new WaitForSeconds(0.5f);
 	}
 
 	public IEnumerator ShowTextStacked(string speaker, string text, string animName)

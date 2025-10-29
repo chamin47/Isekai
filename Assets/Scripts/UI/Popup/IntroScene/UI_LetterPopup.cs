@@ -11,6 +11,9 @@ public class UI_LetterPopup : UI_Popup
 	public override void Init()
 	{
 		base.Init();
+
+		GetComponent<Canvas>().worldCamera = Camera.main;
+
 		StartCoroutine(WaitUntilProductionEnd());
 	}
 

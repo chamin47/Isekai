@@ -16,7 +16,7 @@ MonoBehaviour:
   speaker: "\uC0AC\uC11C"
   animName: Library_ch_idle
   eventName: CameraZoomIn
-  eventParam: 1.1 ,0.8, center
+  eventParam: 1.16, 0.8, center
   nextID: 2001009
   script: "{fade}\uBAA8\uB450\uAC00 \uC990\uAC70\uC6B8 \uC218 \uC788\uB294!"
   descript: 
