@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: 3001083
   m_EditorClassIdentifier: 
   id: 3001083
-  speaker: System
-  animName: null
-  eventName: EndScript
+  speaker: "\uAF43\uC0C1\uC778"
+  animName: Flower_Vendor_idle
+  eventName: ShowText
   eventParam: null
-  nextID: null
-  script: 
+  nextID: 3001084
+  script: "{fade}\uC624! \uBCF4\uB294 \uB208\uC774 \uC788\uC73C\uC2DC\uB124\uC694
+    \uACF5\uC791\uB2D8!"
   descript: 

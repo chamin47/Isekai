@@ -31,7 +31,55 @@ public class UI_DialogueBalloon : UI_Base
 		_cg.alpha = 0f;
 	}
 
-	private void LateUpdate()
+	public void Appear(string text)
+	{
+		if (_typewriter.isShowingText == false)
+			return;
+
+		this.gameObject.SetActive(true);
+        _cg.alpha = 1f;
+		_typewriter.ShowText(text);
+    }
+
+	private Coroutine _fadeCoroutine;
+	public void AppearAndFade(string text)
+	{
+		if (this.gameObject.activeInHierarchy)
+			return;
+
+        this.gameObject.SetActive(true);
+        _cg.alpha = 1f;
+		_typewriter.ShowText(text);
+
+        if (_fadeCoroutine != null)
+			StopCoroutine(_fadeCoroutine);
+		_fadeCoroutine = StartCoroutine(CoFade());
+    }
+
+	private IEnumerator CoFade()
+	{
+		float elapsed = 0f;
+		float duration = 2f;
+		float waitTime = 2f;
+		yield return new WaitForSeconds(waitTime);
+
+		while(elapsed < duration)
+		{
+			_cg.alpha = Mathf.Lerp(1f, 0f, elapsed / duration);
+			elapsed += Time.deltaTime;
+        }
+
+		_cg.alpha = 0f;
+		this.gameObject.SetActive(false);
+    }
+
+	public void Disappear()
+	{
+		_cg.alpha = 0f;
+		this.gameObject.SetActive(false);
+    }
+
+    private void LateUpdate()
 	{
 		if (_anchor == null) 
 			return;
@@ -56,7 +104,9 @@ public class UI_DialogueBalloon : UI_Base
 
 		if (_typewriter && _textAnimator)
 		{
-			_typewriter.ShowText(text); // Start Mode : OnShowText·Î ¼³Á¤ÇØµÖ¾ß µÊ.
+			this.gameObject.SetActive(true);
+            _typewriter.ShowText(text); // Start Mode : OnShowText·Î ¼³Á¤ÇØµÖ¾ß µÊ.
+
 
 			// ÁøÇà Áß Å¬¸¯/½ºÆäÀÌ½º·Î ½ºÅµ
 			while (_typewriter.isShowingText)

@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: 3001062
   m_EditorClassIdentifier: 
   id: 3001062
-  speaker: System
-  animName: Flower_Vendor_walk
-  eventName: SetInteraction
-  eventParam: NPC_Flower, 3001063
+  speaker: Poor_boy
+  animName: Poor_boy_quiver
+  eventName: ShowText
+  eventParam: null
   nextID: 3001063
-  script: 
-  descript: "Shift \uC0C1\uD638\uC791\uC6A9 \uC131\uACF5 \uC2DC, 3001063\uB85C \uC774\uB3D9"
+  script: "{fade}\uC5B4\uB54C\uC694?? \uC815\uB9D0 \uC608\uC058\uC8E0?!"
+  descript: 

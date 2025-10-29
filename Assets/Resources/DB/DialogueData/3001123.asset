@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81fac1d9414d3c84398e6b84bf6b706a, type: 3}
+  m_Name: 3001123
+  m_EditorClassIdentifier: 
+  id: 3001123
+  speaker: System
+  animName: null
+  eventName: WaitForInput
+  eventParam: BR_DUMMY
+  nextID: null
+  script: null
+  descript: "\uD50C\uB808\uC774\uC5B4\uC5D0\uAC8C \uC785\uB825\uC744 \uBC1B\uACE0
+    BR_DUMMY \uADDC\uCE59\uC5D0 \uB530\uB77C \uB85C \uC774\uB3D9"

@@ -1,13 +1,24 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ArtistController : NPCController
 {
+    [SerializeField] private Transform dialoguePos;
+    [SerializeField] private UI_DialogueBalloon _dialogueBalloon;
+
     private void Start()
     {
+        _dialogueBalloon.Init(dialoguePos);
         State = NPCState.Idle;
     }
+
+    public override void ShowDialogue()
+    {
+        _dialogueBalloon.AppearAndFade("대대손손 보관해주세요오오옹~~");
+    }
+
 
     protected override void UpdateAnimation()
     {
@@ -17,19 +28,24 @@ public class ArtistController : NPCController
             case NPCState.Idle:
                 nextState = AnimatorHash.IDLE;
                 break;
-            case NPCState.Move:
-                nextState = AnimatorHash.MOVE;
-                break;
             case NPCState.Event:
-                
+                _isInteracted = true;
+                break;
+            default:
+                nextState = AnimatorHash.IDLE;
                 break;
         }
 
-        if (_prevState != nextState)
+        if (nextState != -1 && _prevState != nextState)
         {
             _animator.CrossFade(nextState, 0.1f);
         }
 
         _prevState = nextState;
+    }
+
+    public override void OnEventEnd()
+    {
+        State = NPCState.Idle;
     }
 }

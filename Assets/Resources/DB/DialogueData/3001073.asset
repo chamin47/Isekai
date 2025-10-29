@@ -13,11 +13,10 @@ MonoBehaviour:
   m_Name: 3001073
   m_EditorClassIdentifier: 
   id: 3001073
-  speaker: "\uAF43 \uC0C1\uC778"
-  animName: Flower_Vendor_idle
-  eventName: ShowText
-  eventParam: null
+  speaker: System
+  animName: Flower_Vendor_walk
+  eventName: SetInteraction
+  eventParam: NPC_Flower, 3001063
   nextID: 3001074
-  script: "{fade}\uC9C0\uAE08 \uAC00\uC7A5 \uC544\uB984\uB2F5\uAC8C \uD540 \uB8E8\uB4DC\uBCA0\uD0A4\uC544\uB97C
-    \uC544\uB984\uB2E4\uC6B4 \uACF5\uC791\uB2D8\uAED8 \uB4DC\uB9B4\uAC8C\uC694."
-  descript: 
+  script: null
+  descript: "Shift \uC0C1\uD638\uC791\uC6A9 \uC131\uACF5 \uC2DC, 3001063\uB85C \uC774\uB3D9"

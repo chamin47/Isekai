@@ -13,11 +13,10 @@ MonoBehaviour:
   m_Name: 3001105
   m_EditorClassIdentifier: 
   id: 3001105
-  speaker: "\uD559\uC790"
-  animName: Scholar_talk
-  eventName: CameraZoomIn
-  eventParam: 1.6, 0.8, middle_2
+  speaker: System
+  animName: null
+  eventName: EndScript
+  eventParam: null
   nextID: 3001106
-  script: "{fade}\uADF8\uB798\uC11C, \uC774 \uD574\uC11D\uC5D0 \uB300\uD574\uC11C\uB294
-    \uC5B4\uB5BB\uAC8C \uC0DD\uAC01\uD558\uC2DC\uB098\uC694?"
+  script: null
   descript: 

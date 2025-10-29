@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: 3001116
   m_EditorClassIdentifier: 
   id: 3001116
-  speaker: System
-  animName: null
-  eventName: EndScript
+  speaker: "\uD559\uC790"
+  animName: Scholar_talk
+  eventName: ShowText
   eventParam: null
-  nextID: null
-  script: null
+  nextID: 3001117
+  script: "{fade}\uC5B4\uB5BB\uAC8C \uADF8\uB7F0 \uC0DD\uAC01\uC744 \uD558\uC2DC\uB294\uC9C0!! "
   descript: 

@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: 3001098
   m_EditorClassIdentifier: 
   id: 3001098
-  speaker: System
-  animName: null
-  eventName: EndScript
+  speaker: "\uD654\uAC00"
+  animName: artist_stop
+  eventName: ShowText
   eventParam: null
-  nextID: null
-  script: null
+  nextID: 3001099
+  script: "{fade}\uC81C\uAC00 \uC9C0\uAE08 \uAC78\uC791\uC744 \uADF8\uB9AC\uACE0
+    \uC788\uAC70\uB4E0\uC694!"
   descript: 

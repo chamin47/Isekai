@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81fac1d9414d3c84398e6b84bf6b706a, type: 3}
+  m_Name: 3001132-1
+  m_EditorClassIdentifier: 
+  id: 3001132-1
+  speaker: "\uB0A8\uC790 \uC0C1\uC778"
+  animName: merchant_M_talk
+  eventName: ShowText
+  eventParam: null
+  nextID: 3001133
+  script: "{fade}\uD558\uD558! \uACF5\uC791\uB2D8 \uC774\uB984\uB9CC \uB4E4\uC5B4\uB3C4
+    \uB9C8\uBB3C\uB4E4\uC774 \uBC8C\uBC8C \uB5A8\uACA0\uB124!"
+  descript: 

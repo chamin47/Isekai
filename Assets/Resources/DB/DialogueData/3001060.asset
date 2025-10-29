@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: 3001060
   m_EditorClassIdentifier: 
   id: 3001060
-  speaker: System
+  speaker: Poor_boy
   animName: Poor_boy_quiver
-  eventName: CameraZoomOut
-  eventParam: 1.0, 0.8
+  eventName: CameraZoomIn
+  eventParam: 1.2, 0.8, player
   nextID: 3001061
-  script: 
+  script: "{fade}\uC81C\uAC00 \uD0A4\uC6B0\uB294 <b>\uB8E8\uD0A4\uC758 \uB625</>\uC73C\uB85C
+    \uB9CC\uB4E0 \uAC70\uC608\uC694\u2026!"
   descript: 

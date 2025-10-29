@@ -22,3 +22,12 @@ MonoBehaviour:
   - BranchID: BR_HAPPINESS
     InputType: Negative
     ResultDialogueID: 2001019
+  - BranchID: BR_Time_Still_5S
+    InputType: Fail
+    ResultDialogueID: 3001101
+  - BranchID: BR_Time_Still_5S
+    InputType: Success
+    ResultDialogueID: 3001107
+  - BranchID: BR_DUMMY
+    InputType: Default
+    ResultDialogueID: 3001124

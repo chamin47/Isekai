@@ -13,8 +13,9 @@ using UnityEngine;
 public class CameraService : MonoBehaviour, ICameraService
 {
 	[SerializeField] private Camera _target;
+	[SerializeField] private CameraController _cameraController;
 
-	[Header("Anchors/Targets")]
+    [Header("Anchors/Targets")]
 	[SerializeField] private Transform _player;
 
 	// "middle_2" 계산용 타깃 두 개
@@ -54,8 +55,18 @@ public class CameraService : MonoBehaviour, ICameraService
 		basePos = _target.transform.position;
 	}
 
-	/// <summary>middle_2용 타깃 지정</summary>
-	public void SetMiddle2Targets(Transform a, Transform b)
+	public void EnableCameraUpdate()
+	{
+		_cameraController?.EnableCameraUpdate();
+    }
+
+	public void DisableCameraUpdate()
+    {
+		_cameraController?.DisableCameraUpdate();
+    }
+
+    /// <summary>middle_2용 타깃 지정</summary>
+    public void SetMiddle2Targets(Transform a, Transform b)
 	{
 		_middle2A = a;
 		_middle2B = b;

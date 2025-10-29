@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: 3001097
   m_EditorClassIdentifier: 
   id: 3001097
-  speaker: System
-  animName: null
-  eventName: ShowUI
-  eventParam: portrait, 5s
+  speaker: "\uD654\uAC00"
+  animName: artist_stop
+  eventName: ShowText
+  eventParam: null
   nextID: 3001098
-  script: null
+  script: "{fade}\uC5B4\uC774\uCFE0 \uACF5\uC791\uB2D8! \uC7A0\uAE50 5\uCD08\uB9CC
+    \uAC00\uB9CC\uD788 \uACC4\uC154\uC8FC\uC2DC\uACA0\uC2B5\uB2C8\uAE4C?"
   descript: 

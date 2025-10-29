@@ -13,11 +13,10 @@ MonoBehaviour:
   m_Name: 3001051
   m_EditorClassIdentifier: 
   id: 3001051
-  speaker: Poor_boy
-  animName: Poor_boy_quiver
-  eventName: ShowText
-  eventParam: null
-  nextID: 3001052
-  script: "{fade}\uC5ED\uC2DC \uC81C \uC6B0\uC0C1\uC778 \uACF5\uC791\uB2D8\uC740...
-    \uCC38 \uB2E4\uC815\uD558\uC2DC\uAD70\uC694!!"
+  speaker: System
+  animName: null
+  eventName: ModifyHappyGauge
+  eventParam: +15
+  nextID: null
+  script: null
   descript: 

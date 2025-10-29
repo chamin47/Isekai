@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: 3001064
   m_EditorClassIdentifier: 
   id: 3001064
-  speaker: "\uAF43 \uC0C1\uC778"
-  animName: Flower_Vendor_idle
-  eventName: ShowText
+  speaker: System
+  animName: null
+  eventName: EndScript
   eventParam: null
   nextID: 3001065
-  script: "<bounce a=0.2>\uAF43 \uC0AC\uC138\uC694~!</>"
+  script: null
   descript: 

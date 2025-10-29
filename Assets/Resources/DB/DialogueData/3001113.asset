@@ -13,11 +13,10 @@ MonoBehaviour:
   m_Name: 3001113
   m_EditorClassIdentifier: 
   id: 3001113
-  speaker: "\uC5EC\uC790 \uC0C1\uC778"
-  animName: "merchant_\uFF26_talk"
-  eventName: ShowText
-  eventParam: null
+  speaker: System
+  animName: null
+  eventName: ModifyHappyGauge
+  eventParam: +15
   nextID: 3001114
-  script: "{fade}\uC815\uB9D0 \uC774 \uC81C\uAD6D\uC5D0 \uB458\uB3C4 \uC5C6\uB294
-    \uC601\uC6C5\uC774\uC154!!!"
+  script: null
   descript: 

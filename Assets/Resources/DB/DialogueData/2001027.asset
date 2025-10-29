@@ -16,7 +16,7 @@ MonoBehaviour:
   speaker: "\uC0AC\uC11C"
   animName: Library_ch_hug
   eventName: CameraZoomIn
-  eventParam: 1.05 ,0.8, center
+  eventParam: 1.08 ,0.8, center
   nextID: 2001028
   script: "{horiexp}\uADF8\uB7FC \uB2F9\uC2E0\uC758 \uC0B6\uC5D0 \uD589\uBCF5\uC774
     \uAC00\uB4DD\uD558\uAE38!"

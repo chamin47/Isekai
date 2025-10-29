@@ -19,9 +19,23 @@ public abstract class NPCController : MonoBehaviour
 {
     protected int _prevState = -1;
     private NPCState _state = NPCState.Idle;
+    protected bool _canInteract = true;
+    protected bool _isInteracted = false;
+    public bool CanInteract
+    {
+        get => _canInteract;
+    }
+    public bool IsInteracted
+    {
+        get => _isInteracted;
+    }
+    [SerializeField] private string _startID;
+    public string StartID => _startID;
 
     protected Animator _animator;
     private SpriteRenderer _sprite;
+    private ActorDirectorSimple _actorDirector;
+    public ActorDirectorSimple ActorDirector => _actorDirector;
 
     private void Awake()
     {
@@ -29,12 +43,14 @@ public abstract class NPCController : MonoBehaviour
             _animator = GetComponentInChildren<Animator>();
         if(_sprite == null)
             _sprite = GetComponentInChildren<SpriteRenderer>();
+        if(_actorDirector == null)
+            _actorDirector = GetComponent<ActorDirectorSimple>();
     }
 
     public NPCState State
     {
         get => _state;
-        protected set
+        set
         {
             _state = value;
             UpdateAnimation();
@@ -48,4 +64,12 @@ public abstract class NPCController : MonoBehaviour
     }
 
     protected abstract void UpdateAnimation();
+    public virtual void ShowDialogue()
+    {
+
+    }
+    public virtual void OnEventEnd()
+    {
+
+    }
 }

@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 3001070
   speaker: System
-  animName: Flower_Vendor_idle
-  eventName: WaitClick
-  eventParam: Click_Flower
-  nextID: null
-  script: 
+  animName: Poor_boy_quiver
+  eventName: CameraZoomOut
+  eventParam: 1.0, 0.8,player
+  nextID: 3001071
+  script: null
   descript: 

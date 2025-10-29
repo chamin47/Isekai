@@ -12,12 +12,32 @@ public class FlowerVendorController : NPCController
     public bool CanMove { get => _canMove; set => _canMove = value; }
     [SerializeField] private bool _canMove = true;
 
+    [SerializeField] private Transform dialoguePos;
+    [SerializeField] private UI_DialogueBalloon _dialogueBalloon;
 
+    private Coroutine _showDialogue; 
     private void Update()
     {
-        if (_canMove == false) return;
+        if (_canMove == false || State == NPCState.Event) return;
 
         Patrol();
+    }
+
+    private void Start()
+    {
+        _dialogueBalloon.Init(dialoguePos);
+        _showDialogue = StartCoroutine(ShowDialogue());
+    }
+
+    private IEnumerator ShowDialogue()
+    {
+        while(true)
+        {
+            yield return new WaitForSeconds(2f);
+            _dialogueBalloon.Appear("<bounce a=0.2>²É »ç¼¼¿ä~!</>");
+            yield return new WaitForSeconds(3f);
+            _dialogueBalloon.Disappear();
+        }
     }
 
     public void Patrol()
@@ -54,15 +74,24 @@ public class FlowerVendorController : NPCController
                 nextState = AnimatorHash.MOVE;
                 break;
             case NPCState.Event:
-                
+                _canInteract = false;
+                if (_showDialogue != null)
+                    StopCoroutine(_showDialogue);
+                _dialogueBalloon.Disappear();
                 break;
         }
 
-        if(_prevState != nextState)
+        if(nextState != -1 && _prevState != nextState)
         {
             _animator.CrossFade(nextState, 0.1f);
         }
 
         _prevState = nextState;
+    }
+
+    public override void OnEventEnd()
+    {
+        State = NPCState.Idle;
+        _showDialogue = StartCoroutine(ShowDialogue());
     }
 }

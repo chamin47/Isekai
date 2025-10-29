@@ -13,11 +13,10 @@ MonoBehaviour:
   m_Name: 3001037
   m_EditorClassIdentifier: 
   id: 3001037
-  speaker: "\uC601\uC560 3"
-  animName: Ladies_jump_3, Ladies_1, Ladies_2
-  eventName: ShowText
-  eventParam: null
-  nextID: 3001043
-  script: "{fade}\uACF5\uC791\uB2D8\uC744 \uC704\uD574\uC11C\uB77C\uBA74, \uC81C
-    \uC2E0\uC131\uB825\uC744 \uC804\uBD80 \uC368\uB3C4 \uC88B\uC544\uC694!!"
+  speaker: System
+  animName: null
+  eventName: ModifyHappyGauge
+  eventParam: +10
+  nextID: null
+  script: null
   descript: 

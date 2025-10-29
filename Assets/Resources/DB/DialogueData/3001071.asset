@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: 3001071
   m_EditorClassIdentifier: 
   id: 3001071
-  speaker: "\uAF43 \uC0C1\uC778"
-  animName: Flower_Vendor_give
-  eventName: PlayAnim
+  speaker: System
+  animName: null
+  eventName: EndScript
   eventParam: null
   nextID: 3001072
-  script: 
-  descript: "\uC5ED\uC7AC\uC0DD"
+  script: null
+  descript: 

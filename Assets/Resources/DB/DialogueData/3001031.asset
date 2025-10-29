@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 3001031
   speaker: System
-  animName: null
+  animName: Ladies_1, Ladies_2, Ladies_3
   eventName: CameraZoomOut
   eventParam: 1.0, 0.8
   nextID: 3001032
   script: null
-  descript: 
+  descript: "\uC601\uC560\uB4E4 \uC560\uB2C8\uBA54\uC774\uC158 \uAC00\uB9CC\uD788
+    \uC788\uB294 \uAC83\uC73C\uB85C \uBCC0\uACBD"

@@ -13,12 +13,11 @@ MonoBehaviour:
   m_Name: 3001094
   m_EditorClassIdentifier: 
   id: 3001094
-  speaker: "\uD654\uAC00"
-  animName: artist_stop
+  speaker: "\uAF43\uC0C1\uC778"
+  animName: Flower_Vendor_idle
   eventName: ShowText
   eventParam: null
   nextID: 3001095
-  script: "{fade}\uC694\uC998 \uC81C \uADF8\uB9BC \uC2E4\uB825\uC774 \uD1F4\uD654\uD55C
-    \uC904 \uC54C\uC558\uB294\uB370 \uC624\uB298 \uC791\uD488\uC744 \uBCF4\uB2C8
-    \uC544\uB2CC \uAC83 \uAC19\uAD70\uC694 \uD558\uD558!"
+  script: "{fade}\uC5B8\uC820\uAC00 \uD53C\uC5B4\uB0A0 \uC21C\uAC04\uC744 \uAE30\uB300\uD558\uBA70
+    \uAE30\uB2E4\uB824\uBCF4\uC544\uC694."
   descript: 

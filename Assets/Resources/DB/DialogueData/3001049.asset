@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 3001049
   speaker: System
-  animName: Poor_boy_hand
-  eventName: ShowChoice
-  eventParam: CHOICE_3001049
-  nextID: null
+  animName: null
+  eventName: CameraZoomOut
+  eventParam: 1.0, 0.8,player
+  nextID: 3001050
   script: null
   descript: 

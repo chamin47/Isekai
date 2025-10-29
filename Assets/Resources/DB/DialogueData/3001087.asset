@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: 3001087
   m_EditorClassIdentifier: 
   id: 3001087
-  speaker: System
-  animName: artist_drowing
-  eventName: CheckPlayerCondition
-  eventParam: BR_Time_Still_5S
-  nextID: null
+  speaker: "\uAF43\uC0C1\uC778"
+  animName: Flower_Vendor_give
+  eventName: PlayAnim
+  eventParam: null
+  nextID: 3001087-1
   script: null
-  descript: "Branch Logic Table\uB85C \uC774\uB3D9 / 5\uCD08\uAC04 \uBA48\uCDA4 \uC131\uACF5
-    or \uC2E4\uD328\uC5D0 \uB530\uB77C \uC774\uB3D9\uB418\uB294 ID \uC0C1\uC774"
+  descript: "Flower_Vendor_give \uC7AC\uC0DD\uD558\uACE0 \uD55C \uBC88 \uC5ED\uC7AC\uC0DD
+    \uD6C4 \uB2E4\uC74C ID\uB85C \uC774\uB3D9"

@@ -13,11 +13,10 @@ MonoBehaviour:
   m_Name: 3001072
   m_EditorClassIdentifier: 
   id: 3001072
-  speaker: "\uAF43 \uC0C1\uC778"
-  animName: Flower_Vendor_idle
-  eventName: ShowText
-  eventParam: null
-  nextID: 3001073
-  script: "{fade}\uC624! \uBCF4\uB294 \uB208\uC774 \uC788\uC73C\uC2DC\uB124\uC694
-    \uACF5\uC791\uB2D8!"
+  speaker: System
+  animName: null
+  eventName: ModifyHappyGauge
+  eventParam: +15
+  nextID: null
+  script: null
   descript: 

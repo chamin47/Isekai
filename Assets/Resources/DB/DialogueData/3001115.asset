@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: 3001115
   m_EditorClassIdentifier: 
   id: 3001115
-  speaker: "\uC5EC\uC790 \uC0C1\uC778"
-  animName: "merchant_\uFF26_talk"
+  speaker: "\uD559\uC790"
+  animName: Scholar_talk
   eventName: ShowText
   eventParam: null
   nextID: 3001116
-  script: "{fade}\uADF8 \uBD84 \uB355\uBD84\uC5D0 \uC774 \uC601\uC9C0\uAC00 \uC5BC\uB9C8\uB098
-    \uD3C9\uD654\uB85C\uC6B4\uC9C0!!"
+  script: "{fade}\uC544 \uACF5\uC791\uB2D8! \uADF8\uB54C \uB0A8\uAE30\uC2E0 \uB17C\uBB38\uC740
+    \uC798 \uD655\uC778\uD588\uC2B5\uB2C8\uB2E4!!"
   descript: 

@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: 3001041
   m_EditorClassIdentifier: 
   id: 3001041
-  speaker: "\uC601\uC560 1"
-  animName: Ladies_jump_1, Ladies_2, Ladies_3
-  eventName: ShowText
-  eventParam: null
+  speaker: System
+  animName: null
+  eventName: CameraZoomOut
+  eventParam: 1.0, 0.8
   nextID: 3001042
-  script: "{fade}\uC0AC\uB791\uB2D8!! \uACF5\uC791\uD569\uB2C8\uB2E4!!!!!"
+  script: null
   descript: 

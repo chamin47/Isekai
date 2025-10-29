@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: 3001038
   m_EditorClassIdentifier: 
   id: 3001038
-  speaker: "\uC601\uC560 1"
-  animName: Ladies_jump_1, Ladies_2, Ladies_3
+  speaker: "\uC601\uC560 3"
+  animName: Ladies_jump_3, Ladies_1, Ladies_2
   eventName: CameraZoomIn
-  eventParam: 1.6, 0.8
+  eventParam: 1.1, 0.8
   nextID: 3001039
-  script: "{fade}\uC800\u2026 \uC800\uB97C\u2026 \uC120\uD0DD\uD558\uC168\uB2E4\uACE0\uC694\u2026?"
+  script: "{size}\uC9C4\uC9DC\uC694?! \uC800, \uC120\uD0DD\uB41C \uAC70\uC608\uC694?!"
   descript: 

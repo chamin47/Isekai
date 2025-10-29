@@ -13,11 +13,10 @@ MonoBehaviour:
   m_Name: 3001066
   m_EditorClassIdentifier: 
   id: 3001066
-  speaker: "\uAF43 \uC0C1\uC778"
-  animName: Flower_Vendor_idle
-  eventName: ShowText
-  eventParam: null
-  nextID: 3001067
-  script: "{fade}\uADF8\uB7F0 \uACF5\uC791\uB2D8\uAED8 \uC5B4\uC6B8\uB9AC\uB294 \uAF43
-    \uD55C \uC1A1\uC774!! \uACE8\uB77C\uBCF4\uC9C0 \uC54A\uC73C\uC2DC\uACA0\uC5B4\uC694?"
+  speaker: Poor_boy
+  animName: Poor_boy_quiver
+  eventName: PlayAnim
+  eventParam: 0
+  nextID: 3001066-1
+  script: null
   descript: 

@@ -13,11 +13,10 @@ MonoBehaviour:
   m_Name: 3001063
   m_EditorClassIdentifier: 
   id: 3001063
-  speaker: "\uAF43 \uC0C1\uC778"
-  animName: Flower_Vendor_idle
-  eventName: StopPatrol
-  eventParam: NPC_Flower
+  speaker: System
+  animName: null
+  eventName: CameraZoomOut
+  eventParam: 1.0, 0.8,player
   nextID: 3001064
-  script: 
-  descript: "\uB300\uD654 \uC2DC\uC791 \uC9C1\uC804, \uC0C1\uC778\uC758 \uC774\uB3D9\uC744
-    \uBA48\uCDA4."
+  script: null
+  descript: 

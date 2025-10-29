@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: 3001096
   m_EditorClassIdentifier: 
   id: 3001096
-  speaker: "\uD654\uAC00"
-  animName: artist_stop
-  eventName: ShowText
+  speaker: System
+  animName: null
+  eventName: EndScript
   eventParam: null
-  nextID: 3001097
-  script: "{fade}<wave>\uB300\uB300\uC190\uC190 \uBCF4\uAD00\uD574\uC8FC\uC138\uC694\uC624\uC624\uC639~~</>"
+  nextID: null
+  script: null
   descript: 

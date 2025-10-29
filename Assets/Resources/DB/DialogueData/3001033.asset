@@ -16,7 +16,7 @@ MonoBehaviour:
   speaker: "\uC601\uC560 2"
   animName: Ladies_jump_2, Ladies_1, Ladies_3
   eventName: CameraZoomIn
-  eventParam: 1.6, 0.8
+  eventParam: 1.1, 0.8
   nextID: 3001034
   script: "{fade}\uD6C4\uD6C4\u2026 \uD604\uBA85\uD55C \uACB0\uC815\uC774\uC2ED\uB2C8\uB2E4.
     \uACF5\uC791\uB2D8."

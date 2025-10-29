@@ -17,6 +17,6 @@ MonoBehaviour:
   animName: Ladies_jump_2, Ladies_1, Ladies_3
   eventName: ShowText
   eventParam: null
-  nextID: 3001043
+  nextID: 3001035
   script: "{fade}\uD6C4\uD68C\uD558\uC9C0 \uC54A\uC73C\uC2E4 \uAC81\uB2C8\uB2E4."
   descript: 

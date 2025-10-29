@@ -13,11 +13,10 @@ MonoBehaviour:
   m_Name: 3001046
   m_EditorClassIdentifier: 
   id: 3001046
-  speaker: Poor_boy
-  animName: Poor_boy_quiver
+  speaker: "\uC601\uC560 1"
+  animName: Ladies_jump_1, Ladies_2, Ladies_3
   eventName: ShowText
   eventParam: null
   nextID: 3001047
-  script: "{fade}\uC774\u2026\uC774\uAC74 \uC81C\uAC00 \uC9C1\uC811 \uB9CC\uB4E0\u2026
-    \uC120\uBB3C\uC778\uB370\u2026"
-  descript: 
+  script: "{fade}\uC0AC\u2026\uC0AC\u2026\uC0AC.<waitfor=0.5>.<waitfor=0.5>.<waitfor=0.5>"
+  descript: "* \uAE00\uC528 \uAE30\uBCF8\uBCF4\uB2E4 \uB354 \uC791\uAC8C"

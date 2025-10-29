@@ -69,7 +69,7 @@ public class DialogueRunner : MonoBehaviour
 
 	IEnumerator Run(string id)
 	{
-		while (!string.IsNullOrEmpty(id))
+        while (!string.IsNullOrEmpty(id))
 		{
 			if (!_database.TryGet(id, out var row))
 			{
@@ -235,9 +235,38 @@ public class DialogueRunner : MonoBehaviour
 						id = next;
 						break;
 					}
-			}
+					// 플레이어가 특정 시간동안 멈춰있다면 성공 아니면 실패
+				case "CheckPlayerCondition":
+					{
+						var player = FindAnyObjectByType<PlayerController>();
+						player.canMove = true;
+
+						// 5초동안 a나 d키를 안누르면 성공
+						float waitTime = 5f;
+						float elapsed = 0f;
+						bool success = true;
+						while (elapsed < waitTime)
+                        {
+							if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
+                            {
+								success = false;
+								break;
+                            }
+							elapsed += Time.deltaTime;
+							yield return null;
+                        }
+
+						player.canMove = false;
+						string branchType = success ? "Positive" : "Negative";
+                        var next = _branchTable ? _branchTable.Resolve(param, branchType) : null;
+
+						id = next;
+						break;
+                    }
+
+            }
 
 			yield return null;
 		}
-	}
+    }
 }

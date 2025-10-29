@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 3001055
   speaker: Poor_boy
-  animName: Poor_boy_quiver
+  animName: Poor_boy_hand
   eventName: ShowText
   eventParam: null
-  nextID: 3001060
-  script: "{fade}\uC5B4\uB54C\uC694?? \uC815\uB9D0 \uC608\uC058\uC8E0?!"
+  nextID: 3001056
+  script: "{fade}<shake>\uD639\uC2DC \uBC1B\uC544\uC8FC\uC2DC\uACA0\uC5B4\uC694\u2026?</>"
   descript: 

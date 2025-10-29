@@ -50,8 +50,27 @@ public class ActorAnimatorSimple : MonoBehaviour
 		if (!animator || string.IsNullOrEmpty(stateName)) 
 			yield break;
 
+        // 현재 재생하고 있는 애니메이션과 동일하면 무시
+		var currentState = animator.GetCurrentAnimatorStateInfo(0);
+		if (currentState.IsName(stateName))
+			yield break;
+
+        float clipLength = GetClipLength(stateName);
+		float dur = durationOverride ?? clipLength;
+		
+		// 역 재생 처리
+		if(dur == -1f)
+		{
+            animator.Play(stateName, 0, 1f);
+            animator.SetFloat("Speed", -1f);
+
+            yield return new WaitForSeconds(clipLength);
+
+			animator.SetFloat("Speed", 1f);
+            yield break;
+        }
+
 		animator.CrossFade(stateName, 0.05f, 0, 0f);
-		float dur = durationOverride ?? GetClipLength(stateName);
 
 		if (dur > 0f) 
 			yield return new WaitForSeconds(dur);

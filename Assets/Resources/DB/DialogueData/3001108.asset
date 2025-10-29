@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: 3001108
   m_EditorClassIdentifier: 
   id: 3001108
-  speaker: "\uD559\uC790"
-  animName: Scholar_mumble
+  speaker: "\uD654\uAC00"
+  animName: artist_stop
   eventName: ShowText
   eventParam: null
   nextID: 3001109
-  script: "{fade}\uC624\u2026! \uADF8\uB7F0\uAC00\uC694?"
+  script: "{fade}\uC5ED\uC2DC \uBAA8\uB378\uC774 \uC88B\uC73C\uB2C8\uAE4C \uADF8\uB9BC\uC774
+    \uB354 \uC798 \uADF8\uB824\uC9C0\uB124\uC694."
   descript: 

@@ -16,7 +16,7 @@ MonoBehaviour:
   speaker: "\uC0AC\uC11C"
   animName: Library_ch_idle
   eventName: CameraZoomOut
-  eventParam: "1.1,\_0.8"
+  eventParam: "1.0,\_0.8"
   nextID: 2001029
   script: null
   descript: 

@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: 3001048
   m_EditorClassIdentifier: 
   id: 3001048
-  speaker: Poor_boy
-  animName: Poor_boy_hand
+  speaker: "\uC601\uC560 1"
+  animName: Ladies_jump_1, Ladies_2, Ladies_3
   eventName: ShowText
   eventParam: null
   nextID: 3001049
-  script: "{fade}\uD639\uC2DC \uBC1B\uC544\uC8FC\uC2DC\uACA0\uC5B4\uC694\u2026?"
+  script: "{fade}<shake>\uC73C\uC544\uC545 \uCDE8\uC18C!!!! \uBC29\uAE08 \uAC74 \uC2E4\uC218\uC608\uC694!!!!</>"
   descript: 

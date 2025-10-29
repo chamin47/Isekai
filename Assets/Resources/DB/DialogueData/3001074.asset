@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: 3001074
   m_EditorClassIdentifier: 
   id: 3001074
-  speaker: "\uAF43 \uC0C1\uC778"
+  speaker: "\uAF43\uC0C1\uC778"
   animName: Flower_Vendor_idle
-  eventName: ShowText
-  eventParam: null
-  nextID: 3001083
-  script: "{fade}\uC774 \uAF43\uC758 \uAF43\uB9D0\uC740 <b>\u2018\uC601\uC6D0\uD55C
-    \uD589\uBCF5\u2019</>\uC774\uB78D\uB2C8\uB2E4!"
-  descript: 
+  eventName: PlayAnim
+  eventParam: 0
+  nextID: 3001075
+  script: null
+  descript: "\uB300\uD654 \uC2DC\uC791 \uC9C1\uC804, \uC0C1\uC778\uC758 \uC774\uB3D9\uC744
+    \uBA48\uCDA4."

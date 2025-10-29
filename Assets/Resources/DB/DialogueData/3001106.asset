@@ -15,8 +15,8 @@ MonoBehaviour:
   id: 3001106
   speaker: System
   animName: null
-  eventName: CameraZoomOut
-  eventParam: 1.0, 0.8
-  nextID: 3001107
-  script: 
+  eventName: ModifyHappyGauge
+  eventParam: 20
+  nextID: 3001114
+  script: null
   descript: 

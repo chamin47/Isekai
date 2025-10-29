@@ -58,6 +58,17 @@ public static class ParamParser
 		return (s, t, a);
 	}
 
+	public static (string name, float dur) UI(string param)
+	{
+		var parts = param.Split(',');
+		string name = parts[0].Trim();
+		float dur = 0f;
+		if (parts.Length >= 2)
+			dur = ToFloat(parts[1].Trim(), 0f);
+
+		return (name, dur);
+    }
+
 	public static float? NullableFloat(string param)
 	{
 		if (string.IsNullOrWhiteSpace(param)) 

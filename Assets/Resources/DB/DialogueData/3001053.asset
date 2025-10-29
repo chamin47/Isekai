@@ -15,9 +15,9 @@ MonoBehaviour:
   id: 3001053
   speaker: Poor_boy
   animName: Poor_boy_quiver
-  eventName: CameraZoomIn
-  eventParam: 1.4, 0.8, middle_2
+  eventName: ShowText
+  eventParam: null
   nextID: 3001054
-  script: "{fade}\uC81C\uAC00 \uD0A4\uC6B0\uB294 <b>\uB8E8\uD0A4\uC758 \uB625</>\uC73C\uB85C
-    \uB9CC\uB4E0 \uAC70\uC608\uC694\u2026!"
+  script: "{fade}\uC774\u2026\uC774\uAC74 \uC81C\uAC00 \uC9C1\uC811 \uB9CC\uB4E0\u2026
+    \uC120\uBB3C\uC778\uB370\u2026"
   descript: 

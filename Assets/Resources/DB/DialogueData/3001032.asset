@@ -14,10 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 3001032
   speaker: System
-  animName: null
+  animName: Ladies_1, Ladies_2, Ladies_3
   eventName: WaitClick
   eventParam: Click_Lady
   nextID: null
   script: null
-  descript: "\uB9C8\uC6B0\uC2A4 \uC624\uBC84\uD560 \uB54C \uC544\uC6C3\uB77C\uC778
+  descript: "\uD074\uB9AD \uB300\uAE30 / \uD074\uB9AD\uD55C target\uC5D0 \uB530\uB77C
+    \uBD84\uAE30 / \uB9C8\uC6B0\uC2A4 \uC624\uBC84\uD560 \uB54C \uC601\uC560 \uC544\uC6C3\uB77C\uC778
     \uD558\uC597\uAC8C \uBE5B\uB098\uAC8C \uD558\uAE30"
