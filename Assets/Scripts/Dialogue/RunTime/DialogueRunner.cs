@@ -1,9 +1,12 @@
+ï»¿using System;
 using System.Collections;
+using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 
 /// <summary>
-/// ´ëÈ­ ½ÇÇà±â.
-/// DialogueDataÀÇ event/script/nextID¸¦ ÇØ¼®ÇÏ¿© ÅØ½ºÆ®/Ä«¸Ş¶ó/¾Ö´Ï/¼±ÅÃÁö/ÀÔ·Â/À» ½ÇÇàÇÑ´Ù.
+/// ëŒ€í™” ì‹¤í–‰ê¸°.
+/// DialogueDataì˜ event/script/nextIDë¥¼ í•´ì„í•˜ì—¬ í…ìŠ¤íŠ¸/ì¹´ë©”ë¼/ì• ë‹ˆ/ì„ íƒì§€/ì…ë ¥/ì„ ì‹¤í–‰í•œë‹¤.
 /// </summary>
 public class DialogueRunner : MonoBehaviour
 {
@@ -243,21 +246,50 @@ public class DialogueRunner : MonoBehaviour
 						// EventParam = BranchID
 						string userText = "";
 						yield return _inputPrompt?.Prompt(row.script, s => userText = s);
-						var type = _branchResolver ? _branchResolver?.Classify(userText) : "Ambiguous";
-						var next = _branchTable ? _branchTable.Resolve(param, type) : null;
 
-						(_textPresenter as DialogueTextPresenter)?.ClearAllStacked();
+                        if (!string.IsNullOrWhiteSpace(userText))
+                        {
+                            float sentimentScore = 0f;
 
-						id = next;
+                            (_textPresenter as DialogueTextPresenter)?.ClearAllStacked();
+
+                            // Taskë¥¼ ì½”ë£¨í‹´ìœ¼ë¡œ ë˜í•‘í•´ì„œ ëŒ€ê¸°
+                            yield return CoroutineUtil.RunTask(
+                                _secretSentimentAnalyer.AnalyzeText(userText, "ko"),
+                                result => sentimentScore = result
+                            );
+
+                            string branchType;
+							if(sentimentScore == SecretSentimentAnalyer.WARNING_SCORE)
+							{
+								branchType = "Ambiguous";
+                            }
+                            else if (sentimentScore > 0.6f) branchType = "Positive";
+                            else if (sentimentScore < -0.6f) branchType = "Negative";
+                            else branchType = "Ambiguous";
+
+                            var next = _branchTable ? _branchTable.Resolve(param, branchType) : null;
+
+                            id = next;
+                        }
+                        else
+                        {
+                            var type = _branchResolver ? _branchResolver?.Classify(userText) : "Ambiguous";
+                            var next = _branchTable ? _branchTable.Resolve(param, type) : null;
+
+                            (_textPresenter as DialogueTextPresenter)?.ClearAllStacked();
+
+                            id = next;
+                        }
 						break;
 					}
-					// ÇÃ·¹ÀÌ¾î°¡ Æ¯Á¤ ½Ã°£µ¿¾È ¸ØÃçÀÖ´Ù¸é ¼º°ø ¾Æ´Ï¸é ½ÇÆĞ
+					// í”Œë ˆì´ì–´ê°€ íŠ¹ì • ì‹œê°„ë™ì•ˆ ë©ˆì¶°ìˆë‹¤ë©´ ì„±ê³µ ì•„ë‹ˆë©´ ì‹¤íŒ¨
 				case "CheckPlayerCondition":
 					{
 						var player = FindAnyObjectByType<PlayerController>();
 						player.canMove = true;
 
-						// 5ÃÊµ¿¾È a³ª dÅ°¸¦ ¾È´©¸£¸é ¼º°ø
+						// 5ì´ˆë™ì•ˆ aë‚˜ dí‚¤ë¥¼ ì•ˆëˆ„ë¥´ë©´ ì„±ê³µ
 						float waitTime = 5f;
 						float elapsed = 0f;
 						bool success = true;
@@ -284,5 +316,21 @@ public class DialogueRunner : MonoBehaviour
 
 			yield return null;
 		}
+    }
+
+	private SecretSentimentAnalyer _secretSentimentAnalyer = new SecretSentimentAnalyer();
+}
+
+public static class CoroutineUtil
+{
+    public static IEnumerator RunTask<T>(Task<T> task, Action<T> onCompleted)
+    {
+        while (!task.IsCompleted)
+            yield return null;
+
+        if (task.Exception != null)
+            Debug.LogError(task.Exception);
+        else
+            onCompleted?.Invoke(task.Result);
     }
 }
