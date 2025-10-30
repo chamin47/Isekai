@@ -77,4 +77,12 @@ public class HappinessHUD : UI_Base
     {
         Managers.Happy.OnHappinessChanged -= UpdateHappinessUI;
     }
+
+#if UNITY_EDITOR
+    [ContextMenu("Test")]
+    public void TestChangeHappyGauge()
+    {
+        ChangeHappiness(10f);
+    }
+#endif
 }

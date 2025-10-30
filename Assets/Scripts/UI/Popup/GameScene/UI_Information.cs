@@ -23,8 +23,8 @@ public class UI_Information : UI_Popup
     {
         get
         {
-            if(_player == null)
-                _player = (Managers.Scene.CurrentScene as GameScene).Player;
+            if (_player == null)
+                _player = FindObjectOfType<PlayerController>();
             return _player;
         }
     }

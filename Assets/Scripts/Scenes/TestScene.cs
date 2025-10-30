@@ -1,0 +1,33 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class TestScene : MonoBehaviour
+{
+    [SerializeField] private PlayerController _player;
+    [SerializeField] private Portal _portal;
+    void Start()
+    {
+        Managers.Happy.OnHappinessChanged += MakePortal;
+    }
+
+    private void MakePortal(float happiness)
+    {
+        if(happiness >= 100f)
+        {
+            _portal.gameObject.SetActive(true);
+            _portal.SetPortalPosition(Scene.TitleScene);
+            if(_player.transform.position.x < 0f)
+                _portal.transform.position = new Vector3(_player.transform.position.x + 3f, -1.9f, 0f);
+            else
+                _portal.transform.position = new Vector3(_player.transform.position.x - 3f, -1.9f, 0f);
+
+            Managers.Happy.OnHappinessChanged -= MakePortal;
+        }
+    }
+
+    private void OnDestroy()
+    {
+        Managers.Happy.OnHappinessChanged -= MakePortal;
+    }
+}
