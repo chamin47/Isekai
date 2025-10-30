@@ -6,10 +6,12 @@ public class TestScene : BaseScene
 {
     [SerializeField] private PlayerController _player;
     [SerializeField] private Portal _portal;
+
     void Start()
     {
         Managers.Happy.OnHappinessChanged += MakePortal;
         Managers.Sound.Play("bgm_isekai_gang", Sound.Bgm);
+        Managers.Happy.Happiness = 50f;
     }
 
     private void MakePortal(float happiness)
