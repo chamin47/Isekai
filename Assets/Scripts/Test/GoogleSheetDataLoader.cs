@@ -69,35 +69,43 @@ public class GoogleSheetDataLoader : EditorWindow
         // CSV 데이터를 줄 단위로 나눔
         string[] lines = csvData.Split(new[] { '\r', '\n' }, System.StringSplitOptions.RemoveEmptyEntries);
 
-        // 첫 번째 줄(헤더)은 건너뛰고 두 번째 줄부터 시작
-        for (int i = 1; i < lines.Length; i++)
+        AssetDatabase.StartAssetEditing(); // 에셋 배치 처리
+        try
         {
-            string[] values = ParseCsvLine(lines[i]);
+			// 첫 번째 줄(헤더)은 건너뛰고 두 번째 줄부터 시작
+			for (int i = 1; i < lines.Length; i++)
+			{
+				string[] values = ParseCsvLine(lines[i]);
 
-            // 데이터가 충분하지 않은 줄은 건너뜀
-            if (values.Length < 8) continue;
+				// 데이터가 충분하지 않은 줄은 건너뜀
+				if (values.Length < 8) continue;
 
-            // ScriptableObject 인스턴스 생성
-            DialogueData data = ScriptableObject.CreateInstance<DialogueData>();
+				// ScriptableObject 인스턴스 생성
+				DialogueData data = ScriptableObject.CreateInstance<DialogueData>();
 
-            // 각 변수에 데이터 할당
-            data.id = values[0];
-            data.speaker = values[1];
-            data.animName = values[2];
-            data.eventName = values[3];
-            data.eventParam = values[4];
-            data.nextID = values[5];
-            //data.nextFalseID = values[6];
-            //data.script = values[7];
-            data.script = values[6];
-			data.descript = values[7];
+				// 각 변수에 데이터 할당
+				data.id = values[0];
+				data.speaker = values[1];
+				data.animName = values[2];
+				data.eventName = values[3];
+				data.eventParam = values[4];
+				data.nextID = values[5];
+				//data.nextFalseID = values[6];
+				//data.script = values[7];
+				data.script = values[6];
+				data.descript = values[7];
 
-			// 파일 이름은 고유한 ID로 지정.
-			string assetPath = $"{SAVE_PATH}/{data.id}.asset";
-            AssetDatabase.CreateAsset(data, assetPath);
-        }
-
-        AssetDatabase.SaveAssets();
+				// 파일 이름은 고유한 ID로 지정.
+				string assetPath = $"{SAVE_PATH}/{data.id}.asset";
+				AssetDatabase.CreateAsset(data, assetPath);
+			}
+		}
+        finally
+        {
+			AssetDatabase.StopAssetEditing(); // 배치 처리 완료
+		}
+       
+		AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
         Debug.Log($"Data import complete! {lines.Length - 1} assets created at {SAVE_PATH}");
     }
