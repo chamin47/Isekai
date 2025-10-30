@@ -50,7 +50,7 @@ namespace Febucci.UI.Examples
 			AudioClip clipToPlay = null;
 
 			// 문자 종류에 따라 다른 사운드 선택
-			if (character == '.')
+			if (character == '.' || character == '?' || character == '!' || character == ',')
 				clipToPlay = specialDotClip;        // 마침표 전용
 			else
 				clipToPlay = GetNextDefaultClip();  // 일반 타이핑 사운드

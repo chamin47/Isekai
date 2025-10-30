@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using Febucci.UI.Core;
 using DG.Tweening;
 using System.Security.Cryptography;
+using Unity.VisualScripting;
 
 /// <summary>
 /// ���� �����̽� ��ȭ ��ǳ��.
@@ -28,6 +29,9 @@ public class UI_DialogueBalloon : UI_Base
 	Tween _offsetTween;
 	Tween _popTween;
 
+	private int _maxCharCount;
+	private bool _isBrIncluded;  // <br>이 포함되었는지 여부
+
 	public void AddStackOffset(float dy)
 	{
 		_extraOffsetY += dy;
@@ -46,9 +50,38 @@ public class UI_DialogueBalloon : UI_Base
 
 		_label.text = text.RemoveRichTags();
 
+		_maxCharCount = CharCountCalculater(text);
+
 		FixBubbleSize();
 		
 		SetPosition();
+	}
+
+	private int CharCountCalculater(string text)
+	{
+		string[] lines;
+
+		if (text.Contains("<br>"))
+		{
+			_isBrIncluded = true;
+			lines = text.Split(new string[] { "<br>" }, System.StringSplitOptions.None);
+		}
+		else
+		{
+			_isBrIncluded = false;
+			lines = new string[] { text };
+		}
+
+		int maxCharCount = 0;
+		foreach (string line in lines)
+		{
+			string pure = line.RemoveRichTags();
+			int count = pure.Length;
+			if (count > maxCharCount) 
+				maxCharCount = count;
+		}
+
+		return maxCharCount;
 	}
 
 	public void Appear(string text)
@@ -117,9 +150,20 @@ public class UI_DialogueBalloon : UI_Base
 
 		float preferHeight = baseHeight + padding + (lineCount - 1) * perLineIncrease;
 
-		float preferWidth = Mathf.Clamp(_label.preferredWidth + 0.5f, 1f, 4.4f);
-		//float preferHeight = Mathf.Max(_label.preferredHeight * 1.1f, 0.8f);
+		float preferWidth;
+		if (_isBrIncluded)
+		{
+			float charWidthUnit = 0.12f;
+			float baseWidth = 1.1f;
+			preferWidth = Mathf.Clamp(baseWidth + _maxCharCount * charWidthUnit, 1f, 4.4f);
+		}
+		else
+		{
+			preferWidth = Mathf.Clamp(_label.preferredWidth + 0.5f, 1f, 4.4f);
+		}
 
+		//float preferWidth = Mathf.Clamp(_label.preferredWidth + 0.5f, 1f, 4.4f);
+		//float preferHeight = Mathf.Max(_label.preferredHeight * 1.1f, 0.8f);
 
 		Vector2 preferSize = new Vector2(preferWidth, preferHeight);
 
