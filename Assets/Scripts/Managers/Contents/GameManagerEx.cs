@@ -8,14 +8,21 @@ using UnityEngine;
 public class GameManagerEx
 {
     // 엔딩씬을 봤는지 보지 않았는지 체크
+
+    private bool _isShowEnding = false;
     public bool IsShowEnding
     {
-        get { return PlayerPrefs.GetInt("IsShowEnding", 0) == 1; }
-        set { PlayerPrefs.SetInt("IsShowEnding", value ? 1 : 0); }
+        get { return _isShowEnding; }
+        set { _isShowEnding = value; }
     }
+    //public bool IsShowEnding
+    //{
+    //    get { return PlayerPrefs.GetInt("IsShowEnding", 0) == 1; }
+    //    set { PlayerPrefs.SetInt("IsShowEnding", value ? 1 : 0); }
+    //}
 
-	// 현재 미니게임이 대화모드인지 아닌지 체크
-	public bool DialogueActive { get; set; } = false;
+    // 현재 미니게임이 대화모드인지 아닌지 체크
+    public bool DialogueActive { get; set; } = false;
 
     public void Init()
     {
