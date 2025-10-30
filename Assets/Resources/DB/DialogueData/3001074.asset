@@ -15,9 +15,8 @@ MonoBehaviour:
   id: 3001074
   speaker: "\uAF43\uC0C1\uC778"
   animName: Flower_Vendor_idle
-  eventName: PlayAnim
-  eventParam: 0
-  nextID: 3001075
-  script: null
-  descript: "\uB300\uD654 \uC2DC\uC791 \uC9C1\uC804, \uC0C1\uC778\uC758 \uC774\uB3D9\uC744
-    \uBA48\uCDA4."
+  eventName: CameraZoomIn
+  eventParam: "1.0, 0.8, \uAF43\uC0C1\uC778"
+  nextID: 3001074-1
+  script: 
+  descript: 

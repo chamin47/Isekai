@@ -16,7 +16,7 @@ MonoBehaviour:
   speaker: "\uD559\uC790"
   animName: Scholar_mumble
   eventName: CameraZoomIn
-  eventParam: 1.16, 0.8,  player
+  eventParam: "1.16, 0.8, \uD559\uC790"
   nextID: 3001121
   script: "{horiexp}<wiggle a=0.1>\uADF8\uB9AC\uACE0 \uC81C\uAC00 \uC774 \uB17C\uBB38\uC744
     \uBC14\uD0D5\uC73C\uB85C \uAD00\uCC30\uD55C \uACB0\uACFC, \uB9C8\uB825 \uC8FC\uD30C\uC218\uC640
