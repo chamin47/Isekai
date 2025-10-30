@@ -43,7 +43,7 @@ public class NewDialogueRunner : MonoBehaviour
 
         _database.LoadAllFromResources();
 
-        if (_database == null)
+        if (_hookProviderBehaviour == null)
             _hookProviderBehaviour = gameObject.AddComponent<AdrianIDHooks>();
 
         _hooks = _hookProviderBehaviour as IDialogueHookProvider;
