@@ -43,6 +43,11 @@ public class MerchantController : NPCController
         _prevState = nextState;
     }
 
+    public override void LookTarget(Vector3 targetPosition)
+    {
+       
+    }
+
     public override void OnEventEnd()
     {
         State = NPCState.Idle;

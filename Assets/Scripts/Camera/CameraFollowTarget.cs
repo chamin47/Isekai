@@ -27,16 +27,16 @@ public class CameraFollowTarget: MonoBehaviour, IRuntimeCamera
             //{
             //    targetPosition = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * _smooth);
             //}
-            transform.position = Vector3.SmoothDamp(
-                transform.position,
-                targetPosition,
-                ref _velocity,
-                smoothTime
-            );
-            //transform.position = targetPosition;
+            //transform.position = Vector3.SmoothDamp(
+            //    transform.position,
+            //    targetPosition,
+            //    ref _velocity,
+            //    smoothTime
+            //);
+            transform.position = targetPosition;
         }
 
-        if(_cameraColliderBounds != null)
+        if (_cameraColliderBounds != null)
         {
             _cameraColliderBounds.UpdateCamera();
         }

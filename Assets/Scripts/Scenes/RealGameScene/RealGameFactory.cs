@@ -32,6 +32,7 @@ public class RealGameFactory : MonoBehaviour
     public event Action<bool> OnGameEnd;
     public void Init(RealWorldInfo realWorldInfo)
     {
+        Debug.Log("RealGameFactory Init");
         _realWorldInfo = realWorldInfo;
         _gameCount = _realWorldInfo.dialog.Count;
 

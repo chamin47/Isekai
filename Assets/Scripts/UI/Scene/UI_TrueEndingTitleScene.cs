@@ -79,14 +79,14 @@ public class UI_TrueEndingTitleScene : UI_Scene
 
 		// UI 초기화
 		_inputCanvasGroup.alpha = 0f;
-		_intro2Group.alpha = 0f;
+		_intro2Group.alpha = 1f;
 		_bubbleGroup.alpha = 0f;
 		_intro2InitPos = _intro2Text.rectTransform.anchoredPosition;
 
 		_inputField.characterLimit = 20;
 		_inputField.onSubmit.AddListener(OnInputSubmit);
 
-		StartCoroutine(PlayIntroSequence2());
+		StartCoroutine(YesSequence());
 	}
 
 	void Update()
@@ -270,22 +270,22 @@ public class UI_TrueEndingTitleScene : UI_Scene
 
 	IEnumerator YesSequence()
 	{
-		_intro2Text.rectTransform.anchoredPosition = _intro2InitPos;
-		_intro2Text.text = _mirrorText.text = "";
-		yield return FadeCanvas(_intro2Group, 1f, 0f);
+		//_intro2Text.rectTransform.anchoredPosition = _intro2InitPos;
+		//_intro2Text.text = _mirrorText.text = "";
+		//yield return FadeCanvas(_intro2Group, 1f, 0f);
 
 
-		_intro2Text.alignment = TextAlignmentOptions.Center;
-		Coroutine a = StartCoroutine(TypeWithEllipsis(_intro2Text, _yesLineA));
-		Coroutine b = StartCoroutine(TypeWithEllipsis(_mirrorText, _yesLineB));
-		yield return a; yield return b;
+		//_intro2Text.alignment = TextAlignmentOptions.Center;
+		//Coroutine a = StartCoroutine(TypeWithEllipsis(_intro2Text, _yesLineA));
+		//Coroutine b = StartCoroutine(TypeWithEllipsis(_mirrorText, _yesLineB));
+		//yield return a; yield return b;
 
-		yield return WaitForSecondsCache.Get(2f);
+		//yield return WaitForSecondsCache.Get(2f);
 
-		yield return FadeCanvas(_intro2Group, 0f, 1f);
-		_intro2Text.text = _mirrorText.text = "";
-		_mirrorText.gameObject.SetActive(false);   
-		yield return FadeCanvas(_intro2Group, 1f, 2f);
+		//yield return FadeCanvas(_intro2Group, 0f, 1f);
+		//_intro2Text.text = _mirrorText.text = "";
+		//_mirrorText.gameObject.SetActive(false);   
+		//yield return FadeCanvas(_intro2Group, 1f, 2f);
 
 		_intro2Text.rectTransform.anchoredPosition = new Vector2(_intro2Text.rectTransform.anchoredPosition.x, 0f);
 

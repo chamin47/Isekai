@@ -42,12 +42,17 @@ public class LadiesController : NPCController
         for(int i = 0; i < _ladiesSprites.Count; i++)
         {
             if (_ladiesSprites[i] == null || !_ladiesSprites[i].gameObject.activeInHierarchy)
-                continue;
+                continue;                
 
-            if (targetPosition.x < transform.position.x)
+            if (targetPosition.x > transform.position.x)
                 _ladiesSprites[i].flipX = true;
             else
                 _ladiesSprites[i].flipX = false;
+
+            if(i == 0)
+            {
+                _ladiesSprites[i].flipX = !_ladiesSprites[i].flipX;
+            }
         }
     }
 
