@@ -18,6 +18,6 @@ MonoBehaviour:
   eventName: ShowTextStacked
   eventParam: null
   nextID: 3001005
-  script: "{fade}\uC5C6\uC73C\uC2DC\uB2E4\uBA74 \uC800\uD76C \uC911 \uD55C \uBA85\uACFC
-    \uC57D\uD63C\uC744 \uB9FA\uC73C\uC2DC\uB294 \uAC74 \uC5B4\uB5A0\uC138\uC694?"
+  script: "{fade}\uC5C6\uC73C\uC2DC\uB2E4\uBA74 \uC800\uD76C \uC911 \uD55C \uBA85\uACFC<br>\uC57D\uD63C\uC744
+    \uB9FA\uC73C\uC2DC\uB294 \uAC74 \uC5B4\uB5A0\uC138\uC694?"
   descript: 

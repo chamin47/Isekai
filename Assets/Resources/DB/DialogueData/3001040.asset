@@ -18,6 +18,6 @@ MonoBehaviour:
   eventName: ShowText
   eventParam: null
   nextID: 3001041
-  script: "{fade}\uACF5\uC791\uB2D8\uC744 \uC704\uD574\uC11C\uB77C\uBA74, \uC81C
+  script: "{fade}\uACF5\uC791\uB2D8\uC744 \uC704\uD574\uC11C\uB77C\uBA74, <br> \uC81C
     \uC2E0\uC131\uB825\uC744 \uC804\uBD80 \uC368\uB3C4 \uC88B\uC544\uC694!!"
   descript: 

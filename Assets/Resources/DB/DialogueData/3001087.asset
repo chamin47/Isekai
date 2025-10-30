@@ -17,7 +17,7 @@ MonoBehaviour:
   animName: Flower_Vendor_give
   eventName: PlayAnim
   eventParam: null
-  nextID: 3001095
+  nextID: 3001087-1
   script: null
   descript: "Flower_Vendor_give \uC7AC\uC0DD\uD558\uACE0 \uD55C \uBC88 \uC5ED\uC7AC\uC0DD
     \uD6C4 \uB2E4\uC74C ID\uB85C \uC774\uB3D9"
