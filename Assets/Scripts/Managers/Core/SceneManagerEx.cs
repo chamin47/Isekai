@@ -26,7 +26,6 @@ public class SceneManagerEx
 
     public void LoadScene(Scene type)
 	{
-		Managers.Clear();
 
 		if(CurrentScene == null)
 		{
@@ -41,6 +40,7 @@ public class SceneManagerEx
 
         Managers.DB.ResetPlayerData();
         SceneManager.LoadScene(GetSceneName(type));
+		Managers.Clear();
 	}
 
 	string GetSceneName(Scene type)
@@ -51,6 +51,9 @@ public class SceneManagerEx
 
 	public void Clear()
 	{
-		CurrentScene?.Clear();
+		if(CurrentScene == null)
+			return;
+
+        CurrentScene.Clear();
 	}
 }
