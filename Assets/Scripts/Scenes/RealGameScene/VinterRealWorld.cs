@@ -127,8 +127,7 @@ public class VinterRealWorld : MonoBehaviour
 
         Managers.World.MoveNextWorld();
 
-        Managers.Game.IsShowEnding = true;
-        Managers.Scene.LoadScene(Scene.TitleScene);
+        Managers.Scene.LoadScene(Scene.TrueEnding_NoRouteScene);
 
         yield return null;
     }
