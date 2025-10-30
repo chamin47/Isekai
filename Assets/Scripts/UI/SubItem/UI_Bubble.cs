@@ -57,6 +57,7 @@ public class UI_Bubble : UI_Base
 
     IEnumerator CoDropDown()
     {
+        Debug.Log("Drop Down Start");
         float elapsedTime = 0f;
         Vector3 startPos = transform.position;
         Vector3 targetPos = new Vector3(startPos.x, -4.5f, startPos.z);
@@ -76,6 +77,7 @@ public class UI_Bubble : UI_Base
 
     IEnumerator BounceEffect()
     {
+        Debug.Log("Bounce Effect Start");
         for (int i = 0; i < bounceCount; i++)
         {
             float elapsedTime = 0f;

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestScene : MonoBehaviour
+public class TestScene : BaseScene
 {
     [SerializeField] private PlayerController _player;
     [SerializeField] private Portal _portal;
@@ -16,7 +16,7 @@ public class TestScene : MonoBehaviour
         if(happiness >= 100f)
         {
             _portal.gameObject.SetActive(true);
-            _portal.SetPortalPosition(Scene.TitleScene);
+            _portal.SetPortalPosition(Scene.LoadingScene);
             if(_player.transform.position.x < 0f)
                 _portal.transform.position = new Vector3(_player.transform.position.x + 3f, -1.9f, 0f);
             else
@@ -29,5 +29,15 @@ public class TestScene : MonoBehaviour
     private void OnDestroy()
     {
         Managers.Happy.OnHappinessChanged -= MakePortal;
+    }
+
+    protected override void Init()
+    {
+        
+    }
+
+    public override void Clear()
+    {
+       
     }
 }
