@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Febucci.UI.Core;
 using DG.Tweening;
+using System.Security.Cryptography;
 
 /// <summary>
 /// ���� �����̽� ��ȭ ��ǳ��.
@@ -105,8 +106,19 @@ public class UI_DialogueBalloon : UI_Base
 	{
 		Debug.Log($"Length: {_label.text.Length} Width: {_label.preferredWidth} Height: {_label.preferredHeight}");
 
+		_label.ForceMeshUpdate();
+
+		int lineCount = Mathf.Max(1, _label.textInfo.lineCount);
+
+		float baseHeight = 0.7f;      // 한 줄일 때 기본 높이
+		float perLineIncrease = 0.23f; // 한 줄 추가될 때마다 증가하는 높이
+		float padding = 0.1f;
+
+		float preferHeight = baseHeight + padding + (lineCount - 1) * perLineIncrease;
+
 		float preferWidth = Mathf.Clamp(_label.preferredWidth + 0.5f, 1f, 4.4f);
-		float preferHeight = Mathf.Max(_label.preferredHeight * 1.1f, 0.8f);
+		//float preferHeight = Mathf.Max(_label.preferredHeight * 1.1f, 0.8f);
+
 
 		Vector2 preferSize = new Vector2(preferWidth, preferHeight);
 
@@ -121,6 +133,13 @@ public class UI_DialogueBalloon : UI_Base
 		if (cam == null)
 			return;
 
+		Debug.LogError(_label.textInfo.lineCount);
+
+		_label.ForceMeshUpdate();
+		int lineCount = Mathf.Max(1, _label.textInfo.lineCount);
+		float lineOffsetY = (lineCount - 1) * 0.1f * _root.lossyScale.y;
+		
+
 		var baseWorld = cam.ScreenToWorldPoint(Vector3.zero);
 		var offWorld = cam.ScreenToWorldPoint(
 			new Vector3(_screenOffset.x, _screenOffset.y + _extraOffsetY, 0f)) - baseWorld;
@@ -128,28 +147,12 @@ public class UI_DialogueBalloon : UI_Base
 		float bubbleHalfWidth = _image.rectTransform.sizeDelta.x * 0.5f;
 
 		var pos = _anchor.position + offWorld;
+		pos.y += lineOffsetY;
 		pos.x += bubbleHalfWidth * _root.lossyScale.x; // ������ �ݿ�
 		pos.z = _anchor.position.z;
 
 		_root.position = pos;
 	}
-
-	//private void LateUpdate()
-	//{
-	//	if (_anchor == null) 
-	//		return;
-	//	var cam = Camera.main; 
-	//	if (cam == null) 
-	//		return;
-
-	//	var baseWorld = cam.ScreenToWorldPoint(Vector3.zero);
-	//	var offWorld = cam.ScreenToWorldPoint(
-	//		new Vector3(_screenOffset.x, _screenOffset.y + _extraOffsetY, 0f)) - baseWorld;
-
-	//	var pos = _anchor.position + offWorld;
-	//	pos.z = _anchor.position.z; // 2D�� z ����
-	//	_root.position = pos;
-	//}
 
 	public IEnumerator CoPresent(string text, float typeSpeed = 0.03f)
 	{

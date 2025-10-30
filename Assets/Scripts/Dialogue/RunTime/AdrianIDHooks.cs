@@ -44,6 +44,9 @@ public class AdrianIDHooks : MonoBehaviour, IDialogueHookProvider
 			// ≤… ªÛ¿Œ 
 			case "3001074": Managers.Sound.Play("give_flower", Sound.Effect); 
 				yield break;
+			case "3001086":
+				Managers.Sound.Play("happiness_effect", Sound.Effect);
+				yield break;
 
 			// »≠∞°
 			case "3001101-1": Managers.Sound.Play("move_impact", Sound.Effect); 

@@ -16,7 +16,7 @@ MonoBehaviour:
   speaker: System
   animName: null
   eventName: CameraZoomOut
-  eventParam: 1.0, 0.8
+  eventParam: 1.0, 0.8, player
   nextID: 3001123
   script: null
   descript: 
