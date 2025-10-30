@@ -38,6 +38,7 @@ public class DialogueInteraction : MonoBehaviour
             _interactNPC.State = NPCState.Event;
             _interactNPC.LookTarget(this.transform.position);
             _playerController.canMove = false;
+            _playerController.SetLook(_interactNPC.transform.position.x - this.transform.position.x);
             _dialogueRunner.Play(_interactNPC.StartID, _interactNPC.ActorDirector, _interactNPC.OnEventEnd);
             return;
         }

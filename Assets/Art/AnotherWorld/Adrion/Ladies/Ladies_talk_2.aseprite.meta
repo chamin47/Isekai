@@ -78,7 +78,7 @@ ScriptedImporter:
     defaultPivotAlignment: 7
     customPivotPosition: {x: 0.5, y: 0.5}
     mosaicPadding: 4
-    spritePadding: 0
+    spritePadding: 1
     generateModelPrefab: 1
     generateAnimationClips: 1
     addSortingGroup: 1
@@ -91,13 +91,13 @@ ScriptedImporter:
     defaultPivotAlignment: 7
     customPivotPosition: {x: 0.5, y: 0.5}
     mosaicPadding: 4
-    spritePadding: 0
+    spritePadding: 1
     generateModelPrefab: 1
     generateAnimationClips: 1
     addSortingGroup: 1
     addShadowCasters: 0
   importFileNodeState: 1
-  platformSettingsDirtyTick: 638969641845423099
+  platformSettingsDirtyTick: 638974508732928167
   textureAssetName: 
   singleSpriteImportData:
   - name: 
@@ -130,8 +130,8 @@ ScriptedImporter:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 9
-      height: 28
+      width: 10
+      height: 29
     spriteID: c7882638ea62c664db9eb4c8b2b9a1b1
     spriteBone: []
     spriteOutline: []
@@ -149,9 +149,9 @@ ScriptedImporter:
     rect:
       serializedVersion: 2
       x: 4
-      y: 76
-      width: 9
-      height: 27
+      y: 78
+      width: 10
+      height: 28
     spriteID: 0882b9898705a684c9a5a47cf7fd3844
     spriteBone: []
     spriteOutline: []
@@ -160,7 +160,7 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 4, y: 76}
+    uvTransform: {x: 4, y: 78}
   - name: Frame_2
     originalName: 
     pivot: {x: 0.5, y: 0.5}
@@ -169,9 +169,9 @@ ScriptedImporter:
     rect:
       serializedVersion: 2
       x: 4
-      y: 40
-      width: 9
-      height: 28
+      y: 41
+      width: 10
+      height: 29
     spriteID: bf3cbbe57cd6dd44db6c83fc83d05be1
     spriteBone: []
     spriteOutline: []
@@ -180,7 +180,7 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 4, y: 40}
+    uvTransform: {x: 4, y: 41}
   - name: Frame_3
     originalName: 
     pivot: {x: 0.5, y: 0.5}
@@ -188,10 +188,10 @@ ScriptedImporter:
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 21
+      x: 22
       y: 4
-      width: 9
-      height: 27
+      width: 10
+      height: 28
     spriteID: 8e2960ea46880fc498490f8f2360b424
     spriteBone: []
     spriteOutline: []
@@ -200,7 +200,7 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 21, y: 4}
+    uvTransform: {x: 22, y: 4}
   spriteSheetImportData: []
   asepriteLayers:
   - layerIndex: 0

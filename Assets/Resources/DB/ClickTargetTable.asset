@@ -16,11 +16,11 @@ MonoBehaviour:
   - ChoiceID: Click_Lady
     options:
     - targetName: Lady_1
-      nextID: 3001021
+      nextID: 3001044
     - targetName: Lady_2
-      nextID: 3001006
+      nextID: 3001033
     - targetName: Lady_3
-      nextID: 3001012
+      nextID: 3001038
   - ChoiceID: Click_Flower
     options:
     - targetName: Flower_1

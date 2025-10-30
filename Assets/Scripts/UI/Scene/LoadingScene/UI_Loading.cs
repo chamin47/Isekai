@@ -48,7 +48,8 @@ public class UI_Loading : UI_Scene
 
         yield return StartCoroutine(StartLoadingSequence());
 
-        Managers.Scene.LoadScene(Scene.GameScene);
+        //TODO : 임시 씬 전환
+        Managers.Scene.LoadScene(Scene.TestScene);
     }
 
     /// <summary>

@@ -101,7 +101,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 16
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &3264861472309434200
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -136,7 +136,6 @@ MonoBehaviour:
   _image: {fileID: 723577063091047321}
   promptLabel: {fileID: 6203013179457077232}
   inputField: {fileID: 7191911731657371455}
-  displayLabel: {fileID: 3284034527037047613}
   screenOffset: {x: 0, y: -105}
   rebuildWhileTyping: 0
   fadeIn: 0.15

@@ -18,5 +18,5 @@ MonoBehaviour:
   eventName: ShowText
   eventParam: null
   nextID: 3001102
-  script: "{size}<wiggle>\uC5B4\uC5C7 \uC6C0\uC9C1\uC600\uB2E4!!!!!</>"
+  script: "{size}<wiggle a=0.1>\uC5B4\uC5C7 \uC6C0\uC9C1\uC600\uB2E4!!!!!</>"
   descript: 

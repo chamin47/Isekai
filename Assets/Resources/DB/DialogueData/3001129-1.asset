@@ -18,6 +18,6 @@ MonoBehaviour:
   eventName: ShowText
   eventParam: null
   nextID: 3001130
-  script: "{fade}<wiggle>\uBB50\uB77C\uAD6C\uC694?! \uADF8 \uAC70\uB300\uD55C \uC6A9\uC744
-    \uD63C\uC790\uC11C\uC694?</>"
+  script: "{fade}<wiggle a=0.1>\uBB50\uB77C\uAD6C\uC694?! \uADF8 \uAC70\uB300\uD55C
+    \uC6A9\uC744 \uD63C\uC790\uC11C\uC694?</>"
   descript: 

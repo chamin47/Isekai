@@ -78,7 +78,7 @@ ScriptedImporter:
     defaultPivotAlignment: 7
     customPivotPosition: {x: 0.5, y: 0.5}
     mosaicPadding: 4
-    spritePadding: 0
+    spritePadding: 1
     generateModelPrefab: 1
     generateAnimationClips: 1
     addSortingGroup: 1
@@ -91,13 +91,13 @@ ScriptedImporter:
     defaultPivotAlignment: 7
     customPivotPosition: {x: 0.5, y: 0.5}
     mosaicPadding: 4
-    spritePadding: 0
+    spritePadding: 1
     generateModelPrefab: 1
     generateAnimationClips: 1
     addSortingGroup: 1
     addShadowCasters: 0
   importFileNodeState: 1
-  platformSettingsDirtyTick: 638973950189480545
+  platformSettingsDirtyTick: 638974508732928167
   textureAssetName: 
   singleSpriteImportData:
   - name: 
@@ -123,15 +123,15 @@ ScriptedImporter:
   animatedSpriteImportData:
   - name: Ladies_1
     originalName: 
-    pivot: {x: 0.5, y: 0}
+    pivot: {x: 0.5, y: 0.5}
     alignment: 7
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 8
-      height: 28
+      width: 9
+      height: 29
     spriteID: 857df436e5cbbdd49a80e59c508b432e
     spriteBone: []
     spriteOutline: []

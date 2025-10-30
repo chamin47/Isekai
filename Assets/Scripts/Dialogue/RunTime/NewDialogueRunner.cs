@@ -69,7 +69,7 @@ public class NewDialogueRunner : MonoBehaviour
     {
         if(_happiness != null)
             _happiness.gameObject.SetActive(false);
-
+        _letterBox.gameObject.SetActive(true);
         yield return _letterBox.ShowLetterBox();
         while (!string.IsNullOrEmpty(id))
         {
@@ -257,9 +257,9 @@ public class NewDialogueRunner : MonoBehaviour
 
                         bool isLeft = player.transform.position.x < _actorDirector.transform.position.x;
                         if (!isLeft)
-                            _choiceUI.transform.position = player.transform.position + new Vector3(0, 1.7f, 0) + new Vector3(2f, 0, 0);
+                            _choiceUI.transform.position = player.transform.position + new Vector3(0, 1.0f, 0) + new Vector3(1.5f, 0, 0);
                         else
-                            _choiceUI.transform.position = player.transform.position + new Vector3(0, 1.7f, 0) + new Vector3(-2f, 0, 0);
+                            _choiceUI.transform.position = player.transform.position + new Vector3(0, 1.0f, 0) + new Vector3(-1.5f, 0, 0);
 
                         int sel = -1;
                         yield return _choiceUI?.ShowChoices(choice, i => sel = i);
