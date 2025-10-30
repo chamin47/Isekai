@@ -9,6 +9,7 @@ public class TestScene : BaseScene
     void Start()
     {
         Managers.Happy.OnHappinessChanged += MakePortal;
+        Managers.Sound.Play("bgm_isekai_gang", Sound.Bgm);
     }
 
     private void MakePortal(float happiness)

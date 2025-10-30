@@ -129,6 +129,21 @@ public class NewDialogueRunner : MonoBehaviour
                         id = row.nextID;
                         break;
                     }
+                case "SCameraZoomIn":
+                    {
+                        var (scale, dur, anchor) = ParamParser.Zoom3(param, 1f, 0.5f, null);
+                        if (_cameraService != null)
+                            Fire(_cameraService.ZoomTo(scale, dur, anchor));
+
+                        if (!string.IsNullOrWhiteSpace(row.animName) && _actorDirector != null)
+                            Fire(_actorDirector.PlayAnim(row.speaker, row.animName));
+
+                        if (!string.IsNullOrWhiteSpace(row.script))
+                            yield return _textPresenter?.ShowTextStacked(row.speaker, row.script, row.animName); // ???? ?? ???????? ????
+
+                        id = row.nextID;
+                        break;
+                    }
                 case "CameraZoomIn":
                     {
                         var (scale, dur, anchor) = ParamParser.Zoom3(param, 1f, 0.5f, null);
@@ -260,9 +275,9 @@ public class NewDialogueRunner : MonoBehaviour
 
                         bool isLeft = player.transform.position.x < _actorDirector.transform.position.x;
                         if (!isLeft)
-                            _choiceUI.transform.position = player.transform.position + new Vector3(0, 1.0f, 0) + new Vector3(1.5f, 0, 0);
+                            _choiceUI.transform.position = player.transform.position + new Vector3(0, 1.0f, 0) + new Vector3(1.9f, 0, 0);
                         else
-                            _choiceUI.transform.position = player.transform.position + new Vector3(0, 1.0f, 0) + new Vector3(-1.5f, 0, 0);
+                            _choiceUI.transform.position = player.transform.position + new Vector3(0, 1.0f, 0) + new Vector3(-1.9f, 0, 0);
 
                         int sel = -1;
                         yield return _choiceUI?.ShowChoices(choice, i => sel = i);
