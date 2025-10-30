@@ -57,4 +57,12 @@ public class ActorDirectorSimple : MonoBehaviour, IActorDirector, ISpeakerAnchor
 		}
 		return null; // 최후 폴백은 프레젠터 쪽에서 처리
 	}
+
+	public Transform GetTransform(string speaker)
+	{
+		var a = Find(speaker);
+		if (a != null)
+			return a.transform;
+		return null;
+    }
 }

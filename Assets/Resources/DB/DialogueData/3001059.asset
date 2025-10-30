@@ -16,7 +16,7 @@ MonoBehaviour:
   speaker: Poor_boy
   animName: Poor_boy_quiver
   eventName: CameraZoomIn
-  eventParam: 1.08, 0.8, player
+  eventParam: 1.08, 0.8, Poor_boy
   nextID: 3001060
   script: "{fade}\uCC38\uACE0\uB85C \uC774 \uC120\uBB3C\uC740...! "
   descript: 

@@ -26,6 +26,7 @@ public class NewDialogueRunner : MonoBehaviour
     [SerializeField] private ActorDirectorSimple _actorDirector;
     [SerializeField] private HappinessHUD _happiness;
     [SerializeField] private UI_LetterBox _letterBox;
+    [SerializeField] private CameraController _cameraController;
 
     [Header("Hooks")]
     [SerializeField] private MonoBehaviour _hookProviderBehaviour;
@@ -55,7 +56,8 @@ public class NewDialogueRunner : MonoBehaviour
 
         OnDialogueEnd += endEvent;
         _actorDirector = actorDirector;
-
+        if (_cameraService != null && _actorDirector != null)
+            _cameraService.Init(_actorDirector);
         if (_textPresenter != null && _actorDirector != null)
             _textPresenter.actor = _actorDirector;
 
@@ -70,7 +72,9 @@ public class NewDialogueRunner : MonoBehaviour
 
     IEnumerator Run(string id)
     {
-        if(_happiness != null)
+        if (_cameraController != null)
+            _cameraController.DisableCameraUpdate();
+        if (_happiness != null)
             _happiness.gameObject.SetActive(false);
         _letterBox.gameObject.SetActive(true);
         yield return _letterBox.ShowLetterBox();
@@ -154,7 +158,7 @@ public class NewDialogueRunner : MonoBehaviour
                             Fire(_actorDirector.PlayAnim(row.speaker, row.animName));
 
                         if (!string.IsNullOrWhiteSpace(row.script))
-                            yield return _textPresenter?.ShowText(row.speaker, row.script, row.animName); // ???? ?? ???????? ????
+                            yield return _textPresenter?.ShowText(row.speaker, row.script, row.animName); 
 
                         id = row.nextID;
                         break;
@@ -230,6 +234,8 @@ public class NewDialogueRunner : MonoBehaviour
                         OnDialogueEnd = null;
 
                         _happiness.gameObject.SetActive(true);
+                        if (_cameraController != null)
+                            _cameraController.EnableCameraUpdate();
                         yield return _letterBox.HideLetterBox();
                         yield break;
                     }

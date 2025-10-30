@@ -30,8 +30,9 @@ public class CameraService : MonoBehaviour, ICameraService
 	// 기준값(초기 상태)
 	private float baseOrthoSize;
 	private Vector3 basePos;
+	private ActorDirectorSimple _actorDirector;
 
-	void Awake()
+    void Awake()
 	{
 		if (_target == null)
 			_target = Camera.main;
@@ -45,6 +46,11 @@ public class CameraService : MonoBehaviour, ICameraService
 		baseOrthoSize = _target.orthographicSize;
 		basePos = _target.transform.position;
 	}
+
+	public void Init(ActorDirectorSimple director)
+	{
+		_actorDirector = director;
+    }
 
 	/// <summary>현재 상태를 기준값으로 재설정</summary>
 	public void SetBaseFromCurrent()
@@ -98,7 +104,7 @@ public class CameraService : MonoBehaviour, ICameraService
 		Vector3 endPos = startPos; // 기본: 위치 이동 없음
 
 		if (!string.IsNullOrWhiteSpace(anchorKey) && TryResolveAnchor(anchorKey, out var anchorPos))
-			endPos = new Vector3(anchorPos.x, anchorPos.y, startPos.z); // z 고정
+			endPos = new Vector3(anchorPos.x, endPos.y, startPos.z); // z 고정
 
 		float t = 0f;
 		while (t < duration)
@@ -170,7 +176,8 @@ public class CameraService : MonoBehaviour, ICameraService
 		{
 			if (_player != null)
 			{
-				pos = _player.position;
+				Debug.Log($"Player Position {_player.position}");
+                pos = _player.position;
 				return true;
 			}
 		}
@@ -185,8 +192,19 @@ public class CameraService : MonoBehaviour, ICameraService
 			}
 		}
 
-		// 알 수 없는 키 → 이동 없음
-		pos = default;
+		if(_actorDirector != null)
+		{
+			var actorPos = _actorDirector.GetTransform(key);
+			if (actorPos != null)
+			{
+				Debug.Log($"Actor Position {actorPos.position}");
+				pos = actorPos.position;
+				return true;
+			}
+		}
+		
+        // 알 수 없는 키 → 이동 없음
+        pos = default;
 		return false;
 
 		// 만약 "모르는 키면 base로 이동"을 원하면 아래처럼 바꾸면 됨:
