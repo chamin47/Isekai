@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using DG.Tweening;
 
 /// <summary>
 /// 간단 입력 프롬프트.
@@ -15,7 +16,7 @@ public class SimpleInputPrompt : MonoBehaviour, IInputPrompt
 
     public IEnumerator Prompt(string prompt, Action<string> onDone)
     {
-        _textPresenter.AllStacksUp();
+        _textPresenter.AllStacksUp(0.3f, false, Ease.InCubic);
 
         // 월드 스페이스 입력 말풍선 생성
         var ui = Managers.UI.MakeWorldSpaceUI<UI_InputBalloon>();

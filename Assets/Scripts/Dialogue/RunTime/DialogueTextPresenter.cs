@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -44,7 +45,7 @@ public class DialogueTextPresenter : MonoBehaviour, ITextPresenter
 		}
 
 		for (int i = 0; i < list.Count; i++)
-			if (list[i]) list[i].AddStackOffset(StackSpacingPx);
+			if (list[i]) list[i].TweenStackOffset(StackSpacingPx, 0.3f, false, Ease.InCubic);
 
 		var balloon = Managers.UI.MakeWorldSpaceUI<UI_DialogueBalloon>();
 		balloon.Init(anchor, text);
@@ -54,7 +55,7 @@ public class DialogueTextPresenter : MonoBehaviour, ITextPresenter
 		list.Add(balloon);
 	}
 
-	public void AllStacksUp()
+	public void AllStacksUp(float dur = 0.12f, bool unscaled = false, Ease ease = Ease.InCubic)
 	{
 		foreach (var kv in _stacked)
 		{
@@ -67,7 +68,7 @@ public class DialogueTextPresenter : MonoBehaviour, ITextPresenter
 					list.RemoveAt(i);
 					continue;
 				}
-				balloon.AddStackOffset(StackSpacingPx);
+				balloon.TweenStackOffset(StackSpacingPx, dur, unscaled, ease);
 			}
 		}
 	}

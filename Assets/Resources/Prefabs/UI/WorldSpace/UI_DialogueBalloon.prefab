@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 448987903608550724}
   - component: {fileID: 2759271662114861165}
   - component: {fileID: 4914768367072000841}
-  - component: {fileID: 2269267440698036614}
+  - component: {fileID: 8954050930925098100}
   m_Layer: 5
   m_Name: BubbleText
   m_TagString: Untagged
@@ -216,7 +216,7 @@ MonoBehaviour:
   useTypewriterWaitForDisappearances: 1
   disappearanceWaitTime: 0.015
   disappearanceSpeedMultiplier: 1
---- !u!114 &2269267440698036614
+--- !u!114 &8954050930925098100
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -225,7 +225,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4793225109425124078}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d68c28ce7b16334a80fe39389408715, type: 3}
+  m_Script: {fileID: 11500000, guid: de0d86d565176474ba63f3df4729d38b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   source: {fileID: 1093819481533106950}
@@ -234,6 +234,7 @@ MonoBehaviour:
   randomSequence: 0
   sounds:
   - {fileID: 8300000, guid: 48161c179d0b87d42bcb6e3f36e8ec8f, type: 3}
+  specialDotClip: {fileID: 8300000, guid: 7e4de86448846294ab06de5ff0d44a62, type: 3}
 --- !u!1 &6789241912876929624
 GameObject:
   m_ObjectHideFlags: 0
@@ -543,7 +544,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 16
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &4936069217011760002
 MonoBehaviour:
   m_ObjectHideFlags: 0

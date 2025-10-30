@@ -27,7 +27,7 @@ public class UI_InputBalloon : UI_Base
 	[SerializeField] private float caretBlinkRate = 0.6f;
 
 	private Transform _anchor;
-	private const int _charLimit = 15;
+	private const int _charLimit = 25;
 
 	private RectTransform _textRt;
 	private readonly List<RectTransform> _caretRects = new();
@@ -113,8 +113,10 @@ public class UI_InputBalloon : UI_Base
 	{
 		Debug.Log($"Length: {promptLabel.text.Length} Width: {promptLabel.preferredWidth} Height: {promptLabel.preferredHeight}");
 
-		float preferredWidth = Mathf.Clamp(promptLabel.preferredWidth * 0.02f , 0.35f, 6f);
-		float preferredHeight = Mathf.Max(promptLabel.preferredHeight * 0.05f, 0.7f);
+		//float preferredWidth = Mathf.Clamp(promptLabel.preferredWidth * 0.02f , 0.7f, 6f);
+
+		float preferredWidth = Mathf.Clamp(Mathf.Sqrt(promptLabel.preferredWidth * 0.05f), 0.7f, 6f); // 루트 기반 보정(휴리스틱)
+		float preferredHeight = Mathf.Max(promptLabel.preferredHeight * 0.05f - 0.05f, 0.7f);
 
 		Vector2 preferredSize = new Vector2(preferredWidth, preferredHeight);
 
@@ -138,7 +140,7 @@ public class UI_InputBalloon : UI_Base
 		float bubbleHalfWidth = _image.rectTransform.sizeDelta.x * 0.5f;
 
 		var pos = _anchor.position + offWorld;
-		pos.x -= bubbleHalfWidth * root.lossyScale.x;
+		pos.x += bubbleHalfWidth * root.lossyScale.x;
 		pos.z = _anchor.position.z;
 
 		root.position = pos;
