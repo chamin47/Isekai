@@ -1,6 +1,7 @@
 using DG.Tweening;
 using System;
 using System.Collections;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 /// <summary>
@@ -42,7 +43,10 @@ public class NewDialogueRunner : MonoBehaviour
 
         _database.LoadAllFromResources();
 
-        //_hooks = _hookProviderBehaviour as IDialogueHookProvider;
+        if (_database == null)
+            _hookProviderBehaviour = gameObject.AddComponent<AdrianIDHooks>();
+
+        _hooks = _hookProviderBehaviour as IDialogueHookProvider;
     }
 
     public void Play(string id, ActorDirectorSimple actorDirector, Action endEvent = null)
@@ -278,6 +282,7 @@ public class NewDialogueRunner : MonoBehaviour
                         {
                             _happiness.gameObject.SetActive(true);
                             _happiness.ChangeHappiness(amount);
+                            Managers.Sound.Play("happiness_gauge", Sound.Effect);
                         }
 
                         id = row.nextID;

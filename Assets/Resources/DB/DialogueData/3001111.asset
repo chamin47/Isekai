@@ -18,5 +18,5 @@ MonoBehaviour:
   eventName: ShowText
   eventParam: null
   nextID: 3001112
-  script: "{fade}<wave>\uB300\uB300\uC190\uC190 \uBCF4\uAD00\uD574\uC8FC\uC138\uC694\uC624\uC624\uC639~~</>"
+  script: "{fade}<wave a=0.3>\uB300\uB300\uC190\uC190 \uBCF4\uAD00\uD574\uC8FC\uC138\uC694\uC624\uC624\uC639~~</>"
   descript: 

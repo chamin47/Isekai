@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Febucci.UI.Core;
+using DG.Tweening;
 
 /// <summary>
 /// ���� �����̽� ��ȭ ��ǳ��.
@@ -22,6 +23,9 @@ public class UI_DialogueBalloon : UI_Base
 	private Transform _anchor;
 
 	private float _extraOffsetY = 0f;
+
+	Tween _offsetTween;
+	Tween _popTween;
 
 	public void AddStackOffset(float dy)
 	{
@@ -213,7 +217,10 @@ public class UI_DialogueBalloon : UI_Base
 
 	public IEnumerator CoPresentStacked(string text, float typeSpeed = 0.03f)
 	{
-		yield return _cg.FadeCanvas(1f, 0.15f);
+		//yield return _cg.FadeCanvas(1f, 0.15f);
+		_cg.alpha = 1f;
+
+		PlayPopScale(0.6f, 0.2f);
 
 		if (_typewriter && _textAnimator)
 		{
@@ -236,6 +243,35 @@ public class UI_DialogueBalloon : UI_Base
 
 		// ���⼭ ����: �ı����� �ʰ� ���ܵ�
 	}
+
+	/// 스택 오프셋을 dy만큼 dur초 동안 부드럽게 올리기(기존 벌룬 전용).
+	public Tween TweenStackOffset(float dy, float dur = 0.12f, bool unscaled = false, Ease ease = Ease.InCubic)
+	{
+		_offsetTween?.Kill();
+		float end = _extraOffsetY + dy;
+		_offsetTween = DOTween
+			.To(() => _extraOffsetY, v => { _extraOffsetY = v; SetPosition(); }, end, dur)
+			.SetEase(ease)
+			.SetUpdate(unscaled)
+			.SetTarget(this);
+		return _offsetTween;
+	}
+
+	/// 팝업(작게→원래 크기). 새로 생성된 스택 벌룬에서만 호출.
+	public Tween PlayPopScale(float from = 0.85f, float dur = 0.15f, bool unscaled = false, Ease ease = Ease.InCubic)
+	{
+		_popTween?.Kill();
+		var s0 = _root.localScale;
+		_root.localScale = s0 * from;
+		_popTween = _root
+			.DOScale(s0, dur)
+			.SetEase(ease)
+			.SetUpdate(unscaled)
+			.SetTarget(this);
+		return _popTween;
+	}
+
+	void OnDestroy() => DOTween.Kill(this);
 
 	public override void Init() { }
 }

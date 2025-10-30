@@ -34,7 +34,7 @@ public class UI_Main : UI_Scene
         }
         else
         {
-			Managers.Sound.Play("bgm_isekai_world_bin", Sound.Bgm);
+			Managers.Sound.Play("isekai_main_bgm", Sound.Bgm);
 
 			_endingBackGround.SetActive(false);
             _commonBackGround.SetActive(true);
