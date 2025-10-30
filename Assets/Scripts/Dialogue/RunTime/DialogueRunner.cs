@@ -253,11 +253,17 @@ public class DialogueRunner : MonoBehaviour
 
                             (_textPresenter as DialogueTextPresenter)?.ClearAllStacked();
 
+							var ballon = _textPresenter.ShowTextTemp("사서", "...", "");
+
                             // Task를 코루틴으로 래핑해서 대기
                             yield return CoroutineUtil.RunTask(
                                 _secretSentimentAnalyer.AnalyzeText(userText, "ko"),
                                 result => sentimentScore = result
                             );
+
+							yield return new WaitForSeconds(1f);
+
+                            Destroy(ballon.gameObject);
 
                             string branchType;
 							if(sentimentScore == SecretSentimentAnalyer.WARNING_SCORE)

@@ -17,7 +17,21 @@ public class DialogueTextPresenter : MonoBehaviour, ITextPresenter
 
 	readonly Dictionary<Transform, List<UI_DialogueBalloon>> _stacked = new();
 
-	public IEnumerator ShowText(string speaker, string text, string animName)
+	public UI_DialogueBalloon ShowTextTemp(string speaker, string text, string animName)
+	{
+        if (actor != null && !string.IsNullOrEmpty(animName))
+            StartCoroutine(actor.PlayAnim(speaker, animName));
+
+        var anchor = ResolveAnchorSafe(speaker);
+
+        var balloon = Managers.UI.MakeWorldSpaceUI<UI_DialogueBalloon>();
+        balloon.Init(anchor, text);
+		balloon.Appear(text);
+
+		return balloon;
+    }
+
+    public IEnumerator ShowText(string speaker, string text, string animName)
 	{
 		if (actor != null && !string.IsNullOrEmpty(animName))
 			StartCoroutine(actor.PlayAnim(speaker, animName));
