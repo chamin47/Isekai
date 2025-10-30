@@ -34,7 +34,7 @@ public class TestScene : BaseScene
 
     protected override void Init()
     {
-        
+        SceneType = Scene.TestScene;
     }
 
     public override void Clear()

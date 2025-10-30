@@ -12,6 +12,7 @@ public class CheatManager : MonoBehaviour
     public Button SetWorldButton;
     public Button SaveCurrentPlayerInfoButton;
     public Button ResetAllInfoButton;
+    public Button happyGaugeUp;
     
     public float playerSpeed = 10f;
 
@@ -26,6 +27,7 @@ public class CheatManager : MonoBehaviour
         sceneType.AddOptions(Enum.GetNames(typeof(Scene)).ToList());
         SaveCurrentPlayerInfoButton.onClick.AddListener(SaveCurrentPlayerInfo);
         ResetAllInfoButton.onClick.AddListener(ResetAllInfo);
+        happyGaugeUp.onClick.AddListener(HappyGaugeUp);
         Debug.Log("CheatManager Awake");
         cheatUI?.SetActive(false);
     }
@@ -48,6 +50,14 @@ public class CheatManager : MonoBehaviour
         Managers.Scene.LoadScene(Scene.TitleScene);
     }
     
+
+    private void HappyGaugeUp()
+    {
+        if(Managers.Happy == null)
+            return;
+
+        Managers.Happy.AddHappiness(10);
+    }
 
     public void Update()
     {

@@ -16,7 +16,7 @@ MonoBehaviour:
   speaker: System
   animName: Poor_boy_quiver
   eventName: CameraZoomOut
-  eventParam: 1.0, 0.8,player
+  eventParam: 1.0, 1.2 ,player
   nextID: 3001071
   script: null
   descript: 

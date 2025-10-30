@@ -82,14 +82,15 @@ public class UI_DialogueBalloon : UI_Base
 	private IEnumerator CoFade()
 	{
 		float elapsed = 0f;
-		float duration = 2f;
-		float waitTime = 2f;
+		float duration = 1f;
+		float waitTime = 3f;
 		yield return new WaitForSeconds(waitTime);
 
 		while(elapsed < duration)
 		{
 			_cg.alpha = Mathf.Lerp(1f, 0f, elapsed / duration);
 			elapsed += Time.deltaTime;
+			yield return null;
         }
 
 		Disappear();
@@ -133,7 +134,7 @@ public class UI_DialogueBalloon : UI_Base
 		if (cam == null)
 			return;
 
-		Debug.LogError(_label.textInfo.lineCount);
+		//Debug.LogError(_label.textInfo.lineCount);
 
 		_label.ForceMeshUpdate();
 		int lineCount = Mathf.Max(1, _label.textInfo.lineCount);

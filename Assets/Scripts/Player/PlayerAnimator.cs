@@ -18,9 +18,9 @@ public class PlayerAnimator : MonoBehaviour
         WorldType currentWorld = Managers.World.CurrentWorldType;
 		Scene currentScene = Managers.Scene.CurrentScene == null ? Scene.Unknown : Managers.Scene.CurrentScene.SceneType;
 
-		if(currentScene == Scene.Unknown)
+		if(currentScene == Scene.TestScene)
 		{
-			_animator.SetBool("VinterWorld", currentScene == Scene.Unknown);
+			_animator.SetBool("VinterWorld", currentScene == Scene.TestScene);
 			return;
         }
         _animator.SetBool("IdleWorld", currentScene != Scene.GameScene);

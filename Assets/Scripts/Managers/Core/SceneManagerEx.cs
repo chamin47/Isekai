@@ -12,7 +12,11 @@ public class SceneManagerEx
 			if(_currentScene == null)
 			{
                 _currentScene = GameObject.FindObjectOfType<BaseScene>();
-				Managers.DebugInfo.LastSceneType = _currentScene?.SceneType ?? Scene.Unknown;
+				if(_currentScene == null)
+				{
+					return null;
+				}
+				Managers.DebugInfo.LastSceneType = _currentScene.SceneType;
             }
 
             return _currentScene;
@@ -24,7 +28,15 @@ public class SceneManagerEx
 	{
 		Managers.Clear();
 
-		prevSceneType = CurrentScene?.SceneType ?? Scene.Unknown;
+		if(CurrentScene == null)
+		{
+			prevSceneType = Scene.Unknown;
+		}
+        else
+		{
+			prevSceneType = CurrentScene.SceneType;
+		}
+
         _currentScene = null;
 
         Managers.DB.ResetPlayerData();

@@ -15,8 +15,8 @@ MonoBehaviour:
   id: 3001012
   speaker: "\uC601\uC560 3"
   animName: Ladies_jump_3, Ladies_1, Ladies_2
-  eventName: ShowText
-  eventParam: null
+  eventName: CameraZoomIn
+  eventParam: "1.08, 0.8, \uC601\uC560 3"
   nextID: 3001013
   script: "<wiggle a=0.1>\uC548\uB155\uD558\uC138\uC694!!!!!!!!!!</>"
   descript: 

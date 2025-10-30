@@ -28,6 +28,11 @@ public class LadiesController : NPCController
     {
         for(int i = 0; i < _ladiesSprites.Count; i++)
         {
+            if(_selectedLadyIndex != -1 && i != _selectedLadyIndex)
+            {
+                continue;
+            }
+
             if (_ladiesSprites[i] != null && _ladiesSprites[i].gameObject.activeInHierarchy)
             {
                 _dialogueBalloon.Init(dialoguePos[i], _dialogues[i]);

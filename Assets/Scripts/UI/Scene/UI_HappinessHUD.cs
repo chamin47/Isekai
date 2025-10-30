@@ -11,6 +11,7 @@ public class HappinessHUD : UI_Base
 	[SerializeField] private Image _happyImage;
 
     [SerializeField] private List<HappinessLevel> _happinessLevels;
+    [SerializeField] private CanvasGroup _canvasGroup;
 
     [SerializeField] private Volume _volume;
 
@@ -71,6 +72,18 @@ public class HappinessHUD : UI_Base
     public void ChangeHappiness(float amount)
 	{
 		Managers.Happy.AddHappiness(amount);
+    }
+
+    public void Disappear()
+    {
+        if(_canvasGroup != null)
+            _canvasGroup.alpha = 0f;
+    }
+
+    public void Appear()
+    {
+        if(_canvasGroup != null)
+            _canvasGroup.alpha = 1f;
     }
 
     public void OnDestroy()

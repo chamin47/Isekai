@@ -55,7 +55,7 @@ public class UI_Information : UI_Popup
             _isYesFocused = false;
             _isNoFocused = false;
         };
-        _yesTextEvent.OnPointerUpHandler += (PointerEventData data) => 
+        _yesTextEvent.OnClickHandler += (PointerEventData data) => 
         {
             _isKeyLocked = true;
             //현실세계로 이동
@@ -72,7 +72,7 @@ public class UI_Information : UI_Popup
             _isNoFocused = false;
             _isYesFocused = false;
         };
-        _noTextEvent.OnPointerUpHandler += (PointerEventData data) => { Managers.UI.ClosePopupUI(this); };
+        _noTextEvent.OnClickHandler += (PointerEventData data) => { Managers.UI.ClosePopupUI(this); };
     }
 
     private void Update()

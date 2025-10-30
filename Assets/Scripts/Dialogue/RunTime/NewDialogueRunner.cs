@@ -75,7 +75,7 @@ public class NewDialogueRunner : MonoBehaviour
         if (_cameraController != null)
             _cameraController.DisableCameraUpdate();
         if (_happiness != null)
-            _happiness.gameObject.SetActive(false);
+            _happiness.Disappear();
         _letterBox.gameObject.SetActive(true);
         yield return _letterBox.ShowLetterBox();
         while (!string.IsNullOrEmpty(id))
@@ -168,7 +168,16 @@ public class NewDialogueRunner : MonoBehaviour
                     {
                         var (scale, dur, anchor) = ParamParser.Zoom3(param, 1f, 0.5f, null);
                         if (_cameraService != null)
-                            Fire(_cameraService?.ZoomOutTo(scale, dur, anchor));
+                        {
+                            if(!string.IsNullOrWhiteSpace(row.script) && row.script != "null")
+                            {
+                                Fire(_cameraService?.ZoomOutTo(scale, dur, anchor));
+                            }
+                            else
+                            {
+                                yield return _cameraService.ZoomOutTo(scale, dur, anchor);
+                            }
+                        }
 
                         if (!string.IsNullOrWhiteSpace(row.animName) && _actorDirector != null)
                             Fire(_actorDirector.PlayAnim(row.speaker, row.animName));
@@ -233,7 +242,7 @@ public class NewDialogueRunner : MonoBehaviour
                         OnDialogueEnd?.Invoke();
                         OnDialogueEnd = null;
 
-                        _happiness.gameObject.SetActive(true);
+                        _happiness.Appear();
                         if (_cameraController != null)
                             _cameraController.EnableCameraUpdate();
                         yield return _letterBox.HideLetterBox();
@@ -300,7 +309,7 @@ public class NewDialogueRunner : MonoBehaviour
                         float amount = ParamParser.ToFloat(param, 0f);
                         if (_happiness != null)
                         {
-                            _happiness.gameObject.SetActive(true);
+                            _happiness.Appear();
                             _happiness.ChangeHappiness(amount);
                             Managers.Sound.Play("happiness_gauge", Sound.Effect);
                         }
