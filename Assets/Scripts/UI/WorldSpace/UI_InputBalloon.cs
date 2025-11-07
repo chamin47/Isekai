@@ -132,16 +132,22 @@ public class UI_InputBalloon : UI_Base
 		if (cam == null)
 			return;
 
-		// 픽셀 오프셋을 월드 오프셋으로 변환
-		var baseWorld = cam.ScreenToWorldPoint(Vector3.zero);
-		var offWorld = cam.ScreenToWorldPoint(
-			new Vector3(screenOffset.x, screenOffset.y, 0f)) - baseWorld;
+		// 기준 앵커의 월드 좌표
+		Vector3 anchorWorld = _anchor.position;
 
-		float bubbleHalfWidth = _image.rectTransform.sizeDelta.x * 0.5f;
+		// 카메라 기준 Viewport 오프셋 (비율 단위)
+		Vector3 viewportOffset = new Vector3(screenOffset.x, screenOffset.y, cam.nearClipPlane);
 
-		var pos = _anchor.position + offWorld;
-		pos.x += bubbleHalfWidth * root.lossyScale.x;
-		pos.z = _anchor.position.z;
+		// Viewport 비율 → 월드 거리로 변환
+		Vector3 baseWorld = cam.ViewportToWorldPoint(Vector3.zero);
+		Vector3 offsetWorld = cam.ViewportToWorldPoint(viewportOffset) - baseWorld;
+
+		// 풍선 반폭 보정
+		float bubbleHalfWidth = _image.rectTransform.sizeDelta.x * 0.5f * root.lossyScale.x;
+
+		Vector3 pos = anchorWorld + offsetWorld;
+		pos.x += bubbleHalfWidth;
+		pos.z = anchorWorld.z;
 
 		root.position = pos;
 	}

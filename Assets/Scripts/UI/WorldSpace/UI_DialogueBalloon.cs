@@ -170,6 +170,7 @@ public class UI_DialogueBalloon : UI_Base
 		_image.rectTransform.sizeDelta = preferSize;
 	}
 
+	[ContextMenu("SetPosition")]
 	private void SetPosition()
 	{
 		if (_anchor == null)
@@ -178,23 +179,26 @@ public class UI_DialogueBalloon : UI_Base
 		if (cam == null)
 			return;
 
-		//Debug.LogError(_label.textInfo.lineCount);
-
 		_label.ForceMeshUpdate();
 		int lineCount = Mathf.Max(1, _label.textInfo.lineCount);
 		float lineOffsetY = (lineCount - 1) * 0.1f * _root.lossyScale.y;
-		
 
-		var baseWorld = cam.ScreenToWorldPoint(Vector3.zero);
-		var offWorld = cam.ScreenToWorldPoint(
-			new Vector3(_screenOffset.x, _screenOffset.y + _extraOffsetY, 0f)) - baseWorld;
+		Vector3 anchorWorld = _anchor.position;
 
-		float bubbleHalfWidth = _image.rectTransform.sizeDelta.x * 0.5f;
+		Vector3 viewportOffset = new Vector3(
+			_screenOffset.x,
+			_screenOffset.y + _extraOffsetY, 
+			cam.nearClipPlane);
 
-		var pos = _anchor.position + offWorld;
+		Vector3 baseWorld = cam.ViewportToWorldPoint(Vector3.zero);
+		Vector3 offsetWorld = cam.ViewportToWorldPoint(viewportOffset) - baseWorld;
+
+		float bubbleHalfWidth = _image.rectTransform.sizeDelta.x * 0.5f * _root.lossyScale.x;
+
+		Vector3 pos = anchorWorld + offsetWorld;
 		pos.y += lineOffsetY;
-		pos.x += bubbleHalfWidth * _root.lossyScale.x; // ������ �ݿ�
-		pos.z = _anchor.position.z;
+		pos.x += bubbleHalfWidth;
+		pos.z = anchorWorld.z;
 
 		_root.position = pos;
 	}
@@ -293,10 +297,10 @@ public class UI_DialogueBalloon : UI_Base
 	}
 
 	/// 스택 오프셋을 dy만큼 dur초 동안 부드럽게 올리기(기존 벌룬 전용).
-	public Tween TweenStackOffset(float dy, float dur = 0.12f, bool unscaled = false, Ease ease = Ease.InCubic)
+	public Tween TweenStackOffset(float dyRatio, float dur = 0.12f, bool unscaled = false, Ease ease = Ease.InCubic)
 	{
 		_offsetTween?.Kill();
-		float end = _extraOffsetY + dy;
+		float end = _extraOffsetY + dyRatio; // 비율 단위
 		_offsetTween = DOTween
 			.To(() => _extraOffsetY, v => { _extraOffsetY = v; SetPosition(); }, end, dur)
 			.SetEase(ease)

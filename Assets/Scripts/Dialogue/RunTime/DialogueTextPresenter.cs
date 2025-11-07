@@ -13,7 +13,7 @@ public class DialogueTextPresenter : MonoBehaviour, ITextPresenter
 
 	public IActorDirector actor; // Runner에서 주입
 
-	public const float StackSpacingPx = 180f;
+	public const float StackSpacingRatio = 0.15f; // 화면 높이의 10%
 
 	readonly Dictionary<Transform, List<UI_DialogueBalloon>> _stacked = new();
 
@@ -59,7 +59,7 @@ public class DialogueTextPresenter : MonoBehaviour, ITextPresenter
 		}
 
 		for (int i = 0; i < list.Count; i++)
-			if (list[i]) list[i].TweenStackOffset(StackSpacingPx, 0.3f, false, Ease.InCubic);
+			if (list[i]) list[i].TweenStackOffset(StackSpacingRatio, 0.3f, false, Ease.InCubic);
 
 		var balloon = Managers.UI.MakeWorldSpaceUI<UI_DialogueBalloon>();
 		balloon.Init(anchor, text);
@@ -82,7 +82,7 @@ public class DialogueTextPresenter : MonoBehaviour, ITextPresenter
 					list.RemoveAt(i);
 					continue;
 				}
-				balloon.TweenStackOffset(StackSpacingPx, dur, unscaled, ease);
+				balloon.TweenStackOffset(StackSpacingRatio, dur, unscaled, ease);
 			}
 		}
 	}
