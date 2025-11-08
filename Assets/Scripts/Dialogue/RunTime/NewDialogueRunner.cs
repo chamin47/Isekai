@@ -325,6 +325,8 @@ public class NewDialogueRunner : MonoBehaviour
                         yield return _inputPrompt?.Prompt(row.script, s => userText = s);
                         var next = _branchTable ? _branchTable.Resolve(param, "Default") : null;
                         (_textPresenter as DialogueTextPresenter)?.ClearAllStacked();
+
+                        id = next;
                         break;
                     }
                 // 플레이어가 특정 시간동안 멈춰있다면 성공 아니면 실패
