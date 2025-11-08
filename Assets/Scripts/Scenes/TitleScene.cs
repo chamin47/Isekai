@@ -1,5 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using Unity.Services.Authentication;
+using Unity.Services.Core;
 using UnityEngine;
 using UnityEngine.Video;
 
@@ -13,6 +16,7 @@ public class TitleScene : BaseScene
 		SceneType = Scene.TitleScene;
 
 		Managers.World.CurrentWorldType = WorldType.Vinter;
+        
     }
 
 	public override void Clear()

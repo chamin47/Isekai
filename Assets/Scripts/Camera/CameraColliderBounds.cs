@@ -8,6 +8,21 @@ public class CameraColliderBounds : MonoBehaviour
     private Camera _cam;
     private Bounds _mapBounds;
 
+    public bool IsCameraWithInBounds()
+    {
+        if (boundingShape == null || !_cam.orthographic)
+        {
+            return false;
+        }
+        float epsilon = 0.01f;
+        float camHalfHeight = _cam.orthographicSize;
+        float camHalfWidth = camHalfHeight * _cam.aspect;
+        float clampedMinX = _mapBounds.min.x + camHalfWidth;
+        float clampedMaxX = _mapBounds.max.x - camHalfWidth;
+        Vector3 camPos = transform.position;
+        return (camPos.x >= clampedMinX + epsilon && camPos.x <= clampedMaxX - epsilon);
+    }
+
     void Awake()
     {
         _cam = GetComponent<Camera>();

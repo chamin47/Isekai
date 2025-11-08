@@ -279,7 +279,7 @@ MonoBehaviour:
     moveSpeed:
     - 2
     - 3
-    - 3
+    - 5
   endingSceneData:
     newsDialog:
     - "\uC18D\uBCF4\uC785\uB2C8\uB2E4"

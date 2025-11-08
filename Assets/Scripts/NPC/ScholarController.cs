@@ -28,7 +28,6 @@ public class ScholarController : NPCController
                 nextState = AnimatorHash.IDLE;
                 break;
             case NPCState.Event:
-                _isInteracted = true;
                 break;
             default:
                 nextState = AnimatorHash.IDLE;
@@ -45,6 +44,7 @@ public class ScholarController : NPCController
 
     public override void OnEventEnd()
     {
+        base.OnEventEnd();
         State = NPCState.Idle;
     }
 }

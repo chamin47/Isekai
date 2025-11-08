@@ -8,14 +8,15 @@ public class FloatingImage : MonoBehaviour
     [SerializeField] private float _floatingSpeed = 0.05f;
 
     private Material _material;
-
+    private Vector2 _offset = Vector2.zero;
     private void Awake()
     {
         _material = GetComponent<SpriteRenderer>().material;
     }
     private void Update()
     {
-        _material.SetTextureOffset("_MainTex", Vector2.left * _floatingSpeed * Time.deltaTime);
+        _offset += Vector2.left * _floatingSpeed * Time.deltaTime;
+        _material.SetTextureOffset("_MainTex", _offset);
     }
 
     private void Reset()

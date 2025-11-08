@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Shader Graphs_SpriteOutline
+  m_Name: SpriteOutline
   m_Shader: {fileID: -6465566751694194690, guid: 5ac1060f0460bb44d85b3829c534e7fc, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -45,6 +45,7 @@ Material:
     - _QueueOffset: 0
     - _Thickness: 0
     m_Colors:
+    - _Direction: {r: 1, g: 0, b: 0, a: 0}
     - _OutlineColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &4217979984437868511
