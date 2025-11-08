@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public class TestScene : BaseScene
@@ -12,7 +13,9 @@ public class TestScene : BaseScene
         Managers.Happy.OnHappinessChanged += MakePortal;
         Managers.Sound.Play("bgm_isekai_gang", Sound.Bgm);
         Managers.Happy.Happiness = 50f;
-    }
+
+        MakeShiftGuide();
+	}
 
     private void MakePortal(float happiness)
     {
@@ -28,6 +31,14 @@ public class TestScene : BaseScene
             Managers.Happy.OnHappinessChanged -= MakePortal;
         }
     }
+
+    private void MakeShiftGuide()
+    {
+		ShiftGuide shiftPrefab = Resources.Load<ShiftGuide>("PrefabS/Item/ShiftGuide");
+		ShiftGuide shift = Instantiate(shiftPrefab);
+
+		shift.SetDialogueInteraction(_player.GetComponent<DialogueInteraction>());
+	}
 
     private void OnDestroy()
     {

@@ -9,6 +9,8 @@ public class DialogueInteraction : MonoBehaviour
     private bool _isInDialogue = false;
     [SerializeField] private NewDialogueRunner _dialogueRunner;
 
+    public event System.Action OnDialogueStarted;
+
     private void Awake()
     {
         _playerController = GetComponent<PlayerController>();
@@ -22,7 +24,9 @@ public class DialogueInteraction : MonoBehaviour
         if ((Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift)) == false)
             return;
 
-        if(_interactNPC.IsInteracted)
+		OnDialogueStarted?.Invoke();
+
+		if (_interactNPC.IsInteracted)
         {
             Debug.Log("대화 생성");
             _interactNPC.ShowDialogue();
