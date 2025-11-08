@@ -34,7 +34,7 @@ public class TestScene : BaseScene
 
     private void MakeShiftGuide()
     {
-		ShiftGuide shiftPrefab = Resources.Load<ShiftGuide>("PrefabS/Item/ShiftGuide");
+		ShiftGuide shiftPrefab = Resources.Load<ShiftGuide>("Prefabs/Item/ShiftGuide");
 		ShiftGuide shift = Instantiate(shiftPrefab);
 
 		shift.SetDialogueInteraction(_player.GetComponent<DialogueInteraction>());
