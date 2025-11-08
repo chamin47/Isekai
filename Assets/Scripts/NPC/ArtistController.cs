@@ -29,7 +29,6 @@ public class ArtistController : NPCController
                 nextState = AnimatorHash.IDLE;
                 break;
             case NPCState.Event:
-                _isInteracted = true;
                 break;
             default:
                 nextState = AnimatorHash.IDLE;
@@ -46,6 +45,7 @@ public class ArtistController : NPCController
 
     public override void OnEventEnd()
     {
+        base.OnEventEnd();
         State = NPCState.Idle;
     }
 }

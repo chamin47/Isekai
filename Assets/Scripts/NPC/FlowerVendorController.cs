@@ -91,7 +91,12 @@ public class FlowerVendorController : NPCController
 
     public override void OnEventEnd()
     {
+        base.OnEventEnd();
         State = NPCState.Idle;
         _showDialogue = StartCoroutine(CoShowDialogue());
+    }
+
+    public override void ShowDialogue()
+    {
     }
 }

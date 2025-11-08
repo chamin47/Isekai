@@ -64,12 +64,10 @@ public abstract class NPCController : MonoBehaviour
     }
 
     protected abstract void UpdateAnimation();
-    public virtual void ShowDialogue()
-    {
-
-    }
+    public abstract void ShowDialogue();
+    
     public virtual void OnEventEnd()
     {
-
+        _isInteracted = true;
     }
 }

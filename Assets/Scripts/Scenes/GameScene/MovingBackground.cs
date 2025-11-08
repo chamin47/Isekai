@@ -10,9 +10,10 @@ public class MovingBackground : MonoBehaviour
     [SerializeField] private PlayerController _playerController;
 
     private Vector2 _currentOffset = new Vector2(0,0);
-   
+    private CameraColliderBounds _mainCamera;
     private void Start()
     {
+        _mainCamera = Camera.main.GetComponent<CameraColliderBounds>();
         _playerController = GameObject.FindObjectOfType<PlayerController>();
         _material = GetComponent<SpriteRenderer>().material;
         _playerController.OnPlayerMove += MoveBackgound;
@@ -20,6 +21,8 @@ public class MovingBackground : MonoBehaviour
 
     private void MoveBackgound(Vector2 dir, float moveSpeed)
     {
+        if(_mainCamera != null && !_mainCamera.IsCameraWithInBounds())
+            return;
         _currentOffset += dir * _floatingSpeed * Time.deltaTime * moveSpeed;
         _material.SetTextureOffset("_MainTex", _currentOffset);
     }
