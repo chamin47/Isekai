@@ -19,7 +19,7 @@ public class MoveingBackgroundByWidth : MonoBehaviour
     private void MoveBackground(Vector2 dir, float moveSpeed)
     {
         Vector2 current = _spriteRenderer.size;
-        current.x += moveSpeed * dir.x * Time.deltaTime * _moveSpeed;
+        current.x += moveSpeed * -dir.x * Time.deltaTime * _moveSpeed;
         _spriteRenderer.size = current;
     }
 }

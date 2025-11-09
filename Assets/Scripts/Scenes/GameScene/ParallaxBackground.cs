@@ -13,6 +13,7 @@ public class ParelBackground : MonoBehaviour
 
     private Vector2 _currentOffset = Vector2.zero;
 
+
     private void Awake()
     {
         _mainCamera = Camera.main.GetComponent<CameraColliderBounds>();
