@@ -18,6 +18,7 @@ public class DialogueInteraction : MonoBehaviour
 
     private void Update()
     {
+        // 상호작용 하고 있는 NPC가 없거나 해당 NPC와 상호작용이 불가능한 경우 무시
         if (_interactNPC == null || _interactNPC.CanInteract == false)
             return;
 
@@ -57,6 +58,7 @@ public class DialogueInteraction : MonoBehaviour
         {
             if(other.TryGetComponent<NPCController>(out var npc))
             {
+                Debug.Log($"NPC와 상호작용 가능 {npc.name}");
                 _interactNPC = npc;
             }
         }
@@ -69,6 +71,7 @@ public class DialogueInteraction : MonoBehaviour
 
         if(_interactNPC.gameObject == other.gameObject)
         {
+            Debug.Log($"NPC와 상호작용 불가능 {_interactNPC.name}");
             _interactNPC = null;
             _isInDialogue = false;
         }

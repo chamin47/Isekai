@@ -140,9 +140,10 @@ public class UI_DialogueBalloon : UI_Base
 	[ContextMenu("FixBubbleSize")]
 	private void FixBubbleSize()
 	{
-		Debug.Log($"Length: {_label.text.Length} Width: {_label.preferredWidth} Height: {_label.preferredHeight}");
+		//Debug.Log($"Length: {_label.text.Length} Width: {_label.preferredWidth} Height: {_label.preferredHeight}");
+		float l = _label.preferredWidth; // 임시 갱신
 
-		_label.ForceMeshUpdate();
+        _label.ForceMeshUpdate();
 
 		int lineCount = Mathf.Max(1, _label.textInfo.lineCount);
 

@@ -27,8 +27,6 @@ public class ActorAnimatorSimple : MonoBehaviour
 			{
 				if (clip && !_clipLen.ContainsKey(clip.name))
 					_clipLen[clip.name] = clip.length;
-
-				Debug.Log($"Clip: {clip.name}, len: {clip.length}");
             }
 		}
     }
@@ -48,7 +46,6 @@ public class ActorAnimatorSimple : MonoBehaviour
 
 	public IEnumerator PlayAnim(string stateName, float? durationOverride = null)
 	{
-		Debug.Log(stateName);
 		if (!animator || string.IsNullOrEmpty(stateName)) 
 			yield break;
 
@@ -72,7 +69,6 @@ public class ActorAnimatorSimple : MonoBehaviour
 		if (currentState.IsName(stateName))
 			yield break;
 
-		Debug.Log($"PlayAnim: {stateName}, dur: {dur}");
         animator.CrossFade(stateName, 0.05f, 0, 0f);
 
 		if (dur > 0f) 
