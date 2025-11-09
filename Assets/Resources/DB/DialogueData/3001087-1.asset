@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 3001087-1
   speaker: "\uAF43\uC0C1\uC778"
-  animName: Flower_Vendor_idle
+  animName: Flower_Vendor_give
   eventName: PlayAnim
-  eventParam: 0
-  nextID: 3001088
-  script: 
+  eventParam: -1
+  nextID: 3001087-2
+  script: null
   descript: 

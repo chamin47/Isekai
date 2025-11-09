@@ -39,7 +39,7 @@ public class ActorDirectorSimple : MonoBehaviour, IActorDirector, ISpeakerAnchor
 	public IEnumerator PlayAnim(string speaker, string animName, float? durationSec = null)
 	{
 		var a = Find(speaker);
-		if (a == null || string.IsNullOrEmpty(animName)) yield break;
+		if (a == null || animName == "null" || string.IsNullOrEmpty(animName)) yield break;
 
 		yield return a.PlayAnim(animName, durationSec);
 	}

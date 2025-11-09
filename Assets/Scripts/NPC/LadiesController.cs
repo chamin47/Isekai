@@ -35,7 +35,6 @@ public class LadiesController : NPCController
 
             if (_ladiesSprites[i] != null && _ladiesSprites[i].gameObject.activeInHierarchy)
             {
-                _dialogueBalloon.Init(dialoguePos[i], _dialogues[i]);
                 _dialogueBalloon.AppearAndFade(_dialogues[i]);
                 return;
             }
@@ -127,6 +126,7 @@ public class LadiesController : NPCController
     private void OnLadySelected(int index)
     {
         _selectedLadyIndex = index;
+        _dialogueBalloon.Init(dialoguePos[index], _dialogues[index]);
     }
 
     public IEnumerator ClickLady(System.Action<int> onClicked)

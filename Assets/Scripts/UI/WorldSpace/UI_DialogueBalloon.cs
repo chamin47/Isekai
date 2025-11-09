@@ -100,6 +100,8 @@ public class UI_DialogueBalloon : UI_Base
 		if (this.gameObject.activeInHierarchy)
 			return;
 
+		Debug.Log($"AppearAndFade: {text}");
+
         this.gameObject.SetActive(true);
         Color color = _label.color;
         color.a = 1f;

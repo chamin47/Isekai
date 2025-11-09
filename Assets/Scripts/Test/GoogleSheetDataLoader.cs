@@ -86,8 +86,8 @@ public class GoogleSheetDataLoader : EditorWindow
 				// 각 변수에 데이터 할당
 				data.id = values[0];
 				data.speaker = values[1];
-				data.animName = values[2];
-				data.eventName = values[3];
+                data.animName = values[2];
+                data.eventName = values[3];
 				data.eventParam = values[4];
 				data.nextID = values[5];
 				//data.nextFalseID = values[6];

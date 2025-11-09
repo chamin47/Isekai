@@ -27,9 +27,11 @@ public class ActorAnimatorSimple : MonoBehaviour
 			{
 				if (clip && !_clipLen.ContainsKey(clip.name))
 					_clipLen[clip.name] = clip.length;
-			}
+
+				Debug.Log($"Clip: {clip.name}, len: {clip.length}");
+            }
 		}
-	}
+    }
 
 	private float GetClipLength(string stateName)
 	{
@@ -70,7 +72,8 @@ public class ActorAnimatorSimple : MonoBehaviour
 		if (currentState.IsName(stateName))
 			yield break;
 
-		animator.CrossFade(stateName, 0.05f, 0, 0f);
+		Debug.Log($"PlayAnim: {stateName}, dur: {dur}");
+        animator.CrossFade(stateName, 0.05f, 0, 0f);
 
 		if (dur > 0f) 
 			yield return new WaitForSeconds(dur);
