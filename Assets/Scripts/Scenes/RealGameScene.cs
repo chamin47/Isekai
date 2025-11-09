@@ -14,6 +14,13 @@ public class RealGameScene : BaseScene
 
     public void Start()
     {
+        
+    }
+
+
+    protected override void Init()
+    {
+        SceneType = Scene.RealGameScene;
         switch (Managers.World.CurrentWorldType)
         {
             case WorldType.Gang:
@@ -29,12 +36,6 @@ public class RealGameScene : BaseScene
                 Debug.Log("나올 수 없는 월드 입니다");
                 break;
         }
-    }
-
-
-    protected override void Init()
-    {
-        SceneType = Scene.RealGameScene;
     }
 
     public override void Clear()
