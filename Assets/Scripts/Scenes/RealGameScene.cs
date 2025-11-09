@@ -12,12 +12,6 @@ public class RealGameScene : BaseScene
     [SerializeField] private GameObject _gangRealWorld;
     [SerializeField] private GameObject _chaumRealWorld;
 
-    public void Start()
-    {
-        
-    }
-
-
     protected override void Init()
     {
         SceneType = Scene.RealGameScene;
