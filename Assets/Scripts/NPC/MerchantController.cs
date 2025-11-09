@@ -47,9 +47,9 @@ public class MerchantController : NPCController
        
     }
 
-    public override void OnEventEnd()
+    public override void OnEventEnd(int eventParam)
     {
-        base.OnEventEnd();
+        base.OnEventEnd(eventParam);
         State = NPCState.Idle;
     }
 }

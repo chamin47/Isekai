@@ -35,7 +35,9 @@ public class NewDialogueRunner : MonoBehaviour
     private Coroutine runCo;
 
     [Header("Events")]
-    private Action OnDialogueEnd;
+    private Action<int> OnDialogueEnd;
+    private int _endEventParam;
+
     void Awake()
     {
         if (_database == null)
@@ -49,7 +51,7 @@ public class NewDialogueRunner : MonoBehaviour
         _hooks = _hookProviderBehaviour as IDialogueHookProvider;
     }
 
-    public void Play(string id, ActorDirectorSimple actorDirector, Action endEvent = null)
+    public void Play(string id, ActorDirectorSimple actorDirector, Action<int> endEvent = null)
     {
         if (runCo != null)
             StopCoroutine(runCo);
@@ -239,8 +241,9 @@ public class NewDialogueRunner : MonoBehaviour
                         //float settle = baseH * 0.85f;        
 
                         //yield return letterbox.CloseOvershoot(settle, overshoot, 170f);
-                        OnDialogueEnd?.Invoke();
+                        OnDialogueEnd?.Invoke(_endEventParam);
                         OnDialogueEnd = null;
+                        _endEventParam = -1;
 
                         _happiness.Appear();
                         if (_cameraController != null)
@@ -353,6 +356,7 @@ public class NewDialogueRunner : MonoBehaviour
 
                         player.canMove = false;
                         string branchType = success ? "Success" : "Fail";
+                        _endEventParam = success ? 1 : 0;
                         var next = _branchTable ? _branchTable.Resolve(param, branchType) : null;
 
                         Debug.Log(next);

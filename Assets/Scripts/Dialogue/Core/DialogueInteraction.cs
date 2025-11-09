@@ -64,6 +64,21 @@ public class DialogueInteraction : MonoBehaviour
         }
     }
 
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (_interactNPC != null)
+            return;
+
+        if (collision.CompareTag("NPC"))
+        {
+            if (collision.TryGetComponent<NPCController>(out var npc))
+            {
+                Debug.Log($"NPC와 상호작용 가능 {npc.name}");
+                _interactNPC = npc;
+            }
+        }
+    }
+
     private void OnTriggerExit2D(Collider2D other)
     {
         if (_interactNPC == null)

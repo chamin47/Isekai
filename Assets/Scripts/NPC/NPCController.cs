@@ -19,8 +19,8 @@ public abstract class NPCController : MonoBehaviour
 {
     protected int _prevState = -1;
     private NPCState _state = NPCState.Idle;
-    protected bool _canInteract = true;
-    protected bool _isInteracted = false;
+    protected bool _canInteract = true; // 상호작용이 가능한지 여부
+    protected bool _isInteracted = false; // 상호작용을 완료 했는지 여부
     public bool CanInteract
     {
         get => _canInteract;
@@ -66,7 +66,7 @@ public abstract class NPCController : MonoBehaviour
     protected abstract void UpdateAnimation();
     public abstract void ShowDialogue();
     
-    public virtual void OnEventEnd()
+    public virtual void OnEventEnd(int eventParam)
     {
         _isInteracted = true;
     }

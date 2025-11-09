@@ -7,16 +7,16 @@ public class ArtistController : NPCController
 {
     [SerializeField] private Transform dialoguePos;
     [SerializeField] private UI_DialogueBalloon _dialogueBalloon;
-
+    private string _dialogue;
     private void Start()
     {
-        _dialogueBalloon.Init(dialoguePos, "대대손손 보관해주세요오오옹~~");
         State = NPCState.Idle;
     }
 
     public override void ShowDialogue()
     {
-        _dialogueBalloon.AppearAndFade("대대손손 보관해주세요오오옹~~");
+
+        _dialogueBalloon.AppearAndFade(_dialogue);
     }
 
 
@@ -43,9 +43,20 @@ public class ArtistController : NPCController
         _prevState = nextState;
     }
 
-    public override void OnEventEnd()
+    public override void OnEventEnd(int eventParam)
     {
-        base.OnEventEnd();
+        base.OnEventEnd(eventParam);
         State = NPCState.Idle;
+
+        if(eventParam == 0)
+        {
+            _dialogue = "그래도 역시 우리 공작님이 훨씬 더 눈부시네요";
+            _dialogueBalloon.Init(dialoguePos, _dialogue);
+        }
+        else
+        {
+            _dialogue = "대대손손 보관해주세요오오옹~~";
+            _dialogueBalloon.Init(dialoguePos, _dialogue);
+        }
     }
 }
