@@ -1163,7 +1163,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _target: {fileID: 1622524268}
-  _cameraController: {fileID: 1622524273}
+  _cameraController: {fileID: 1622524272}
   _player: {fileID: 609365078}
   _middle2A: {fileID: 0}
   _middle2B: {fileID: 0}
@@ -1529,7 +1529,7 @@ MonoBehaviour:
   _actorDirector: {fileID: 0}
   _happiness: {fileID: 1840131506}
   _letterBox: {fileID: 144011108}
-  _cameraController: {fileID: 1622524273}
+  _cameraController: {fileID: 0}
   _hookProviderBehaviour: {fileID: 0}
 --- !u!4 &560116831
 Transform:
@@ -1689,7 +1689,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 609365072}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -15.91, y: -4.293, z: 0}
+  m_LocalPosition: {x: 6.61, y: -4.24, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3854,7 +3854,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7878350319992209165, guid: ef164ac5c4862fd40a24550722de5c41, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.234
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 7878350319992209165, guid: ef164ac5c4862fd40a24550722de5c41, type: 3}
       propertyPath: m_LocalPosition.y
@@ -4835,7 +4835,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7878350319992209165, guid: 4b755c591b7760d4794687b7e2334aa3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.26
+      value: -0.2
       objectReference: {fileID: 0}
     - target: {fileID: 7878350319992209165, guid: 4b755c591b7760d4794687b7e2334aa3, type: 3}
       propertyPath: m_LocalPosition.y
@@ -4993,7 +4993,7 @@ GameObject:
   - component: {fileID: 1622524269}
   - component: {fileID: 1622524270}
   - component: {fileID: 1622524271}
-  - component: {fileID: 1622524273}
+  - component: {fileID: 1622524272}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -5165,7 +5165,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   m_MaxRayIntersections: 0
---- !u!114 &1622524273
+--- !u!114 &1622524272
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
