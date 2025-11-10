@@ -24,11 +24,11 @@ public class ActorDirectorSimple : MonoBehaviour, IActorDirector, ISpeakerAnchor
 	// 전체 바인딩을 찾는 헬퍼 (앵커/배우 둘 다 필요할 때 사용)
 	SpeakerBindingSimple FindBind(string speaker)
 	{
-		if (string.IsNullOrEmpty(speaker)) return null;
-		foreach (var b in bindings)
+		if (string.IsNullOrWhiteSpace(speaker)) return null;
+		foreach (var bind in bindings)
 		{
-			if (b != null && b.actor != null && b.speaker == speaker)
-				return b;
+			if (bind != null && bind.actor != null && bind.speaker.Equals(speaker))
+				return bind;
 		}
 		return null;
 	}
@@ -39,23 +39,26 @@ public class ActorDirectorSimple : MonoBehaviour, IActorDirector, ISpeakerAnchor
 	public IEnumerator PlayAnim(string speaker, string animName, float? durationSec = null)
 	{
 		var a = Find(speaker);
-		if (a == null || animName == "null" || string.IsNullOrEmpty(animName)) yield break;
+		if (a == null || animName == "null" || string.IsNullOrWhiteSpace(animName)) yield break;
 
 		yield return a.PlayAnim(animName, durationSec);
 	}
 
-	// IResolveAnchor: 말풍선 앵커 위치 제공
+	/// <summary>
+	/// 지정된 앵커 -> 배우의 트랜스폼 -> null 순으로 반환된다
+	/// </summary>
+
 	public Transform ResolveAnchor(string speaker)
 	{
-		var b = FindBind(speaker);
-		if (b != null)
+		var bind = FindBind(speaker);
+		if (bind != null)
 		{
-			if (b.anchor != null) 
-				return b.anchor;                 // 지정 앵커 우선
-			if (b.actor != null) 
-				return b.actor.transform;        // 없으면 배우 트랜스폼 폴백
+			if (bind.anchor != null) 
+				return bind.anchor;                 // 지정 앵커 우선
+			if (bind.actor != null) 
+				return bind.actor.transform;        // 없으면 배우 트랜스폼
 		}
-		return null; // 최후 폴백은 프레젠터 쪽에서 처리
+		return null; 
 	}
 
 	public Transform GetTransform(string speaker)

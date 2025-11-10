@@ -18,10 +18,11 @@ public class DialogueDatabaseRuntime : MonoBehaviour
     {
         map = new Dictionary<string, DialogueData>();
         var all = Resources.LoadAll<DialogueData>("DB");
-        foreach (var d in all)
+        foreach (var data in all)
         {
-            if (string.IsNullOrWhiteSpace(d.id)) continue;
-            map[d.id] = d;
+            if (string.IsNullOrWhiteSpace(data.id)) 
+                continue;
+            map[data.id] = data;
         }
         Debug.Log($"Dialogue DB loaded: {map.Count} rows");
     }
@@ -30,7 +31,7 @@ public class DialogueDatabaseRuntime : MonoBehaviour
     {
         if (map == null)
         {
-            row = null;          // <- out 매개변수 보장
+            row = null;         
             return false;
         }
 
