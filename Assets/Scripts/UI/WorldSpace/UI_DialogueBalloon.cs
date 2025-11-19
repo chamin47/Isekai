@@ -4,22 +4,16 @@ using UnityEngine;
 using UnityEngine.UI;
 using Febucci.UI.Core;
 using DG.Tweening;
-using System.Security.Cryptography;
-using Unity.VisualScripting;
 
-/// <summary>
-/// ���� �����̽� ��ȭ ��ǳ��.
-/// ���Ÿ���� ����/��ŵ/Ŭ�� ���� ���̵� �Ρ��ƿ�, ��� ���� ��ġ�� �߰� �������� �����Ѵ�.
-/// </summary>
 public class UI_DialogueBalloon : UI_Base
 {
-	[SerializeField] private RectTransform _root;   // ��ǳ�� ��Ʈ
+	[SerializeField] private RectTransform _root;
 	[SerializeField] private Image _image;
 	[SerializeField] private TMP_Text _label;
 	[SerializeField] private CanvasGroup _cg;
 	[SerializeField] private Vector2 _screenOffset = new Vector2(0, 80f);
 
-	[SerializeField] private TAnimCore _textAnimator;       
+	[SerializeField] private TAnimCore _textAnimator;
 	[SerializeField] private TypewriterCore _typewriter;
 
 	private Transform _anchor;
@@ -30,12 +24,15 @@ public class UI_DialogueBalloon : UI_Base
 	Tween _popTween;
 
 	private int _maxCharCount;
-	private bool _isBrIncluded;  // <br>이 포함되었는지 여부
+	private bool _isBrIncluded;
+
+	// 글자 크기 리치 태그 스케일 저장
+	private float _sizeScaleFactor = 1f;
 
 	public void AddStackOffset(float dy)
 	{
 		_extraOffsetY += dy;
-		SetPosition(); 
+		SetPosition();
 	}
 
 	public void Init(Transform anchor, string text)
@@ -44,17 +41,44 @@ public class UI_DialogueBalloon : UI_Base
 
 		_cg.alpha = 0f;
 
+		// 글자 알파 0 (기존 로직 유지)
 		Color color = _label.color;
-		color.a = 0f;           
+		color.a = 0f;
 		_label.color = color;
 
-		_label.text = text.RemoveRichTags();
+		// 리치태그에서 size% 추출 후 캐싱
+		ExtractSizeScale(text);
 
+		string pureText = text.RemoveRichTags();
+		_label.text = pureText;
+
+		// 문자 수 계산
 		_maxCharCount = CharCountCalculater(text);
 
+		// 말풍선 크기 조절
 		FixBubbleSize();
-		
+
+		// 위치 갱신
 		SetPosition();
+	}
+
+	private void ExtractSizeScale(string text)
+	{
+		_sizeScaleFactor = 1f;
+
+		int startIndex = text.IndexOf("<size=");
+		if (startIndex < 0) return;
+
+		int percentIndex = text.IndexOf('%', startIndex);
+		if (percentIndex < 0) return;
+
+		int numberStart = startIndex + "<size=".Length;
+		string numStr = text.Substring(numberStart, percentIndex - numberStart);
+
+		if (float.TryParse(numStr, out float value))
+		{
+			_sizeScaleFactor = value / 100f;
+		}
 	}
 
 	private int CharCountCalculater(string text)
@@ -77,7 +101,7 @@ public class UI_DialogueBalloon : UI_Base
 		{
 			string pure = line.RemoveRichTags();
 			int count = pure.Length;
-			if (count > maxCharCount) 
+			if (count > maxCharCount)
 				maxCharCount = count;
 		}
 
@@ -86,101 +110,95 @@ public class UI_DialogueBalloon : UI_Base
 
 	public void Appear(string text)
 	{
-		this.gameObject.SetActive(true);
-        Color color = _label.color;
-        color.a = 1f;
-        _label.color = color;
-        _cg.alpha = 1f;
+		gameObject.SetActive(true);
+
+		// ★ 글자 알파 복구 (기존 Init의 0을 무조건 1로)
+		Color c = _label.color;
+		c.a = 1f;
+		_label.color = c;
+
+		_cg.alpha = 1f;
 		_typewriter.ShowText(text);
-    }
+	}
 
 	private Coroutine _fadeCoroutine;
 	public void AppearAndFade(string text)
 	{
-		if (this.gameObject.activeInHierarchy)
+		if (gameObject.activeInHierarchy)
 			return;
 
-		Debug.Log($"AppearAndFade: {text}");
+		gameObject.SetActive(true);
 
-        this.gameObject.SetActive(true);
-        Color color = _label.color;
-        color.a = 1f;
-        _label.color = color;
-        _cg.alpha = 1f;
+		Color c = _label.color;
+		c.a = 1f;
+		_label.color = c;
+
+		_cg.alpha = 1f;
 		_typewriter.ShowText(text);
 
-        if (_fadeCoroutine != null)
+		if (_fadeCoroutine != null)
 			StopCoroutine(_fadeCoroutine);
 		_fadeCoroutine = StartCoroutine(CoFade());
-    }
+	}
 
 	private IEnumerator CoFade()
 	{
 		float elapsed = 0f;
 		float duration = 1f;
 		float waitTime = 3f;
+
 		yield return new WaitForSeconds(waitTime);
 
-		while(elapsed < duration)
+		while (elapsed < duration)
 		{
 			_cg.alpha = Mathf.Lerp(1f, 0f, elapsed / duration);
 			elapsed += Time.deltaTime;
 			yield return null;
-        }
+		}
 
 		Disappear();
-    }
+	}
 
 	public void Disappear()
 	{
 		_cg.alpha = 0f;
-		this.gameObject.SetActive(false);
-    }
+		gameObject.SetActive(false);
+	}
 
 	[ContextMenu("FixBubbleSize")]
 	private void FixBubbleSize()
 	{
-		//Debug.Log($"Length: {_label.text.Length} Width: {_label.preferredWidth} Height: {_label.preferredHeight}");
-		float l = _label.preferredWidth; // 임시 갱신
-
-        _label.ForceMeshUpdate();
-
+		_label.ForceMeshUpdate();
 		int lineCount = Mathf.Max(1, _label.textInfo.lineCount);
 
-		float baseHeight = 0.7f;      // 한 줄일 때 기본 높이
-		float perLineIncrease = 0.23f; // 한 줄 추가될 때마다 증가하는 높이
+		float baseHeight = 0.7f;
+		float perLineIncrease = 0.23f;
 		float padding = 0.1f;
 
-		float preferHeight = baseHeight + padding + (lineCount - 1) * perLineIncrease;
+		float preferHeight = (baseHeight + padding + (lineCount - 1) * perLineIncrease) * _sizeScaleFactor;
 
 		float preferWidth;
 		if (_isBrIncluded)
 		{
 			float charWidthUnit = 0.12f;
 			float baseWidth = 1.1f;
-			preferWidth = Mathf.Clamp(baseWidth + _maxCharCount * charWidthUnit, 1f, 4.4f);
+			preferWidth = Mathf.Clamp((baseWidth + _maxCharCount * charWidthUnit) * _sizeScaleFactor, 1f, 4.4f);
 		}
 		else
 		{
-			preferWidth = Mathf.Clamp(_label.preferredWidth + 0.5f, 1f, 4.4f);
+			preferWidth = Mathf.Clamp((_label.preferredWidth + 0.5f) * _sizeScaleFactor, 1f, 4.4f);
 		}
 
-		//float preferWidth = Mathf.Clamp(_label.preferredWidth + 0.5f, 1f, 4.4f);
-		//float preferHeight = Mathf.Max(_label.preferredHeight * 1.1f, 0.8f);
-
-		Vector2 preferSize = new Vector2(preferWidth, preferHeight);
-
-		_image.rectTransform.sizeDelta = preferSize;
+		_image.rectTransform.sizeDelta = new Vector2(preferWidth, preferHeight);
 	}
 
 	[ContextMenu("SetPosition")]
 	private void SetPosition()
 	{
-		if (_anchor == null)
-			return;
+		if (_anchor == null) return;
+
 		var cam = Camera.main;
-		if (cam == null)
-			return;
+		if (cam == null) return;
 
 		_label.ForceMeshUpdate();
 		int lineCount = Mathf.Max(1, _label.textInfo.lineCount);
@@ -190,7 +208,7 @@ public class UI_DialogueBalloon : UI_Base
 
 		Vector3 viewportOffset = new Vector3(
 			_screenOffset.x,
-			_screenOffset.y + _extraOffsetY, 
+			_screenOffset.y + _extraOffsetY,
 			cam.nearClipPlane);
 
 		Vector3 baseWorld = cam.ViewportToWorldPoint(Vector3.zero);
@@ -208,37 +226,30 @@ public class UI_DialogueBalloon : UI_Base
 
 	public IEnumerator CoPresent(string text, float typeSpeed = 0.03f)
 	{
-		// ���̵� ��
 		yield return _cg.FadeCanvas(1f, 0.15f);
-
 
 		if (_typewriter && _textAnimator)
 		{
-			this.gameObject.SetActive(true);
-            
-			Color color = _label.color;
-			color.a = 1f;           // ���ĸ� 1���� ����
-			_label.color = color;
+			gameObject.SetActive(true);
 
-			_typewriter.ShowText(text); // Start Mode : OnShowText�� �����ص־� ��.
+			Color c = _label.color;
+			c.a = 1f;
+			_label.color = c;
 
-			// ���� �� Ŭ��/�����̽��� ��ŵ
+			_typewriter.ShowText(text);
+
 			while (_typewriter.isShowingText)
-			{		
-				// �Է� ����
+			{
 				if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
 				{
-					// ���콺 Ŭ�� �ÿ��� ���� ���
 					if (Input.GetMouseButtonDown(0))
 						Managers.Sound.Play("click_down", Sound.Effect);
 
-					_typewriter.SkipTypewriter(); // ��� ���� ǥ��
+					_typewriter.SkipTypewriter();
 				}
-
 				yield return null;
 			}
 
-			// ���� ���� �� �� ������ ���� Up ����
 			if (Input.GetMouseButton(0))
 			{
 				yield return new WaitUntil(() => Input.GetMouseButtonUp(0));
@@ -246,13 +257,10 @@ public class UI_DialogueBalloon : UI_Base
 			}
 		}
 
-		// ��ü ��� �� Ŭ��/�����̽� ���
 		while (true)
 		{
-			// �Է� ���� (Space �Ǵ� Mouse)
 			if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
 			{
-				// ����� ���콺 Ŭ���� ����
 				if (Input.GetMouseButtonDown(0))
 				{
 					Managers.Sound.Play("click_down", Sound.Effect);
@@ -265,23 +273,20 @@ public class UI_DialogueBalloon : UI_Base
 			yield return null;
 		}
 
-		//// ���̵� �ƿ�
-		//yield return _cg.FadeCanvas(0f, 0.12f);
 		Destroy(gameObject);
 	}
 
 	public IEnumerator CoPresentStacked(string text, float typeSpeed = 0.03f)
 	{
-		//yield return _cg.FadeCanvas(1f, 0.15f);
 		_cg.alpha = 1f;
 
 		PlayPopScale(0.6f, 0.2f);
 
 		if (_typewriter && _textAnimator)
 		{
-			Color color = _label.color;
-			color.a = 1f;           // ���ĸ� 1���� ����
-			_label.color = color;
+			Color c = _label.color;
+			c.a = 1f;
+			_label.color = c;
 
 			_typewriter.ShowText(text);
 			while (_typewriter.isShowingText)
@@ -292,27 +297,26 @@ public class UI_DialogueBalloon : UI_Base
 			}
 		}
 
-		// ��ü ��� �� Ŭ��/Space ���
 		while (!Input.GetMouseButtonDown(0) && !Input.GetKeyDown(KeyCode.Space))
 			yield return null;
-
-		// ���⼭ ����: �ı����� �ʰ� ���ܵ�
 	}
 
-	/// 스택 오프셋을 dy만큼 dur초 동안 부드럽게 올리기(기존 벌룬 전용).
 	public Tween TweenStackOffset(float dyRatio, float dur = 0.12f, bool unscaled = false, Ease ease = Ease.InCubic)
 	{
 		_offsetTween?.Kill();
-		float end = _extraOffsetY + dyRatio; // 비율 단위
+		float end = _extraOffsetY + dyRatio;
 		_offsetTween = DOTween
-			.To(() => _extraOffsetY, v => { _extraOffsetY = v; SetPosition(); }, end, dur)
+			.To(() => _extraOffsetY, v =>
+			{
+				_extraOffsetY = v;
+				SetPosition();
+			}, end, dur)
 			.SetEase(ease)
 			.SetUpdate(unscaled)
 			.SetTarget(this);
 		return _offsetTween;
 	}
 
-	/// 팝업(작게→원래 크기). 새로 생성된 스택 벌룬에서만 호출.
 	public Tween PlayPopScale(float from = 0.85f, float dur = 0.15f, bool unscaled = false, Ease ease = Ease.InCubic)
 	{
 		_popTween?.Kill();
