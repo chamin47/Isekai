@@ -9,12 +9,42 @@ public class OutlineSelectSprite : MonoBehaviour, IPointerEnterHandler, IPointer
     private Material _material;    
     public event System.Action<int> OnSelected;
 
+    [SerializeField] private float _fadeDuration = 0.3f;
+
     private void Awake()
     {
         SpriteRenderer image = GetComponent<SpriteRenderer>();
         var material = image.material;
         _material = new Material(material);
         image.material = _material;
+    }
+
+    public IEnumerator FadeIn()
+    {
+        float duration = _fadeDuration;
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float alpha = Mathf.Clamp01(elapsed / duration);
+            _material.SetFloat("_Alpha", alpha);
+            yield return null;
+        }
+        _material.SetFloat("_Alpha", 1f);
+    }
+
+    public IEnumerator FadeOut()
+    {
+        float duration = _fadeDuration;
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float alpha = 1f - Mathf.Clamp01(elapsed / duration);
+            _material.SetFloat("_Alpha", alpha);
+            yield return null;
+        }
+        _material.SetFloat("_Alpha", 0f);
     }
 
     public void OnPointerEnter(UnityEngine.EventSystems.PointerEventData eventData)

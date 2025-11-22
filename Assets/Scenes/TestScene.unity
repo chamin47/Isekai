@@ -1517,7 +1517,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42769d2ea2388ca4d97c66ab9419fcaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _startID: 
+  _player: {fileID: 609365077}
   _database: {fileID: 0}
   _branchTable: {fileID: 11400000, guid: 7d7dcc10f100f3d4e8717fe72403aa86, type: 2}
   _choiceTable: {fileID: 11400000, guid: 346f2bc18392df14bae458687ca8b301, type: 2}
@@ -1529,7 +1529,7 @@ MonoBehaviour:
   _actorDirector: {fileID: 0}
   _happiness: {fileID: 1840131506}
   _letterBox: {fileID: 144011108}
-  _cameraController: {fileID: 0}
+  _cameraController: {fileID: 1622524272}
   _hookProviderBehaviour: {fileID: 0}
 --- !u!4 &560116831
 Transform:
@@ -1689,7 +1689,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 609365072}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -15.91, y: -4.24, z: 0}
+  m_LocalPosition: {x: 6.61, y: -4.24, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1878,7 +1878,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d1fee058e4299841821017dc8f65a13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 0}
+  _animator: {fileID: 0}
 --- !u!1 &751760473
 GameObject:
   m_ObjectHideFlags: 0
@@ -2383,7 +2383,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d1fee058e4299841821017dc8f65a13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 0}
+  _animator: {fileID: 0}
 --- !u!1 &978231629
 GameObject:
   m_ObjectHideFlags: 0
@@ -2568,9 +2568,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72cb9f05447f8504fa420b9976c1628d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _lady1: {fileID: 1536658610}
-  _lady2: {fileID: 1769667404}
-  _lady3: {fileID: 1363462718}
+  _ladies:
+  - {fileID: 1536658610}
+  - {fileID: 1769667404}
+  - {fileID: 1363462718}
 --- !u!1 &986539987
 GameObject:
   m_ObjectHideFlags: 0
@@ -3938,7 +3939,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d1fee058e4299841821017dc8f65a13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 0}
+  _animator: {fileID: 0}
 --- !u!114 &1363462718
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3952,6 +3953,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _index: 2
+  _fadeDuration: 0.3
 --- !u!61 &1363462719
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -4498,7 +4500,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d1fee058e4299841821017dc8f65a13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 0}
+  _animator: {fileID: 0}
 --- !u!1 &1489015845
 GameObject:
   m_ObjectHideFlags: 0
@@ -4826,6 +4828,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3626916397498700004, guid: 4b755c591b7760d4794687b7e2334aa3, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3626916397498700004, guid: 4b755c591b7760d4794687b7e2334aa3, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 239963b322c26094282923f9b877178f, type: 2}
@@ -4919,7 +4925,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d1fee058e4299841821017dc8f65a13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 0}
+  _animator: {fileID: 0}
 --- !u!114 &1536658610
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4933,6 +4939,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _index: 0
+  _fadeDuration: 0.3
 --- !u!61 &1536658611
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -5584,7 +5591,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d1fee058e4299841821017dc8f65a13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 0}
+  _animator: {fileID: 0}
 --- !u!1001 &1769667398
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5608,6 +5615,10 @@ PrefabInstance:
     - target: {fileID: 3626916397498700004, guid: da553d0ad5b7e744ba8e8efcac18100e, type: 3}
       propertyPath: m_FlipX
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3626916397498700004, guid: da553d0ad5b7e744ba8e8efcac18100e, type: 3}
+      propertyPath: m_Color.a
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3626916397498700004, guid: da553d0ad5b7e744ba8e8efcac18100e, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -5703,7 +5714,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d1fee058e4299841821017dc8f65a13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 0}
+  _animator: {fileID: 0}
 --- !u!114 &1769667404
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5717,6 +5728,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _index: 1
+  _fadeDuration: 0.3
 --- !u!61 &1769667405
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -6150,7 +6162,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d1fee058e4299841821017dc8f65a13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 0}
+  _animator: {fileID: 0}
 --- !u!1 &2060495446
 GameObject:
   m_ObjectHideFlags: 0
