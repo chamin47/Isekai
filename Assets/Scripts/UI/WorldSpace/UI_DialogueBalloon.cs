@@ -77,7 +77,8 @@ public class UI_DialogueBalloon : UI_Base
 
 		if (float.TryParse(numStr, out float value))
 		{
-			_sizeScaleFactor = value / 100f;
+			// TMP 실제 높이 증가량에 근접하도록 sqrt 기반으로 변환
+			_sizeScaleFactor = Mathf.Sqrt(value / 100f);
 		}
 	}
 
@@ -112,7 +113,7 @@ public class UI_DialogueBalloon : UI_Base
 	{
 		gameObject.SetActive(true);
 
-		// ★ 글자 알파 복구 (기존 Init의 0을 무조건 1로)
+		// 글자 알파 복구 (기존 Init의 0을 무조건 1로)
 		Color c = _label.color;
 		c.a = 1f;
 		_label.color = c;
@@ -180,12 +181,18 @@ public class UI_DialogueBalloon : UI_Base
 		float preferWidth;
 		if (_isBrIncluded)
 		{
+			_label.enableWordWrapping = false;
+			_label.ForceMeshUpdate();
+
 			float charWidthUnit = 0.12f;
 			float baseWidth = 1.1f;
 			preferWidth = Mathf.Clamp((baseWidth + _maxCharCount * charWidthUnit) * _sizeScaleFactor, 1f, 4.4f);
 		}
 		else
 		{
+			_label.enableWordWrapping = true;
+			_label.ForceMeshUpdate();
+
 			preferWidth = Mathf.Clamp((_label.preferredWidth + 0.5f) * _sizeScaleFactor, 1f, 4.4f);
 		}
 
