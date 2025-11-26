@@ -293,6 +293,58 @@ public static class Extension
 
 		return sb.ToString().Trim();
 	}
+
+	public static string KeepOnlySizeTag(this string input)
+	{
+		if (string.IsNullOrEmpty(input))
+			return string.Empty;
+
+		System.Text.StringBuilder sb = new();
+		System.Text.StringBuilder temp = new();
+		bool insideCurly = false;
+		bool insideAngle = false;
+
+		foreach (char c in input)
+		{
+			if (c == '{') { insideCurly = true; continue; }
+			if (c == '}') { insideCurly = false; continue; }
+
+			if (insideCurly)
+				continue;
+
+			if (c == '<')
+			{
+				insideAngle = true;
+				temp.Clear();
+				continue;
+			}
+
+			if (c == '>')
+			{
+				insideAngle = false;
+
+				string tag = temp.ToString();
+
+				// "<size=60%>" 형태만 살린다.
+				if (tag.StartsWith("size=") && tag.EndsWith("%"))
+				{
+					sb.Append('<').Append(tag).Append('>');
+				}
+
+				continue;
+			}
+
+			if (insideAngle)
+			{
+				temp.Append(c);
+				continue;
+			}
+
+			sb.Append(c);
+		}
+
+		return sb.ToString().Trim();
+	}
 	#endregion
 
 	/// <summary>

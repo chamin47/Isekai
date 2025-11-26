@@ -29,6 +29,7 @@ public class UI_DialogueBalloon : UI_Base
 	// 글자 크기 리치 태그 스케일 저장
 	private float _sizeScaleFactor = 1f;
 
+	private string _pureText;
 	public void AddStackOffset(float dy)
 	{
 		_extraOffsetY += dy;
@@ -46,11 +47,12 @@ public class UI_DialogueBalloon : UI_Base
 		color.a = 0f;
 		_label.color = color;
 
+		_pureText = text.RemoveRichTags();
+
 		// 리치태그에서 size% 추출 후 캐싱
 		ExtractSizeScale(text);
 
-		string pureText = text.RemoveRichTags();
-		_label.text = pureText;
+		_label.text = text.KeepOnlySizeTag();
 
 		// 문자 수 계산
 		_maxCharCount = CharCountCalculater(text);
@@ -77,10 +79,11 @@ public class UI_DialogueBalloon : UI_Base
 
 		if (float.TryParse(numStr, out float value))
 		{
-			// TMP 실제 높이 증가량에 근접하도록 sqrt 기반으로 변환
-			_sizeScaleFactor = Mathf.Sqrt(value / 100f);
+			_sizeScaleFactor = Mathf.Pow(value / 100f, 0.75f);
 		}
 	}
+
+	private int _lineCount;
 
 	private int CharCountCalculater(string text)
 	{
@@ -90,6 +93,8 @@ public class UI_DialogueBalloon : UI_Base
 		{
 			_isBrIncluded = true;
 			lines = text.Split(new string[] { "<br>" }, System.StringSplitOptions.None);
+
+			_lineCount = lines.Length;
 		}
 		else
 		{
@@ -170,17 +175,18 @@ public class UI_DialogueBalloon : UI_Base
 	private void FixBubbleSize()
 	{
 		_label.ForceMeshUpdate();
-		int lineCount = Mathf.Max(1, _label.textInfo.lineCount);
+
+		int lineCount; 
 
 		float baseHeight = 0.7f;
 		float perLineIncrease = 0.23f;
 		float padding = 0.1f;
 
-		float preferHeight = (baseHeight + padding + (lineCount - 1) * perLineIncrease) * _sizeScaleFactor;
-
 		float preferWidth;
 		if (_isBrIncluded)
 		{
+			lineCount = _lineCount;
+
 			_label.enableWordWrapping = false;
 			_label.ForceMeshUpdate();
 
@@ -190,11 +196,20 @@ public class UI_DialogueBalloon : UI_Base
 		}
 		else
 		{
+			lineCount = Mathf.Max(1, _label.textInfo.lineCount);
+
+			string temp = _label.text;
+			_label.text = _pureText;
+
 			_label.enableWordWrapping = true;
 			_label.ForceMeshUpdate();
 
 			preferWidth = Mathf.Clamp((_label.preferredWidth + 0.5f) * _sizeScaleFactor, 1f, 4.4f);
+
+			_label.text = temp;
 		}
+
+		float preferHeight = (baseHeight + padding + (lineCount - 1) * perLineIncrease)/* * _sizeScaleFactor*/;
 
 		_image.rectTransform.sizeDelta = new Vector2(preferWidth, preferHeight);
 	}
@@ -208,7 +223,17 @@ public class UI_DialogueBalloon : UI_Base
 		if (cam == null) return;
 
 		_label.ForceMeshUpdate();
-		int lineCount = Mathf.Max(1, _label.textInfo.lineCount);
+		int lineCount;
+
+		if (_isBrIncluded)
+		{
+			lineCount = _lineCount;
+		}
+		else
+		{
+			lineCount = Mathf.Max(1, _label.textInfo.lineCount);
+		}
+		
 		float lineOffsetY = (lineCount - 1) * 0.1f * _root.lossyScale.y;
 
 		Vector3 anchorWorld = _anchor.position;
@@ -313,11 +338,7 @@ public class UI_DialogueBalloon : UI_Base
 		_offsetTween?.Kill();
 		float end = _extraOffsetY + dyRatio;
 		_offsetTween = DOTween
-			.To(() => _extraOffsetY, v =>
-			{
-				_extraOffsetY = v;
-				SetPosition();
-			}, end, dur)
+			.To(() => _extraOffsetY, v => { _extraOffsetY = v; SetPosition(); }, end, dur)
 			.SetEase(ease)
 			.SetUpdate(unscaled)
 			.SetTarget(this);

@@ -17,6 +17,8 @@ public class UI_InputBalloon : UI_Base
 	[SerializeField] private TMP_Text promptLabel;
 	[SerializeField] private TMP_InputField inputField;
 
+	[SerializeField] private TMP_Text shadowText;   // 측정용 텍스트
+
 	[Header("Layout")]
 	[SerializeField] private Vector2 screenOffset = new Vector2(0, 80f);
 	[SerializeField] private bool rebuildWhileTyping = true;
@@ -108,20 +110,21 @@ public class UI_InputBalloon : UI_Base
 		}
 	}
 
-
 	private void FixBubbleSize()
 	{
-		Debug.Log($"Length: {promptLabel.text.Length} Width: {promptLabel.preferredWidth} Height: {promptLabel.preferredHeight}");
+		// ShadowText에 입력 텍스트 복사
+		shadowText.text = inputField.text;
 
-		//float preferredWidth = Mathf.Clamp(promptLabel.preferredWidth * 0.02f , 0.7f, 6f);
+		shadowText.ForceMeshUpdate();
 
-		float preferredWidth = Mathf.Clamp(Mathf.Sqrt(promptLabel.preferredWidth * 0.05f), 0.7f, 6f); // 루트 기반 보정(휴리스틱)
-		float preferredHeight = Mathf.Max(promptLabel.preferredHeight * 0.05f - 0.05f, 0.7f);
+		float baseWidth = 0.55f;
+		float minWidth = 1f;
+		float maxWidth = 6f;
 
-		Vector2 preferredSize = new Vector2(preferredWidth, preferredHeight);
+		float width = baseWidth + shadowText.preferredWidth * 0.01f;
+		width = Mathf.Clamp(width, minWidth, maxWidth);
 
-		// root 혹은 배경 이미지 RectTransform 크기 갱신
-		_image.rectTransform.sizeDelta = preferredSize;
+		_image.rectTransform.sizeDelta = new Vector2(width, 0.7f);
 	}
 
 	private void SetPosition()
