@@ -15,8 +15,8 @@ public class LibraryIDHooks : MonoBehaviour, IDialogueHookProvider
 	[SerializeField] private HappinessHUD _hud;
 
 	[Header("Anchors")]
-	[SerializeField] private Vector3 _pos2 = new Vector3(22.23f, -4.86f, 0);
-	[SerializeField] private Vector3 _pos3 = new Vector3(25.32f, -4.86f, 0);               
+	[SerializeField] private Vector3 _pos2 = new Vector3(22.23f, -3.45f, 0);
+	[SerializeField] private Vector3 _pos3 = new Vector3(24.54f, -3.45f, 0);               
 
 	[Header("Move settings")]
 	[SerializeField] private float _walkSpeed = 2.2f;
@@ -56,12 +56,13 @@ public class LibraryIDHooks : MonoBehaviour, IDialogueHookProvider
 				if (_hud != null)
 					_hud.gameObject.SetActive(false);
 
-				//float baseH = Screen.height * 0.1f;
-				//float overshoot = baseH;
-				//float settle = baseH * 0.85f;        
+				{
+					float baseH = Screen.height * 0.1f;
+					float overshoot = baseH;
+					float settle = baseH * 0.85f;
 
-				//yield return _letterbox.OpenOvershoot(settle, overshoot, 250f);
-
+					yield return _letterbox.OpenOvershoot(settle, overshoot, 250f);
+				}
 				yield break;
 
 			case "2001002":
@@ -132,8 +133,13 @@ public class LibraryIDHooks : MonoBehaviour, IDialogueHookProvider
 
 					book.EnableClick();
 
-				}
+					float baseH = Screen.height * 0.1f;  // 네가 쓰던 기준
+					float overshoot = baseH;
+					float settle = baseH * 0.85f;        // 10 → 7 느낌으로 70%
 
+					yield return _letterbox.CloseOvershoot(settle, overshoot, 170f);
+				}
+				
 				yield break;
 
 			default:
