@@ -56,13 +56,7 @@ public class LibraryIDHooks : MonoBehaviour, IDialogueHookProvider
 				if (_hud != null)
 					_hud.gameObject.SetActive(false);
 
-				{
-					float baseH = Screen.height * 0.1f;
-					float overshoot = baseH;
-					float settle = baseH * 0.85f;
 
-					yield return _letterbox.OpenOvershoot(settle, overshoot, 250f);
-				}
 				yield break;
 
 			case "2001002":
@@ -80,12 +74,26 @@ public class LibraryIDHooks : MonoBehaviour, IDialogueHookProvider
 					_moveCo = StartCoroutine(CoMoveTo(_librarian, _pos2, _walkSpeed, _arriveEps));
 
 					StartCoroutine(CoLibrarianFootSound());
+
 				}
 				yield break;
 
 			case "2001005":
 				if (_moveCo != null)
 					yield return _moveCo;
+
+				var anim = _librarian.GetComponentInChildren<Animator>();
+				anim.CrossFade("Library_ch_idle", 0.05f);
+
+				{
+					float baseH = Screen.height * 0.1f;
+					float overshoot = baseH;
+					float settle = baseH * 0.85f;
+
+					StartCoroutine(_letterbox.OpenOvershoot(settle, overshoot, 250f));
+				}
+
+				yield return new WaitForSeconds(1f);
 				yield break;
 
 			case "2001009":
@@ -133,9 +141,9 @@ public class LibraryIDHooks : MonoBehaviour, IDialogueHookProvider
 
 					book.EnableClick();
 
-					float baseH = Screen.height * 0.1f;  // 네가 쓰던 기준
+					float baseH = Screen.height * 0.1f;  
 					float overshoot = baseH;
-					float settle = baseH * 0.85f;        // 10 → 7 느낌으로 70%
+					float settle = baseH * 0.85f;        // 10 → 8.5 느낌으로 85%
 
 					yield return _letterbox.CloseOvershoot(settle, overshoot, 170f);
 				}

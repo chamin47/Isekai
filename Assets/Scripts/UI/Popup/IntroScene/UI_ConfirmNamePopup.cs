@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using DG.Tweening;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -7,15 +8,16 @@ using UnityEngine.UI;
 public class UI_ConfirmNamePopup : UI_Popup
 {
 	[Header("Texts")]
-	[SerializeField] private TMP_Text _questionText;   
+	[SerializeField] private TMP_Text _questionText;
 	[SerializeField] private TMP_Text _yesText;
 	[SerializeField] private TMP_Text _noText;
 
 	[Header("FX")]
 	[SerializeField] private Image _fadeImage;
-
+	[SerializeField] private Image _popupOverlay;
 	[SerializeField] private GameObject _infoImage;
 
+	[SerializeField] private RectTransform _root;
 
 	private Color _initColor;
 
@@ -31,12 +33,18 @@ public class UI_ConfirmNamePopup : UI_Popup
 
 		_questionText.text = "당신의 이름이 맞나요?";
 
-		UI_EventHandler _yesTextEvent = _yesText.GetComponent<UI_EventHandler>(); 
-		_yesTextEvent.OnPointerEnterHandler += (PointerEventData data) => { OnTextFocus(_yesText); OffTextFocus(_noText);
+		_infoImage.GetComponent<CanvasGroup>().alpha = 0f;
+
+		UI_EventHandler _yesTextEvent = _yesText.GetComponent<UI_EventHandler>();
+		_yesTextEvent.OnPointerEnterHandler += (PointerEventData data) =>
+		{
+			OnTextFocus(_yesText); OffTextFocus(_noText);
 			_isYesFocused = true;
 			_isNoFocused = false;
 		};
-		_yesTextEvent.OnPointerExitHandler += (PointerEventData data) => { OffTextFocus(_yesText); OffTextFocus(_noText); 
+		_yesTextEvent.OnPointerExitHandler += (PointerEventData data) =>
+		{
+			OffTextFocus(_yesText); OffTextFocus(_noText);
 			_isYesFocused = false;
 			_isNoFocused = false;
 		};
@@ -63,6 +71,8 @@ public class UI_ConfirmNamePopup : UI_Popup
 		{
 			OnClickNoButton();
 		};
+
+		PlayPopupScale();
 	}
 
 	private void OnClickYesButton()
@@ -75,9 +85,7 @@ public class UI_ConfirmNamePopup : UI_Popup
 		if (_isTransitioning) return;
 		_isTransitioning = true;
 
-		Managers.UI.ClosePopupUI(this);
-		Managers.UI.ClosePopupUI();
-		Managers.UI.ShowPopupUI<UI_EditNamePopup>(); // 0004_N
+		PlayPopupScaleReverse();
 	}
 
 	/// <summary>
@@ -106,4 +114,43 @@ public class UI_ConfirmNamePopup : UI_Popup
 
 	public void OnTextFocus(TMP_Text text) => text.color = Color.red;
 	public void OffTextFocus(TMP_Text text) => text.color = _initColor;
+
+	private void PlayPopupScale()
+	{
+		// 팝업 초기 크기
+		_root.localScale = Vector3.one * 0.7f;
+
+		// 배경 초기 알파
+		Color color = _popupOverlay.color;
+		color.a = 0f;
+		_popupOverlay.color = color;
+
+		// 배경 먼저 어둡게
+		_popupOverlay.DOFade(0.77f, 0.7f)
+			.SetEase(Ease.Linear)
+			.OnComplete(() =>
+			{
+				_infoImage.GetComponent<CanvasGroup>().alpha = 1f;
+				// 팝업 나중에 커지기
+				_root.DOScale(1f, 0.32f)
+					 .SetEase(Ease.OutBack);
+			});
+	}
+
+	private void PlayPopupScaleReverse()
+	{
+		_root.DOScale(0f, 0.32f)
+					 .SetEase(Ease.Linear)
+					 .OnComplete(() =>
+					 {
+						 _popupOverlay.DOFade(0f, 0.7f)
+						 .SetEase(Ease.Linear)
+						 .OnComplete(() =>
+						 {
+							 Managers.UI.ClosePopupUI(this);
+							 Managers.UI.ClosePopupUI();
+							 Managers.UI.ShowPopupUI<UI_EditNamePopup>(); // 0004_N});
+						 });
+					 });
+	}
 }

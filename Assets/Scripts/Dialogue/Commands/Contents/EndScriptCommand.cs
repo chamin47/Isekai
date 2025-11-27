@@ -21,9 +21,15 @@ public class EndScriptCommand : IDialogueCommand
         if (context.CameraController != null)
             context.CameraController.EnableCameraUpdate();
 
-        yield return context.LetterBox.HideLetterBox();
-        
-        // EndScript는 대화 종료이므로 NextID를 null로 설정
-        context.NextID = null;
+		float baseH = Screen.height * 0.1f;  
+		float overshoot = baseH;
+		float settle = baseH * 0.85f;        
+
+		UILetterboxOverlay letterbox = UILetterboxOverlay.GetOrCreate();
+
+		yield return letterbox.CloseOvershoot(settle, overshoot, 170f);
+
+		// EndScript는 대화 종료이므로 NextID를 null로 설정
+		context.NextID = null;
     }
 }

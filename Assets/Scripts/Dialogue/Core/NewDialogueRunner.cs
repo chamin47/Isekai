@@ -152,8 +152,13 @@ public class NewDialogueRunner : MonoBehaviour
         if (_happiness != null)
             _happiness.Disappear();
 
-        // 레터박스 표시
-        _letterBox.gameObject.SetActive(true);
-        yield return _letterBox.ShowLetterBox();
-    }
+		// 레터박스 표시
+		float baseH = Screen.height * 0.1f;
+		float overshoot = baseH;
+		float settle = baseH * 0.85f;
+
+        UILetterboxOverlay letterbox = UILetterboxOverlay.GetOrCreate();
+
+		yield return letterbox.OpenOvershoot(settle, overshoot, 250f);
+	}
 }

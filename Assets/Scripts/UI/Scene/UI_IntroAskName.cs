@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System;
 using System.Collections;
 using TMPro;
@@ -29,6 +30,9 @@ public class UI_IntroAskName : UI_Scene
 
 	const string LINE = "당신의 이름은 무엇인가요?";
 
+	[SerializeField] private RectTransform _root;
+	[SerializeField] private Image _popupOverlay;
+
 	public override void Init()
 	{
 		base.Init();
@@ -49,11 +53,11 @@ public class UI_IntroAskName : UI_Scene
 		_input.characterLimit = 4;
 		_input.lineType = TMP_InputField.LineType.SingleLine;
 		_input.contentType = TMP_InputField.ContentType.Standard;
-		_input.customCaretColor = true;                        
+		_input.customCaretColor = true;
 		_input.caretColor = _input.textComponent.color;
 		_input.caretWidth = 2;
 
-		_input.onSubmit.AddListener((value) => { StartCoroutine(OnSubmit(value)); } );
+		_input.onSubmit.AddListener((value) => { StartCoroutine(OnSubmit(value)); });
 
 		// 입력 중 공백 제거하고 한글 조합 안정성
 		_input.onValueChanged.AddListener(val =>
@@ -63,16 +67,44 @@ public class UI_IntroAskName : UI_Scene
 				_input.text = val.Replace(" ", "");
 		});
 
+		//PlayPopupScale();
+
 		StartCoroutine(Flow());
+	}
+
+	private void PlayPopupScale()
+	{
+		// 팝업 초기 크기
+		_root.localScale = Vector3.one * 0.7f;
+
+		// 배경 초기 알파
+		Color color = _popupOverlay.color;
+		color.a = 0f;
+		_popupOverlay.color = color;
+
+		// 배경 먼저 어둡게
+		_popupOverlay.DOFade(0.77f, 0.7f)
+			.SetEase(Ease.Linear)
+			.OnComplete(() =>
+			{
+				// 팝업 나중에 커지기
+				_questionGroup.alpha = 1f;
+				_root.DOScale(1f, 0.32f)
+					 .SetEase(Ease.OutBack);
+			});
 	}
 
 	IEnumerator Flow()
 	{
-		yield return WaitForSecondsCache.Get(2f);
+		yield return WaitForSecondsCache.Get(1f);
+
+		PlayPopupScale();
+
+		yield return WaitForSecondsCache.Get(1f);
 
 		// 0001 : 질문 타이핑
 		Managers.Sound.Play("intro_typing2", Sound.SubEffect);
-		_questionGroup.alpha = 1f;
+		
 		yield return _questionText.CoTypingEffect(LINE, 0.075f);
 		Managers.Sound.PauseSubEffect();
 
@@ -122,5 +154,11 @@ public class UI_IntroAskName : UI_Scene
 		yield return _fadeImage.CoFadeOut(3f);
 		Managers.UI.ShowPopupUI<UI_IntroBookPopup>(); // 0003
 		gameObject.SetActive(false);
+	}
+
+	IEnumerator DelayedFlow()
+	{
+		yield return new WaitForSeconds(0.22f);
+		StartCoroutine(Flow());
 	}
 }
