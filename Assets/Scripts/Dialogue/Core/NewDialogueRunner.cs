@@ -32,13 +32,12 @@ public class NewDialogueRunner : MonoBehaviour
     [SerializeField] private MonoBehaviour _hookProviderBehaviour;
     private IDialogueHookProvider _hooks;
 
-    private Coroutine runCo;
+    private Coroutine _runCo;
 
     private DialogueContext _context;
     private DialogueCommandFactory _commandFactory;
-    private Coroutine _runCo;
 
-    void Awake()
+    private void Start()
     {
         InitializeDatabase();
         InitializeHooks();
@@ -85,8 +84,8 @@ public class NewDialogueRunner : MonoBehaviour
 
     public void Play(string id, ActorDirectorSimple actorDirector, Action<int> endEvent = null)
     {
-        if (runCo != null)
-            StopCoroutine(runCo);
+        if (_runCo != null)
+            StopCoroutine(_runCo);
 
         // 배우 설정
         _actorDirector = actorDirector;

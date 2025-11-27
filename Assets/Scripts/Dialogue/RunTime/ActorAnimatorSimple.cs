@@ -78,6 +78,7 @@ public class ActorAnimatorSimple : MonoBehaviour
 		if (currentState.IsName(stateName))
 			yield break;
 
+		Debug.Log("PlayAnim: " + stateName + " dur: " + dur);
         _animator.CrossFade(stateName, 0.05f, 0, 0f);
 
 		if (dur > 0f) 

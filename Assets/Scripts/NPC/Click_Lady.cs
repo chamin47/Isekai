@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class Click_Lady : MonoBehaviour
 {
-    [SerializeField] private OutlineSelectSprite _lady1;
-    [SerializeField] private OutlineSelectSprite _lady2;
-    [SerializeField] private OutlineSelectSprite _lady3;
+    [SerializeField] private List<OutlineSelectSprite> _ladies;
 
     public event System.Action<int> OnClicked;
 
@@ -14,19 +12,36 @@ public class Click_Lady : MonoBehaviour
     private int _clickedIndex = -1;
     private void Awake()
     {
-        _lady1.enabled = false;
-        _lady2.enabled = false;
-        _lady3.enabled = false;
-        _lady1.OnSelected += OnClickLady;
-        _lady2.OnSelected += OnClickLady;
-        _lady3.OnSelected += OnClickLady;
+        for (int i = 0; i < _ladies.Count; i++)
+        {
+            _ladies[i].OnSelected += OnClickLady;
+        }
+
+        ClickDisable();
     }
 
     private void OnDestroy()
     {
-        _lady1.OnSelected -= OnClickLady;
-        _lady2.OnSelected -= OnClickLady;
-        _lady3.OnSelected -= OnClickLady;
+        for (int i = 0; i < _ladies.Count; i++)
+        {
+            _ladies[i].OnSelected -= OnClickLady;
+        }
+    }
+
+    private void ClickEnable()
+    {
+        for (int i = 0; i < _ladies.Count; i++)
+        {
+            _ladies[i].enabled = true;
+        }
+    }
+
+    private void ClickDisable()
+    {
+        for (int i = 0; i < _ladies.Count; i++)
+        {
+            _ladies[i].enabled = false;
+        }
     }
 
     private void OnClickLady(int index)
@@ -38,14 +53,25 @@ public class Click_Lady : MonoBehaviour
 
     public IEnumerator ClickLady(System.Action<int> onClicked)
     {
-        _lady1.enabled = true;
-        _lady2.enabled = true;
-        _lady3.enabled = true;
+        ClickEnable();
         yield return new WaitUntil(() => isClicked);
         Debug.Log("Clicked Lady Index: " + _clickedIndex);
         onClicked?.Invoke(_clickedIndex);
-        _lady1.enabled = false;
-        _lady2.enabled = false;
-        _lady3.enabled = false;
+
+        List<Coroutine> fadeOutCoroutines = new List<Coroutine>();
+        for(int i = 0; i < _ladies.Count; i++)
+        {
+            if (i != _clickedIndex)
+            {
+                fadeOutCoroutines.Add(StartCoroutine(_ladies[i].FadeOut()));
+            }
+        }
+
+        foreach(var coroutine in fadeOutCoroutines)
+        {
+            yield return coroutine;
+        }
+
+        ClickDisable();
     }
 }

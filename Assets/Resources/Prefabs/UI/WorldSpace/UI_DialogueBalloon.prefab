@@ -185,9 +185,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   useTypeWriter: 1
   startTypewriterMode: 3
-  hideAppearancesOnSkip: 0
+  hideAppearancesOnSkip: 1
   hideDisappearancesOnSkip: 0
-  triggerEventsOnSkip: 0
+  triggerEventsOnSkip: 1
   resetTypingSpeedAtStartup: 1
   disappearanceOrientation: 0
   triggerShowedAfterEffectsEnd: 0
@@ -544,7 +544,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 16
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &4936069217011760002
 MonoBehaviour:
   m_ObjectHideFlags: 0
