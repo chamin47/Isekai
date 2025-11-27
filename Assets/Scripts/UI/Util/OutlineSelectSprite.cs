@@ -21,6 +21,8 @@ public class OutlineSelectSprite : MonoBehaviour, IPointerEnterHandler, IPointer
 
     public IEnumerator FadeIn()
     {
+        this.gameObject.SetActive(true);
+
         float duration = _fadeDuration;
         float elapsed = 0f;
         while (elapsed < duration)
@@ -45,6 +47,8 @@ public class OutlineSelectSprite : MonoBehaviour, IPointerEnterHandler, IPointer
             yield return null;
         }
         _material.SetFloat("_Alpha", 0f);
+
+        this.gameObject.SetActive(false);
     }
 
     public void OnPointerEnter(UnityEngine.EventSystems.PointerEventData eventData)
