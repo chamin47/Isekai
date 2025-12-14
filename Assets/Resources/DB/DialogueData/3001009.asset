@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 3001009
   speaker: "\uC601\uC560 2"
-  animName: Ladies_jump_2, Ladies_1, Ladies_3
+  animName: null
   eventName: ShowText
   eventParam: null
   nextID: 3001010
