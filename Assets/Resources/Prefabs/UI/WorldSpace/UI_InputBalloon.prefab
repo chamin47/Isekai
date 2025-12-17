@@ -142,6 +142,7 @@ MonoBehaviour:
   fadeIn: 0.15
   fadeOut: 0.12
   caretBlinkRate: 0.6
+  _scale: 0.02
 --- !u!1 &4703386583941016078
 GameObject:
   m_ObjectHideFlags: 0
@@ -356,7 +357,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 9295ca0af9952924b8f4d5b899dcfbcb, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 472fe9cc089e9364a8fc35cc3cedb509, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
