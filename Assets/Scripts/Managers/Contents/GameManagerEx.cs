@@ -24,6 +24,14 @@ public class GameManagerEx
     // 현재 미니게임이 대화모드인지 아닌지 체크
     public bool DialogueActive { get; set; } = false;
 
+
+    /// <summary>
+    /// intro에 필요한 저장 데이터
+    /// </summary>
+
+    public bool IsIntroCommentSaved = false;
+    public string IntroCommentText;
+
     public void Init()
     {
 
