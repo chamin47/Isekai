@@ -30,6 +30,9 @@ public class UI_DialogueBalloon : UI_Base
 	private float _sizeScaleFactor = 1f;
 
 	private string _pureText;
+
+	private bool _isInitialized;   // Init이 완료되었는지
+	private bool _layoutFixed;     // 레이아웃 계산 완료되었는지
 	public void AddStackOffset(float dy)
 	{
 		_extraOffsetY += dy;
@@ -57,11 +60,26 @@ public class UI_DialogueBalloon : UI_Base
 		// 문자 수 계산
 		_maxCharCount = CharCountCalculater(text);
 
-		// 말풍선 크기 조절
-		FixBubbleSize();
+		_isInitialized = true;
+		_layoutFixed = false;
 
-		// 위치 갱신
+		if (gameObject.activeInHierarchy)
+		{
+			FixBubbleSize();
+			SetPosition();
+			_layoutFixed = true;
+		}
+	}
+
+	private void OnEnable()
+	{
+		if (!_isInitialized || _layoutFixed)
+			return;
+
+		FixBubbleSize();
 		SetPosition();
+
+		_layoutFixed = true;
 	}
 
 	private void ExtractSizeScale(string text)
