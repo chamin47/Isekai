@@ -702,6 +702,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4750923791182429461, guid: 1c3db6df8cc82bb42b1fbaae0ec2131a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 519455573}
+    - targetCorrespondingSourceObject: {fileID: 4750923791182429461, guid: 1c3db6df8cc82bb42b1fbaae0ec2131a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 519455575}
     - targetCorrespondingSourceObject: {fileID: 1387300714311248513, guid: 1c3db6df8cc82bb42b1fbaae0ec2131a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1926076735}
@@ -963,6 +966,18 @@ PolygonCollider2D:
       - {x: 1.46875, y: 1.0625}
       - {x: 1.4375, y: 1.3125}
   m_UseDelaunayMesh: 0
+--- !u!114 &519455575
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519455570}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4eb3051440883ed40aacd867bf3517f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &556145836
 PrefabInstance:
   m_ObjectHideFlags: 0
