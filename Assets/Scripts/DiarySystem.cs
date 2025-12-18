@@ -26,6 +26,8 @@ class DiaryContent
 
 public class DiarySystem: MonoBehaviour
 {
+    [SerializeField] private Button closeButton;
+
     [Header("첫번째 페이지")]
     [SerializeField] private TMP_InputField commentInput;
     [SerializeField] private Button saveButton;
@@ -42,6 +44,8 @@ public class DiarySystem: MonoBehaviour
     [SerializeField] private float effectTime = 2f;
     private void Start()
     {
+        closeButton.onClick.AddListener(() => this.gameObject.SetActive(false));
+
         nextButton.onClick.AddListener(OnNextButtonClick);
         prevButton.onClick.AddListener(OnPrevButtonClick);
         saveButton.onClick.AddListener(OnSaveButtonClick);
@@ -57,6 +61,14 @@ public class DiarySystem: MonoBehaviour
             saveButton.gameObject.SetActive(false);
             commentInput.text = Managers.Game.IntroCommentText;
             commentInput.readOnly = true;
+        }
+    }
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            this.gameObject.SetActive(false);
         }
     }
 
