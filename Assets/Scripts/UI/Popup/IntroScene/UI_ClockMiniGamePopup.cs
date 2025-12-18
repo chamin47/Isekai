@@ -140,6 +140,12 @@ public class UI_ClockMiniGamePopup : UI_Popup
 	private void OnCloseButton()
 	{
 		Managers.UI.ClosePopupUI(this);
+
+		if (ClockMiniGameModel.IsSolved && CalendarInputModel.IsSolved)
+		{
+			DoorController door = FindAnyObjectByType<DoorController>();
+			door.Open();
+		}
 	}
 
 	private void OnSuccess()
@@ -156,6 +162,12 @@ public class UI_ClockMiniGamePopup : UI_Popup
 		Debug.Log("성공!");
 
 		// 문 개방 이벤트 트리거
+
+		if (ClockMiniGameModel.IsSolved && CalendarInputModel.IsSolved)
+		{
+			DoorController door = FindAnyObjectByType<DoorController>();
+			door.Open();
+		}		
 	}
 
 	private IEnumerator CoPlayIntro()

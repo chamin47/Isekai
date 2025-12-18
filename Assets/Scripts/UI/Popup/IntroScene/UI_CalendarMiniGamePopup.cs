@@ -101,6 +101,12 @@ public class UI_CalendarMiniGamePopup : UI_Popup
 	private void OnCloseButton()
 	{
 		Managers.UI.ClosePopupUI(this);
+
+		if (ClockMiniGameModel.IsSolved && CalendarInputModel.IsSolved)
+		{
+			DoorController door = FindAnyObjectByType<DoorController>();
+			door.Open();
+		}
 	}
 
 	private IEnumerator CoSuccess()
