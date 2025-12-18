@@ -1,13 +1,13 @@
-using TMPro;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CalendarHintController
 {
-	private readonly TMP_Text _left;
-	private readonly TMP_Text _right;
+	private readonly Image _left;
+	private readonly Image _right;
 
-	public CalendarHintController(TMP_Text left, TMP_Text right)
+	public CalendarHintController(Image left, Image right)
 	{
 		_left = left;
 		_right = right;
@@ -15,14 +15,17 @@ public class CalendarHintController
 
 	public IEnumerator CoHintLoop()
 	{
-		while (true)
-		{
-			// 1분 대기
-			yield return new WaitForSeconds(60f);
+		// 1분 대기
+		yield return new WaitForSeconds(60f);
 
+		while (!CalendarInputModel.IsSolved)
+		{		
 			// 2와 0만 점멸 (총 4회)
 			for (int i = 0; i < 4; i++)
 			{
+				if (CalendarInputModel.IsSolved)    // 해결 시 즉시 종료
+					yield break;
+
 				SetVisible(false);
 				yield return new WaitForSeconds(1f);
 				SetVisible(true);

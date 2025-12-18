@@ -9,8 +9,8 @@ public class UI_CalendarMiniGamePopup : UI_Popup
 	[SerializeField] private Button _checkButton;
 	[SerializeField] private Button _closeButton;
 	[SerializeField] private CanvasGroup _checkCanvas;
-	[SerializeField] private TMP_Text _hintLeft;
-	[SerializeField] private TMP_Text _hintRight;
+	[SerializeField] private Image _hintLeft;
+	[SerializeField] private Image _hintRight;
 
 	[SerializeField] private RectTransform _slotRoot;
 	[SerializeField] private Image _slotBackground; // 색상 변경용
@@ -57,7 +57,19 @@ public class UI_CalendarMiniGamePopup : UI_Popup
 		_closeButton.onClick.AddListener(OnCloseButton);
 
 		_hintController = new CalendarHintController(_hintLeft, _hintRight);
-		_hintCoroutine = StartCoroutine(_hintController.CoHintLoop());
+
+		if (!CalendarInputModel.IsSolved)
+			_hintCoroutine = StartCoroutine(_hintController.CoHintLoop());
+
+		RestoreSolvedState();
+	}
+
+	private void Update()
+	{
+		if (Input.GetKeyDown(KeyCode.Escape))
+		{
+			Managers.UI.ClosePopupUI();
+		}
 	}
 
 	/// <summary>
@@ -147,7 +159,24 @@ public class UI_CalendarMiniGamePopup : UI_Popup
 		_failCoroutine = null;
 	}
 
+	private void RestoreSolvedState()
+	{
+		if (!CalendarInputModel.IsSolved)
+			return;
 
+		// 체크 버튼 제거
+		if (_checkButton != null)
+			Destroy(_checkButton.gameObject);
+
+		// 체크 캔버스 표시
+		_checkCanvas.alpha = 1f;
+		_checkCanvas.blocksRaycasts = true;
+		_checkCanvas.interactable = true;
+
+		// 모든 Digit 잠금
+		foreach (var digit in _digits)
+			digit.Lock();
+	}
 
 	private void OnDisable()
 	{
