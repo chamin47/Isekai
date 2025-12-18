@@ -32,4 +32,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/TrueEnding_NoRouteScene.unity
     guid: 47a447283d9476842b5a4b11823f41a8
+  - enabled: 1
+    path: Assets/Scenes/DreamTestScene.unity
+    guid: 3a786dcee12ab7e4e9835276adcd48d9
   m_configObjects: {}
