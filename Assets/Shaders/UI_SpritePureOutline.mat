@@ -29,9 +29,9 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _AlphaCutoff: 0
+    - _AlphaCutoff: 0.62
     - _ColorMask: 15
-    - _OutlineThickness: 13
+    - _OutlineThickness: 15
     - _Stencil: 0
     - _StencilComp: 8
     - _StencilOp: 0
