@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 /// <summary>
@@ -38,6 +39,8 @@ public class UI_InputBalloon : UI_Base
 	{
 		_anchor = anchor;
 
+		ApplySceneFontSize();
+
 		if (cg != null)
 			cg.alpha = 0f;
 
@@ -64,6 +67,26 @@ public class UI_InputBalloon : UI_Base
 			StartCoroutine(ActivateNextFrame());
 		}
 	}
+
+	private void ApplySceneFontSize()
+	{
+		string sceneName = SceneManager.GetActiveScene().name;
+
+		float fontSize = (sceneName == "LibraryScene")
+			? 13.39f
+			: 17f;
+
+		// 실제 입력 텍스트
+		if (inputField && inputField.textComponent)
+			inputField.textComponent.fontSize = fontSize;
+
+		if (shadowText)
+			shadowText.fontSize = fontSize;
+
+		if (promptLabel)
+			promptLabel.fontSize = fontSize;
+	}
+
 
 	// TMP_InputField 내부의 실제 캐럿/선택 하이라이트 RectTransform을 수집
 	private void BindCaretsIfNeeded()
@@ -121,10 +144,14 @@ public class UI_InputBalloon : UI_Base
 		float minWidth = 1f;
 		float maxWidth = 6f;
 
+		string sceneName = SceneManager.GetActiveScene().name;
+
+		float height = (sceneName == "LibraryScene") ? 0.63f : 0.7f;
+
 		float width = baseWidth + shadowText.preferredWidth * 0.01f;
 		width = Mathf.Clamp(width, minWidth, maxWidth);
 
-		_image.rectTransform.sizeDelta = new Vector2(width, 0.7f);
+		_image.rectTransform.sizeDelta = new Vector2(width, height);
 	}
 
 	private void SetPosition()

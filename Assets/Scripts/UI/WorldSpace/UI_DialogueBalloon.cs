@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Febucci.UI.Core;
 using DG.Tweening;
+using UnityEngine.SceneManagement;
 
 public class UI_DialogueBalloon : UI_Base
 {
@@ -48,6 +49,8 @@ public class UI_DialogueBalloon : UI_Base
 		color.a = 0f;
 		_label.color = color;
 
+		ApplySceneFontSize();
+
 		_pureText = text.RemoveRichTags();
 
 		// 리치태그에서 size% 추출 후 캐싱
@@ -63,6 +66,20 @@ public class UI_DialogueBalloon : UI_Base
 
 		// 위치 갱신
 		SetPosition();
+	}
+
+	private void ApplySceneFontSize()
+	{
+		string sceneName = SceneManager.GetActiveScene().name;
+
+		if (sceneName == "LibraryScene")
+		{
+			_label.fontSize = 0.13f;
+		}
+		else
+		{
+			_label.fontSize = 0.165f;
+		}
 	}
 
 	private void ExtractSizeScale(string text)
@@ -183,6 +200,21 @@ public class UI_DialogueBalloon : UI_Base
 		float perLineIncrease = 0.23f;
 		float padding = 0.1f;
 
+		float charWidthUnit = 0.12f; // 문자 한개 실제 폭
+		float baseWidth = 1.1f;		 // 좌 + 우 여백 합
+
+		string sceneName = SceneManager.GetActiveScene().name;
+
+		if (sceneName == "LibraryScene")
+		{
+			baseHeight = 0.63f;
+			perLineIncrease = 0.18f;
+			padding = 0.08f;
+
+			charWidthUnit = 0.095f;
+			baseWidth = 0.85f;
+		}
+
 		float preferWidth;
 		if (_isBrIncluded)
 		{
@@ -191,8 +223,6 @@ public class UI_DialogueBalloon : UI_Base
 			_label.enableWordWrapping = false;
 			_label.ForceMeshUpdate();
 
-			float charWidthUnit = 0.12f;
-			float baseWidth = 1.1f;
 			preferWidth = Mathf.Clamp((baseWidth + _maxCharCount * charWidthUnit) * _sizeScaleFactor, 1f, 4.4f);
 		}
 		else

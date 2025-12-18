@@ -101,7 +101,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 16
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &3264861472309434200
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -142,7 +142,6 @@ MonoBehaviour:
   fadeIn: 0.15
   fadeOut: 0.12
   caretBlinkRate: 0.6
-  _scale: 0.02
 --- !u!1 &4703386583941016078
 GameObject:
   m_ObjectHideFlags: 0
@@ -357,7 +356,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 472fe9cc089e9364a8fc35cc3cedb509, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1c5a803414393a24c9a8685736c60b4c, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
