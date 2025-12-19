@@ -242,7 +242,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _screen: {fileID: 3110554177139909202}
   _vp: {fileID: 9190328700629140675}
-  _fileName: "\uC778\uD2B8\uB85C_\uC774\uBBF8\uC9C0\uC218\uC815.mp4"
+  _fileName: "\uC11C\uCF54_\uC778\uD2B8\uB85C.mp4"
   _fade: {fileID: 502993539732541653}
   _skipButton: {fileID: 1540849676472170698}
 --- !u!1 &2078460891914773272
