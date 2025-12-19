@@ -37,6 +37,17 @@ public abstract class NPCController : MonoBehaviour
     private ActorDirectorSimple _actorDirector;
     public ActorDirectorSimple ActorDirector => _actorDirector;
 
+    public Transform LeftTalkPosition;
+    public Transform RightTalkPostion;
+
+    public Transform GetTalkPosition(Transform interactor)
+    {
+        var leftDistance = Vector3.SqrMagnitude(LeftTalkPosition.position - interactor.position);
+        var rightDistance = Vector3.SqrMagnitude(RightTalkPostion.position - interactor.position);
+
+        return leftDistance < rightDistance ? LeftTalkPosition : RightTalkPostion;
+    }
+
     private void Awake()
     {
         if(_animator == null)

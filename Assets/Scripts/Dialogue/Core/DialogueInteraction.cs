@@ -41,6 +41,8 @@ public class DialogueInteraction : MonoBehaviour
             Debug.Log("대화 시작");
             _isInDialogue = true;
             _interactNPC.State = NPCState.Event;
+
+            // 플레이어가 NPC를 바라보도록 설정
             _interactNPC.LookTarget(this.transform.position);
             _playerController.canMove = false;
             _playerController.SetLook(_interactNPC.transform.position.x - this.transform.position.x);
