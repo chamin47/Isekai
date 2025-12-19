@@ -117,6 +117,7 @@ public class DreamSystem : MonoBehaviour
         yield return WaitForSecondsCache.Get(1f);
         _bedAnimator.gameObject.SetActive(false);        
         _player.SetActive(true);
+        Managers.Sound.Play("dream_wake_up", Sound.Effect);
     }
 
     private void UpdateDreamVisual()
@@ -169,12 +170,15 @@ public class DreamSystem : MonoBehaviour
         _masks[1].SetActive(false);
         yield return WaitForSecondsCache.Get(2f);
         _dreamAnimator.gameObject.SetActive(false);
+        Managers.Sound.Play("dream_failure", Sound.Effect);
         _gameOverUI.gameObject.SetActive(true);
         yield return _gameOverUI.CoFadeOut(1f);
     }
 
     void RegressionState()
     {
+        Managers.Sound.Play("dream_deepen1", Sound.Effect);
+
         if (currentState == DreamState.Phase2) currentState = DreamState.Phase1;
         else if (currentState == DreamState.Phase3) currentState = DreamState.Phase2;
         // 1단계에서 3초 추가 방치 시 로직 추가 가능
