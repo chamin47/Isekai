@@ -29,6 +29,10 @@ public class BlackHole : MonoBehaviour
             StopCoroutine(_hideCoroutine);
             _hideCoroutine = null;
         }
+
+        if (this.gameObject.activeInHierarchy == false)
+            return;
+
         _showCoroutine = StartCoroutine(_sprite.CoFadeOut(_fadeDuration));
     }
 
@@ -39,6 +43,10 @@ public class BlackHole : MonoBehaviour
             StopCoroutine(_showCoroutine);
             _showCoroutine = null;
         }
+
+        if (this.gameObject.activeInHierarchy == false)
+            return;
+
         _hideCoroutine = StartCoroutine(_sprite.CoFadeIn(_fadeDuration));
 
     }

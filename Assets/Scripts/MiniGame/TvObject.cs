@@ -6,6 +6,5 @@ public class TvObject : MonoBehaviour, IPointerClickHandler
 {
 	public void OnPointerClick(PointerEventData eventData)
 	{
-		
 	}
 }

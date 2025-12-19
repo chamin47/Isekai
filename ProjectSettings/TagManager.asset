@@ -10,6 +10,8 @@ TagManager:
   - Diary
   - CameraTargetMoving
   - NPC
+  - Home
+  - RealWorld
   layers:
   - Default
   - TransparentFX
@@ -23,7 +25,7 @@ TagManager:
   - Interactable
   - Wall
   - 
-  - 
+  - Camera
   - 
   - 
   - 

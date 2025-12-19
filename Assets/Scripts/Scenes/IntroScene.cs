@@ -11,12 +11,16 @@ public class IntroScene : BaseScene
 	[SerializeField] private PlayerController _playerController;
 	public PlayerController Player => _playerController;
 
+	[SerializeField] private DreamSystem _dreamSystem;
+
     protected override void Init()
 	{
 		
 		SceneType = Scene.IntroScene;
 
 		Managers.Sound.Play("bgm_real_world", Sound.Bgm);
+		_dreamSystem.gameObject.SetActive(true);
+        StartCoroutine(_dreamSystem.StartSystem());
 	}
 
 	public override void Clear()

@@ -10,10 +10,13 @@ public class DreamSystem : MonoBehaviour
     public enum DreamState { Phase1, Phase2, Phase3, WakeUp }
     
     [SerializeField] private Animator _dreamAnimator;
+    [SerializeField] private SpriteRenderer _dreamRenderer;
     [SerializeField] private GameObject[] _masks;
     [SerializeField] private GameObject _mouse;
-
+    [SerializeField] private Animator _bedAnimator;
     [SerializeField] private CanvasGroup _gameOverUI;
+    [SerializeField] private GameObject _player;
+
     public DreamState currentState = DreamState.Phase1;
 
     [SerializeField] private int[] _skipClickThresholds = { 5, 7, 10 }; 
@@ -96,8 +99,24 @@ public class DreamSystem : MonoBehaviour
         {
             currentState = DreamState.WakeUp;
             _currentClicks = 0;
-            //TriggerWakeUp();
+            TriggerWakeUp();
         }
+    }
+
+    [ContextMenu("Trigger Wake Up")]
+    private void TriggerWakeUp()
+    {
+        _dreamAnimator.gameObject.SetActive(false);
+        _canStopSystem = true;
+        _bedAnimator.enabled = true;
+        StartCoroutine(CoWakeUp());
+    }
+
+    private IEnumerator CoWakeUp()
+    {
+        yield return WaitForSecondsCache.Get(1f);
+        _bedAnimator.gameObject.SetActive(true);
+        _player.SetActive(true);
     }
 
     private void UpdateDreamVisual()
@@ -163,5 +182,14 @@ public class DreamSystem : MonoBehaviour
 
         _currentClicks = 0; // 단계가 내려가면 연타 수도 초기화
         UpdateDreamVisual();
+    }
+
+    public IEnumerator StartSystem()
+    {
+        _canStopSystem = true;
+        yield return WaitForSecondsCache.Get(2f);
+        yield return _dreamRenderer.CoFadeOut(2f);
+        _dreamAnimator.SetBool("StartDream", true);
+        _canStopSystem = false;
     }
 }

@@ -347,7 +347,8 @@ public class UI_DialogueBalloon : UI_Base
 
 		if (_typewriter && _textAnimator)
 		{
-			Color c = _label.color;
+            gameObject.SetActive(true);
+            Color c = _label.color;
 			c.a = 1f;
 			_label.color = c;
 

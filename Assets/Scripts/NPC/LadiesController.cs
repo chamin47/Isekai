@@ -18,6 +18,7 @@ public class LadiesController : NPCController
     {
         State = NPCState.Idle;
         click.OnClicked += OnLadySelected;
+        _dialogueBalloon.gameObject.SetActive(false);
     }
 
     private void OnDestroy()

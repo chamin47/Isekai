@@ -5404,7 +5404,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b89a7619d7548da419a01e6110318530, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boundingShape: {fileID: 852626718}
+  _boundingShape: {fileID: 852626718}
 --- !u!114 &1622524270
 MonoBehaviour:
   m_ObjectHideFlags: 0

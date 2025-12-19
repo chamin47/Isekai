@@ -3,7 +3,20 @@ using UnityEngine;
 public class CameraColliderBounds : MonoBehaviour
 {
     [Tooltip("경계로 사용할 콜라이더 (씬에 있는 BoxCollider2D 오브젝트 권장)")]
-    public Collider2D boundingShape;
+
+    [SerializeField] private Collider2D _boundingShape;
+    public Collider2D boundingShape
+    {
+        get { return _boundingShape; }
+        set
+        {
+            _boundingShape = value;
+            if (_boundingShape != null)
+            {
+                _mapBounds = _boundingShape.bounds;
+            }
+        }
+    }
 
     private Camera _cam;
     private Bounds _mapBounds;
