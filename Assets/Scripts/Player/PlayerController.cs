@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -113,6 +114,37 @@ public class PlayerController : MonoBehaviour
 	{
 		return _movement.Velocity.x;
 	}
+
+    public IEnumerator CoMoveToTarget(Transform target, float duration = 2f)
+    {
+		
+		_playerAnimator.SetCutSceneTalk();
+        Vector3 targetPos = new Vector3(target.position.x, transform.position.y, transform.position.z);
+        Vector3 startPos = transform.position;
+
+        float direction = Mathf.Sign(targetPos.x - startPos.x);
+        if (direction != 0)
+        {
+            _playerAnimator.SpriteFlipX(direction);
+        }
+
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float t = elapsed / duration;
+
+            transform.position = Vector3.Lerp(startPos, targetPos, t);
+            yield return null;
+        }
+
+        _playerAnimator.EndCurSceneTalk();
+        // 목표 지점에 정확히 도착
+        transform.position = targetPos;
+        _footStepTimer = 0f;
+		yield return null;
+    }
 
     private void OnDisable()
     {

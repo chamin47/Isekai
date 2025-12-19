@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -43,12 +44,32 @@ public class DialogueInteraction : MonoBehaviour
             _interactNPC.State = NPCState.Event;
 
             // 플레이어가 NPC를 바라보도록 설정
-            _interactNPC.LookTarget(this.transform.position);
+        
             _playerController.canMove = false;
-            _playerController.SetLook(_interactNPC.transform.position.x - this.transform.position.x);
-            _dialogueRunner.Play(_interactNPC.StartID, _interactNPC.ActorDirector, _interactNPC.OnEventEnd);
+            StartCoroutine(MoveAndTalk());
             return;
         }
+    }
+
+    private IEnumerator MoveAndTalk()
+    {
+        // 대화 위치까지 이동
+        var talkPosition = _interactNPC.GetTalkPosition(this.transform);
+        if (talkPosition == null)
+        {
+            DialogueSequence();
+            yield break;
+        }
+
+        yield return _playerController.CoMoveToTarget(talkPosition);
+        DialogueSequence();
+    }
+
+    private void DialogueSequence()
+    {
+        _interactNPC.LookTarget(this.transform.position);
+        _playerController.SetLook(_interactNPC.transform.position.x - this.transform.position.x);
+        _dialogueRunner.Play(_interactNPC.StartID, _interactNPC.ActorDirector, _interactNPC.OnEventEnd);
     }
 
     private void OnTriggerEnter2D(Collider2D other)

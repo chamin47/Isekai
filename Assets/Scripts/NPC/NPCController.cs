@@ -42,6 +42,9 @@ public abstract class NPCController : MonoBehaviour
 
     public Transform GetTalkPosition(Transform interactor)
     {
+        if (LeftTalkPosition == null || RightTalkPostion == null)
+            return null;
+
         var leftDistance = Vector3.SqrMagnitude(LeftTalkPosition.position - interactor.position);
         var rightDistance = Vector3.SqrMagnitude(RightTalkPostion.position - interactor.position);
 

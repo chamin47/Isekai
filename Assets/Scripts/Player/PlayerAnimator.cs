@@ -40,12 +40,29 @@ public class PlayerAnimator : MonoBehaviour
 		_animator.SetFloat("Speed", Mathf.Abs(x) * Mathf.Abs(_movement.Velocity.x));
 	}
 
-	public void SpriteFlipX(float x)
+    public void PlayFootSound()
+    {
+        Managers.Sound.Play("all_s_walk2", Sound.Effect, 0.8f);
+    }
+
+    public void SpriteFlipX(float x)
 	{
 		if(Time.timeScale == 0) return;
         _spriteRenderer.flipX = x < 0 ? true : false;
 
     }
+
+	public void SetCutSceneTalk()
+	{
+        _animator.SetBool("CutScene", true);
+        _animator.Play("VinterCutSceneWalk");
+    }
+
+	public void EndCurSceneTalk()
+	{
+        _animator.SetBool("CutScene", false);
+    }
+
 
     
 }
