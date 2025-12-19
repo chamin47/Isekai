@@ -18,6 +18,8 @@ public class DreamSystem : MonoBehaviour, IPointerClickHandler
     [SerializeField] private CanvasGroup _gameOverUI;
     [SerializeField] private GameObject _player;
     [SerializeField] private Image _fadeUI;
+    [SerializeField] private BlinkObject _a;
+    [SerializeField] private BlinkObject _b;
 
     public DreamState currentState = DreamState.Phase1;
 
@@ -131,6 +133,8 @@ public class DreamSystem : MonoBehaviour, IPointerClickHandler
         yield return WaitForSecondsCache.Get(1f);
         _bedAnimator.gameObject.SetActive(false);        
         _player.SetActive(true);
+        _a.gameObject.SetActive(true);
+        _b.gameObject.SetActive(true);
         Managers.Sound.Play("dream_wake_up", Sound.Effect);
     }
 
