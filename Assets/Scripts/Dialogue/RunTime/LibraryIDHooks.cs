@@ -22,6 +22,8 @@ public class LibraryIDHooks : MonoBehaviour, IDialogueHookProvider
 	[SerializeField] private float _walkSpeed = 2.2f;
 	[SerializeField] private float _arriveEps = 0.05f;
 
+	[SerializeField] private GameObject[] _twinkles;
+
 	private UILetterboxOverlay _letterbox;
 	private bool _startTimelineEnded;
 	private Coroutine _moveCo;
@@ -120,6 +122,11 @@ public class LibraryIDHooks : MonoBehaviour, IDialogueHookProvider
 					book.gameObject.SetActive(true);               // 빈터발트 오브젝트
 
 					StartCoroutine(book.FadeInMouse());
+
+					foreach (var gameObject in _twinkles)
+					{
+						gameObject.SetActive(true);
+					}
 				}
 				yield break;
 
