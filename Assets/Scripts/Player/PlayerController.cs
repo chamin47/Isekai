@@ -6,7 +6,7 @@ public class PlayerController : MonoBehaviour
 {
 	private MovementRigidbody2D _movement;
 	private PlayerAnimator _playerAnimator;
-	public bool canMove = false;
+    public bool canMove = false;
 
 	private string _currentScene;
 

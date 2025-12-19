@@ -115,7 +115,7 @@ public class DreamSystem : MonoBehaviour
     private IEnumerator CoWakeUp()
     {
         yield return WaitForSecondsCache.Get(1f);
-        _bedAnimator.gameObject.SetActive(true);
+        _bedAnimator.gameObject.SetActive(false);        
         _player.SetActive(true);
     }
 

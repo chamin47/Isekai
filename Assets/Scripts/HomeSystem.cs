@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class HomeSystem : MonoBehaviour
 {
-    public static bool IsDoorOpen = true;
+    public static bool IsDoorOpen = false;
     [SerializeField] private GameObject _player;
 
 }

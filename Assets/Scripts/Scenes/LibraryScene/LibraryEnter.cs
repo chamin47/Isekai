@@ -17,12 +17,9 @@ public class LibraryEnter : MonoBehaviour
 	private float _originalZoom;
 
 	[SerializeField] private GameObject _gauidLine;
-	[SerializeField] private GameObject _mouse;
-	[SerializeField] private GameObject _diary;
 
     private bool _canUI = true;
-	private Coroutine _mouseCoroutine;
-    private bool _isMouseVisible = true;
+
 
     private void Start()
 	{
@@ -30,8 +27,6 @@ public class LibraryEnter : MonoBehaviour
 		_playerController = (Managers.Scene.CurrentScene as IntroScene).Player;
         timeline = FindAnyObjectByType<PlayableDirector>();
 		_originalZoom = _mainCamera.orthographicSize;
-		
-        _mouseCoroutine = StartCoroutine(BlinkMouse());
     }
 
     public void Update()
@@ -39,25 +34,6 @@ public class LibraryEnter : MonoBehaviour
         if (_canUI && Input.GetKeyDown(KeyCode.M))
         {
             _gauidLine.SetActive(!_gauidLine.activeSelf);
-        }
-
-        if (_isMouseVisible && _diary.activeInHierarchy == false)
-        {
-            _isMouseVisible = false;
-            StopCoroutine(_mouseCoroutine);
-            _mouse.SetActive(false);
-        }
-    }
-
-    private IEnumerator BlinkMouse()
-    {
-		float interval = 0.5f;
-		while(true)
-		{
-            _mouse.SetActive(false);
-            yield return WaitForSecondsCache.Get(interval);
-            _mouse.SetActive(true);
-            yield return WaitForSecondsCache.Get(interval);
         }
     }
 

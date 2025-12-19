@@ -29,8 +29,9 @@ public class DiarySystem: MonoBehaviour
     [SerializeField] private Button closeButton;
 
     [Header("첫번째 페이지")]
-    [SerializeField] private TMP_InputField commentInput;
-    [SerializeField] private Button saveButton;
+    [SerializeField] private TMP_InputField _commentInput;
+    [SerializeField] private Button _saveButton;
+    [SerializeField] private GameObject comment;
 
     [SerializeField] private Button prevButton;
     [SerializeField] private Button nextButton;
@@ -48,19 +49,24 @@ public class DiarySystem: MonoBehaviour
 
         nextButton.onClick.AddListener(OnNextButtonClick);
         prevButton.onClick.AddListener(OnPrevButtonClick);
-        saveButton.onClick.AddListener(OnSaveButtonClick);
-        if(!Managers.Game.IsIntroCommentSaved)
+        _saveButton.onClick.AddListener(OnSaveButtonClick);
+        
+    }
+
+    private void OnEnable()
+    {
+        if (!Managers.Game.IsIntroCommentSaved)
         {
-            commentInput.gameObject.SetActive(true);
-            commentInput.Select();
-            saveButton.gameObject.SetActive(true);
+            _commentInput.gameObject.SetActive(true);
+            _commentInput.Select();
+            _saveButton.gameObject.SetActive(true);
         }
         else
         {
-            commentInput.gameObject.SetActive(false);
-            saveButton.gameObject.SetActive(false);
-            commentInput.text = Managers.Game.IntroCommentText;
-            commentInput.readOnly = true;
+            comment.SetActive(true);
+            _saveButton.gameObject.SetActive(false);
+            _commentInput.text = Managers.Game.IntroCommentText;
+            _commentInput.readOnly = true;
         }
     }
 
@@ -74,25 +80,25 @@ public class DiarySystem: MonoBehaviour
 
     private void OnSaveButtonClick()
     {
-        if(string.IsNullOrWhiteSpace(commentInput.text))
+        if(string.IsNullOrWhiteSpace(_commentInput.text))
         {
             return;
         }
 
-        commentInput.readOnly = true;
+        _commentInput.readOnly = true;
         Managers.Game.IsIntroCommentSaved = true;
-        Managers.Game.IntroCommentText = commentInput.text;
+        Managers.Game.IntroCommentText = _commentInput.text;
 
-        saveButton.enabled = false;
-        StartCoroutine(saveButton.image.CoFadeIn(1));
+        _saveButton.enabled = false;
+        StartCoroutine(_saveButton.image.CoFadeIn(1));
     }
 
     private void OnPrevButtonClick()
     {
         if(currentPageIndex == 1)
         {
-            if(commentInput.readOnly == false)
-                commentInput.Select();
+            if(_commentInput.readOnly == false)
+                _commentInput.Select();
 
             prevButton.gameObject.SetActive(false);
         }
