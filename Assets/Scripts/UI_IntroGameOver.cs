@@ -60,7 +60,7 @@ public class UI_IntroGameOver : UI_Popup
         _yesTextEvent.OnClickHandler += (PointerEventData data) =>
         {
             _isKeyLocked = true;
-            SceneManager.LoadScene("DreamTestScene");
+            Managers.Scene.LoadScene(Scene.IntroScene);
         };
 
         UI_EventHandler _noTextEvent = _noText.GetComponent<UI_EventHandler>();
@@ -75,7 +75,7 @@ public class UI_IntroGameOver : UI_Popup
             _isYesFocused = false;
         };
         _noTextEvent.OnClickHandler += (PointerEventData data) => 
-        { SceneManager.LoadScene("TitleScene"); };
+        { Managers.Scene.LoadScene(Scene.TitleScene); };
     }
 
     private void Update()

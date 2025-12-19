@@ -168,7 +168,7 @@ public class DreamSystem : MonoBehaviour
     {
         _masks[0].SetActive(false);
         _masks[1].SetActive(false);
-        yield return WaitForSecondsCache.Get(2f);
+        yield return WaitForSecondsCache.Get(1f);
         _dreamAnimator.gameObject.SetActive(false);
         Managers.Sound.Play("dream_failure", Sound.Effect);
         _gameOverUI.gameObject.SetActive(true);
