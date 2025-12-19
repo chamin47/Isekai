@@ -2,13 +2,23 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(OutlineSelectSprite))]
-public class CalendarObject : MonoBehaviour, IPointerClickHandler
+public class CalendarObject : MonoBehaviour
 {
-	public void OnPointerClick(PointerEventData eventData)
-	{
-		if (TvBubbleRunner.InputLocked)
-			return;
+	private OutlineSelectSprite _outlineSelectSprite;
 
+	private void Awake()
+	{
+		_outlineSelectSprite = GetComponent<OutlineSelectSprite>();
+		_outlineSelectSprite.OnSelected += OnPointerClick;
+	}
+
+	public void OnPointerClick(int index)
+	{
 		Managers.UI.ShowPopupUI<UI_CalendarMiniGamePopup>();
+	}
+
+	private void OnDestroy()
+	{
+		_outlineSelectSprite.OnSelected -= OnPointerClick;
 	}
 }

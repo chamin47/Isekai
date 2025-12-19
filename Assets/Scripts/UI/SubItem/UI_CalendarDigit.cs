@@ -40,6 +40,8 @@ public class UI_CalendarDigit : UI_Base
 		if (_locked)
 			return;
 
+		Managers.Sound.Play("mini_calendar_date_select", Sound.Effect);
+
 		int from = CalendarInputModel.Digits[_index];
 		int to = (from + 1) % 10;
 

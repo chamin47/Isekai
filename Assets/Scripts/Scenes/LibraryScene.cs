@@ -47,7 +47,7 @@ public class LibraryScene : BaseScene
     protected override void Init()
 	{
 		Managers.DebugInfo.LastWorldType = Managers.World.CurrentWorldType;
-        StartCoroutine(Managers.Sound.FadeInBGM("bgm_library_sketch_4", 3f));
+        StartCoroutine(Managers.Sound.FadeInBGM("bgm_library", 3f));
 		
 		SceneType = Scene.LibraryScene;
 

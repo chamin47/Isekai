@@ -113,6 +113,8 @@ public class UI_CalendarMiniGamePopup : UI_Popup
 	{
 		CalendarInputModel.IsSolved = true;
 
+		Managers.Sound.Play("mini_answer_correct", Sound.Effect);
+
 		yield return _checkCanvas.CoFadeIn(1f);
 		Destroy(_checkButton.gameObject);
 
@@ -131,6 +133,8 @@ public class UI_CalendarMiniGamePopup : UI_Popup
 
 	private IEnumerator CoShake()
 	{
+		Managers.Sound.Play("mini_answer_wrong", Sound.Effect);
+
 		RectTransform rt = _slotRoot;
 
 		float duration = 0.5f;  // 흔들림 전체 지속 시간 (초 단위)

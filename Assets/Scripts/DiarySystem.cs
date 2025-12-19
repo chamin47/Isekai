@@ -107,7 +107,8 @@ public class DiarySystem: MonoBehaviour
 
     private IEnumerator CoPrevPage()
     {
-        prevButton.enabled = false;
+		Managers.Sound.Play("diary_page_turn", Sound.Effect);
+		prevButton.enabled = false;
         nextButton.enabled = false;
 
         var curImage = diaryImages[currentPageIndex];
@@ -144,6 +145,7 @@ public class DiarySystem: MonoBehaviour
 
     private IEnumerator CoNextPage()
     {
+        Managers.Sound.Play("diary_page_turn", Sound.Effect);
         prevButton.enabled = false;
         nextButton.enabled = false;
         var nextIndex = currentPageIndex + 1;

@@ -11,12 +11,21 @@ public class UI_ClockHand : UI_Base, IBeginDragHandler, IDragHandler, IEndDragHa
 	[Header("Shader")]
 	[SerializeField] private float _outlineHoverThickness = 1.5f;
 
+	[Header("Sound")]
+	[SerializeField] private float _soundAngleThreshold = 0.5f;
+	[SerializeField] private float _soundStopDelay = 0.08f;
+
 	private RectTransform _centerRoot;   // ClockRoot
 	private float _handWidth;
 	private float _handHeight;
 
 	private bool _isHovered;     // 포인터가 위에 있는지
 	private bool _isDragging;
+	private bool _isSoundPlaying;
+
+	private float _lastAngle;
+	private float _lastFrameAngle;
+	private float _soundStopTimer;
 
 	private Material _runtimeMat;	
 
@@ -94,6 +103,10 @@ public class UI_ClockHand : UI_Base, IBeginDragHandler, IDragHandler, IEndDragHa
 		_isDragging = true;
 		UpdateRotation(eventData);
 		UpdateOutline();
+
+		_lastAngle = CurrentAngle;
+		_lastFrameAngle = CurrentAngle;
+		_soundStopTimer = 0f;
 	}
 
 	public void OnDrag(PointerEventData eventData)
@@ -111,7 +124,50 @@ public class UI_ClockHand : UI_Base, IBeginDragHandler, IDragHandler, IEndDragHa
 		if (!ClockMiniGameModel.HasTouchedHand)
 			ClockMiniGameModel.HasTouchedHand = true;
 
+		StopSound();
+
 		UpdateOutline();
+	}
+
+	private void Update()
+	{
+		if (!_isDragging)
+			return;
+
+		float delta =
+			Mathf.Abs(Mathf.DeltaAngle(_lastFrameAngle, CurrentAngle));
+
+		if (delta > _soundAngleThreshold)
+		{
+			_soundStopTimer = 0f;
+
+			if (!_isSoundPlaying)
+				StartSound();
+		}
+		else
+		{
+			_soundStopTimer += Time.deltaTime;
+
+			if (_soundStopTimer >= _soundStopDelay)
+				StopSound();
+		}
+
+		_lastFrameAngle = CurrentAngle;
+	}
+
+	private void StartSound()
+	{
+		Managers.Sound.PlaySubEffect("mini_clock_spin", 1f);
+		_isSoundPlaying = true;
+	}
+
+	private void StopSound()
+	{
+		if (!_isSoundPlaying)
+			return;
+
+		Managers.Sound.StopSubEffect();
+		_isSoundPlaying = false;
 	}
 
 	private void UpdateRotation(PointerEventData eventData)

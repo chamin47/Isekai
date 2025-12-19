@@ -16,7 +16,7 @@ public class IntroScene : BaseScene
 		
 		SceneType = Scene.IntroScene;
 
-		Managers.Sound.Play("bgm_real_world", Sound.Bgm);
+		Managers.Sound.Play("bgm_real", Sound.Bgm);
 	}
 
 	public override void Clear()

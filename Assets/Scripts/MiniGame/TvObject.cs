@@ -4,15 +4,25 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(OutlineSelectSprite))]
-public class TvObject : MonoBehaviour, IPointerClickHandler
+public class TvObject : MonoBehaviour
 {
 	[SerializeField] private TvBubbleRunner _runner;
 
-	public void OnPointerClick(PointerEventData eventData)
-	{
-		if (TvBubbleRunner.InputLocked)
-			return;
+	private OutlineSelectSprite _outlineSelectSprite;
 
+	private void Awake()
+	{
+		_outlineSelectSprite = GetComponent<OutlineSelectSprite>();
+		_outlineSelectSprite.OnSelected += OnPointerClick;
+	}
+
+	public void OnPointerClick(int index)
+	{
 		_runner.Play("1001001");
+	}
+
+	private void OnDestroy()
+	{
+		_outlineSelectSprite.OnSelected -= OnPointerClick;
 	}
 }

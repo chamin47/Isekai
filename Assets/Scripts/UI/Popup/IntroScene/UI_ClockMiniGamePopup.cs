@@ -157,6 +157,8 @@ public class UI_ClockMiniGamePopup : UI_Popup
 		ClockMiniGameModel.HourAngle = _hourHand.CurrentAngle;
 		ClockMiniGameModel.MinuteAngle = _minuteHand.CurrentAngle;
 
+		Managers.Sound.Play("mini_answer_correct",Sound.Effect);
+
 		_hourHand.Lock();
 		_minuteHand.Lock();
 		Debug.Log("성공!");
@@ -192,6 +194,8 @@ public class UI_ClockMiniGamePopup : UI_Popup
 		ClockMiniGameModel.InputLocked = true;
 
 		SetInputLock(ClockMiniGameModel.InputLocked);
+
+		Managers.Sound.Play("mini_answer_wrong", Sound.Effect);
 
 		// 이전 쉐이크 중단
 		if (_uiShakeCoroutine != null)

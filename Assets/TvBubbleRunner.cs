@@ -11,8 +11,6 @@ public class TvBubbleRunner : MonoBehaviour
 
 	[SerializeField] private List<OutlineSelectSprite> _outlines = new();
 
-	public static bool InputLocked = false;
-
 	private void Awake()
 	{		
 		_database = gameObject.AddComponent<DialogueDatabaseRuntime>();
@@ -30,12 +28,7 @@ public class TvBubbleRunner : MonoBehaviour
 
 	private IEnumerator CoPlay(string id)
 	{
-		foreach (OutlineSelectSprite sprite in _outlines)
-		{
-			sprite.enabled = false;
-		}
-
-		InputLocked = true;
+		SetOutlineEnabled(false);
 
 		var _bubblePrefab = Resources.Load<UI_TvBubble>("Prefabs/UI/SubItem/UI_TvBubble");
 
@@ -59,11 +52,14 @@ public class TvBubbleRunner : MonoBehaviour
 		while (bubble != null)
 			yield return null;
 
+		SetOutlineEnabled(true);
+	}
+
+	private void SetOutlineEnabled(bool enabled)
+	{
 		foreach (OutlineSelectSprite sprite in _outlines)
 		{
-			sprite.enabled = true;
+			sprite.enabled = enabled;
 		}
-
-		InputLocked = false;
 	}
 }

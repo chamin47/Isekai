@@ -47,9 +47,10 @@ public class Click_Lady : MonoBehaviour
     private void OnClickLady(int index)
     {
         isClicked = true;
-        OnClicked.Invoke(index);
         _clickedIndex = index;
-    }
+		Managers.Sound.Play("duke_choice", Sound.Effect);
+        OnClicked.Invoke(index);
+	}
 
     public IEnumerator ClickLady(System.Action<int> onClicked)
     {

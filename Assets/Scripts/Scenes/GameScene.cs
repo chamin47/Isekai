@@ -91,10 +91,10 @@ public class GameScene : BaseScene
         switch (_worldType)
         {
             case WorldType.Vinter:
-                Managers.Sound.Play("bgm_isekai_world_bin", Sound.Bgm);
+                Managers.Sound.Play("bgm_isekai_adrian", Sound.Bgm);
                 break;
             case WorldType.Chaumm:
-                Managers.Sound.Play("bgm_isekai_cha2", Sound.Bgm);
+                Managers.Sound.Play("bgm_isekai_cha", Sound.Bgm);
                 break;
             case WorldType.Gang:
                 Managers.Sound.Play("bgm_isekai_gang", Sound.Bgm);
@@ -103,7 +103,7 @@ public class GameScene : BaseScene
                 Managers.Sound.Play("bgm_isekai_pel", Sound.Bgm);
                 break;
             default:
-                Managers.Sound.Play("bgm_isekai_world_bin", Sound.Bgm);
+                Managers.Sound.Play("bgm_isekai_adrian", Sound.Bgm);
                 break;
         }
 

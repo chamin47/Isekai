@@ -29,6 +29,7 @@ public class CalendarHintController
 				SetVisible(false);
 				yield return new WaitForSeconds(1f);
 				SetVisible(true);
+				Managers.Sound.Play("mini_calendar_hint_flicker", Sound.Effect);
 				yield return new WaitForSeconds(1f);
 			}
 

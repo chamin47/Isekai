@@ -2,12 +2,23 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(OutlineSelectSprite))]
-public class ClockObject : MonoBehaviour, IPointerClickHandler
+public class ClockObject : MonoBehaviour
 {
-	public void OnPointerClick(PointerEventData eventData)
+	private OutlineSelectSprite _outlineSelectSprite;
+
+	private void Awake()
 	{
-		if (TvBubbleRunner.InputLocked)
-			return;
+		_outlineSelectSprite = GetComponent<OutlineSelectSprite>();
+		_outlineSelectSprite.OnSelected += OnPointerClick;
+	}
+
+	public void OnPointerClick(int index)
+	{
 		Managers.UI.ShowPopupUI<UI_ClockMiniGamePopup>();
+	}
+
+	private void OnDestroy()
+	{
+		_outlineSelectSprite.OnSelected -= OnPointerClick;
 	}
 }

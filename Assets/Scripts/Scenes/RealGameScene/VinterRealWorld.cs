@@ -29,7 +29,7 @@ public class VinterRealWorld : MonoBehaviour
         // 게임시작
         RealWorldInfo realWorldInfo = GetRealWorldInfo();
 
-        Managers.Sound.Play("bgm_real_world", Sound.Bgm);
+        Managers.Sound.Play("bgm_real", Sound.Bgm);
 
         Init(realWorldInfo);
     }

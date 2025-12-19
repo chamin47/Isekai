@@ -65,6 +65,5 @@ public class OutlineSelectSprite : MonoBehaviour, IPointerEnterHandler, IPointer
     {
         OnSelected?.Invoke(_index);
         _material.SetFloat("_Thickness", 0f);
-        Managers.Sound.Play("duke_choice", Sound.Effect);
     }
 }

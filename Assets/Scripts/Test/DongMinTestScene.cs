@@ -161,7 +161,7 @@ public class DongMinTestScene : BaseScene
         _warningText.gameObject.SetActive(false);
         yield return new WaitForSeconds(0.5f);
 
-		Managers.Sound.Play("bgm_real_world", Sound.Bgm);
+		Managers.Sound.Play("bgm_real", Sound.Bgm);
 
 		yield return null;
 
