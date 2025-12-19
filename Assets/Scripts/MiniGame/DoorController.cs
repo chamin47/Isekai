@@ -93,6 +93,7 @@ public class DoorController : MonoBehaviour
 		if(HomeSystem.IsDoorOpen)
 			return;
 
+        Managers.Sound.Play("door_open2", Sound.Effect);
         OpenCollider();
         _outlineSelectSprite.enabled = true;
         _animator.CrossFade("door_Clip", 0.1f);
