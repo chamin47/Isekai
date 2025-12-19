@@ -83,7 +83,7 @@ public class SoundManager
 
 	private GameObject _root = null;
 
-    private const int MAX_EFFECT_COUNT = 15;
+    private const int MAX_EFFECT_COUNT = 25;
     public void Init()
 	{
 		if(_root != null)

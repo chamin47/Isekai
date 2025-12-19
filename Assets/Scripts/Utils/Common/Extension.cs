@@ -399,7 +399,7 @@ public static class Extension
         if (waitAfter > 0f) yield return WaitForSecondsCache.Get(waitAfter);
     }
 
-    public static IEnumerator CoFadeIn(this SpriteRenderer sprite, float fadeTime, float waitBefore = 0f, float waitAfter = 0f)
+    public static IEnumerator CoFadeIn(this SpriteRenderer sprite, float fadeTime, float waitBefore = 0f, float waitAfter = 0f, Action onFadeFinish = null)
     {
         if (waitBefore > 0f) yield return WaitForSecondsCache.Get(waitBefore);
 
@@ -418,7 +418,7 @@ public static class Extension
 
         color.a = targetAlpha;
         sprite.color = color;
-
+        onFadeFinish?.Invoke();
         if (waitAfter > 0f) yield return WaitForSecondsCache.Get(waitAfter);
     }
     public static IEnumerator CoFadeOut(this SpriteRenderer sprite, float fadeTime, float waitBefore = 0f, float waitAfter = 0f)
@@ -444,7 +444,7 @@ public static class Extension
         if (waitAfter > 0f) yield return WaitForSecondsCache.Get(waitAfter);
     }
 
-    public static IEnumerator CoFadeIn(this CanvasGroup canvasGroup, float fadeTime, float waitBefore = 0f, float waitAfter = 0f)
+    public static IEnumerator CoFadeIn(this CanvasGroup canvasGroup, float fadeTime, float waitBefore = 0f, float waitAfter = 0f, Action onFadeFinish = null)
     {
         if (waitBefore > 0f) yield return WaitForSecondsCache.Get(waitBefore);
         float startAlpha = 1;
@@ -457,6 +457,7 @@ public static class Extension
             yield return null;
         }
         canvasGroup.alpha = targetAlpha;
+        onFadeFinish?.Invoke();
         if (waitAfter > 0f) yield return WaitForSecondsCache.Get(waitAfter);
     }
 

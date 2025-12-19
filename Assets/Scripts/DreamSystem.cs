@@ -66,6 +66,7 @@ public class DreamSystem : MonoBehaviour
         // 0.5초 이내 연타인지 확인
         if (currentTime - _lastClickTime <= comboWindow)
         {
+            Managers.Sound.Play("dream_wake_up", Sound.Effect);
             _currentClicks++;
         }
         else
