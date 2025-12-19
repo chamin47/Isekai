@@ -39,7 +39,6 @@ public class UI_DialogueBalloon : UI_Base
 
 	public void Init(Transform anchor, string text)
 	{
-		gameObject.SetActive(false);
         _anchor = anchor;
 
 		_cg.alpha = 0f;
@@ -227,13 +226,14 @@ public class UI_DialogueBalloon : UI_Base
 		}
 		else
 		{
-			lineCount = Mathf.Max(1, _label.textInfo.lineCount);
+			_label.enableWordWrapping = true;
 
 			string temp = _label.text;
 			_label.text = _pureText;
 
-			_label.enableWordWrapping = true;
-			_label.ForceMeshUpdate();
+			_label.ForceMeshUpdate(true);
+
+			lineCount = Mathf.Max(1, _label.textInfo.lineCount);
 
 			preferWidth = Mathf.Clamp((_label.preferredWidth + 0.5f) * _sizeScaleFactor, 1f, 4.4f);
 
@@ -241,6 +241,8 @@ public class UI_DialogueBalloon : UI_Base
 		}
 
 		float preferHeight = (baseHeight + padding + (lineCount - 1) * perLineIncrease)/* * _sizeScaleFactor*/;
+
+		Debug.Log(lineCount);
 
 		_image.rectTransform.sizeDelta = new Vector2(preferWidth, preferHeight);
 	}
