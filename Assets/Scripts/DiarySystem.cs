@@ -58,9 +58,9 @@ public class DiarySystem: MonoBehaviour
         if (!Managers.Game.IsIntroCommentSaved)
         {
             _commentInput.gameObject.SetActive(true);
-            _commentInput.Select();
             _saveButton.gameObject.SetActive(true);
-        }
+            StartCoroutine(Focus());
+    }
         else
         {
             comment.SetActive(true);
@@ -68,6 +68,14 @@ public class DiarySystem: MonoBehaviour
             _commentInput.text = Managers.Game.IntroCommentText;
             _commentInput.readOnly = true;
         }
+
+        Load();
+    }
+
+    private IEnumerator Focus()
+    {
+        yield return null;
+        _commentInput.Select();
     }
 
     private void Update()
@@ -80,7 +88,8 @@ public class DiarySystem: MonoBehaviour
 
     private void OnSaveButtonClick()
     {
-        if(string.IsNullOrWhiteSpace(_commentInput.text))
+        _commentInput.Select();
+        if (string.IsNullOrWhiteSpace(_commentInput.text))
         {
             return;
         }

@@ -171,7 +171,6 @@ public class DreamSystem : MonoBehaviour
         _dreamAnimator.gameObject.SetActive(false);
         _gameOverUI.gameObject.SetActive(true);
         yield return _gameOverUI.CoFadeOut(1f);
-        this.gameObject.SetActive(false);
     }
 
     void RegressionState()

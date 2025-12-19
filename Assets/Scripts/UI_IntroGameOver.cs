@@ -105,11 +105,11 @@ public class UI_IntroGameOver : UI_Popup
             {
                 _isKeyLocked = true;
                 //현실세계로 이동
-                SceneManager.LoadScene("DreamTestScene");
+                Managers.Scene.LoadScene(Scene.IntroScene);
             }
             else if (_isNoFocused)
             {
-                SceneManager.LoadScene("TitleScene");
+                Managers.Scene.LoadScene(Scene.TitleScene);
             }
         }
 
