@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,6 +19,7 @@ public class LadiesController : NPCController
     {
         State = NPCState.Idle;
         click.OnClicked += OnLadySelected;
+        _dialogueBalloon.Init(dialoguePos[0], _dialogues[0]);
         _dialogueBalloon.gameObject.SetActive(false);
     }
 

@@ -10,6 +10,7 @@ public class ScholarController : NPCController
     private void Start()
     {
         _dialogueBalloon.Init(dialoguePos, "{fade}공작님의 의견이 그렇다면야!");
+        _dialogueBalloon.gameObject.SetActive(false);
         State = NPCState.Idle;
     }
 

@@ -162,14 +162,6 @@ public class UI_ClockMiniGamePopup : UI_Popup
 		_hourHand.Lock();
 		_minuteHand.Lock();
 		Debug.Log("성공!");
-
-		// 문 개방 이벤트 트리거
-
-		if (ClockMiniGameModel.IsSolved && CalendarInputModel.IsSolved)
-		{
-			DoorController door = FindAnyObjectByType<DoorController>();
-			door.Open();
-		}		
 	}
 
 	private IEnumerator CoPlayIntro()
