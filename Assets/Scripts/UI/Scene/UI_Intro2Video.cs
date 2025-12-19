@@ -7,7 +7,7 @@ public class UI_Intro2Video : UI_Scene
 {
 	[SerializeField] private RawImage _screen;            // RenderTexture 표시용
 	[SerializeField] private VideoPlayer _vp;             // Render Mode: RenderTexture
-	[SerializeField] private string _fileName = "인트로_이미지수정.mp4"; // StreamingAssets
+	[SerializeField] private string _fileName = "서코_인트로.mp4"; // StreamingAssets
 	[SerializeField] private Image _fade;                 // 화면 페이드
 	[SerializeField] private Button _skipButton;
 
