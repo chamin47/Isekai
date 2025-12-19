@@ -201,5 +201,6 @@ public class DreamSystem : MonoBehaviour
         yield return _dreamRenderer.CoFadeOut(2f);
         _dreamAnimator.SetBool("StartDream", true);
         _canStopSystem = false;
+        _fadeUI.gameObject.SetActive(false);
     }
 }
