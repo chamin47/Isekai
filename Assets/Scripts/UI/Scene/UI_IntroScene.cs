@@ -14,9 +14,9 @@ public class UI_IntroScene : UI_Scene
 	public override void Init()
 	{
 		base.Init();
-
-		StartCoroutine(StartIntroSequence());
-	}
+        
+        //StartCoroutine(StartIntroSequence());
+    }
 
 	private IEnumerator StartIntroSequence()
 	{

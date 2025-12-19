@@ -53,7 +53,7 @@ public class OutlineSelectSprite : MonoBehaviour, IPointerEnterHandler, IPointer
 
     public void OnPointerEnter(UnityEngine.EventSystems.PointerEventData eventData)
     {
-        _material.SetFloat("_Thickness", 0.02f);
+        _material.SetFloat("_Thickness", 0.015f);
     }
 
     public void OnPointerExit(UnityEngine.EventSystems.PointerEventData eventData)

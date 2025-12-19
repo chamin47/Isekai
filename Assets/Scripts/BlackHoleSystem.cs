@@ -5,14 +5,13 @@ using UnityEngine;
 public class BlackHoleSystem : MonoBehaviour
 {
     [SerializeField] private BlackHole _blackHole;
-    [SerializeField] private Transform _target;
 
     // ºí·¢È¦ ÃâÇö
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.CompareTag("Player"))
         {
-            _blackHole.StartChase();
+            _blackHole.Show();
         }
     }
 
@@ -21,6 +20,7 @@ public class BlackHoleSystem : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
+            _blackHole.Hide();
         }
     }
 }
