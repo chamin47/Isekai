@@ -167,7 +167,7 @@ public class DreamSystem : MonoBehaviour
     {
         _masks[0].SetActive(false);
         _masks[1].SetActive(false);
-        yield return WaitForSecondsCache.Get(2f);
+        yield return WaitForSecondsCache.Get(1f);
         _dreamAnimator.gameObject.SetActive(false);
         _gameOverUI.gameObject.SetActive(true);
         yield return _gameOverUI.CoFadeOut(1f);

@@ -21,7 +21,7 @@ public class DoorController : MonoBehaviour
     private void Awake()
 	{
 		_animator = GetComponent<Animator>();
-	}
+    }
 
     private void Start()
     {
@@ -73,5 +73,9 @@ public class DoorController : MonoBehaviour
 		HomeSystem.IsDoorOpen = true;
     }
 
-	
+    private void OnDestroy()
+    {
+        _outlineSelectSprite.OnSelected -= MoveToIntro;
+    }
+
 }
