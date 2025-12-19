@@ -17,10 +17,28 @@ public class DoorController : MonoBehaviour
     [SerializeField] private BoxCollider2D _changedCollider;
     [SerializeField] private IntroCameraController _introCameraController;
     [SerializeField] private GameObject _happyUI;
-
+    [SerializeField] private BoxCollider2D _doorCollider;
     private void Awake()
 	{
 		_animator = GetComponent<Animator>();
+    }
+
+    private void CloseCollider()
+    {
+        var offset = _doorCollider.offset;
+        _doorCollider.offset = new Vector2(0.24f, offset.y);
+
+        var size = _doorCollider.size;
+        _doorCollider.size = new Vector2(0.15f, size.y);
+    }
+
+    private void OpenCollider()
+    {
+        var offset = _doorCollider.offset;
+        _doorCollider.offset = new Vector2(0f, offset.y);
+
+        var size = _doorCollider.size;
+        _doorCollider.size = new Vector2(0.59f, size.y);
     }
 
     private void Start()
@@ -28,19 +46,26 @@ public class DoorController : MonoBehaviour
         _outlineSelectSprite.OnSelected += MoveToIntro;
         if (HomeSystem.IsDoorOpen)
         {
+            OpenCollider();
             Debug.Log("Door is Open");
             _animator.CrossFade("door_Clip", 0.1f);
-            _outlineSelectSprite.enabled = true;
         }
         else
         {
+            CloseCollider();
             Debug.Log("Door is Closed");
-            _outlineSelectSprite.enabled = false;
         }
     }
 
     private void MoveToIntro(int index)
     {
+        if (HomeSystem.IsDoorOpen == false)
+        {
+            CloseCollider();
+            Managers.Sound.Play("door_locked", Sound.Effect);
+            return;
+        }
+
         _outlineSelectSprite.enabled = false;
         StartCoroutine(FadeAndMove());
     }
@@ -68,6 +93,8 @@ public class DoorController : MonoBehaviour
 		if(HomeSystem.IsDoorOpen)
 			return;
 
+        Managers.Sound.Play("door_open2", Sound.Effect);
+        OpenCollider();
         _outlineSelectSprite.enabled = true;
         _animator.CrossFade("door_Clip", 0.1f);
 		HomeSystem.IsDoorOpen = true;

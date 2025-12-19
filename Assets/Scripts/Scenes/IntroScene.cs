@@ -17,7 +17,7 @@ public class IntroScene : BaseScene
 	{
 		SceneType = Scene.IntroScene;
 
-		Managers.Sound.Play("bgm_real", Sound.Bgm);
+		Managers.Sound.Play("bgm_mainChar_house", Sound.Bgm);
 
 		_playerController.gameObject.SetActive(false);
 		_dreamSystem.gameObject.SetActive(true);

@@ -16,6 +16,8 @@ public class BlackHole : MonoBehaviour
     private Coroutine _showCoroutine;
     private Coroutine _hideCoroutine;
 
+    private bool _isDisappeared = true;
+
     void Start()
     {
         _sprite = GetComponent<SpriteRenderer>();
@@ -33,6 +35,11 @@ public class BlackHole : MonoBehaviour
         if (this.gameObject.activeInHierarchy == false)
             return;
 
+        if(_isDisappeared)
+        {
+            Managers.Sound.PlaySubEffect("whirlpool_chase_amp_2.0x", 1f);
+        }
+        
         _showCoroutine = StartCoroutine(_sprite.CoFadeOut(_fadeDuration));
     }
 
@@ -47,7 +54,12 @@ public class BlackHole : MonoBehaviour
         if (this.gameObject.activeInHierarchy == false)
             return;
 
-        _hideCoroutine = StartCoroutine(_sprite.CoFadeIn(_fadeDuration));
+        _hideCoroutine = StartCoroutine(_sprite.CoFadeIn(_fadeDuration, onFadeFinish : Stop));
+    }
 
+    private void Stop()
+    {
+        Managers.Sound.StopSubEffect();
+        _isDisappeared = true;
     }
 }
