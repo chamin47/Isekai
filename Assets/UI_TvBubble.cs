@@ -16,9 +16,38 @@ public class UI_TvBubble : MonoBehaviour
 		_typewriter.ShowText(text);
 
 		while (_typewriter.isShowingText)
-			yield return null;
+		{
+			if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
+			{
+				if (Input.GetMouseButtonDown(0))
+					Managers.Sound.Play("click_down", Sound.Effect);
 
-		yield return new WaitForSeconds(0.4f);
+				_typewriter.SkipTypewriter();
+			}
+			yield return null;
+		}
+
+		if (Input.GetMouseButton(0))
+		{
+			yield return new WaitUntil(() => Input.GetMouseButtonUp(0));
+			Managers.Sound.Play("click_up", Sound.Effect);
+		}
+
+		while (true)
+		{
+			if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
+			{
+				if (Input.GetMouseButtonDown(0))
+				{
+					Managers.Sound.Play("click_down", Sound.Effect);
+					yield return new WaitUntil(() => Input.GetMouseButtonUp(0));
+					Managers.Sound.Play("click_up", Sound.Effect);
+				}
+				break;
+			}
+
+			yield return null;
+		}
 	}
 
 	public void FadeOutAndDestroy()
