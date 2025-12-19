@@ -14,6 +14,7 @@ public class ArtistController : NPCController
         _dialogueBalloon.gameObject.SetActive(false);
     }
 
+    List<int> a;
     public override void ShowDialogue()
     {
         _dialogueBalloon.AppearAndFade(_dialogue);

@@ -3,9 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Xml;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class DreamSystem : MonoBehaviour
+public class DreamSystem : MonoBehaviour, IPointerClickHandler
 {
     public enum DreamState { Phase1, Phase2, Phase3, WakeUp }
     
@@ -44,11 +45,6 @@ public class DreamSystem : MonoBehaviour
 
         if (_canStartSystem)
         {
-            if (Input.GetMouseButtonDown(0))
-            {
-                ProcessClick();
-            }
-
             CheckIdleTime();
             return;
         }
@@ -58,6 +54,20 @@ public class DreamSystem : MonoBehaviour
             Managers.Sound.PlaySubEffect("dream_sink", 1f);
             _canStartSystem = true;
             _mouse.SetActive(true);
+        }
+    }
+
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if(_canStopSystem)
+        {
+            return;
+        }
+
+        if (_canStartSystem)
+        {
+            ProcessClick();
         }
     }
 
@@ -203,4 +213,5 @@ public class DreamSystem : MonoBehaviour
         _canStopSystem = false;
         _fadeUI.gameObject.SetActive(false);
     }
+
 }
