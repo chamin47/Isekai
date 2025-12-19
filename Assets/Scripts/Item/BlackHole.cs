@@ -37,7 +37,7 @@ public class BlackHole : MonoBehaviour
 
         if(_isDisappeared)
         {
-            Managers.Sound.PlaySubEffect("whirlpool_chase", 1f);
+            Managers.Sound.PlaySubEffect("whirlpool_chase_amp_2.0x", 1f);
         }
         
         _showCoroutine = StartCoroutine(_sprite.CoFadeOut(_fadeDuration));
