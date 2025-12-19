@@ -39,7 +39,7 @@ public class UI_DialogueBalloon : UI_Base
 
 	public void Init(Transform anchor, string text)
 	{
-		gameObject.SetActive(false);
+		//gameObject.SetActive(false);
         _anchor = anchor;
 
 		_cg.alpha = 0f;

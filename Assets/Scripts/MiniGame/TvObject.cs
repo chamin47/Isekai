@@ -1,7 +1,4 @@
-using System.Collections.Generic;
-using UnityEditor.SceneManagement;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(OutlineSelectSprite))]
 public class TvObject : MonoBehaviour

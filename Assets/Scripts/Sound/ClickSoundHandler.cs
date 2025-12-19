@@ -12,6 +12,9 @@ public class ClickSoundHandler : MonoBehaviour
 
     private void OnMouseDown()
     {
+        if (enabled == false)
+            return;
+
         _pressedInside = true;
 
         if (!string.IsNullOrEmpty(_clickDownSound))
@@ -23,7 +26,9 @@ public class ClickSoundHandler : MonoBehaviour
 
     private void OnMouseUp()
     {
- 
+        if (enabled == false)
+            return;
+
         if (_pressedInside && _isPointerOver)
         {
             if (!string.IsNullOrEmpty(_clickUpSound))

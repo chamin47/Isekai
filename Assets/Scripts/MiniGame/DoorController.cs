@@ -1,10 +1,6 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class DoorController : MonoBehaviour
 {
@@ -18,6 +14,8 @@ public class DoorController : MonoBehaviour
     [SerializeField] private IntroCameraController _introCameraController;
     [SerializeField] private GameObject _happyUI;
     [SerializeField] private BoxCollider2D _doorCollider;
+    [SerializeField] private ClickSoundHandler _clickSoundHandler;
+
     private void Awake()
 	{
 		_animator = GetComponent<Animator>();
@@ -46,12 +44,14 @@ public class DoorController : MonoBehaviour
         _outlineSelectSprite.OnSelected += MoveToIntro;
         if (HomeSystem.IsDoorOpen)
         {
+            _clickSoundHandler.enabled = true;
             OpenCollider();
             Debug.Log("Door is Open");
             _animator.CrossFade("door_Clip", 0.1f);
         }
         else
         {
+            _clickSoundHandler.enabled = false;
             CloseCollider();
             Debug.Log("Door is Closed");
         }
@@ -92,7 +92,7 @@ public class DoorController : MonoBehaviour
 	{
 		if(HomeSystem.IsDoorOpen)
 			return;
-
+        _clickSoundHandler.enabled = true;
         Managers.Sound.Play("door_open2", Sound.Effect);
         OpenCollider();
         _outlineSelectSprite.enabled = true;

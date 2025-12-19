@@ -8,7 +8,7 @@ public class TestScene : BaseScene
     void Start()
     {
         Managers.Happy.OnHappinessChanged += MakePortal;
-        Managers.Sound.Play("bgm_isekai_gang", Sound.Bgm);
+        Managers.Sound.Play("bgm_isekai_adrian", Sound.Bgm);
         Managers.Happy.Happiness = 50f;
 
         MakeShiftGuide();

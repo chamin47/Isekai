@@ -56,7 +56,7 @@ public class RealGameFactory : MonoBehaviour
         }
         else
         {
-            float x = Camera.main.ViewportToWorldPoint(new Vector3(1, 0, 0)).x;
+            float x = Camera.main.ViewportToWorldPoint(new Vector3(0.9f, 0, 0)).x;
             float y = 8f;
 
             ui_Bubble.transform.position = new Vector2(x, y);

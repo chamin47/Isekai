@@ -16,6 +16,7 @@ public class DreamSystem : MonoBehaviour
     [SerializeField] private Animator _bedAnimator;
     [SerializeField] private CanvasGroup _gameOverUI;
     [SerializeField] private GameObject _player;
+    [SerializeField] private Image _fadeUI;
 
     public DreamState currentState = DreamState.Phase1;
 
@@ -54,6 +55,7 @@ public class DreamSystem : MonoBehaviour
 
         if(_dreamAnimator.GetCurrentAnimatorStateInfo(0).IsName("dream3"))
         {
+            Managers.Sound.PlaySubEffect("dream_sink", 1f);
             _canStartSystem = true;
             _mouse.SetActive(true);
         }
@@ -110,6 +112,7 @@ public class DreamSystem : MonoBehaviour
         _dreamAnimator.gameObject.SetActive(false);
         _canStopSystem = true;
         _bedAnimator.enabled = true;
+        Managers.Sound.StopSubEffect();
         StartCoroutine(CoWakeUp());
     }
 
@@ -162,6 +165,7 @@ public class DreamSystem : MonoBehaviour
     {
         Debug.Log("Game Over Triggered");
         _canStopSystem = true;
+        Managers.Sound.StopSubEffect();
         StartCoroutine(CoGameOver());
     }
 
@@ -191,6 +195,8 @@ public class DreamSystem : MonoBehaviour
     public IEnumerator StartSystem()
     {
         _canStopSystem = true;
+        _fadeUI.gameObject.SetActive(true);
+        yield return _fadeUI.CoFadeIn(3f);
         yield return WaitForSecondsCache.Get(2f);
         yield return _dreamRenderer.CoFadeOut(2f);
         _dreamAnimator.SetBool("StartDream", true);

@@ -158,7 +158,7 @@ RectTransform:
   - {fileID: 3209893725792695872}
   - {fileID: 7980859975422082166}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -242,7 +242,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _screen: {fileID: 3110554177139909202}
   _vp: {fileID: 9190328700629140675}
-  _fileName: "\uC11C\uCF54_\uC778\uD2B8\uB85C.mp4"
+  _fileName: warning_new.mp4
   _fade: {fileID: 502993539732541653}
   _skipButton: {fileID: 1540849676472170698}
 --- !u!1 &2078460891914773272

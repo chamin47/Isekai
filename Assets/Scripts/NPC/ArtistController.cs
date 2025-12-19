@@ -11,6 +11,7 @@ public class ArtistController : NPCController
     private void Start()
     {
         State = NPCState.Idle;
+        _dialogueBalloon.gameObject.SetActive(false);
     }
 
     public override void ShowDialogue()
