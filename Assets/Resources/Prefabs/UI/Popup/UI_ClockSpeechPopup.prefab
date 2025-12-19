@@ -60,7 +60,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 0.77254903}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -136,7 +136,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -457,5 +457,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e70e85eaea44760419a4b4158d802da4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _blocker: {fileID: 8642443135044619183}
   _popupRoot: {fileID: 2607806541608119285}
   _messageText: {fileID: 6684218450523813738}

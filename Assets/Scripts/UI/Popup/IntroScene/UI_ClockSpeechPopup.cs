@@ -1,20 +1,23 @@
+using DG.Tweening;
 using System.Collections;
 using TMPro;
 using UnityEngine;
-using DG.Tweening;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class UI_ClockSpeechPopup : UI_Popup
 {
+	[SerializeField] private Image _blocker;
 	[SerializeField] private RectTransform _popupRoot;
 	[SerializeField] private TMP_Text _messageText;
-
-	private Coroutine _autoCloseCoroutine;
 
 	public override void Init()
 	{
 		base.Init();
 
 		_popupRoot.localScale = Vector3.zero;
+
+		_blocker.gameObject.BindEvent(OnClickBlocker);
 	}
 
 	public IEnumerator Show(string message, float autoCloseTime = 4f)
@@ -27,17 +30,6 @@ public class UI_ClockSpeechPopup : UI_Popup
 		_popupRoot
 			.DOScale(1f, 0.32f)
 			.SetEase(Ease.OutBack);
-
-		if (_autoCloseCoroutine != null)
-			StopCoroutine(_autoCloseCoroutine);
-
-		_autoCloseCoroutine = StartCoroutine(CoAutoClose(autoCloseTime));
-	}
-
-	private IEnumerator CoAutoClose(float delay)
-	{
-		yield return new WaitForSeconds(delay);
-		CloseWithAnimation();
 	}
 
 	private void CloseWithAnimation()
@@ -49,5 +41,10 @@ public class UI_ClockSpeechPopup : UI_Popup
 			{
 				Managers.UI.ClosePopupUI(this);
 			});
+	}
+
+	private void OnClickBlocker(PointerEventData data)
+	{
+		CloseWithAnimation();
 	}
 }

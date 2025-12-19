@@ -721,11 +721,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 190203238}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d183b1a72b8967b43a9ef0dd782ba58a, type: 3}
+  m_Script: {fileID: 11500000, guid: 625b98ae9d821c943b952cb317d09d25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _clickDownSound: click_down
-  _clickUpSound: click_up
 --- !u!1 &193210816
 GameObject:
   m_ObjectHideFlags: 0
@@ -1954,7 +1952,7 @@ PrefabInstance:
       addedObject: {fileID: 2019926571}
     - targetCorrespondingSourceObject: {fileID: 4577427795674140330, guid: 1c3db6df8cc82bb42b1fbaae0ec2131a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2019926574}
+      addedObject: {fileID: 2019926577}
     - targetCorrespondingSourceObject: {fileID: 4750923791182429461, guid: 1c3db6df8cc82bb42b1fbaae0ec2131a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 519455574}
@@ -1966,7 +1964,7 @@ PrefabInstance:
       addedObject: {fileID: 519455575}
     - targetCorrespondingSourceObject: {fileID: 4750923791182429461, guid: 1c3db6df8cc82bb42b1fbaae0ec2131a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 519455578}
+      addedObject: {fileID: 519455581}
     - targetCorrespondingSourceObject: {fileID: 1387300714311248513, guid: 1c3db6df8cc82bb42b1fbaae0ec2131a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1926076735}
@@ -1978,7 +1976,7 @@ PrefabInstance:
       addedObject: {fileID: 1926076738}
     - targetCorrespondingSourceObject: {fileID: 1387300714311248513, guid: 1c3db6df8cc82bb42b1fbaae0ec2131a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1926076741}
+      addedObject: {fileID: 1926076744}
     - targetCorrespondingSourceObject: {fileID: 855493602640308472, guid: 1c3db6df8cc82bb42b1fbaae0ec2131a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1779685437}
@@ -2328,7 +2326,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _runner: {fileID: 690080354}
---- !u!114 &519455578
+--- !u!114 &519455581
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2337,11 +2335,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 519455570}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d183b1a72b8967b43a9ef0dd782ba58a, type: 3}
+  m_Script: {fileID: 11500000, guid: 625b98ae9d821c943b952cb317d09d25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _clickDownSound: click_down
-  _clickUpSound: click_up
 --- !u!1 &541291530
 GameObject:
   m_ObjectHideFlags: 0
@@ -5252,7 +5248,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6a3aace333556a47a3562a767ea402e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1926076741
+--- !u!114 &1926076744
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5261,11 +5257,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1926076731}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d183b1a72b8967b43a9ef0dd782ba58a, type: 3}
+  m_Script: {fileID: 11500000, guid: 625b98ae9d821c943b952cb317d09d25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _clickDownSound: click_down
-  _clickUpSound: click_up
 --- !u!1 &2014292663
 GameObject:
   m_ObjectHideFlags: 0
@@ -5434,7 +5428,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8172cc57d4fc884b8c88e20697386d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2019926574
+--- !u!114 &2019926577
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5443,11 +5437,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 2019926564}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d183b1a72b8967b43a9ef0dd782ba58a, type: 3}
+  m_Script: {fileID: 11500000, guid: 625b98ae9d821c943b952cb317d09d25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _clickDownSound: click_down
-  _clickUpSound: click_up
 --- !u!4 &2091775745 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7638598911383099013, guid: 1c3db6df8cc82bb42b1fbaae0ec2131a, type: 3}
