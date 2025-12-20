@@ -68,7 +68,7 @@ public class UI_CalendarMiniGamePopup : UI_Popup
 	{
 		if (Input.GetKeyDown(KeyCode.Escape))
 		{
-			Managers.UI.ClosePopupUI();
+			OnCloseButton();
 		}
 	}
 

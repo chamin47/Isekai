@@ -1,6 +1,7 @@
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class UI_ClockMiniGamePopup : UI_Popup
@@ -35,9 +36,16 @@ public class UI_ClockMiniGamePopup : UI_Popup
 	private Coroutine _uiShakeCoroutine;
 	private Vector2 _originAnchoredPos;
 
+	private bool _tutorialOutlineActive; // Drag 기반
+	private bool _hoverOutlineActive;    // Hover 기반
+	private bool _ignoreHoverUntilExit;
+
 	public override void Init()
 	{
 		base.Init();
+
+		_centerButton.gameObject.BindEvent(OnCenterHoverEnter, UIEvent.Enter);
+		_centerButton.gameObject.BindEvent(OnCenterHoverExit, UIEvent.Exit);
 
 		_originAnchoredPos = _clockRoot.anchoredPosition;
 
@@ -89,17 +97,23 @@ public class UI_ClockMiniGamePopup : UI_Popup
 	{
 		if (Input.GetKeyDown(KeyCode.Escape))
 		{
-			Managers.UI.ClosePopupUI();
+			OnCloseButton();
 		}
 
 		if (ClockMiniGameModel.IsSolved)
 			return;
 
 
-		if (ClockMiniGameModel.HasTouchedHand && !ClockMiniGameModel.HasClickedCenter)
+		if (ClockMiniGameModel.HasTouchedHand && !ClockMiniGameModel.HasClickedCenter
+		&& !_tutorialOutlineActive)
 		{
-			_centerMat.SetFloat(ClockMiniGameModel.OutlineThicknessID, 2f);
+			_tutorialOutlineActive = true;
 		}
+
+		bool showOutline = _tutorialOutlineActive || _hoverOutlineActive;
+
+		_centerMat.SetFloat(ClockMiniGameModel.OutlineThicknessID, showOutline ? 2f : 0f
+		);
 
 		ClockMiniGameModel.HourAngle = _hourHand.CurrentAngle;
 		ClockMiniGameModel.MinuteAngle = _minuteHand.CurrentAngle;
@@ -119,7 +133,10 @@ public class UI_ClockMiniGamePopup : UI_Popup
 			return;
 
 		ClockMiniGameModel.HasClickedCenter = true;
-		_centerMat.SetFloat(ClockMiniGameModel.OutlineThicknessID, 0f);
+		_tutorialOutlineActive = false;
+		//_centerMat.SetFloat(ClockMiniGameModel.OutlineThicknessID, 0f);
+		_hoverOutlineActive = false;
+		_ignoreHoverUntilExit = true;
 
 		bool hourOk =
 			Mathf.Abs(Mathf.DeltaAngle(_hourHand.CurrentAngle, 157.4f)) <= 5f;
@@ -229,5 +246,19 @@ public class UI_ClockMiniGamePopup : UI_Popup
 		}
 
 		_clockRoot.anchoredPosition = _originAnchoredPos;
+	}
+
+	private void OnCenterHoverEnter(PointerEventData data)
+	{
+		if (_ignoreHoverUntilExit)
+			return;
+		_hoverOutlineActive = true;
+	}
+
+	private void OnCenterHoverExit(PointerEventData data)
+	{
+		_hoverOutlineActive = false;
+
+		_ignoreHoverUntilExit = false;
 	}
 }
