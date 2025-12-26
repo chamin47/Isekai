@@ -8,6 +8,7 @@ ScriptedImporter:
   assetBundleName: 
   assetBundleVariant: 
   script: {fileID: 11500000, guid: 62a9f0aa5b59740cfbadc7e5f9823bb0, type: 3}
+  importerVersion: 2
   textureImporterSettings:
     alphaSource: 1
     mipMapMode: 0
@@ -2004,7 +2005,12 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   asepriteLayers:
   - layerIndex: 0
-    guid: 1249332633
+    uuid:
+      value0: 1582656317
+      value1: 0
+      value2: 0
+      value3: 0
+    guid: 1582656317
     name: cutscene1
     layerFlags: 0
     layerType: 0
@@ -2512,3 +2518,4 @@ ScriptedImporter:
   secondarySpriteTextures: []
   spritePackingTag: 
   canvasSize: {x: 320, y: 180}
+  previousTextureSize: {x: 2048, y: 2048}

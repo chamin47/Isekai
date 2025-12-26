@@ -8,6 +8,7 @@ ScriptedImporter:
   assetBundleName: 
   assetBundleVariant: 
   script: {fileID: 11500000, guid: 62a9f0aa5b59740cfbadc7e5f9823bb0, type: 3}
+  importerVersion: 2
   textureImporterSettings:
     alphaSource: 1
     mipMapMode: 0
@@ -123,7 +124,7 @@ ScriptedImporter:
   animatedSpriteImportData:
   - name: Frame_4
     originalName: 
-    pivot: {x: 0.5, y: 0}
+    pivot: {x: 0.18750001, y: 0.023809526}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -143,7 +144,7 @@ ScriptedImporter:
     uvTransform: {x: 24, y: 64}
   - name: Frame_5
     originalName: 
-    pivot: {x: 0.6, y: 0}
+    pivot: {x: 0.35, y: 0.023809526}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -163,7 +164,7 @@ ScriptedImporter:
     uvTransform: {x: 4, y: 34}
   - name: Frame_6
     originalName: 
-    pivot: {x: 0.6666667, y: 0}
+    pivot: {x: 0.4583333, y: 0.022727273}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -183,7 +184,7 @@ ScriptedImporter:
     uvTransform: {x: 4, y: 4}
   - name: Frame_2
     originalName: 
-    pivot: {x: 0.5, y: 0}
+    pivot: {x: 0.18750001, y: 0.022727273}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -203,7 +204,7 @@ ScriptedImporter:
     uvTransform: {x: 24, y: 4}
   - name: Frame_3
     originalName: 
-    pivot: {x: 0.5, y: -0}
+    pivot: {x: 0.18750001, y: 0.022727273}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -223,7 +224,7 @@ ScriptedImporter:
     uvTransform: {x: 24, y: 34}
   - name: Frame_0
     originalName: 
-    pivot: {x: 0.5555556, y: 0}
+    pivot: {x: 0.2777778, y: 0.022727273}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -243,7 +244,7 @@ ScriptedImporter:
     uvTransform: {x: 4, y: 63}
   - name: Frame_1
     originalName: 
-    pivot: {x: 0.5555556, y: 0}
+    pivot: {x: 0.2777778, y: 0.023809526}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -264,7 +265,12 @@ ScriptedImporter:
   spriteSheetImportData: []
   asepriteLayers:
   - layerIndex: 0
-    guid: -2080979435
+    uuid:
+      value0: 3975987369
+      value1: 0
+      value2: 0
+      value3: 0
+    guid: -318979927
     name: Poor_boy_hand
     layerFlags: 0
     layerType: 0
@@ -424,3 +430,4 @@ ScriptedImporter:
   secondarySpriteTextures: []
   spritePackingTag: 
   canvasSize: {x: 14, y: 22}
+  previousTextureSize: {x: 64, y: 128}

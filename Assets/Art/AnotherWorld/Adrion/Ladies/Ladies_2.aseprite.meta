@@ -8,6 +8,7 @@ ScriptedImporter:
   assetBundleName: 
   assetBundleVariant: 
   script: {fileID: 11500000, guid: 62a9f0aa5b59740cfbadc7e5f9823bb0, type: 3}
+  importerVersion: 2
   textureImporterSettings:
     alphaSource: 1
     mipMapMode: 0
@@ -123,7 +124,7 @@ ScriptedImporter:
   animatedSpriteImportData:
   - name: Ladies_2
     originalName: 
-    pivot: {x: 0.6363636, y: 0.033333335}
+    pivot: {x: 0.5, y: 0.03333333}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -144,7 +145,12 @@ ScriptedImporter:
   spriteSheetImportData: []
   asepriteLayers:
   - layerIndex: 0
-    guid: -448230889
+    uuid:
+      value0: 2649417523
+      value1: 0
+      value2: 0
+      value3: 0
+    guid: -1645549773
     name: Ladies_2
     layerFlags: 0
     layerType: 0
@@ -250,3 +256,4 @@ ScriptedImporter:
   secondarySpriteTextures: []
   spritePackingTag: 
   canvasSize: {x: 11, y: 29}
+  previousTextureSize: {x: 32, y: 64}

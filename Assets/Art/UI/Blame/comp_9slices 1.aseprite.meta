@@ -8,6 +8,7 @@ ScriptedImporter:
   assetBundleName: 
   assetBundleVariant: 
   script: {fileID: 11500000, guid: 62a9f0aa5b59740cfbadc7e5f9823bb0, type: 3}
+  importerVersion: 2
   textureImporterSettings:
     alphaSource: 1
     mipMapMode: 0
@@ -123,8 +124,8 @@ ScriptedImporter:
   animatedSpriteImportData:
   - name: comp_9slices 1
     originalName: 
-    pivot: {x: 0.5, y: 0}
-    alignment: 9
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
     border: {x: 5, y: 3, z: 3, w: 3}
     rect:
       serializedVersion: 2
@@ -144,7 +145,12 @@ ScriptedImporter:
   spriteSheetImportData: []
   asepriteLayers:
   - layerIndex: 0
-    guid: 1295209582
+    uuid:
+      value0: 500916134
+      value1: 0
+      value2: 0
+      value3: 0
+    guid: 500916134
     name: comp_9slices
     layerFlags: 0
     layerType: 0
@@ -250,3 +256,4 @@ ScriptedImporter:
   secondarySpriteTextures: []
   spritePackingTag: 
   canvasSize: {x: 9, y: 7}
+  previousTextureSize: {x: 32, y: 16}
