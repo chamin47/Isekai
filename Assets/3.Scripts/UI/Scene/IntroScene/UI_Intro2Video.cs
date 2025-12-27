@@ -64,10 +64,23 @@ public class UI_Intro2Video : UI_Scene
 		if (_screen != null) 
 			_screen.enabled = true;
 
-		_vp.Play();
+#if UNITY_EDITOR
+		_skipButton.gameObject.SetActive(true);
+#else
+		StartCoroutine(Delay());
+
+        IEnumerator Delay()
+        {
+            yield return WaitForSecondsCache.Get(15f);
+            if (_skipButton != null)
+                _skipButton.gameObject.SetActive(true);
+        }
+#endif
+
+        _vp.Play();
 	}
 
-	private void OnVideoEnd(VideoPlayer _)
+    private void OnVideoEnd(VideoPlayer _)
 	{
 		if (_isSkipped)
 			return;
