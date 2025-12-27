@@ -8,6 +8,7 @@ ScriptedImporter:
   assetBundleName: 
   assetBundleVariant: 
   script: {fileID: 11500000, guid: 62a9f0aa5b59740cfbadc7e5f9823bb0, type: 3}
+  importerVersion: 2
   textureImporterSettings:
     alphaSource: 1
     mipMapMode: 0
@@ -244,7 +245,12 @@ ScriptedImporter:
   spriteSheetImportData: []
   asepriteLayers:
   - layerIndex: 0
-    guid: -145147711
+    uuid:
+      value0: 3018011909
+      value1: 0
+      value2: 0
+      value3: 0
+    guid: -1276955387
     name: dream_1
     layerFlags: 0
     layerType: 0
@@ -395,3 +401,4 @@ ScriptedImporter:
   secondarySpriteTextures: []
   spritePackingTag: 
   canvasSize: {x: 133, y: 82}
+  previousTextureSize: {x: 512, y: 256}

@@ -8,6 +8,7 @@ ScriptedImporter:
   assetBundleName: 
   assetBundleVariant: 
   script: {fileID: 11500000, guid: 62a9f0aa5b59740cfbadc7e5f9823bb0, type: 3}
+  importerVersion: 2
   textureImporterSettings:
     alphaSource: 1
     mipMapMode: 0
@@ -244,7 +245,12 @@ ScriptedImporter:
   spriteSheetImportData: []
   asepriteLayers:
   - layerIndex: 0
-    guid: -1860369818
+    uuid:
+      value0: 3803446142
+      value1: 0
+      value2: 0
+      value3: 0
+    guid: -491521154
     name: Library_ch_hug
     layerFlags: 0
     layerType: 0
@@ -383,3 +389,4 @@ ScriptedImporter:
   secondarySpriteTextures: []
   spritePackingTag: 
   canvasSize: {x: 26, y: 36}
+  previousTextureSize: {x: 64, y: 128}
