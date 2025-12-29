@@ -98,7 +98,7 @@ ScriptedImporter:
     addSortingGroup: 1
     addShadowCasters: 0
   importFileNodeState: 1
-  platformSettingsDirtyTick: 639016789465171183
+  platformSettingsDirtyTick: 639026652544889928
   textureAssetName: 
   singleSpriteImportData:
   - name: 
@@ -133,7 +133,7 @@ ScriptedImporter:
       y: 4
       width: 133
       height: 81
-    spriteID: 3259a38abf17c804294697c58fc89888
+    spriteID: 150808f4b0e016045bae3a7365e385f8
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -153,7 +153,7 @@ ScriptedImporter:
       y: 93
       width: 133
       height: 81
-    spriteID: d134ccb92e64e3c40b7b8b01a3427ef8
+    spriteID: 41ede7c7ea076244ba080071bf44e749
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -173,7 +173,7 @@ ScriptedImporter:
       y: 182
       width: 133
       height: 81
-    spriteID: 0ce5f12d0b5fcc94fa88b5da557fc742
+    spriteID: 05febe6eef42a0b48b0ac662d097422b
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -190,7 +190,7 @@ ScriptedImporter:
       value1: 0
       value2: 0
       value3: 0
-    guid: -927589164
+    guid: 0
     name: dream_deep
     layerFlags: 0
     layerType: 0
@@ -204,7 +204,7 @@ ScriptedImporter:
         y: 0
         width: 133
         height: 81
-      spriteId: 3259a38abf17c804294697c58fc89888
+      spriteId: 150808f4b0e016045bae3a7365e385f8
     - name: Frame_1
       frameIndex: 1
       additiveSortOrder: 0
@@ -213,7 +213,7 @@ ScriptedImporter:
         y: 0
         width: 133
         height: 81
-      spriteId: d134ccb92e64e3c40b7b8b01a3427ef8
+      spriteId: 41ede7c7ea076244ba080071bf44e749
     - name: Frame_2
       frameIndex: 2
       additiveSortOrder: 0
@@ -222,7 +222,7 @@ ScriptedImporter:
         y: 0
         width: 133
         height: 81
-      spriteId: 0ce5f12d0b5fcc94fa88b5da557fc742
+      spriteId: 05febe6eef42a0b48b0ac662d097422b
     linkedCells: []
     parentIndex: -1
   platformSettings:
@@ -241,7 +241,7 @@ ScriptedImporter:
   - name: DefaultTexturePlatform
     overridden: 0
     ignorePlatformSupport: 0
-    maxTextureSize: 2048
+    maxTextureSize: 16384
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -253,58 +253,10 @@ ScriptedImporter:
   - name: Standalone
     overridden: 0
     ignorePlatformSupport: 0
-    maxTextureSize: 2048
+    maxTextureSize: 16384
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    androidETC2FallbackOverride: 0
-  - name: Server
-    overridden: 0
-    ignorePlatformSupport: 0
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    androidETC2FallbackOverride: 0
-  - name: Android
-    overridden: 0
-    ignorePlatformSupport: 0
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    androidETC2FallbackOverride: 0
-  - name: iPhone
-    overridden: 0
-    ignorePlatformSupport: 0
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    androidETC2FallbackOverride: 0
-  - name: WebGL
-    overridden: 0
-    ignorePlatformSupport: 0
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     forceMaximumCompressionQuality_BC6H_BC7: 0
     crunchedCompression: 0
