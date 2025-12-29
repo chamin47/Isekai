@@ -1,10 +1,10 @@
+using System.Collections;
+using System.Collections.Generic;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
-using System.Collections;
-
 using static UnityEngine.UI.Image;
-using System.Collections.Generic;
 
 class DiaryContent
 {
@@ -19,8 +19,6 @@ class DiaryContent
         leftImage.fillMethod = FillMethod.Horizontal;
         leftImage.type = Type.Filled;
     }
-
-   
 }
 
 
@@ -33,19 +31,25 @@ public class DiarySystem: MonoBehaviour
     [SerializeField] private Button _saveButton;
     [SerializeField] private GameObject comment;
 
+    [Header("Navigation")]
     [SerializeField] private Button prevButton;
     [SerializeField] private Button nextButton;
 
+    [Header("Pages")]
     [SerializeField] private List<Sprite> diarySprites;
     [SerializeField] private List<Image> diaryImages;
-    
-    [SerializeField] private int currentPageIndex = 0;
-    private int MaxPageIndex => diarySprites.Count - 1;
 
+    [Header("Setting")]
     [SerializeField] private float effectTime = 2f;
+
+    [Header("È®ÀÎ¿ë")]
+    [SerializeField] private int currentPageIndex = 0;
+
+    private int MaxPageIndex => Mathf.Max(0, diaryImages.Count - 1);
+
     private void Start()
     {
-        closeButton.onClick.AddListener(() => this.gameObject.SetActive(false));
+        closeButton.onClick.AddListener(Close);
 
         nextButton.onClick.AddListener(OnNextButtonClick);
         prevButton.onClick.AddListener(OnPrevButtonClick);
@@ -72,6 +76,11 @@ public class DiarySystem: MonoBehaviour
         Load();
     }
 
+    private void Close()
+    {
+        gameObject.SetActive(false);
+    }
+
     private IEnumerator Focus()
     {
         yield return null;
@@ -95,6 +104,8 @@ public class DiarySystem: MonoBehaviour
         }
 
         _commentInput.readOnly = true;
+        _commentInput.selectionColor = new Color(0, 0, 0, 0);
+
         Managers.Game.IsIntroCommentSaved = true;
         Managers.Game.IntroCommentText = _commentInput.text;
 
@@ -104,6 +115,11 @@ public class DiarySystem: MonoBehaviour
 
     private void OnPrevButtonClick()
     {
+        if (Managers.Game.IsIntroCommentSaved)
+        {
+            comment.SetActive(true);
+        }
+
         if(currentPageIndex == 1)
         {
             if(_commentInput.readOnly == false)
@@ -145,7 +161,12 @@ public class DiarySystem: MonoBehaviour
 
     public void OnNextButtonClick()
     {
-        if(currentPageIndex == MaxPageIndex -1)
+        if (Managers.Game.IsIntroCommentSaved)
+        {
+            comment.SetActive(true);
+        }
+
+        if (currentPageIndex == MaxPageIndex -1)
         {
             nextButton.gameObject.SetActive(false);
         }

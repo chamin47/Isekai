@@ -317,6 +317,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI_DiarySystem
       objectReference: {fileID: 0}
+    - target: {fileID: 4878779295261995672, guid: 0d5c0191d36ba7d4aa5af161596f2530, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5466227042056129864, guid: 0d5c0191d36ba7d4aa5af161596f2530, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6153780910391595987, guid: 0d5c0191d36ba7d4aa5af161596f2530, type: 3}
       propertyPath: m_Pivot.x
       value: 0
