@@ -13,7 +13,7 @@ public class DialogueTextPresenter : MonoBehaviour, ITextPresenter
 
 	public IActorDirector actor; // Runner에서 주입
 
-	public const float StackSpacingRatio = 0.15f; // 화면 높이의 10%
+	public const float StackSpacingRatio = 0.16f; // 화면 높이의 10%
 
 	readonly Dictionary<Transform, List<UI_DialogueBalloon>> _stacked = new();
 

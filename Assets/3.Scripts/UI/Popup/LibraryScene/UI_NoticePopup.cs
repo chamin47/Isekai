@@ -16,8 +16,9 @@ public class UI_NoticePopup : UI_Popup
     [SerializeField] protected RectTransform _backgroundParent;
     [SerializeField] protected TMP_Text _noticeText;
     [SerializeField] protected Button _closeButton;
+	[SerializeField] private RectTransform _popupRoot;
 
-    protected Canvas _canvas;
+	protected Canvas _canvas;
 
     protected LibraryScene _libraryScene;
     protected LibraryBook _book;
@@ -87,10 +88,21 @@ public class UI_NoticePopup : UI_Popup
             _book.EnableFinger();
         }
 
-        Managers.UI.ClosePopupUI(this);
+		CloseWithAnimation();
     }
 
-    public virtual void OnCheckToggleIsOn(bool isOn)
+	private void CloseWithAnimation()
+	{
+		_popupRoot
+			.DOScale(0f, 0.25f)
+			.SetEase(Ease.InBack)
+			.OnComplete(() =>
+			{
+				Managers.UI.ClosePopupUI(this);
+			});
+	}
+
+	public virtual void OnCheckToggleIsOn(bool isOn)
     {
         if (!isOn) return;
 

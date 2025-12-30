@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Library_ch_walk
+  m_Name: Library_ch_sit_idle_Clip
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -21,15 +21,13 @@ AnimationClip:
   - serializedVersion: 2
     curve:
     - time: 0
-      value: {fileID: 795509402502319035, guid: 53abc991b8d1b0749b0c4436dd96fcfe, type: 3}
-    - time: 0.12
-      value: {fileID: 7404644757233501919, guid: 53abc991b8d1b0749b0c4436dd96fcfe, type: 3}
-    - time: 0.24
-      value: {fileID: -7439584869467626368, guid: 53abc991b8d1b0749b0c4436dd96fcfe, type: 3}
-    - time: 0.36
-      value: {fileID: -2221099499844734400, guid: 53abc991b8d1b0749b0c4436dd96fcfe, type: 3}
-    - time: 0.47000003
-      value: {fileID: -2221099499844734400, guid: 53abc991b8d1b0749b0c4436dd96fcfe, type: 3}
+      value: {fileID: -3764082163901075372, guid: ed5a9eee94e4ca44899c008f6bfa5572, type: 3}
+    - time: 0.33
+      value: {fileID: -6680427956463196176, guid: ed5a9eee94e4ca44899c008f6bfa5572, type: 3}
+    - time: 0.66
+      value: {fileID: -5984425375661880411, guid: ed5a9eee94e4ca44899c008f6bfa5572, type: 3}
+    - time: 0.98
+      value: {fileID: -5984425375661880411, guid: ed5a9eee94e4ca44899c008f6bfa5572, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -48,7 +46,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.48000002
+    m_StopTime: 0.99
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0

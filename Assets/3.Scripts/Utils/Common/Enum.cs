@@ -35,6 +35,8 @@ public enum UIEvent
 {
 	Click,
 	Drag,
+	Enter,
+	Exit
 }
 
 public enum MouseEvent

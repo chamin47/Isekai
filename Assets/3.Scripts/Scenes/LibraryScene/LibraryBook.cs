@@ -1,7 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 /// <summary>
 /// 책 hover시 이벤트
@@ -10,36 +8,43 @@ using UnityEngine.EventSystems;
 public class LibraryBook : MonoBehaviour
 {
 	[SerializeField] private GameObject _mouse;
-    [SerializeField] private BoxCollider2D _collider;
+	[SerializeField] private BoxCollider2D _collider;
+	[SerializeField] private SpriteRenderer _twinkleRenderer;
+	[SerializeField] private GameObject _hud;
+	[SerializeField] private WorldType _worldType;
 	[SerializeField] private bool _isClicked = false;           // 클릭되었는지 여부
-    [SerializeField] private float _fingerBlinkSpeed = 0.8f;    // 손가락 깜박거림 대기시간
+	[SerializeField] private float _fingerBlinkSpeed = 0.8f;    // 손가락 깜박거림 대기시간
 	[SerializeField] private float _fadeDuration = 0.5f;   // 페이드인 지속 시간
+	[SerializeField] private float _dimAlpha = 0.35f;
 
+	private SpriteRenderer _bookRenderer;
 	private SpriteRenderer _mouseRenderer;
 
 	private void Awake()
 	{
 		if (_mouse != null)
 			_mouseRenderer = _mouse.GetComponent<SpriteRenderer>();
+
+		_bookRenderer = GetComponent<SpriteRenderer>();
 	}
 
 	public void StartFingerBlink()
-    {
-        StartCoroutine(CoFingerBlink());
-    }
-
-    public void StopFingerBlink()
-    {
-        StopAllCoroutines();
-        _mouse.SetActive(false);
-    }
-
-    // 책 클릭 초기화
-    public void EnableClick()
 	{
-        _isClicked = false;
-        _collider.enabled = true;
-    }
+		StartCoroutine(CoFingerBlink());
+	}
+
+	public void StopFingerBlink()
+	{
+		StopAllCoroutines();
+		_mouse.SetActive(false);
+	}
+
+	// 책 클릭 초기화
+	public void EnableClick()
+	{
+		_isClicked = false;
+		_collider.enabled = true;
+	}
 
 	public void EnableFinger()
 	{
@@ -53,21 +58,44 @@ public class LibraryBook : MonoBehaviour
 
 	// 손가락 깜박거림
 	private IEnumerator CoFingerBlink()
-    {
-        while (true)
-        {
-            if(_mouse.activeSelf)
-            {
-                _mouse.SetActive(false);
-            }
-            else
-            {
-                _mouse.SetActive(true);
-            }
+	{
+		while (true)
+		{
+			if (_mouse.activeSelf)
+			{
+				_mouse.SetActive(false);
+			}
+			else
+			{
+				_mouse.SetActive(true);
+			}
 
-            yield return WaitForSecondsCache.Get(_fingerBlinkSpeed);
-        }
-    }
+			yield return WaitForSecondsCache.Get(_fingerBlinkSpeed);
+		}
+	}
+
+	public void SetHighlight(bool highlight)
+	{
+		if (highlight)
+		{
+			SetAlpha(1f);
+		}
+		else
+		{
+			SetAlpha(_dimAlpha);
+		}
+	}
+
+	private void SetAlpha(float alpha)
+	{
+		Color bookColor = _bookRenderer.color;
+		bookColor.a = alpha;
+		_bookRenderer.color = bookColor;
+
+		Color twinkleColor = _twinkleRenderer.color;
+		twinkleColor.a = alpha;
+		_twinkleRenderer.color = twinkleColor;
+	}
 
 	public IEnumerator FadeInMouse()
 	{
@@ -96,15 +124,31 @@ public class LibraryBook : MonoBehaviour
 	}
 
 	public void OnMouseDown()
-    {
-        if (!_isClicked)
-        {
-            _isClicked = true;
+	{
+		if (!IsUnlocked())
+		{
+			if (UI_LockedBookNotice.IsShowing)
+				return;
 
-            var ui = Managers.UI.MakeWorldSpaceUI<UI_BookSelectWorldSpace>();
-            ui.Init(this);
-
-            DisableFinger();
+			var ui = Managers.UI.ShowPopupUI<UI_LockedBookNotice>();
+			ui.Init();
+			return;
 		}
-    }
+
+		if (!_isClicked)
+		{
+			_isClicked = true;
+
+			_hud.SetActive(false);
+			var ui = Managers.UI.ShowPopupUI<UI_BookPopup>();
+			ui.Init(this, _hud);
+
+			DisableFinger();
+		}
+	}
+
+	private bool IsUnlocked()
+	{
+		return _worldType == Managers.World.CurrentWorldType;
+	}
 }

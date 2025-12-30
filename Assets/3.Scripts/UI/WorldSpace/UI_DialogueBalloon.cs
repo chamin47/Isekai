@@ -195,9 +195,8 @@ public class UI_DialogueBalloon : UI_Base
 
 		int lineCount; 
 
-		float baseHeight = 0.7f;
+		float baseHeight = 0.8f;
 		float perLineIncrease = 0.23f;
-		float padding = 0.1f;
 
 		float charWidthUnit = 0.12f; // 문자 한개 실제 폭
 		float baseWidth = 1.1f;		 // 좌 + 우 여백 합
@@ -206,9 +205,8 @@ public class UI_DialogueBalloon : UI_Base
 
 		if (sceneName == "LibraryScene")
 		{
-			baseHeight = 0.63f;
+			baseHeight = 0.71f;
 			perLineIncrease = 0.18f;
-			padding = 0.08f;
 
 			charWidthUnit = 0.095f;
 			baseWidth = 0.85f;
@@ -240,7 +238,7 @@ public class UI_DialogueBalloon : UI_Base
 			_label.text = temp;
 		}
 
-		float preferHeight = (baseHeight + padding + (lineCount - 1) * perLineIncrease)/* * _sizeScaleFactor*/;
+		float preferHeight = (baseHeight + (lineCount - 1) * perLineIncrease)/* * _sizeScaleFactor*/;
 
 		Debug.Log(lineCount);
 

@@ -8,8 +8,10 @@ public class UI_ClockHand : UI_Base, IBeginDragHandler, IDragHandler, IEndDragHa
 	[SerializeField] private RectTransform _handImage;
 	[SerializeField] private Image _handSprite;
 
-	[Header("Shader")]
-	[SerializeField] private float _outlineHoverThickness = 1.5f;
+	[Header("Outline")]
+	[SerializeField] private RectTransform _outlineRoot; 
+	[SerializeField] private Image[] _outlineImages;       // OL_Up ~ OL_DownLeft (8개)
+	[SerializeField] private float _outlineThickness = 4f; 
 
 	[Header("Sound")]
 	[SerializeField] private float _soundAngleThreshold = 0.5f;
@@ -23,21 +25,31 @@ public class UI_ClockHand : UI_Base, IBeginDragHandler, IDragHandler, IEndDragHa
 	private bool _isDragging;
 	private bool _isSoundPlaying;
 
-	private float _lastAngle;
 	private float _lastFrameAngle;
 	private float _soundStopTimer;
 
-	private Material _runtimeMat;	
-
 	public float CurrentAngle { get; private set; }
+
+	/// <summary>
+	/// Inspector 배열 순서와 반드시 일치
+	/// 0: Up, 1: Down, 2: Left, 3: Right,
+	/// 4: UpRight, 5: UpLeft, 6: DownRight, 7: DownLeft
+	/// </summary>
+	private static readonly Vector2[] DIR_8 =
+	{
+		new( 0,  1),  // Up
+        new( 0, -1),  // Down
+        new(-1,  0),  // Left
+        new( 1,  0),  // Right
+        new( 1,  1),  // UpRight
+        new(-1,  1),  // UpLeft
+        new( 1, -1),  // DownRight
+        new(-1, -1),  // DownLeft
+    };
 
 	public override void Init()
 	{
-		_runtimeMat = Instantiate(_handSprite.material);
-		_handSprite.material = _runtimeMat;
-
-		// 기본은 아웃라인 OFF
-		_runtimeMat.SetFloat(ClockMiniGameModel.OutlineThicknessID, 0f);
+		SetOutlineVisible(false);
 	}
 
 	public void SetCenterRoot(RectTransform centerRoot)
@@ -45,34 +57,54 @@ public class UI_ClockHand : UI_Base, IBeginDragHandler, IDragHandler, IEndDragHa
 		_centerRoot = centerRoot;
 	}
 
-	public void SetSprite(Sprite sprite)
-	{
-		_handSprite.sprite = sprite;
-	}
-
-	public void SetSize(float width, float height)
-	{
-		_handWidth = width;
-		_handHeight = height;
-		ApplyLayout();
-	}
-
 	public void SetAngle(float angle)
 	{
 		CurrentAngle = angle;
 		_handImage.localRotation = Quaternion.Euler(0, 0, -angle);
+		_outlineRoot.localRotation = Quaternion.Euler(0, 0, -angle);
 	}
 
-	public void SetPivot(Vector2 pivot)
+	public void Setup(Sprite sprite, float width, float height, Vector2 pivot, float outlineThickness)
 	{
+		_handSprite.sprite = sprite;
+		_handWidth = width;
+		_handHeight = height;
+		_outlineThickness = outlineThickness;
+
 		_handImage.pivot = pivot;
+		ApplyLayout();
+
+		// Outline들도 동일하게 세팅
+		foreach (var img in _outlineImages)
+		{
+			img.sprite = sprite;
+			img.rectTransform.sizeDelta = new Vector2(width, height);
+			img.rectTransform.pivot = pivot;
+		}
+
+		ApplyOutlineOffset();
 	}
 
 	private void ApplyLayout()
 	{
 		// 바늘 길이 조절
-		_handImage.sizeDelta =
-			new Vector2(_handWidth, _handHeight);
+		_handImage.sizeDelta = new Vector2(_handWidth, _handHeight);
+	}
+
+	private void ApplyOutlineOffset()
+	{
+		for (int i = 0; i < _outlineImages.Length; i++)
+		{
+			RectTransform rt = _outlineImages[i].rectTransform;
+			Vector2 dir = DIR_8[i];
+
+			float offset =
+				(Mathf.Abs(dir.x) + Mathf.Abs(dir.y) > 1.1f)
+				? _outlineThickness * 0.707f
+				: _outlineThickness;
+
+			rt.anchoredPosition = dir.normalized * offset;
+		}
 	}
 
 	public void OnPointerEnter(PointerEventData eventData)
@@ -101,10 +133,10 @@ public class UI_ClockHand : UI_Base, IBeginDragHandler, IDragHandler, IEndDragHa
 			return;
 
 		_isDragging = true;
+
 		UpdateRotation(eventData);
 		UpdateOutline();
 
-		_lastAngle = CurrentAngle;
 		_lastFrameAngle = CurrentAngle;
 		_soundStopTimer = 0f;
 	}
@@ -125,7 +157,6 @@ public class UI_ClockHand : UI_Base, IBeginDragHandler, IDragHandler, IEndDragHa
 			ClockMiniGameModel.HasTouchedHand = true;
 
 		StopSound();
-
 		UpdateOutline();
 	}
 
@@ -184,29 +215,27 @@ public class UI_ClockHand : UI_Base, IBeginDragHandler, IDragHandler, IEndDragHa
 		if (angle < 0f)
 			angle += 360f;
 
-		CurrentAngle = angle;
-		_handImage.localRotation = Quaternion.Euler(0, 0, -angle);
+		SetAngle(angle);
 	}
 
 	private void UpdateOutline()
 	{
-		if (_runtimeMat == null)
-			return;
-
 		// Hover 중이거나 Drag 중이면 아웃라인 ON
 		bool showOutline = _isHovered || _isDragging;
 
-		_runtimeMat.SetFloat(
-			ClockMiniGameModel.OutlineThicknessID,
-			showOutline ? _outlineHoverThickness : 0f
-		);
+		SetOutlineVisible(showOutline);
+	}
+
+	private void SetOutlineVisible(bool visible)
+	{
+		_outlineRoot.gameObject.SetActive(visible);
 	}
 
 	public void Lock()
 	{
 		_isDragging = false;
 		_isHovered = false;
-		UpdateOutline();
+		SetOutlineVisible(false);
 
 		enabled = false;
 	}

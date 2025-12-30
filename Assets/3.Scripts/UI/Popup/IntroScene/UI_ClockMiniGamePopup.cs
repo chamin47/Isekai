@@ -1,6 +1,7 @@
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class UI_ClockMiniGamePopup : UI_Popup
@@ -27,6 +28,7 @@ public class UI_ClockMiniGamePopup : UI_Popup
 	[SerializeField] private CanvasGroup _blackOverlay;
 
 	[SerializeField] private Image _centerImage;
+	[SerializeField] private Image _clockFaceImage;
 	private Material _centerMat;
 
 	private UI_ClockHand _hourHand;
@@ -35,9 +37,18 @@ public class UI_ClockMiniGamePopup : UI_Popup
 	private Coroutine _uiShakeCoroutine;
 	private Vector2 _originAnchoredPos;
 
+	private bool _tutorialOutlineActive; // Drag 기반
+	private bool _hoverOutlineActive;    // Hover 기반
+	private bool _ignoreHoverUntilExit;
+
 	public override void Init()
 	{
 		base.Init();
+
+		_clockFaceImage.alphaHitTestMinimumThreshold = 0.1f;
+
+		_centerButton.gameObject.BindEvent(OnCenterHoverEnter, UIEvent.Enter);
+		_centerButton.gameObject.BindEvent(OnCenterHoverExit, UIEvent.Exit);
 
 		_originAnchoredPos = _clockRoot.anchoredPosition;
 
@@ -54,15 +65,19 @@ public class UI_ClockMiniGamePopup : UI_Popup
 		_minuteHand.SetCenterRoot(_clockRoot);
 
 		// 차이점은 팝업에서 주입
-		_hourHand.SetSprite(_hourSprite);
-		_hourHand.SetSize(_hourWidth, _hourHeight);
+		_hourHand.Setup(
+		sprite: _hourSprite,
+		width: _hourWidth,
+		height: _hourHeight,
+		pivot: new Vector2(0.5f, 0.04f),
+		outlineThickness: 2.5f);
 
-		_minuteHand.SetSprite(_minuteSprite);
-		_minuteHand.SetSize(_minuteWidth, _minuteHeight);
-
-		// 스프라이트의 어느 지점을 중심으로 회전할지 결정한다.
-		_hourHand.SetPivot(new Vector2(0.5f, 0.04f));
-		_minuteHand.SetPivot(new Vector2(0.5f, 0.085f));
+		_minuteHand.Setup(
+		sprite: _minuteSprite,
+		width: _minuteWidth,
+		height: _minuteHeight,
+		pivot: new Vector2(0.5f, 0.085f),
+		outlineThickness: 2.5f);
 
 		_hourHand.SetAngle(ClockMiniGameModel.HourAngle);
 		_minuteHand.SetAngle(ClockMiniGameModel.MinuteAngle);
@@ -89,20 +104,33 @@ public class UI_ClockMiniGamePopup : UI_Popup
 	{
 		if (Input.GetKeyDown(KeyCode.Escape))
 		{
-			Managers.UI.ClosePopupUI();
+			OnCloseButton();
 		}
 
-		if (ClockMiniGameModel.IsSolved)
-			return;
-
-
-		if (ClockMiniGameModel.HasTouchedHand && !ClockMiniGameModel.HasClickedCenter)
+		if (!ClockMiniGameModel.IsSolved)
 		{
-			_centerMat.SetFloat(ClockMiniGameModel.OutlineThicknessID, 2f);
+			if (ClockMiniGameModel.HasTouchedHand && !ClockMiniGameModel.HasClickedCenter
+			&& !_tutorialOutlineActive)
+			{
+				_tutorialOutlineActive = true;
+			}			
 		}
 
-		ClockMiniGameModel.HourAngle = _hourHand.CurrentAngle;
-		ClockMiniGameModel.MinuteAngle = _minuteHand.CurrentAngle;
+		bool showOutline = false;
+
+		if (!ClockMiniGameModel.IsSolved)
+		{
+			showOutline = _tutorialOutlineActive || _hoverOutlineActive;
+		}
+
+		_centerMat.SetFloat(ClockMiniGameModel.OutlineThicknessID, showOutline ? 4f : 0f
+		);
+
+		if (!ClockMiniGameModel.IsSolved)
+		{
+			ClockMiniGameModel.HourAngle = _hourHand.CurrentAngle;
+			ClockMiniGameModel.MinuteAngle = _minuteHand.CurrentAngle;
+		}
 	}
 
 	private void AlignSubItemToParent(UI_ClockHand clockHand)
@@ -119,13 +147,18 @@ public class UI_ClockMiniGamePopup : UI_Popup
 			return;
 
 		ClockMiniGameModel.HasClickedCenter = true;
-		_centerMat.SetFloat(ClockMiniGameModel.OutlineThicknessID, 0f);
+		_tutorialOutlineActive = false;
+		//_centerMat.SetFloat(ClockMiniGameModel.OutlineThicknessID, 0f);
+		_hoverOutlineActive = false;
+		_ignoreHoverUntilExit = true;
 
 		bool hourOk =
-			Mathf.Abs(Mathf.DeltaAngle(_hourHand.CurrentAngle, 157.4f)) <= 5f;
+			Mathf.Abs(Mathf.DeltaAngle(_hourHand.CurrentAngle, 147.2269f)) <= 5f;
 
 		bool minuteOk =
 			Mathf.Abs(Mathf.DeltaAngle(_minuteHand.CurrentAngle, 0f)) <= 5f;
+
+		Debug.Log($"Hour Hand : {_hourHand.CurrentAngle} Minute Hand : {_minuteHand.CurrentAngle}");
 
 		if (hourOk && minuteOk)
 		{
@@ -161,7 +194,7 @@ public class UI_ClockMiniGamePopup : UI_Popup
 
 		_hourHand.Lock();
 		_minuteHand.Lock();
-		Debug.Log("성공!");
+		_centerButton.transition = Selectable.Transition.None;
 	}
 
 	private IEnumerator CoPlayIntro()
@@ -229,5 +262,19 @@ public class UI_ClockMiniGamePopup : UI_Popup
 		}
 
 		_clockRoot.anchoredPosition = _originAnchoredPos;
+	}
+
+	private void OnCenterHoverEnter(PointerEventData data)
+	{
+		if (_ignoreHoverUntilExit)
+			return;
+		_hoverOutlineActive = true;
+	}
+
+	private void OnCenterHoverExit(PointerEventData data)
+	{
+		_hoverOutlineActive = false;
+
+		_ignoreHoverUntilExit = false;
 	}
 }

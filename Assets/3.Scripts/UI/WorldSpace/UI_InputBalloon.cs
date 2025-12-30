@@ -146,7 +146,7 @@ public class UI_InputBalloon : UI_Base
 
 		string sceneName = SceneManager.GetActiveScene().name;
 
-		float height = (sceneName == "LibraryScene") ? 0.63f : 0.7f;
+		float height = (sceneName == "LibraryScene") ? 0.71f : 0.8f;
 
 		float width = baseWidth + shadowText.preferredWidth * 0.01f;
 		width = Mathf.Clamp(width, minWidth, maxWidth);

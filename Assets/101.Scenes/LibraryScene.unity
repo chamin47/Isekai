@@ -971,9 +971,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _mouse: {fileID: 1815966035}
   _collider: {fileID: 286667079}
+  _twinkleRenderer: {fileID: 457533643}
+  _hud: {fileID: 378438639}
+  _worldType: 0
   _isClicked: 0
   _fingerBlinkSpeed: 0.8
   _fadeDuration: 0.5
+  _dimAlpha: 0.35
 --- !u!114 &286667081
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1163,6 +1167,11 @@ GameObject:
 --- !u!4 &457533642 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7878350319992209165, guid: dfb32e04418ed2f4ea940ee84e0c0da3, type: 3}
+  m_PrefabInstance: {fileID: 93096734}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &457533643 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 3626916397498700004, guid: dfb32e04418ed2f4ea940ee84e0c0da3, type: 3}
   m_PrefabInstance: {fileID: 93096734}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &477170671
@@ -1798,6 +1807,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7878350319992209165, guid: dfb32e04418ed2f4ea940ee84e0c0da3, type: 3}
   m_PrefabInstance: {fileID: 288640003}
   m_PrefabAsset: {fileID: 0}
+--- !u!212 &913021947 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 3626916397498700004, guid: dfb32e04418ed2f4ea940ee84e0c0da3, type: 3}
+  m_PrefabInstance: {fileID: 288640003}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &937309929
 GameObject:
   m_ObjectHideFlags: 0
@@ -2102,9 +2116,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _mouse: {fileID: 477170671}
   _collider: {fileID: 1057986705}
+  _twinkleRenderer: {fileID: 1588608366}
+  _hud: {fileID: 378438639}
+  _worldType: 2
   _isClicked: 0
   _fingerBlinkSpeed: 0.8
   _fadeDuration: 0.5
+  _dimAlpha: 0.35
 --- !u!61 &1057986705
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2596,6 +2614,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI_HappinessHUD
       objectReference: {fileID: 0}
+    - target: {fileID: 4690293418905282394, guid: 10723e3edd83a2248833965e7d4ad2cd, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2625,6 +2647,11 @@ GameObject:
 --- !u!4 &1588608365 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7878350319992209165, guid: dfb32e04418ed2f4ea940ee84e0c0da3, type: 3}
+  m_PrefabInstance: {fileID: 103662538}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &1588608366 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 3626916397498700004, guid: dfb32e04418ed2f4ea940ee84e0c0da3, type: 3}
   m_PrefabInstance: {fileID: 103662538}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1623266546
@@ -3374,9 +3401,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _mouse: {fileID: 247549915}
   _collider: {fileID: 2030263361}
+  _twinkleRenderer: {fileID: 913021947}
+  _hud: {fileID: 378438639}
+  _worldType: 3
   _isClicked: 0
   _fingerBlinkSpeed: 0.8
   _fadeDuration: 0.5
+  _dimAlpha: 0.35
 --- !u!61 &2030263361
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3538,9 +3569,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _mouse: {fileID: 1089894157}
   _collider: {fileID: 2045367022}
+  _twinkleRenderer: {fileID: 2054215908}
+  _hud: {fileID: 378438639}
+  _worldType: 1
   _isClicked: 0
   _fingerBlinkSpeed: 0.8
   _fadeDuration: 0.5
+  _dimAlpha: 0.35
 --- !u!61 &2045367022
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3608,6 +3643,11 @@ GameObject:
 --- !u!4 &2054215907 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7878350319992209165, guid: dfb32e04418ed2f4ea940ee84e0c0da3, type: 3}
+  m_PrefabInstance: {fileID: 347474498}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &2054215908 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 3626916397498700004, guid: dfb32e04418ed2f4ea940ee84e0c0da3, type: 3}
   m_PrefabInstance: {fileID: 347474498}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &2070269047
@@ -3805,7 +3845,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 1294444458363093852, guid: 82241c484daed1446abcc25ca42049a4, type: 3}
+  m_Sprite: {fileID: -3876447128106954134, guid: 30bea74dd873a1749a01d3b237034053, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

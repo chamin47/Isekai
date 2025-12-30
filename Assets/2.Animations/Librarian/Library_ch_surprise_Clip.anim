@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Library_ch_sit_idle
+  m_Name: Library_ch_surprise_Clip
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -21,13 +21,13 @@ AnimationClip:
   - serializedVersion: 2
     curve:
     - time: 0
-      value: {fileID: 45201576162303351, guid: 2cd9ed09b463fe64b95bd132f08e0544, type: 3}
-    - time: 0.33
-      value: {fileID: -3973960429416306371, guid: 2cd9ed09b463fe64b95bd132f08e0544, type: 3}
-    - time: 0.66
-      value: {fileID: -7291328390711661819, guid: 2cd9ed09b463fe64b95bd132f08e0544, type: 3}
-    - time: 0.98
-      value: {fileID: -7291328390711661819, guid: 2cd9ed09b463fe64b95bd132f08e0544, type: 3}
+      value: {fileID: 8387541021415967041, guid: ce6833849f5117f4a82dc0702310bdf7, type: 3}
+    - time: 0.12
+      value: {fileID: -2439879833116908415, guid: ce6833849f5117f4a82dc0702310bdf7, type: 3}
+    - time: 0.24
+      value: {fileID: 8901209598905155528, guid: ce6833849f5117f4a82dc0702310bdf7, type: 3}
+    - time: 0.35
+      value: {fileID: 8901209598905155528, guid: ce6833849f5117f4a82dc0702310bdf7, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -39,27 +39,14 @@ AnimationClip:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}
   m_ClipBindingConstant:
-    genericBindings:
-    - serializedVersion: 2
-      path: 0
-      attribute: 0
-      script: {fileID: 0}
-      typeID: 212
-      customType: 23
-      isPPtrCurve: 1
-      isIntCurve: 0
-      isSerializeReferenceCurve: 0
-    pptrCurveMapping:
-    - {fileID: 45201576162303351, guid: 2cd9ed09b463fe64b95bd132f08e0544, type: 3}
-    - {fileID: -3973960429416306371, guid: 2cd9ed09b463fe64b95bd132f08e0544, type: 3}
-    - {fileID: -7291328390711661819, guid: 2cd9ed09b463fe64b95bd132f08e0544, type: 3}
-    - {fileID: -7291328390711661819, guid: 2cd9ed09b463fe64b95bd132f08e0544, type: 3}
+    genericBindings: []
+    pptrCurveMapping: []
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.99
+    m_StopTime: 0.35999998
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -70,7 +57,7 @@ AnimationClip:
     m_LoopBlendPositionY: 0
     m_LoopBlendPositionXZ: 0
     m_KeepOriginalOrientation: 0
-    m_KeepOriginalPositionY: 1
+    m_KeepOriginalPositionY: 0
     m_KeepOriginalPositionXZ: 0
     m_HeightFromFeet: 0
     m_Mirror: 0
