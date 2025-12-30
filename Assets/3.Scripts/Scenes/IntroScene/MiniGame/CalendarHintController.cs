@@ -4,25 +4,36 @@ using UnityEngine.UI;
 
 public class CalendarHintController
 {
-	private readonly Image _left;
-	private readonly Image _right;
+	private readonly Image _smallLeft;
+	private readonly Image _smallRight;
+	private readonly Image _bigLeft;
+	private readonly Image _bigRight;
 
-	private readonly Material _leftMat;
-	private readonly Material _rightMat;
+	private readonly Material _smallLeftMat;
+	private readonly Material _smallRightMat;
 
-	private const float OUTLINE_THICKNESS = 4f;
+	private readonly Material _bigLeftMat;
+	private readonly Material _bigRightMat;
+
+	private const float OUTLINE_THICKNESS = 3f;
 	private readonly Color OUTLINE_COLOR = new Color(1f, 1f, 1f, 1f);
 
-	public CalendarHintController(Image left, Image right)
+	public CalendarHintController(Image smallLeft, Image smallRight, Image bigLeft, Image bigRight)
 	{
-		_left = left;
-		_right = right;
+		_smallLeft = smallLeft;
+		_smallRight = smallRight;
+		_bigLeft = bigLeft;
+		_bigRight = bigRight;
 
-		_leftMat  = Object.Instantiate(_left.material);
-		_rightMat = Object.Instantiate(_right.material);
+		_smallLeftMat  = Object.Instantiate(_smallLeft.material);
+		_smallRightMat = Object.Instantiate(_smallRight.material);
+		_bigLeftMat = Object.Instantiate(_bigLeft.material);
+		_bigRightMat = Object.Instantiate(_bigRight.material);
 
-		_left.material  = _leftMat;
-		_right.material = _rightMat;
+		_smallLeft.material  = _smallLeftMat;
+		_smallRight.material = _smallRightMat;
+		_bigLeft.material = _bigLeftMat;
+		_bigRight.material = _bigRightMat;
 
 		DisableOutline();
 	}
@@ -30,7 +41,7 @@ public class CalendarHintController
 	public IEnumerator CoHintLoop()
 	{
 		// 1분 대기
-		yield return new WaitForSeconds(60f);
+		yield return new WaitForSeconds(10f);
 
 		while (!CalendarInputModel.IsSolved)
 		{		
@@ -48,20 +59,24 @@ public class CalendarHintController
 			}
 
 			// 30초 대기 후 다시 힌트
-			yield return new WaitForSeconds(30f);
+			yield return new WaitForSeconds(5f);
 		}
 	}
 
 	private void EnableOutline()
 	{
-		SetOutline(_leftMat, true);
-		SetOutline(_rightMat, true);
+		SetOutline(_smallLeftMat, true);
+		SetOutline(_smallRightMat, true);
+		SetOutline(_bigLeftMat, true);
+		SetOutline(_bigRightMat, true);
 	}
 
 	private void DisableOutline()
 	{
-		SetOutline(_leftMat, false);
-		SetOutline(_rightMat, false);
+		SetOutline(_smallLeftMat, false);
+		SetOutline(_smallRightMat, false);
+		SetOutline(_bigLeftMat, false);
+		SetOutline(_bigRightMat, false);
 	}
 
 	private void SetOutline(Material mat, bool enable)

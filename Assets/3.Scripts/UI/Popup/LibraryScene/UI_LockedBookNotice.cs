@@ -9,6 +9,7 @@ public class UI_LockedBookNotice : UI_Popup
 	[SerializeField] private TMP_Text _text;
 
 	private static bool _isShowing;
+	private bool _closed;
 
 	private const float MOVE_OFFSET_Y = -40f;
 	private const float MOVE_DURATION = 0.25f;
@@ -68,6 +69,10 @@ public class UI_LockedBookNotice : UI_Popup
 
 		_canvasGroup.alpha = 0f;
 
+		if (_closed)
+			yield break;
+
+		_closed = true;
 		_isShowing = false;
 		Managers.UI.ClosePopupUI(this);
 	}
