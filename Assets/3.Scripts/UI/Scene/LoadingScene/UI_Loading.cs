@@ -73,6 +73,8 @@ public class UI_Loading : UI_Scene
 
     private IEnumerator StartLoadingSequence()
     {
+        yield return WaitForSecondsCache.Get(2f);
+
         switch (_loadingSceneData.worldType)
         {
             case WorldType.Gang:

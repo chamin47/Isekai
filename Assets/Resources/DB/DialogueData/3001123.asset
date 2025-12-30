@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: 3001123
   m_EditorClassIdentifier: 
   id: 3001123
-  speaker: System
+  speaker: "\uD559\uC790"
   animName: null
-  eventName: WaitForInput
-  eventParam: BR_DUMMY
+  eventName: AIWaitForInput
+  eventParam: BR_Scholar
   nextID: null
   script: null
-  descript: 
+  descript: "BR_DUMMY -> BR_Scholar\uB85C \uBCC0\uACBD / \uD14D\uC2A4\uD2B8 \uC785\uB825
+    \uB300\uAE30 / \uC785\uB825 \uD6C4 BR_Schollar \uBD84\uAE30\uB85C \uC774\uB3D9"

@@ -260,8 +260,6 @@ public class DialogueRunner : MonoBehaviour
                                 result => sentimentScore = result
                             );
 
-							yield return new WaitForSeconds(1f);
-
                             Destroy(ballon.gameObject);
 
                             string branchType;

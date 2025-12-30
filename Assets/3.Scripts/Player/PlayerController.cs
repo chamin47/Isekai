@@ -115,12 +115,14 @@ public class PlayerController : MonoBehaviour
 		return _movement.Velocity.x;
 	}
 
-    public IEnumerator CoMoveToTarget(Transform target, float duration = 2f)
+    public IEnumerator CoMoveToTarget(Transform target)
     {
 		
 		_playerAnimator.SetCutSceneTalk();
         Vector3 targetPos = new Vector3(target.position.x, transform.position.y, transform.position.z);
         Vector3 startPos = transform.position;
+
+		float duration = Vector3.Distance(startPos, targetPos);
 
         float direction = Mathf.Sign(targetPos.x - startPos.x);
         if (direction != 0)

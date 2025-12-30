@@ -333,7 +333,7 @@ GameObject:
   - component: {fileID: 41744622}
   - component: {fileID: 41744621}
   m_Layer: 0
-  m_Name: TestController
+  m_Name: TestScene
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1752,7 +1752,7 @@ Transform:
   m_GameObject: {fileID: 609365072}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -15.91, y: -4.24, z: 0}
+  m_LocalPosition: {x: 4.88, y: -4.24, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5451,7 +5451,7 @@ BoxCollider2D:
   m_Offset: {x: -0.046875, y: 0.2109375}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.46875, y: 0.03448276}
+    pivot: {x: 0.684375, y: 0.034483023}
     oldSize: {x: 0.25, y: 0.453125}
     newSize: {x: 0.25, y: 0.453125}
     adaptiveTilingThreshold: 0.5

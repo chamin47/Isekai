@@ -16,14 +16,15 @@ public class CameraShake : MonoBehaviour
         _initialPosition = transform.localPosition;
     }
 
-    public void Shake(float duration = 1f, float magnitude = 0.2f)
+    [ContextMenu("Shake")]
+    public void Shake()
     {
         if(_shakeCoroutine != null)
             StopCoroutine(_shakeCoroutine);
         _shakeCoroutine = StartCoroutine(CoShake());
     }
 
-    private IEnumerator CoShake()
+    public IEnumerator CoShake()
     {
         _initialPosition = transform.localPosition;
 

@@ -57,6 +57,13 @@ public class DoorController : MonoBehaviour
         }
     }
 
+    [ContextMenu("Move To Intro")]
+    public void SkipHome()
+    {
+        HomeSystem.IsDoorOpen = true;
+        MoveToIntro(0);
+    }
+    
     private void MoveToIntro(int index)
     {
         if (HomeSystem.IsDoorOpen == false)

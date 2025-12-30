@@ -29,7 +29,7 @@ public abstract class NPCController : MonoBehaviour
     {
         get => _isInteracted;
     }
-    [SerializeField] private string _startID;
+    [SerializeField] protected string _startID;
     public string StartID => _startID;
 
     protected Animator _animator;

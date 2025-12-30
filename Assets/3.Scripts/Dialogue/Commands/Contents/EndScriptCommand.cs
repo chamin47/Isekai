@@ -3,6 +3,13 @@ using UnityEngine;
 
 public class EndScriptCommand : IDialogueCommand
 {
+    private bool _canReInteract = false;
+
+    public EndScriptCommand(bool canReInteract = false)
+    {
+        _canReInteract = canReInteract;
+    }
+
     public IEnumerator Execute(DialogueContext context, DialogueData row)
     {
         Debug.Log("대화 종료.");
@@ -10,6 +17,11 @@ public class EndScriptCommand : IDialogueCommand
         var player = context.Player;
         if (player != null)
             player.canMove = true;
+
+        if(_canReInteract)
+        {
+            context.EndEventParam = row.eventParam != null ? int.Parse(row.eventParam) : 0;
+        }
 
         context.OnDialogueEnd?.Invoke(context.EndEventParam);
         context.OnDialogueEnd = null;

@@ -9,7 +9,7 @@ public class TestScene : BaseScene
     {
         Managers.Happy.OnHappinessChanged += MakePortal;
         Managers.Sound.Play("bgm_isekai_adrian", Sound.Bgm);
-        Managers.Happy.Happiness = 50f;
+        Managers.Happy.Happiness = 20f;
 
         MakeShiftGuide();
 	}

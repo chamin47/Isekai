@@ -28,6 +28,12 @@ MonoBehaviour:
   - BranchID: BR_Time_Still_5S
     InputType: Success
     ResultDialogueID: 3001107
-  - BranchID: BR_DUMMY
-    InputType: Default
+  - BranchID: BR_Scholar
+    InputType: Positive
+    ResultDialogueID: 3001125-3
+  - BranchID: BR_Scholar
+    InputType: Ambiguous
     ResultDialogueID: 3001124
+  - BranchID: BR_Scholar
+    InputType: Negative
+    ResultDialogueID: 3001125-8

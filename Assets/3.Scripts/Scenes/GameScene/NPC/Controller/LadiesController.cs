@@ -107,5 +107,14 @@ public class LadiesController : NPCController
     {
         base.OnEventEnd(eventParam);
         State = NPCState.Idle;
+        if(eventParam >= 1000)
+        {
+            _isInteracted = false;
+            _startID = eventParam.ToString();
+            for(int i = 0; i < _ladiesSprites.Count; i++)
+            {
+                _ladiesSprites[i].flipX = false;
+            }
+        }
     }
 }

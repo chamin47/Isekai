@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81fac1d9414d3c84398e6b84bf6b706a, type: 3}
+  m_Name: 3001125-8
+  m_EditorClassIdentifier: 
+  id: 3001125-8
+  speaker: "\uD559\uC790"
+  animName: Scholar_mumble
+  eventName: ShowText
+  eventParam: null
+  nextID: 3001125-9
+  script: "{fade}\uACF5\uC791\uB2D8\uC740 \uC774 \uC774\uB860\uC774 \uB9D8\uC5D0
+    \uB4DC\uC2DC\uC9C0 \uC54A\uB294\uAC00\uBCF4\uAD70\uC694\u2026"
+  descript: 

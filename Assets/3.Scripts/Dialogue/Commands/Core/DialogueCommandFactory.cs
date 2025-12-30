@@ -20,10 +20,12 @@ public class DialogueCommandFactory
         _commands["CameraShake"] = new CameraShakeCommand();
         _commands["PlayAnim"] = new PlayAnimCommand();
         _commands["EndScript"] = new EndScriptCommand();
+        _commands["REndScript"] = new EndScriptCommand(true);
         _commands["ShowChoice"] = new ShowChoiceCommand();
         _commands["WaitClick"] = new WaitClickCommand();
         _commands["ModifyHappyGauge"] = new ModifyHappyGaugeCommand();
         _commands["WaitForInput"] = new WaitForInputCommand();
+        _commands["AIWaitForInput"] = new WaitForInputCommand(true);
         _commands["CheckPlayerCondition"] = new CheckPlayerConditionCommand();
         _commands["ShowUI"] = new ShowUICommand();
     }

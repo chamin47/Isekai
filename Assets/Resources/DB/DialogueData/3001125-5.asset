@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81fac1d9414d3c84398e6b84bf6b706a, type: 3}
+  m_Name: 3001125-5
+  m_EditorClassIdentifier: 
+  id: 3001125-5
+  speaker: "\uD559\uC790"
+  animName: Scholar_talk
+  eventName: ShowText
+  eventParam: null
+  nextID: 3001125-6
+  script: "{horiexp}<wiggle a=0.1>\uC81C\uAC00\uC815\uB9D0\uACF5\uC791\uB2D8\uC744\uC5B8\uC81C\uBD80\uD130\uC874\uACBD\uD574\uC654\uB294\uC9C0\uC544\uC2DC\uBA74\uC815\uB9D0\uAE5C\uC9DD\uB180\uB784\uAC70\uC608\uC694.\uADF8\uB54C\uB294\uC81C\uAC00\uC544\uC8FC\uC5B4\uB838\uC744\uB54C\uC600\uC8E0.\uC544\uADF8\uB7EC\uB2C8\uAE4C\uC5B4\uB9B4\uB54C\uB77C\uAE30\uBCF4\uB2E4\uB294\uC544\uC9C1\uC138\uC0C1\uBB3C\uC815\uB3C4\uC798\uBAA8\uB97C\uB54C\uC600\uB294\uB370\uC694.\uACF5\uC791\uB2D8\uC774\uBC1C\uD45C\uD558\uC2E0\uADF8\uC774\uB860\uD558\uB098\uB97C\uBCF4\uC558\uC744\uB54C\uB294\uC800\uB294\uC815\uB9D0\uC138\uC0C1\uC744\uBCF4\uB294\uB208\uC774\uB2EC\uB77C\uC84C\uB2E4\uB784\uAE4C.\uC544\uB2C8\uB2E4\uADF8\uB0E5\uB9C9\uB2E4\uC2DC\uD0DC\uC5B4\uB09C\uAE30\uBD84\uC774\uC5C8\uB2EC\uAE4C!!!</>"
+  descript: .

@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81fac1d9414d3c84398e6b84bf6b706a, type: 3}
+  m_Name: 3001125-2
+  m_EditorClassIdentifier: 
+  id: 3001125-2
+  speaker: "\uD559\uC790"
+  animName: Scholar_talk
+  eventName: ShowText
+  eventParam: null
+  nextID: 3001126
+  script: "{fade}<shake>\uC55E\uC73C\uB85C \uB354\uC6B1 \uD559\uBB38\uC5D0 \uC815\uC9C4\uD558\uACA0\uC2B5\uB2C8\uB2E4!</>"
+  descript: 

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class HappinessManager
 {
-	private float _happiness = 50;
+	private float _happiness = 20;
 	private readonly float _maxHappiness = 100;
 	private readonly float _minHappiness = 0;
 

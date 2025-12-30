@@ -162,6 +162,27 @@ public class LibraryIDHooks : MonoBehaviour, IDialogueHookProvider
 		}
 	}
 
+	[ContextMenu("Test End")]
+    public void TestHooker()
+	{
+		if (_hud != null)
+			_hud.gameObject.SetActive(true);
+		{
+			WorldType currentWorldType = Managers.World.CurrentWorldType;
+
+			int bookIndex = (int)currentWorldType;
+			LibraryBook book = _library.Books[bookIndex].GetComponent<LibraryBook>(); // 빈터발트
+			book.gameObject.SetActive(true);               // 빈터발트 오브젝트
+
+			book.EnableClick();
+
+			float baseH = Screen.height * 0.1f;
+			float overshoot = baseH;
+			float settle = baseH * 0.85f;        // 10 → 8.5 느낌으로 85%
+
+		}
+	}
+
 	IEnumerator CoMoveTo(Transform who, Vector3 target, float speed, float eps)
 	{
 		if (who == null) 

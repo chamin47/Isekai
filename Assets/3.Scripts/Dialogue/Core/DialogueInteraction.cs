@@ -11,7 +11,7 @@ public class DialogueInteraction : MonoBehaviour
     [SerializeField] private NewDialogueRunner _dialogueRunner;
 
     public event System.Action OnDialogueStarted;
-
+    public event System.Action<int> OnDialogueEnded;
     private void Awake()
     {
         _playerController = GetComponent<PlayerController>();
@@ -41,6 +41,11 @@ public class DialogueInteraction : MonoBehaviour
         {
             Debug.Log("대화 시작");
             _isInDialogue = true;
+
+            OnDialogueEnded = null;
+            OnDialogueEnded += _interactNPC.OnEventEnd;
+            OnDialogueEnded += (param) => _isInDialogue = false;
+
             _interactNPC.State = NPCState.Event;
 
             // 플레이어가 NPC를 바라보도록 설정
@@ -69,7 +74,7 @@ public class DialogueInteraction : MonoBehaviour
     {
         _interactNPC.LookTarget(this.transform.position);
         _playerController.SetLook(_interactNPC.transform.position.x - this.transform.position.x);
-        _dialogueRunner.Play(_interactNPC.StartID, _interactNPC.ActorDirector, _interactNPC.OnEventEnd);
+        _dialogueRunner.Play(_interactNPC.StartID, _interactNPC.ActorDirector, OnDialogueEnded);
     }
 
     private void OnTriggerEnter2D(Collider2D other)

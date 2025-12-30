@@ -17,7 +17,7 @@ public class UI_AIResponse : MonoBehaviour
     public async void Response(string input)
     {
         resultText.text = "분석중....";
-        float result = await analyzer.AnalyzeText(input, "");
+        float result = await analyzer.AnalyzeText(input, "ko");
         
         Debug.Log("분석 완료");
         if (result == SecretSentimentAnalyer.WARNING_SCORE)

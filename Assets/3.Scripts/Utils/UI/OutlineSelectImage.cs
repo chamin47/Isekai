@@ -8,12 +8,17 @@ public class OutlineSelectImage : MonoBehaviour, IPointerEnterHandler, IPointerE
     public event System.Action<int> OnSelected;
 
     [SerializeField] private int _index;
+    [SerializeField] private bool _isDefaultSelected = true;
+
     private void Awake()
     {
         Image image = GetComponent<Image>();
         var material = image.material;
         _material = new Material(material);
         image.material = _material;
+        
+        if (_isDefaultSelected == false)
+            _material.SetFloat("_AlphaCutoff", 0f);
     }
 
     public void OnPointerEnter(PointerEventData eventData)

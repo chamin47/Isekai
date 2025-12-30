@@ -55,12 +55,14 @@ internal class SecretSentimentAnalyer
 
     private async Task InitializeAndSignInAsync()
     {
-        // TODO: 로그인 기능이 생길시 확장
+        var sw = System.Diagnostics.Stopwatch.StartNew();
         await UnityServices.InitializeAsync();
         if (!AuthenticationService.Instance.IsSignedIn)
         {
             await AuthenticationService.Instance.SignInAnonymouslyAsync();
             Debug.Log("익명 로그인");
         }
+        sw.Stop();
+        Debug.Log($"Unity Services 초기화 및 로그인 완료: {sw.ElapsedMilliseconds / 1000f}초");
     }
 }

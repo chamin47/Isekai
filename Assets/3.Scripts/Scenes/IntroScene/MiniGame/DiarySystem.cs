@@ -46,9 +46,13 @@ public class DiarySystem: MonoBehaviour
     [SerializeField] private int currentPageIndex = 0;
 
     private int MaxPageIndex => Mathf.Max(0, diaryImages.Count - 1);
+    private bool _isPageTurning = false;
 
     private void Start()
     {
+        //prevButton.enabled = true;
+        //nextButton.enabled = true;
+
         closeButton.onClick.AddListener(Close);
 
         nextButton.onClick.AddListener(OnNextButtonClick);
@@ -89,7 +93,7 @@ public class DiarySystem: MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if(Input.GetKeyDown(KeyCode.Escape) && _isPageTurning == false)
         {
             this.gameObject.SetActive(false);
         }
@@ -138,12 +142,15 @@ public class DiarySystem: MonoBehaviour
 
     private IEnumerator CoPrevPage()
     {
-		Managers.Sound.Play("diary_page_turn", Sound.Effect);
+        _isPageTurning = true;
+
+        Managers.Sound.Play("diary_page_turn", Sound.Effect);
 		prevButton.enabled = false;
         nextButton.enabled = false;
 
         var curImage = diaryImages[currentPageIndex];
         float elapsedTime = 0f;
+        currentPageIndex--;
 
         while (elapsedTime <= effectTime)
         {
@@ -154,9 +161,9 @@ public class DiarySystem: MonoBehaviour
             yield return null;
         }
 
-        currentPageIndex--;
         prevButton.enabled = true;
         nextButton.enabled = true;
+        _isPageTurning = false;
     }
 
     public void OnNextButtonClick()
@@ -181,12 +188,15 @@ public class DiarySystem: MonoBehaviour
 
     private IEnumerator CoNextPage()
     {
+        _isPageTurning = true;
         Managers.Sound.Play("diary_page_turn", Sound.Effect);
         prevButton.enabled = false;
         nextButton.enabled = false;
         var nextIndex = currentPageIndex + 1;
         var nextImage = diaryImages[nextIndex];
         float elapsedTime = 0f;
+        currentPageIndex = nextIndex;
+
         while (elapsedTime <= effectTime)
         {
             elapsedTime += Time.deltaTime;
@@ -194,9 +204,10 @@ public class DiarySystem: MonoBehaviour
             nextImage.fillAmount = fillAmount;
             yield return null;
         }
-        currentPageIndex = nextIndex;
+
         prevButton.enabled = true;
         nextButton.enabled = true;
+        _isPageTurning = false;
     }
 
 

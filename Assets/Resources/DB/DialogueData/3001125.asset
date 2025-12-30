@@ -17,7 +17,7 @@ MonoBehaviour:
   animName: Scholar_mumble
   eventName: ShowText
   eventParam: null
-  nextID: 3001126
+  nextID: 3001125-1
   script: "{fade}\uBBF8\uCC9C\uD55C \uC800\uB85C\uC11C\uB294 \uC644\uC804\uD788 \uC774\uD574\uD558\uC9C4
     \uBABB\uD558\uACA0\uB124\uC694!!"
   descript: 

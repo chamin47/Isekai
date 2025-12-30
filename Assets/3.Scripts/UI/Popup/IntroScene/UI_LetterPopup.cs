@@ -10,7 +10,13 @@ public class UI_LetterPopup : UI_Popup
 
 	private HappinessHUD _hud;
 
-	public override void Init()
+	private Coroutine _endCoroutine;
+	private bool _isEnded = false;
+	private float _currentTime = 0f;
+	private const float _skipTime = 1.0f;
+    private const float _endTime = 5.0f;
+
+    public override void Init()
 	{
 		base.Init();
 
@@ -20,15 +26,35 @@ public class UI_LetterPopup : UI_Popup
 
 		_hud.gameObject.SetActive(false);
 
-		StartCoroutine(WaitUntilProductionEnd());
+        _endCoroutine = StartCoroutine(WaitUntilProductionEnd());
 	}
 
-	private IEnumerator WaitUntilProductionEnd()
+    private IEnumerator WaitUntilProductionEnd()
+    {
+        yield return WaitForSecondsCache.Get(_skipTime);
+
+        float remain = _endTime - _skipTime;
+        while (remain > 0f)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                EndSequence();
+                yield break;
+            }
+
+            remain -= Time.deltaTime;
+            yield return null;
+        }
+
+        EndSequence();
+    }
+
+    private void EndSequence()
 	{
-		yield return WaitForSecondsCache.Get(5.0f);
+        _isEnded = true;
 
-		Managers.UI.ShowPopupUI<UI_CutScene2Popup>();
-		_hud.gameObject.SetActive(true);
-		gameObject.SetActive(false);
-	}
+        Managers.UI.ShowPopupUI<UI_CutScene2Popup>();
+        _hud.gameObject.SetActive(true);
+        gameObject.SetActive(false);
+    }
 }
