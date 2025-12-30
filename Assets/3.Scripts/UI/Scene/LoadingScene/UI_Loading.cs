@@ -73,8 +73,6 @@ public class UI_Loading : UI_Scene
 
     private IEnumerator StartLoadingSequence()
     {
-        yield return WaitForSecondsCache.Get(2f);
-
         switch (_loadingSceneData.worldType)
         {
             case WorldType.Gang:
@@ -112,6 +110,7 @@ public class UI_Loading : UI_Scene
     private IEnumerator DefaultLoadingSequence()
     {
         SetLoadingTexts();
+        yield return WaitForSecondsCache.Get(1f);
         yield return FillProgressBar(0.8f, 3f);
         yield return FillProgressBar(1f, 3f);
         yield return _fadeImage.CoFadeOut(_fadeTime, 1f);
