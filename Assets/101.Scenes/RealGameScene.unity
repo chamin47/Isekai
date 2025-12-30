@@ -5093,7 +5093,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _vinterRealWorld: {fileID: 1213455712}
-  _gangRealWorld: {fileID: 1373701446}
+  _gangRealWorld: {fileID: 0}
   _chaumRealWorld: {fileID: 113533948}
 --- !u!4 &1216565630
 Transform:
@@ -5158,11 +5158,6 @@ Material:
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
---- !u!1 &1373701446 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 132580918187528434, guid: 4389eefe2931f6c44a23e45fb7ed8d9e, type: 3}
-  m_PrefabInstance: {fileID: 3141427780283100115}
-  m_PrefabAsset: {fileID: 0}
 --- !u!21 &1739060442
 Material:
   serializedVersion: 8
@@ -5352,77 +5347,10 @@ PrefabInstance:
       addedObject: {fileID: 529651828}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ac07bc1068d673942a490659524d1387, type: 3}
---- !u!1001 &3141427780283100115
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 132580918187528434, guid: 4389eefe2931f6c44a23e45fb7ed8d9e, type: 3}
-      propertyPath: m_Name
-      value: GangRealWorld
-      objectReference: {fileID: 0}
-    - target: {fileID: 132580918187528434, guid: 4389eefe2931f6c44a23e45fb7ed8d9e, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8497310376783086963, guid: 4389eefe2931f6c44a23e45fb7ed8d9e, type: 3}
-      propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8497310376783086963, guid: 4389eefe2931f6c44a23e45fb7ed8d9e, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8497310376783086963, guid: 4389eefe2931f6c44a23e45fb7ed8d9e, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8497310376783086963, guid: 4389eefe2931f6c44a23e45fb7ed8d9e, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8497310376783086963, guid: 4389eefe2931f6c44a23e45fb7ed8d9e, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8497310376783086963, guid: 4389eefe2931f6c44a23e45fb7ed8d9e, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8497310376783086963, guid: 4389eefe2931f6c44a23e45fb7ed8d9e, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8497310376783086963, guid: 4389eefe2931f6c44a23e45fb7ed8d9e, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8497310376783086963, guid: 4389eefe2931f6c44a23e45fb7ed8d9e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8497310376783086963, guid: 4389eefe2931f6c44a23e45fb7ed8d9e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8497310376783086963, guid: 4389eefe2931f6c44a23e45fb7ed8d9e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects:
-    - {fileID: 3066673084292834450, guid: 4389eefe2931f6c44a23e45fb7ed8d9e, type: 3}
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 4389eefe2931f6c44a23e45fb7ed8d9e, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1216565630}
   - {fileID: 2645362311529116154}
-  - {fileID: 3141427780283100115}
   - {fileID: 2778660735300885723}
