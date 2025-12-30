@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 2cd9ed09b463fe64b95bd132f08e0544
+guid: ed5a9eee94e4ca44899c008f6bfa5572
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -98,7 +98,7 @@ ScriptedImporter:
     addSortingGroup: 1
     addShadowCasters: 0
   importFileNodeState: 1
-  platformSettingsDirtyTick: 638968673071374375
+  platformSettingsDirtyTick: 639027328855707118
   textureAssetName: 
   singleSpriteImportData:
   - name: 
@@ -133,7 +133,7 @@ ScriptedImporter:
       y: 4
       width: 7
       height: 24
-    spriteID: 6380896439a17c34fb9becfd5114f8c4
+    spriteID: 8550066a339bef64288e32de013d9ebc
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -153,7 +153,7 @@ ScriptedImporter:
       y: 4
       width: 7
       height: 23
-    spriteID: a2e6bc359591cdc47b5b7a60a0a838ef
+    spriteID: 7922a41ba38c1f2429c4d9d468b6d0fa
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -173,7 +173,7 @@ ScriptedImporter:
       y: 36
       width: 7
       height: 24
-    spriteID: 8de1d0b80a8360a41a0f587a4092f371
+    spriteID: c0da2bd3eab47e248b00759363269620
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -186,12 +186,12 @@ ScriptedImporter:
   asepriteLayers:
   - layerIndex: 0
     uuid:
-      value0: 3937948981
+      value0: 2398145153
       value1: 0
       value2: 0
       value3: 0
-    guid: -357018315
-    name: Library_ch_sit_idle
+    guid: 0
+    name: Library_ch_sit_idle (1)
     layerFlags: 0
     layerType: 0
     blendMode: 0
@@ -204,7 +204,7 @@ ScriptedImporter:
         y: 0
         width: 7
         height: 24
-      spriteId: 6380896439a17c34fb9becfd5114f8c4
+      spriteId: 8550066a339bef64288e32de013d9ebc
     - name: Frame_1
       frameIndex: 1
       additiveSortOrder: 0
@@ -213,7 +213,7 @@ ScriptedImporter:
         y: 0
         width: 7
         height: 23
-      spriteId: a2e6bc359591cdc47b5b7a60a0a838ef
+      spriteId: 7922a41ba38c1f2429c4d9d468b6d0fa
     - name: Frame_2
       frameIndex: 2
       additiveSortOrder: 0
@@ -222,7 +222,7 @@ ScriptedImporter:
         y: 0
         width: 7
         height: 24
-      spriteId: 8de1d0b80a8360a41a0f587a4092f371
+      spriteId: c0da2bd3eab47e248b00759363269620
     linkedCells: []
     parentIndex: -1
   platformSettings:
@@ -241,10 +241,10 @@ ScriptedImporter:
   - name: DefaultTexturePlatform
     overridden: 0
     ignorePlatformSupport: 0
-    maxTextureSize: 2048
+    maxTextureSize: 16384
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     forceMaximumCompressionQuality_BC6H_BC7: 0
     crunchedCompression: 0
@@ -253,22 +253,10 @@ ScriptedImporter:
   - name: Standalone
     overridden: 0
     ignorePlatformSupport: 0
-    maxTextureSize: 2048
+    maxTextureSize: 16384
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    androidETC2FallbackOverride: 0
-  - name: Server
-    overridden: 0
-    ignorePlatformSupport: 0
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     forceMaximumCompressionQuality_BC6H_BC7: 0
     crunchedCompression: 0
@@ -277,10 +265,10 @@ ScriptedImporter:
   - name: Android
     overridden: 0
     ignorePlatformSupport: 0
-    maxTextureSize: 2048
+    maxTextureSize: 16384
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     forceMaximumCompressionQuality_BC6H_BC7: 0
     crunchedCompression: 0
@@ -289,10 +277,10 @@ ScriptedImporter:
   - name: WebGL
     overridden: 0
     ignorePlatformSupport: 0
-    maxTextureSize: 2048
+    maxTextureSize: 16384
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     forceMaximumCompressionQuality_BC6H_BC7: 0
     crunchedCompression: 0

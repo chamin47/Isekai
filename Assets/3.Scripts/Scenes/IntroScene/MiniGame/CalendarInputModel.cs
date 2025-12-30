@@ -16,4 +16,14 @@ public static class CalendarInputModel
 	{
 		return GetDateString() == "2035.12.24";
 	}
+
+	public static void Reset()
+	{
+		for (int i = 0; i < Digits.Length; i++)
+		{
+			Digits[i] = 0;
+		}
+
+		IsSolved = false;
+	}
 }

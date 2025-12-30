@@ -130,12 +130,20 @@ public class LibraryIDHooks : MonoBehaviour, IDialogueHookProvider
 				}
 				yield break;
 
-
 			case "2001027":
 
 				Managers.Sound.Play("positive", Sound.Effect);
 
 				yield break;
+			case "2001028":
+				{	
+					WorldType currentWorldType = Managers.World.CurrentWorldType;
+					int bookIndex = (int)currentWorldType;
+
+					_library.HighlightOnly(bookIndex);
+				}
+				yield break;
+
 			case "2001029":
 				if (_hud != null)
 					_hud.gameObject.SetActive(true);

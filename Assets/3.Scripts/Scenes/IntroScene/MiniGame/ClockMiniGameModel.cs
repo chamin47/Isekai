@@ -20,5 +20,6 @@ public static class ClockMiniGameModel
 		HasTouchedHand = false;
 		HasClickedCenter = false;
 		HasSeenIntro = false;
+		InputLocked = false;
 	}
 }

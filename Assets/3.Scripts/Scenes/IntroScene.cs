@@ -26,6 +26,7 @@ public class IntroScene : BaseScene
 
 	public override void Clear()
 	{
-
+		CalendarInputModel.Reset();
+		ClockMiniGameModel.Reset();
 	}
 }

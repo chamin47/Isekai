@@ -161,10 +161,27 @@ public class LibraryScene : BaseScene
             book.GetComponent<LibraryBook>().DisableFinger();
 		}
     }
-    #endregion
+	#endregion
 
-    #region BackgroundMethod
-    public void SetLightOn()
+	#region BookHighlight
+	public void HighlightOnly(int targetIndex)
+	{
+		for (int i = 0; i < _books.Length; i++)
+		{
+			var book = _books[i].GetComponent<LibraryBook>();
+			if (book == null) continue;
+
+			book.gameObject.SetActive(true);
+
+			bool isTarget = (i == targetIndex);
+			book.SetHighlight(isTarget);
+		}
+	}
+	#endregion
+
+
+	#region BackgroundMethod
+	public void SetLightOn()
     {
         foreach (var _background in _backgrounds)
         {

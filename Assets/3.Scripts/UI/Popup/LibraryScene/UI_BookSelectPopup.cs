@@ -41,7 +41,7 @@ public class UI_BookSelectWorldSpace : UI_Base, IPointerEnterHandler, IPointerEx
     private void OnClickOpenBook(PointerEventData eventData)
 	{
 		var ui = Managers.UI.ShowPopupUI<UI_BookPopup>();
-		ui.Init(_book);
+		//ui.Init(_book);
 
         Managers.Resource.Destroy(gameObject);
 	}
