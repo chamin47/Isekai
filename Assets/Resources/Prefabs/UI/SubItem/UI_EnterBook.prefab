@@ -214,8 +214,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _animater: {fileID: 7541450671068954402}
   _uiRoot: {fileID: 3821900039558545461}
-  _shakeDuration: 0.5
-  _shakeMagnitude: 5
+  _shakeDuration: 0.15
+  _shakeMagnitude: 3
 --- !u!1 &7224250904483047465
 GameObject:
   m_ObjectHideFlags: 0

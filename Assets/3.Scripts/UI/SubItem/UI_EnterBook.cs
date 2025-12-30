@@ -9,8 +9,8 @@ public class UI_EnterBook : UI_Base
     private bool _canClick = false;
     private Vector2 _originAnchoredPos;
 
-    [SerializeField] private  float _shakeDuration = 0.5f;
-    [SerializeField] private float _shakeMagnitude = 5f;
+    [SerializeField] private  float _shakeDuration = 0.15f;
+    [SerializeField] private float _shakeMagnitude = 3f;
 
     public override void Init()
     {
@@ -33,10 +33,15 @@ public class UI_EnterBook : UI_Base
     private IEnumerator CoOpenBookEnter()
     {
         Managers.Sound.Play("isekai_entry_door_knock", Sound.Effect);
-        OpenBookEnter();
+        yield return CoShakeUI();
+        Managers.Sound.Play("isekai_entry_door_knock", Sound.Effect);
+        yield return CoShakeUI();
+        Managers.Sound.Play("isekai_entry_door_knock", Sound.Effect);
         yield return CoShakeUI();
         Managers.Scene.LoadScene(Scene.LoadingScene);
+        OpenBookEnter();
         yield return WaitForSecondsCache.Get(0.5f);
+        Managers.Sound.Play("isekai_entry_warp", Sound.Effect);
         Destroy(gameObject, 3f);
     }
 
@@ -64,14 +69,14 @@ public class UI_EnterBook : UI_Base
 
     public void CloseBookEnter()
     {
-        _animater.SetFloat("Speed", 1f);
+        Managers.Sound.Play("isekai_entry_door_close", Sound.Effect);
         _animater.Play("EnterBook");
     }
 
     public void OpenBookEnter()
     {
-        _animater.SetFloat("Speed", -1f);
-        _animater.Play("EnterBook");
+        Managers.Sound.Play("isekai_entry_door_open", Sound.Effect);
+        _animater.Play("REnterBook");
     }
 
     public void EnableClick()
