@@ -88,17 +88,18 @@ public class UI_NoticePopup : UI_Popup
             _book.EnableFinger();
         }
 
-		CloseWithAnimation();
+		CloseWithAnimation(false);
     }
 
-	private void CloseWithAnimation()
+	private void CloseWithAnimation(bool active)
 	{
 		_popupRoot
 			.DOScale(0f, 0.25f)
 			.SetEase(Ease.InBack)
 			.OnComplete(() =>
 			{
-				Managers.UI.ClosePopupUI(this);
+                if(active == false)
+				    Managers.UI.ClosePopupUI(this);
 			});
 	}
 
@@ -116,24 +117,14 @@ public class UI_NoticePopup : UI_Popup
     {
         _canHandle = false;
 
-        if(_libraryScene != null)
-            _libraryScene.PlayEndTimeLine();
-
         StartCoroutine(CoFadeOut());
     }
 
     private IEnumerator CoFadeOut()
     {
-        StartCoroutine(Managers.Sound.FadeOutBGM(2f));
-        StartCoroutine(_libraryScene.FadeScene(2f));
-
-        yield return WaitForSecondsCache.Get(1f);
-
-        Managers.Sound.Play("s2_book1", Sound.Effect);
-
-        yield return WaitForSecondsCache.Get(2f);
-
-        Managers.Scene.LoadScene(Scene.LoadingScene);
+        CloseWithAnimation(true);
+        yield return Managers.Sound.FadeOutBGM(1f);
+        Managers.UI.MakeSubItem<UI_EnterBook>();
     }
 
     public void SetActiveFalse()

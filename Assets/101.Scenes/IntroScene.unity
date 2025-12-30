@@ -1648,7 +1648,7 @@ PrefabInstance:
       objectReference: {fileID: 5083692884918192216, guid: a0c7379aa19a97242b5b81318f8200a5, type: 3}
     - target: {fileID: 3626916397498700004, guid: 071e94ec4ae4adc419489f39298590e5, type: 3}
       propertyPath: m_Color.a
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3626916397498700004, guid: 071e94ec4ae4adc419489f39298590e5, type: 3}
       propertyPath: m_MaskInteraction
@@ -3177,7 +3177,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &829168435
 Transform:
   m_ObjectHideFlags: 0
@@ -3641,7 +3641,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &950176489
 Transform:
   m_ObjectHideFlags: 0
