@@ -7,8 +7,6 @@ using UnityEngine.UI;
 
 public class UI_BookPopup : UI_Popup
 {
-	[SerializeField] private TMP_Text _letterText;
-	[SerializeField] private TMP_Text _TitleText;
 	[SerializeField] private Button _AnyClick;
 	[SerializeField] private Image _selectImage;
 
@@ -128,7 +126,7 @@ public class UI_BookPopup : UI_Popup
 		if (_isHovering)
 			return;
 
-		if (eventData.pointerEnter == _selectImage.gameObject)
+        if (eventData.pointerEnter == _selectImage.gameObject)
 		{
 			_isHovering = true;
 			_selectImage.color = Color.gray;
@@ -141,7 +139,8 @@ public class UI_BookPopup : UI_Popup
 		if (!_isHovering)
 			return;
 
-		if (eventData.pointerEnter == _selectImage.gameObject)
+		Debug.Log(eventData.pointerEnter);
+        if (eventData.pointerEnter == _selectImage.gameObject)
 		{
 			_isHovering = false;
 			_selectImage.color = defaultColor;

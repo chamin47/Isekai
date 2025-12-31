@@ -256,7 +256,7 @@ public class DialogueRunner : MonoBehaviour
 
                             // Task를 코루틴으로 래핑해서 대기
                             yield return CoroutineUtil.RunTask(
-                                _secretSentimentAnalyer.AnalyzeText(userText, "ko"),
+                                _secretSentimentAnalyer.AnalyzeText(userText + " " + userText, "ko"),
                                 result => sentimentScore = result
                             );
 
@@ -267,8 +267,8 @@ public class DialogueRunner : MonoBehaviour
 							{
 								branchType = "Ambiguous";
                             }
-                            else if (sentimentScore > 0.6f) branchType = "Positive";
-                            else if (sentimentScore < -0.6f) branchType = "Negative";
+                            else if (sentimentScore > 0.5f) branchType = "Positive";
+                            else if (sentimentScore < -0.5f) branchType = "Negative";
                             else branchType = "Ambiguous";
 
                             var next = _branchTable ? _branchTable.Resolve(param, branchType) : null;

@@ -165,6 +165,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _index: 0
   _isDefaultSelected: 0
+  _outlineWidth: 18
 --- !u!1 &3836782990220838946
 GameObject:
   m_ObjectHideFlags: 0
@@ -374,3 +375,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _index: 1
   _isDefaultSelected: 0
+  _outlineWidth: 18

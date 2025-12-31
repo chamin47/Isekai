@@ -38,6 +38,7 @@ public class UI_EnterBook : UI_Base
         yield return CoShakeUI();
         Managers.Sound.Play("isekai_entry_door_knock", Sound.Effect);
         yield return CoShakeUI();
+        yield return WaitForSecondsCache.Get(1f);
         Managers.Scene.LoadScene(Scene.LoadingScene);
         OpenBookEnter();
         yield return WaitForSecondsCache.Get(0.5f);
