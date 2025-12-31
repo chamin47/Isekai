@@ -45,18 +45,6 @@ public class LibraryEnter : MonoBehaviour
 		{
 			_playerController.canMove = false;
 
-            Vector3 startPos = _playerController.transform.position;
-
-            foreach (var track in timeline.playableAsset.outputs)
-            {
-                if (track.streamName == "PlayerPosition")
-                {
-					Debug.Log("Adjust Timeline Position");
-                    AnimationTrack animationTrack = (AnimationTrack)track.sourceObject;
-                    animationTrack.position = startPos;
-                }
-            }
-
             StartCoroutine(HandleSceneTransition());
 		}
 	}
