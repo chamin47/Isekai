@@ -51,6 +51,11 @@ public class LibraryBook : MonoBehaviour
 		_mouse.SetActive(true);
 	}
 
+	public void DisableClick()
+	{
+		_collider.enabled = false;
+	}
+
 	public void DisableFinger()
 	{
 		_mouse.SetActive(false);

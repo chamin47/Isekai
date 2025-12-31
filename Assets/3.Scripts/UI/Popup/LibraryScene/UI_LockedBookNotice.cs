@@ -68,6 +68,8 @@ public class UI_LockedBookNotice : UI_Popup
 		}
 
 		_canvasGroup.alpha = 0f;
+		_canvasGroup.blocksRaycasts = false;
+		_canvasGroup.interactable = false;
 
 		if (_closed)
 			yield break;
