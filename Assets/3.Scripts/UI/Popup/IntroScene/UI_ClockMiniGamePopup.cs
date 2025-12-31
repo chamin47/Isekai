@@ -14,13 +14,13 @@ public class UI_ClockMiniGamePopup : UI_Popup
 
 	[Header("Hour Hand")]
 	[SerializeField] private Sprite _hourSprite;
-	private const float _hourWidth = 23.3585f;
-	private const float _hourHeight = 119.0532f;
+	private const float _hourWidth = 30.589f;
+	private const float _hourHeight = 148.4602f;
 
 	[Header("Minute Hand")]
 	[SerializeField] private Sprite _minuteSprite;
-	private const float _minuteWidth = 56.8893f;
-	private const float _minuteHeight = 195.9099f;
+	private const float _minuteWidth = 74.054f;
+	private const float _minuteHeight = 255.0206f;
 
 	[SerializeField] private Button _centerButton;
 	[SerializeField] private Button _closeButton;

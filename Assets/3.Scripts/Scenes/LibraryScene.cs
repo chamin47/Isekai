@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Rendering;
@@ -125,6 +124,22 @@ public class LibraryScene : BaseScene
     {
         _bookParent.SetActive(true);
     }
+
+    private void DisableClicks()
+    {
+        foreach (var book in _books)
+        {
+            book.GetComponent<LibraryBook>().DisableClick();
+        }
+    }
+
+    private void EnableClicks()
+    {
+		foreach (var book in _books)
+		{
+			book.GetComponent<LibraryBook>().EnableClick();
+		}
+	}
     
     public void ActiveCurrentWorldBook()
     {
@@ -187,8 +202,8 @@ public class LibraryScene : BaseScene
         {
             _background.material = _lightOn;
         }
-
         EnableBooks();
+        EnableClicks();
     }
 
     public void SetLightOff()
@@ -197,8 +212,8 @@ public class LibraryScene : BaseScene
         {
             _background.material = _lightOff;
         }
-
-        DisableBooks();
+        //DisableBooks();
+        DisableClicks();
     }
     #endregion
 

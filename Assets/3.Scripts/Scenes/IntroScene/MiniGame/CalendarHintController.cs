@@ -4,27 +4,17 @@ using UnityEngine.UI;
 
 public class CalendarHintController
 {
-	private readonly Image _left;
-	private readonly Image _right;
+	private readonly Image _smallLeft;
+	private readonly Image _smallRight;
+	private readonly Image _bigLeft;
+	private readonly Image _bigRight;
 
-	private readonly Material _leftMat;
-	private readonly Material _rightMat;
-
-	private const float OUTLINE_THICKNESS = 4f;
-	private readonly Color OUTLINE_COLOR = new Color(1f, 1f, 1f, 1f);
-
-	public CalendarHintController(Image left, Image right)
+	public CalendarHintController(Image smallLeft, Image smallRight, Image bigLeft, Image bigRight)
 	{
-		_left = left;
-		_right = right;
-
-		_leftMat  = Object.Instantiate(_left.material);
-		_rightMat = Object.Instantiate(_right.material);
-
-		_left.material  = _leftMat;
-		_right.material = _rightMat;
-
-		DisableOutline();
+		_smallLeft = smallLeft;
+		_smallRight = smallRight;
+		_bigLeft = bigLeft;
+		_bigRight = bigRight;
 	}
 
 	public IEnumerator CoHintLoop()
@@ -40,10 +30,10 @@ public class CalendarHintController
 				if (CalendarInputModel.IsSolved)    // 해결 시 즉시 종료
 					yield break;
 
-				EnableOutline();
+				SetVisible(false);
 				Managers.Sound.Play("mini_calendar_hint_flicker", Sound.Effect);
 				yield return new WaitForSeconds(1f);
-				DisableOutline();
+				SetVisible(true);
 				yield return new WaitForSeconds(1f);
 			}
 
@@ -52,33 +42,30 @@ public class CalendarHintController
 		}
 	}
 
-	private void EnableOutline()
+	private void SetVisible(bool visible)
 	{
-		SetOutline(_leftMat, true);
-		SetOutline(_rightMat, true);
-	}
+		float alpha = visible ? 1f : 0f;
 
-	private void DisableOutline()
-	{
-		SetOutline(_leftMat, false);
-		SetOutline(_rightMat, false);
-	}
+		Color c;
+		c = _smallLeft.color;
+		c.a = alpha;
+		_smallLeft.color = c;
 
-	private void SetOutline(Material mat, bool enable)
-	{
-		if (enable)
-		{
-			mat.SetFloat("_OutlineThickness", OUTLINE_THICKNESS);
-			mat.SetColor("_OutlineColor", OUTLINE_COLOR);
-		}
-		else
-		{
-			mat.SetFloat("_OutlineThickness", 0f);
-		}
+		c = _smallRight.color;
+		c.a = alpha;
+		_smallRight.color = c;
+
+		c = _bigLeft.color;
+		c.a = alpha;
+		_bigLeft.color = c;
+
+		c = _bigRight.color;
+		c.a = alpha;
+		_bigRight.color = c;
 	}
 
 	public void Reset()
 	{
-		DisableOutline();
+		
 	}
 }

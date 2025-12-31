@@ -31,12 +31,11 @@ public class UI_NoticePopup : UI_Popup
     {
         base.Init();
 
-
         if (Managers.Scene.CurrentScene is LibraryScene)
         {
             _libraryScene = Managers.Scene.CurrentScene as LibraryScene;
 
-            _libraryScene.DisableBooks();
+            //_libraryScene.DisableBooks();
             _libraryScene.SetLightOff();
         }
 
@@ -47,7 +46,9 @@ public class UI_NoticePopup : UI_Popup
         _canvas = GetComponent<Canvas>();
         _canvas.renderMode = RenderMode.ScreenSpaceCamera;
         _canvas.worldCamera = Camera.main;
-    }
+
+		StartCoroutine(Show());
+	}
 
     public virtual void Init(LibraryBook book)
     {
@@ -91,6 +92,18 @@ public class UI_NoticePopup : UI_Popup
 		CloseWithAnimation(false);
     }
 
+    private IEnumerator Show()
+    {
+		yield return new WaitForSeconds(0.3f);
+
+        _popupRoot.GetComponent<CanvasGroup>().alpha = 1.0f;
+
+        _popupRoot.localScale = Vector3.one * 0.7f;
+        _popupRoot
+            .DOScale(1f, 0.32f)
+            .SetEase(Ease.OutBack);
+    }
+
 	private void CloseWithAnimation(bool active)
 	{
 		_popupRoot
@@ -99,7 +112,15 @@ public class UI_NoticePopup : UI_Popup
 			.OnComplete(() =>
 			{
                 if(active == false)
-				    Managers.UI.ClosePopupUI(this);
+                {
+					Managers.UI.ClosePopupUI(this);
+
+					WorldType currentWorldType = Managers.World.CurrentWorldType;
+
+					int bookIndex = (int)currentWorldType;
+					LibraryBook book = _libraryScene.Books[bookIndex].GetComponent<LibraryBook>();
+					book.SetHighlight(true);
+				}				    
 			});
 	}
 

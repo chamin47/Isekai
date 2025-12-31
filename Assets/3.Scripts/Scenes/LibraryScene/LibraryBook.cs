@@ -51,6 +51,11 @@ public class LibraryBook : MonoBehaviour
 		_mouse.SetActive(true);
 	}
 
+	public void DisableClick()
+	{
+		_collider.enabled = false;
+	}
+
 	public void DisableFinger()
 	{
 		_mouse.SetActive(false);
@@ -79,10 +84,12 @@ public class LibraryBook : MonoBehaviour
 		if (highlight)
 		{
 			SetAlpha(1f);
+			EnableTwincle();
 		}
 		else
 		{
 			SetAlpha(_dimAlpha);
+			DisableTwincle();
 		}
 	}
 
@@ -91,10 +98,16 @@ public class LibraryBook : MonoBehaviour
 		Color bookColor = _bookRenderer.color;
 		bookColor.a = alpha;
 		_bookRenderer.color = bookColor;
+	}
 
-		Color twinkleColor = _twinkleRenderer.color;
-		twinkleColor.a = alpha;
-		_twinkleRenderer.color = twinkleColor;
+	private void DisableTwincle()
+	{
+		_twinkleRenderer.gameObject.SetActive(false);
+	}
+
+	private void EnableTwincle()
+	{
+		_twinkleRenderer.gameObject.SetActive(true);
 	}
 
 	public IEnumerator FadeInMouse()
@@ -149,6 +162,7 @@ public class LibraryBook : MonoBehaviour
 
 	private bool IsUnlocked()
 	{
+		Debug.Log(Managers.World.CurrentWorldType);
 		return _worldType == Managers.World.CurrentWorldType;
 	}
 }

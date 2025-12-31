@@ -147,14 +147,14 @@ public class LibraryIDHooks : MonoBehaviour, IDialogueHookProvider
 			case "2001029":
 				if (_hud != null)
 					_hud.gameObject.SetActive(true);
-				{
-					WorldType currentWorldType = Managers.World.CurrentWorldType;
+				{				
+					foreach (var each in _library.Books)
+					{
+						LibraryBook book = each.GetComponent<LibraryBook>();
 
-					int bookIndex = (int)currentWorldType;
-					LibraryBook book = _library.Books[bookIndex].GetComponent<LibraryBook>(); // 빈터발트
-					book.gameObject.SetActive(true);               // 빈터발트 오브젝트
-
-					book.EnableClick();
+						book.gameObject.SetActive(true);
+						book.EnableClick();
+					}
 
 					float baseH = Screen.height * 0.1f;  
 					float overshoot = baseH;
@@ -176,13 +176,13 @@ public class LibraryIDHooks : MonoBehaviour, IDialogueHookProvider
 		if (_hud != null)
 			_hud.gameObject.SetActive(true);
 		{
-			WorldType currentWorldType = Managers.World.CurrentWorldType;
+			foreach (var each in _library.Books)
+			{
+				LibraryBook book = each.GetComponent<LibraryBook>();
 
-			int bookIndex = (int)currentWorldType;
-			LibraryBook book = _library.Books[bookIndex].GetComponent<LibraryBook>(); // 빈터발트
-			book.gameObject.SetActive(true);               // 빈터발트 오브젝트
-
-			book.EnableClick();
+				book.gameObject.SetActive(true);
+				book.EnableClick();
+			}
 
 			float baseH = Screen.height * 0.1f;
 			float overshoot = baseH;

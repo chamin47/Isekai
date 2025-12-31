@@ -89,6 +89,7 @@ GameObject:
   - component: {fileID: 7872015348294681436}
   - component: {fileID: 8917285224689939106}
   - component: {fileID: 1689900623118718968}
+  - component: {fileID: 8517938174133636638}
   m_Layer: 5
   m_Name: UI_LockedBookNotice
   m_TagString: Untagged
@@ -191,9 +192,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a52ac2b41b97724e856620e5dce21a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _canvasGroup: {fileID: 0}
-  _rect: {fileID: 0}
-  _text: {fileID: 0}
+  _canvasGroup: {fileID: 8517938174133636638}
+  _rect: {fileID: 6981905945433252228}
+  _text: {fileID: 4188164249456195572}
+--- !u!225 &8517938174133636638
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4134556759121808760}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &7160324271596212690
 GameObject:
   m_ObjectHideFlags: 0
@@ -259,7 +272,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: New Text
+  m_text: "\uC9C0\uAE08\uC740 \uC5F4\uB78C\uD560 \uC218 \uC5C6\uB294 \uCC45\uC785\uB2C8\uB2E4."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c19fe47c8b7733e4aa1a519a3ee08f91, type: 2}
   m_sharedMaterial: {fileID: -8522933860761544228, guid: c19fe47c8b7733e4aa1a519a3ee08f91, type: 2}
@@ -268,8 +281,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:

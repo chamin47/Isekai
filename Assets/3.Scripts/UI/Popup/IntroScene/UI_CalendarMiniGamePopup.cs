@@ -9,8 +9,10 @@ public class UI_CalendarMiniGamePopup : UI_Popup
 	[SerializeField] private Button _checkButton;
 	[SerializeField] private Button _closeButton;
 	[SerializeField] private CanvasGroup _checkCanvas;
-	[SerializeField] private Image _hintLeft;
-	[SerializeField] private Image _hintRight;
+	[SerializeField] private Image _hintSmallLeft;
+	[SerializeField] private Image _hintSmallRight;
+	[SerializeField] private Image _hintBigLeft;
+	[SerializeField] private Image _hintBigRight;
 
 	[SerializeField] private RectTransform _slotRoot;
 	[SerializeField] private Image _slotBackground; // 색상 변경용
@@ -56,7 +58,7 @@ public class UI_CalendarMiniGamePopup : UI_Popup
 		_checkButton.onClick.AddListener(OnCheck);
 		_closeButton.onClick.AddListener(OnCloseButton);
 
-		_hintController = new CalendarHintController(_hintLeft, _hintRight);
+		_hintController = new CalendarHintController(_hintSmallLeft, _hintSmallRight, _hintBigLeft, _hintBigRight);
 
 		if (!CalendarInputModel.IsSolved)
 			_hintCoroutine = StartCoroutine(_hintController.CoHintLoop());

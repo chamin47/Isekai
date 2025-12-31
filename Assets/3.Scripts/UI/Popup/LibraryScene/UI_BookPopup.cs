@@ -25,10 +25,26 @@ public class UI_BookPopup : UI_Popup
 	[SerializeField] private CanvasGroup _canvasGroup;
 	private const float _decisionFadeTime = 1f;
 
+	private LibraryScene _libraryScene;
+	private bool _isHovering;
+
 
 	public override void Init()
 	{
 		base.Init();
+
+		if (Managers.Scene.CurrentScene is LibraryScene)
+		{
+			_libraryScene = (LibraryScene)Managers.Scene.CurrentScene;
+
+			_libraryScene.SetLightOff();
+		}
+
+		WorldType currentWorldType = Managers.World.CurrentWorldType;
+
+		int bookIndex = (int)currentWorldType;
+		LibraryBook book = _libraryScene.Books[bookIndex].GetComponent<LibraryBook>();
+		book.SetHighlight(false);
 
 		SetImage();
 
@@ -51,9 +67,23 @@ public class UI_BookPopup : UI_Popup
 
 	public void ClosePopup()
 	{
-		_book.EnableClick();
+		if (_libraryScene != null)
+		{
+			_libraryScene.EnableBooks();
+			_libraryScene.SetLightOn();
+		}
 
-		_book.EnableFinger();
+		if (_book != null)
+		{
+			_book.EnableClick();
+			_book.EnableFinger();
+		}
+
+		WorldType currentWorldType = Managers.World.CurrentWorldType;
+
+		int bookIndex = (int)currentWorldType;
+		LibraryBook book = _libraryScene.Books[bookIndex].GetComponent<LibraryBook>();
+		book.SetHighlight(true);
 
 		Managers.UI.ClosePopupUI(this);
 		_hud.SetActive(true);
@@ -95,17 +125,25 @@ public class UI_BookPopup : UI_Popup
 
 	public void OnPointerBookEnter(PointerEventData eventData)
 	{
+		if (_isHovering)
+			return;
+
 		if (eventData.pointerEnter == _selectImage.gameObject)
 		{
-			_selectImage.color = Color.yellow;
+			_isHovering = true;
+			_selectImage.color = Color.gray;
 			_decisionHintBubble.SetActive(true);
 		}
 	}
 
 	public void OnPointerBookExit(PointerEventData eventData)
 	{
+		if (!_isHovering)
+			return;
+
 		if (eventData.pointerEnter == _selectImage.gameObject)
 		{
+			_isHovering = false;
 			_selectImage.color = defaultColor;
 			_decisionHintBubble.SetActive(false);
 		}
