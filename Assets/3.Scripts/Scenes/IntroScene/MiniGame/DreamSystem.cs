@@ -119,8 +119,10 @@ public class DreamSystem : MonoBehaviour, IPointerClickHandler
     }
 
     [ContextMenu("Trigger Wake Up")]
-    private void TriggerWakeUp()
+    public void TriggerWakeUp()
     {
+        _masks[0].SetActive(false);
+        _masks[1].SetActive(false);
         _dreamAnimator.gameObject.SetActive(false);
         _canStopSystem = true;
         _bedAnimator.enabled = true;
@@ -152,7 +154,7 @@ public class DreamSystem : MonoBehaviour, IPointerClickHandler
         }
         else if(currentState == DreamState.Phase3)
         {
-            _masks[0].SetActive(true);
+            _masks[0].SetActive(false);
             _masks[1].SetActive(true);
         }
     }

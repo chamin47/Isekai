@@ -531,11 +531,11 @@ MonoBehaviour:
   m_Name: Recorded
   m_EditorClassIdentifier: 
   m_Clip: {fileID: -4163187738869324665}
-  m_Position: {x: 21.079, y: -3.979, z: 0}
+  m_Position: {x: 25, y: -3.979, z: 0}
   m_EulerAngles: {x: -0, y: 0, z: 0}
   m_UseTrackMatchFields: 1
   m_MatchTargetFields: 63
-  m_RemoveStartOffset: 0
+  m_RemoveStartOffset: 1
   m_ApplyFootIK: 1
   m_Loop: 0
   m_Version: 1
