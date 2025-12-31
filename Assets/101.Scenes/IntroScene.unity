@@ -3143,7 +3143,7 @@ PlayableDirector:
   m_Enabled: 1
   serializedVersion: 3
   m_PlayableAsset: {fileID: 11400000, guid: f2e0dcfbb85a31648a5f866375a7b201, type: 2}
-  m_InitialState: 1
+  m_InitialState: 0
   m_WrapMode: 2
   m_DirectorUpdateMode: 1
   m_InitialTime: 0
@@ -5518,7 +5518,7 @@ MonoBehaviour:
     m_Events:
     - m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 0}
+        - m_Target: {fileID: 1920423446}
           m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
           m_MethodName: PlayFootSound
           m_Mode: 1
