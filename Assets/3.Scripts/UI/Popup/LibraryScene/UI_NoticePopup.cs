@@ -112,7 +112,15 @@ public class UI_NoticePopup : UI_Popup
 			.OnComplete(() =>
 			{
                 if(active == false)
-				    Managers.UI.ClosePopupUI(this);
+                {
+					Managers.UI.ClosePopupUI(this);
+
+					WorldType currentWorldType = Managers.World.CurrentWorldType;
+
+					int bookIndex = (int)currentWorldType;
+					LibraryBook book = _libraryScene.Books[bookIndex].GetComponent<LibraryBook>();
+					book.SetHighlight(true);
+				}				    
 			});
 	}
 

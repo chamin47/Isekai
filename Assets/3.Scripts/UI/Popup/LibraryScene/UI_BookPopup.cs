@@ -40,6 +40,12 @@ public class UI_BookPopup : UI_Popup
 			_libraryScene.SetLightOff();
 		}
 
+		WorldType currentWorldType = Managers.World.CurrentWorldType;
+
+		int bookIndex = (int)currentWorldType;
+		LibraryBook book = _libraryScene.Books[bookIndex].GetComponent<LibraryBook>();
+		book.SetHighlight(false);
+
 		SetImage();
 
 		_selectImage.gameObject.BindEvent(OnClickdecision);
@@ -72,6 +78,12 @@ public class UI_BookPopup : UI_Popup
 			_book.EnableClick();
 			_book.EnableFinger();
 		}
+
+		WorldType currentWorldType = Managers.World.CurrentWorldType;
+
+		int bookIndex = (int)currentWorldType;
+		LibraryBook book = _libraryScene.Books[bookIndex].GetComponent<LibraryBook>();
+		book.SetHighlight(true);
 
 		Managers.UI.ClosePopupUI(this);
 		_hud.SetActive(true);

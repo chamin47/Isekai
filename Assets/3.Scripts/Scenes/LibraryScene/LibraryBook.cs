@@ -84,6 +84,7 @@ public class LibraryBook : MonoBehaviour
 		if (highlight)
 		{
 			SetAlpha(1f);
+			EnableTwincle();
 		}
 		else
 		{
@@ -102,6 +103,11 @@ public class LibraryBook : MonoBehaviour
 	private void DisableTwincle()
 	{
 		_twinkleRenderer.gameObject.SetActive(false);
+	}
+
+	private void EnableTwincle()
+	{
+		_twinkleRenderer.gameObject.SetActive(true);
 	}
 
 	public IEnumerator FadeInMouse()
