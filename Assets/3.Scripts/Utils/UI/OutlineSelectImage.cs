@@ -9,7 +9,7 @@ public class OutlineSelectImage : MonoBehaviour, IPointerEnterHandler, IPointerE
 
     [SerializeField] private int _index;
     [SerializeField] private bool _isDefaultSelected = true;
-
+    [SerializeField] private float _outlineWidth = 18f;
     private void Awake()
     {
         Image image = GetComponent<Image>();
@@ -19,6 +19,8 @@ public class OutlineSelectImage : MonoBehaviour, IPointerEnterHandler, IPointerE
         
         if (_isDefaultSelected == false)
             _material.SetFloat("_AlphaCutoff", 0f);
+
+        _material.SetFloat("_OutlineThickness", _outlineWidth);
     }
 
     public void OnPointerEnter(PointerEventData eventData)

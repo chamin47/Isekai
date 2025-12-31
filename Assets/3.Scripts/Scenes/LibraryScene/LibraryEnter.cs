@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.U2D;
 using UnityEngine.Playables;
-using System;
+using UnityEngine.Timeline;
+using UnityEngine.U2D;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class LibraryEnter : MonoBehaviour
 {
@@ -42,8 +44,20 @@ public class LibraryEnter : MonoBehaviour
 		if (collision.CompareTag("Player"))
 		{
 			_playerController.canMove = false;
-			
-			StartCoroutine(HandleSceneTransition());
+
+            Vector3 startPos = _playerController.transform.position;
+
+            foreach (var track in timeline.playableAsset.outputs)
+            {
+                if (track.streamName == "PlayerPosition")
+                {
+					Debug.Log("Adjust Timeline Position");
+                    AnimationTrack animationTrack = (AnimationTrack)track.sourceObject;
+                    animationTrack.position = startPos;
+                }
+            }
+
+            StartCoroutine(HandleSceneTransition());
 		}
 	}
 
