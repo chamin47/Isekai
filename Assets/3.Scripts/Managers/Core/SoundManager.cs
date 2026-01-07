@@ -328,7 +328,7 @@ public class SoundManager
 
     public IEnumerator FadeOutSubEffect(float duration)
     {
-        if (_subEffectAudio.clip = null)
+        if (_subEffectAudio.clip == null)
             yield break;
 
         float startVolume = _subEffectAudio.volume;

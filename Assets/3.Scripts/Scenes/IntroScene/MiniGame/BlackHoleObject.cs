@@ -38,7 +38,8 @@ public class BlackHoleObject : MonoBehaviour
         if(_isDisappeared)
         {
             Managers.Sound.PlaySubEffect("whirlpool_chase_3x", 1f);
-        }
+			_isDisappeared = false;
+		}
         
         _showCoroutine = StartCoroutine(_sprite.CoFadeOut(_fadeDuration));
     }
@@ -54,12 +55,14 @@ public class BlackHoleObject : MonoBehaviour
         if (this.gameObject.activeInHierarchy == false)
             return;
 
-        _hideCoroutine = StartCoroutine(_sprite.CoFadeIn(_fadeDuration, onFadeFinish : Stop));
+		StartCoroutine(Managers.Sound.FadeOutSubEffect(_fadeDuration));
+
+		_hideCoroutine = StartCoroutine(_sprite.CoFadeIn(_fadeDuration, onFadeFinish : Stop));
     }
 
     private void Stop()
     {
-        Managers.Sound.StopSubEffect();
+        //Managers.Sound.StopSubEffect();
         _isDisappeared = true;
     }
 }
