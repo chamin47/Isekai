@@ -31,14 +31,23 @@ public class Sub_Toggle : UI_Base
         if (isOn)
         {
             _toggle.image.sprite = _onImage;
-        }
+			DisableBackgroundClick();
+		}
         else
         {
             _toggle.image.sprite = _offImage;
         }
     }
 
-    public override void Init()
+	public void DisableBackgroundClick()
+	{
+		Image img = _backGround.GetComponent<Image>();
+
+		if (img != null)
+			img.raycastTarget = false;
+	}
+
+	public override void Init()
     {
     }
 }
