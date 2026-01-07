@@ -11,6 +11,9 @@ public class UI_ClockSpeechPopup : UI_Popup
 	[SerializeField] private RectTransform _popupRoot;
 	[SerializeField] private TMP_Text _messageText;
 
+	private bool _canClose = false;   // 닫을 수 있는지 여부
+	private bool _isClosing = false;  // 닫히는 중인지 여부
+
 	public override void Init()
 	{
 		base.Init();
@@ -30,10 +33,17 @@ public class UI_ClockSpeechPopup : UI_Popup
 		_popupRoot
 			.DOScale(1f, 0.32f)
 			.SetEase(Ease.OutBack);
+
+		yield return new WaitForSeconds(1f);
+		_canClose = true;
 	}
 
 	private void CloseWithAnimation()
 	{
+		if (_isClosing)
+			return;
+
+		_isClosing = true;
 		_popupRoot
 			.DOScale(0f, 0.25f)
 			.SetEase(Ease.InBack)
@@ -45,6 +55,9 @@ public class UI_ClockSpeechPopup : UI_Popup
 
 	private void OnClickBlocker(PointerEventData data)
 	{
-		CloseWithAnimation();
+		if (_canClose)
+		{
+			CloseWithAnimation();
+		}
 	}
 }
