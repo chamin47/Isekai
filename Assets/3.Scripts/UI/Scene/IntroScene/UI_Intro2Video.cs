@@ -11,10 +11,16 @@ public class UI_Intro2Video : UI_Scene
 	[SerializeField] private Image _fade;                 // 화면 페이드
 	[SerializeField] private Button _skipButton;
 
+	[Header("Notice")]
+	[SerializeField] private Button _confirmButton;     // 확인했습니다 버튼
+	[SerializeField] private CanvasGroup _noticeCanvasGroup;
+	private const float _noticeFadeTime = 1f;
+
 	private Coroutine _playFlowCo;
 	private bool _isSkipped = false;
+	private bool _noticeConfirmed = false;
 
-    #region 초기화&구독
+	#region 초기화&구독
 	private void Awake()
 	{
 		if (_screen != null)
@@ -25,7 +31,13 @@ public class UI_Intro2Video : UI_Scene
 		_vp.isLooping = false;
 
 		if (_skipButton != null)
+		{
+			_skipButton.gameObject.SetActive(false);
 			_skipButton.onClick.AddListener(Skip);
+		}
+
+		if (_confirmButton != null)
+			_confirmButton.onClick.AddListener(OnConfirmNotice);
 	}
     
 	private void OnEnable()
@@ -44,14 +56,11 @@ public class UI_Intro2Video : UI_Scene
 	{
 		if (_skipButton != null)
 			_skipButton.onClick.RemoveListener(Skip);
+
+		if (_confirmButton != null)
+			_confirmButton.onClick.RemoveListener(OnConfirmNotice);
 	}
 	#endregion
-
-	public override void Init()
-	{
-		base.Init();
-		_playFlowCo = StartCoroutine(PlayFlow());
-	}
 
 	private IEnumerator PlayFlow()
 	{
@@ -113,5 +122,31 @@ public class UI_Intro2Video : UI_Scene
 
 		Managers.UI.ShowSceneUI<UI_TitleScene>();
 		gameObject.SetActive(false);
+	}
+
+	private void OnConfirmNotice()
+	{
+		if (_noticeConfirmed)
+			return;
+
+		_noticeConfirmed = true;
+		StartCoroutine(CoConfirmFlow());
+	}
+
+	private IEnumerator CoConfirmFlow()
+	{
+		yield return _noticeCanvasGroup.FadeCanvas(0f, _noticeFadeTime);
+
+		_noticeCanvasGroup.gameObject.SetActive(false);
+
+		StartVideo();
+	}
+
+	private void StartVideo()
+	{
+		if (_playFlowCo != null)
+			StopCoroutine(_playFlowCo);
+
+		_playFlowCo = StartCoroutine(PlayFlow());
 	}
 }
