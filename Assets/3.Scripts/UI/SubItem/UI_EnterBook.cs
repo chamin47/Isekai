@@ -32,7 +32,8 @@ public class UI_EnterBook : UI_Base
 
     private IEnumerator CoOpenBookEnter()
     {
-        Managers.Sound.Play("isekai_entry_door_knock", Sound.Effect);
+		_animater.Play("CandleFlicker");
+		Managers.Sound.Play("isekai_entry_door_knock", Sound.Effect);
         yield return CoShakeUI();
         Managers.Sound.Play("isekai_entry_door_knock", Sound.Effect);
         yield return CoShakeUI();
@@ -48,7 +49,7 @@ public class UI_EnterBook : UI_Base
 
     private IEnumerator CoShakeUI()
     {
-        float elapsed = 0f;
+		float elapsed = 0f;
 
         while (elapsed < _shakeDuration)
         {
