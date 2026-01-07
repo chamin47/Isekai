@@ -10,7 +10,7 @@ public class ShowUICommand : IDialogueCommand
         if (name == "portrait")
         {
             var ui = Managers.UI.ShowPopupUI<UI_Portrait>();
-            yield return ui.Disapear(duration);
+            yield return ui.ShowAndWait(duration);
         }
 
         context.NextID = row.nextID;
