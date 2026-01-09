@@ -17,6 +17,8 @@ public class DialogueTextPresenter : MonoBehaviour, ITextPresenter
 
 	readonly Dictionary<Transform, List<UI_DialogueBalloon>> _stacked = new();
 
+	public bool UseSlowPunctuation { get; set; } = false;
+
 	public UI_DialogueBalloon ShowTextTemp(string speaker, string text, string animName)
 	{
         if (actor != null && !string.IsNullOrEmpty(animName))
@@ -25,7 +27,9 @@ public class DialogueTextPresenter : MonoBehaviour, ITextPresenter
         var anchor = ResolveAnchorSafe(speaker);
 
         var balloon = Managers.UI.MakeWorldSpaceUI<UI_DialogueBalloon>();
-        balloon.Init(anchor, text);
+
+		balloon.ApplyPunctuationMode(UseSlowPunctuation);
+		balloon.Init(anchor, text);
 		balloon.Appear(text);
 
 		return balloon;
@@ -39,7 +43,9 @@ public class DialogueTextPresenter : MonoBehaviour, ITextPresenter
 		var anchor = ResolveAnchorSafe(speaker);
 
 		var balloon = Managers.UI.MakeWorldSpaceUI<UI_DialogueBalloon>();
+		balloon.ApplyPunctuationMode(UseSlowPunctuation);
 		balloon.Init(anchor, text);
+
 		yield return balloon.CoPresent(text ?? "", _charSpeed);
 
 		yield return new WaitForSeconds(0.5f);
@@ -62,6 +68,7 @@ public class DialogueTextPresenter : MonoBehaviour, ITextPresenter
 			if (list[i]) list[i].TweenStackOffset(StackSpacingRatio, 0.3f, false, Ease.InCubic);
 
 		var balloon = Managers.UI.MakeWorldSpaceUI<UI_DialogueBalloon>();
+		balloon.ApplyPunctuationMode(UseSlowPunctuation);
 		balloon.Init(anchor, text);
 
 		yield return balloon.CoPresentStacked(text ?? "", _charSpeed);

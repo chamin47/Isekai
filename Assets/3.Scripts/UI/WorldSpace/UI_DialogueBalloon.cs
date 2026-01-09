@@ -1,10 +1,11 @@
+using DG.Tweening;
+using Febucci.UI;
+using Febucci.UI.Core;
 using System.Collections;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
-using Febucci.UI.Core;
-using DG.Tweening;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class UI_DialogueBalloon : UI_Base
 {
@@ -388,6 +389,16 @@ public class UI_DialogueBalloon : UI_Base
 			.SetUpdate(unscaled)
 			.SetTarget(this);
 		return _popTween;
+	}
+
+	public void ApplyPunctuationMode(bool useSlowPunctuation)
+	{
+		if (_typewriter is TypewriterByCharacter twCharacter)
+		{
+			// AI 입력 중이면 false (전부 쉼)
+			// 일반 대화면 true (연속 구두점 축약)
+			twCharacter.avoidMultiplePunctuationWait = !useSlowPunctuation;
+		}
 	}
 
 	void OnDestroy() => DOTween.Kill(this);

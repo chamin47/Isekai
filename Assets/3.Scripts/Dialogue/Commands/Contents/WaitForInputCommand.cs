@@ -16,7 +16,10 @@ public class WaitForInputCommand : IDialogueCommand
 
     public IEnumerator Execute(DialogueContext context, DialogueData row)
     {
-        string userText = "";
+		if (_useAIInput)
+			context.TextPresenter.UseSlowPunctuation = true;
+
+		string userText = "";
         yield return context.InputPrompt?.Prompt(row.script, s => userText = s);
 
         string branchType = "Ambiguous";

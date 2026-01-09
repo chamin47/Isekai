@@ -242,6 +242,8 @@ public class DialogueRunner : MonoBehaviour
 
 				case "WaitForInput":
 					{
+						_textPresenter.UseSlowPunctuation = true;
+
 						// EventParam = BranchID
 						string userText = "";
 						yield return _inputPrompt?.Prompt(row.script, s => userText = s);
@@ -284,6 +286,9 @@ public class DialogueRunner : MonoBehaviour
 
                             id = next;
                         }
+
+						_textPresenter.UseSlowPunctuation = false;
+
 						break;
 					}
 					// 플레이어가 특정 시간동안 멈춰있다면 성공 아니면 실패
