@@ -45,7 +45,11 @@ public class DiarySystem: MonoBehaviour
     [Header("확인용")]
     [SerializeField] private int currentPageIndex = 0;
 
-    private int MaxPageIndex => Mathf.Max(0, diaryImages.Count - 1);
+	[Header("Thickness Lines")]
+	[SerializeField] private GameObject[] leftThicknessLines;
+	[SerializeField] private GameObject[] rightThicknessLines;
+
+	private int MaxPageIndex => Mathf.Max(0, diaryImages.Count - 1);
     private bool _isPageTurning = false;
 
     private void Start()
@@ -78,7 +82,8 @@ public class DiarySystem: MonoBehaviour
         }
 
         Load();
-    }
+		UpdateThicknessLines();
+	}
 
     private void Close()
     {
@@ -161,7 +166,9 @@ public class DiarySystem: MonoBehaviour
             yield return null;
         }
 
-        prevButton.enabled = true;
+		UpdateThicknessLines();
+
+		prevButton.enabled = true;
         nextButton.enabled = true;
         _isPageTurning = false;
     }
@@ -205,14 +212,35 @@ public class DiarySystem: MonoBehaviour
             yield return null;
         }
 
-        prevButton.enabled = true;
+		UpdateThicknessLines();
+
+		prevButton.enabled = true;
         nextButton.enabled = true;
         _isPageTurning = false;
     }
 
+	private void UpdateThicknessLines()
+	{
+		if (currentPageIndex % 2 != 0)
+			return;
 
+		int thickness = currentPageIndex / 2;
 
-    [ContextMenu("Load")]
+		// 왼쪽: 쌓인다
+		for (int i = 0; i < leftThicknessLines.Length; i++)
+		{
+			leftThicknessLines[i].SetActive(i < thickness);
+		}
+
+		// 오른쪽: 줄어든다
+		int rightRemain = rightThicknessLines.Length - thickness;
+		for (int i = 0; i < rightThicknessLines.Length; i++)
+		{
+			rightThicknessLines[i].SetActive(i < rightRemain);
+		}
+	}
+
+	[ContextMenu("Load")]
     private void Load()
     {
         for(int i = 0; i < diaryImages.Count; i++)
