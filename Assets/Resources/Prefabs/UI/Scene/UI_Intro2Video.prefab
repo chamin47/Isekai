@@ -241,7 +241,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _screen: {fileID: 3110554177139909202}
   _vp: {fileID: 9190328700629140675}
-  _fileName: warning_new.mp4
+  _fileName: trigger delete.mp4
   _fade: {fileID: 502993539732541653}
   _skipButton: {fileID: 1540849676472170698}
   _confirmButton: {fileID: 3630697223410884825}
@@ -552,7 +552,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 619, y: -394}
-  m_SizeDelta: {x: 489.3918, y: 171.2542}
+  m_SizeDelta: {x: 382.522, y: 121.7895}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1317521246318072516
 CanvasRenderer:
@@ -577,12 +577,12 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_RaycastPadding: {x: 6.23, y: 13.28, z: 5.38, w: 8.56}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: b9f9a4a02ce9cfb43a856dca7b26c05e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9f9bfcde2eeb16941bb3eb3563b3d63b, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -847,13 +847,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 3ff722e2b2af63b4fa352e5e7d88e9f8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 42e7fae0217c2ac48a1173b540a1bb10, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
