@@ -9,6 +9,11 @@ public class CalendarHintController
 	private readonly Image _bigLeft;
 	private readonly Image _bigRight;
 
+	private bool _paused;
+
+	public void Pause() => _paused = true;
+	public void Resume() => _paused = false;
+
 	public CalendarHintController(Image smallLeft, Image smallRight, Image bigLeft, Image bigRight)
 	{
 		_smallLeft = smallLeft;
@@ -23,7 +28,13 @@ public class CalendarHintController
 		yield return new WaitForSeconds(60f);
 
 		while (!CalendarInputModel.IsSolved)
-		{		
+		{
+			if (_paused)
+			{
+				yield return null;
+				continue;
+			}
+
 			// 2¿Í 0¸¸ Á¡¸ê (ÃÑ 4È¸)
 			for (int i = 0; i < 4; i++)
 			{

@@ -7,7 +7,8 @@ using UnityEngine;
 public class Portal : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer _spriteRenderer;
-    [SerializeField] private float _fadeTime = 1f;
+    [SerializeField] private Animator _animator;
+	[SerializeField] private float _fadeTime = 1f;
 
     private UI_Information _information;
 
@@ -45,4 +46,10 @@ public class Portal : MonoBehaviour
     {
         _nextScene = targetScene;
     }
+
+    public void PlayOpenAnimation()
+    {
+        _animator.CrossFade("portal", 0.1f);
+        Managers.Sound.Play("door_open2", Sound.Effect);
+	}
 }

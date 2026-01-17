@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81fac1d9414d3c84398e6b84bf6b706a, type: 3}
+  m_Name: 0001001
+  m_EditorClassIdentifier: 
+  id: 0001001
+  speaker: UI_Calendar
+  animName: null
+  eventName: ShowText
+  eventParam: null
+  nextID: null
+  script: "\uD78C\uD2B8\uB97C \uBCF4\uC2DC\uACA0\uC2B5\uB2C8\uAE4C?<br>\uD78C\uD2B8\uB97C
+    \uD655\uC778\uD558\uBA74 \uAC8C\uC784\uC758 \uBAB0\uC785\uAC10\uC774 \uB2E4\uC18C
+    \uB0AE\uC544\uC9C8 \uC218 \uC788\uC2B5\uB2C8\uB2E4."
+  descript: 

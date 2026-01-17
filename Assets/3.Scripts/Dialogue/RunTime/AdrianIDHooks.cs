@@ -47,6 +47,8 @@ public class AdrianIDHooks : MonoBehaviour, IDialogueHookProvider
 				yield break;
 
 			// 화가
+			case "3001100": Managers.Sound.Play("drawing", Sound.Effect); 
+				yield break;
 			case "3001101-1": Managers.Sound.Play("move_impact", Sound.Effect); 
 				yield break;
 			case "3001111": Managers.Sound.Play("funny_impact", Sound.Effect); 
@@ -54,6 +56,11 @@ public class AdrianIDHooks : MonoBehaviour, IDialogueHookProvider
 
 			// 학자
 			case "3001124": Managers.Sound.Play("notice_effect", Sound.Effect); 
+				yield break;
+
+			case "3001125-4": Managers.Sound.Play("theory_positive3", Sound.Effect); 
+				yield break;
+			case "3001125-8": Managers.Sound.Play("theory_negative4", Sound.Effect); 
 				yield break;
 
 			default: yield break;

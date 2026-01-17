@@ -18,10 +18,23 @@ public class LightToggleController : MonoBehaviour
 	{
 		_isOn = !_isOn;
 		SetSprite();
+		PlaySound();
 	}
 
 	private void SetSprite()
 	{
 		_renderer.sprite = _isOn ? _bgLightOn : _bgLightOff;
+	}
+
+	private void PlaySound()
+	{
+		if (_isOn)
+		{
+			Managers.Sound.Play("light_turn_on1", Sound.Effect);
+		}
+		else
+		{
+			Managers.Sound.Play("light_turn_off", Sound.Effect);
+		}
 	}
 }

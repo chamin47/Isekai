@@ -24,6 +24,7 @@ public class UI_ClockMiniGamePopup : UI_Popup
 
 	[SerializeField] private Button _centerButton;
 	[SerializeField] private Button _closeButton;
+	[SerializeField] private Button _hintButton;
 
 	[SerializeField] private CanvasGroup _blackOverlay;
 
@@ -40,6 +41,8 @@ public class UI_ClockMiniGamePopup : UI_Popup
 	private bool _tutorialOutlineActive; // Drag 기반
 	private bool _hoverOutlineActive;    // Hover 기반
 	private bool _ignoreHoverUntilExit;
+
+	public bool IsHintButtonClicked { get; set; } = false;
 
 	public override void Init()
 	{
@@ -90,6 +93,7 @@ public class UI_ClockMiniGamePopup : UI_Popup
 
 		_centerButton.onClick.AddListener(CheckAnswer);
 		_closeButton.onClick.AddListener(OnCloseButton);
+		_hintButton.onClick.AddListener(OnhintButton);
 
 		_centerMat = Instantiate(_centerImage.material);
 		_centerImage.material = _centerMat;
@@ -179,6 +183,19 @@ public class UI_ClockMiniGamePopup : UI_Popup
 			DoorController door = FindAnyObjectByType<DoorController>();
 			door.Open();
 		}
+	}
+
+	private void OnhintButton()
+	{
+		if (IsHintButtonClicked)
+			return;
+
+		IsHintButtonClicked = true;
+
+		var hintPopup = Managers.UI.ShowPopupUI<UI_ConfirmHintPopup>();
+
+		hintPopup.Init("0001002", HintType.ClockHint, null);
+		hintPopup.SetParentPopup(this);
 	}
 
 	private void OnSuccess()

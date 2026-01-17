@@ -13,6 +13,7 @@ public class UI_CalendarMiniGamePopup : UI_Popup
 	[SerializeField] private Image _hintSmallRight;
 	[SerializeField] private Image _hintBigLeft;
 	[SerializeField] private Image _hintBigRight;
+	[SerializeField] private Button _hintButton;
 
 	[SerializeField] private RectTransform _slotRoot;
 	[SerializeField] private Image _slotBackground; // 색상 변경용
@@ -27,6 +28,8 @@ public class UI_CalendarMiniGamePopup : UI_Popup
 	private Coroutine _failCoroutine;
 
 	private Vector2 _originSlotPos;
+
+	public bool IsHintButtonClicked { get; set; } = false;
 
 	public override void Init()
 	{
@@ -57,7 +60,7 @@ public class UI_CalendarMiniGamePopup : UI_Popup
 
 		_checkButton.onClick.AddListener(OnCheck);
 		_closeButton.onClick.AddListener(OnCloseButton);
-
+		_hintButton.onClick.AddListener(OnhintButton);
 		_hintController = new CalendarHintController(_hintSmallLeft, _hintSmallRight, _hintBigLeft, _hintBigRight);
 
 		if (!CalendarInputModel.IsSolved)
@@ -109,6 +112,19 @@ public class UI_CalendarMiniGamePopup : UI_Popup
 			DoorController door = FindAnyObjectByType<DoorController>();
 			door.Open();
 		}
+	}
+
+	private void OnhintButton()
+	{
+		if (IsHintButtonClicked)
+			return;
+
+		IsHintButtonClicked = true;
+
+		var hintPopup = Managers.UI.ShowPopupUI<UI_ConfirmHintPopup>();
+
+		hintPopup.Init("0001001", HintType.CalendarHint, _hintController);
+		hintPopup.SetParentPopup(this);
 	}
 
 	private IEnumerator CoSuccess()

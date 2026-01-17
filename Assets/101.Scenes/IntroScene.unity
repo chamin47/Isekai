@@ -1645,7 +1645,6 @@ GameObject:
   - component: {fileID: 416809242}
   - component: {fileID: 416809241}
   - component: {fileID: 416809240}
-  - component: {fileID: 416809244}
   m_Layer: 0
   m_Name: LightInteraction
   m_TagString: Untagged
@@ -1929,20 +1928,6 @@ PolygonCollider2D:
       - {x: -0.64426863, y: -4.1306963}
       - {x: -0.6465596, y: -4.072842}
   m_UseDelaunayMesh: 0
---- !u!114 &416809244
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 416809238}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 625b98ae9d821c943b952cb317d09d25, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _clickDownSound: click_down
-  _clickUpSound: click_up
 --- !u!1001 &431551627
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2263,7 +2248,7 @@ PrefabInstance:
     - target: {fileID: 6257036220331740517, guid: 1c3db6df8cc82bb42b1fbaae0ec2131a, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 9a535fe54f4b13e4eb463cd246542cc3, type: 3}
+      objectReference: {fileID: 21300000, guid: 2616113ed4e62c0489c66505f85bc4ef, type: 3}
     - target: {fileID: 6257036220331740517, guid: 1c3db6df8cc82bb42b1fbaae0ec2131a, type: 3}
       propertyPath: m_WasSpriteAssigned
       value: 1
@@ -5911,7 +5896,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.8125, y: 3.6875}
+    oldSize: {x: 2.1875, y: 4.46875}
     newSize: {x: 1.8125, y: 3.6875}
     adaptiveTilingThreshold: 0.5
     drawMode: 0

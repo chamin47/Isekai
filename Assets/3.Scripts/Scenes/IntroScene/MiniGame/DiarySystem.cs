@@ -82,10 +82,16 @@ public class DiarySystem: MonoBehaviour
         }
 
         Load();
-		UpdateThicknessLines();
+		IntializeThicknessLines();
 	}
 
-    private void Close()
+	private void IntializeThicknessLines()
+	{		
+		UpdateLeftThickness();
+		UpdateRightThickness();
+	}
+
+	private void Close()
     {
         gameObject.SetActive(false);
     }
@@ -153,11 +159,13 @@ public class DiarySystem: MonoBehaviour
 		prevButton.enabled = false;
         nextButton.enabled = false;
 
-        var curImage = diaryImages[currentPageIndex];
-        float elapsedTime = 0f;
+		var curImage = diaryImages[currentPageIndex];
         currentPageIndex--;
 
-        while (elapsedTime <= effectTime)
+		UpdateLeftThickness();
+
+		float elapsedTime = 0f;
+		while (elapsedTime <= effectTime)
         {
             elapsedTime += Time.deltaTime;
             float fillAmount = 1- (elapsedTime / effectTime);
@@ -166,7 +174,7 @@ public class DiarySystem: MonoBehaviour
             yield return null;
         }
 
-		UpdateThicknessLines();
+		UpdateRightThickness();
 
 		prevButton.enabled = true;
         nextButton.enabled = true;
@@ -199,12 +207,14 @@ public class DiarySystem: MonoBehaviour
         Managers.Sound.Play("diary_page_turn", Sound.Effect);
         prevButton.enabled = false;
         nextButton.enabled = false;
-        var nextIndex = currentPageIndex + 1;
+		var nextIndex = currentPageIndex + 1;
         var nextImage = diaryImages[nextIndex];
-        float elapsedTime = 0f;
         currentPageIndex = nextIndex;
 
-        while (elapsedTime <= effectTime)
+		UpdateRightThickness();
+
+		float elapsedTime = 0f;
+		while (elapsedTime <= effectTime)
         {
             elapsedTime += Time.deltaTime;
             float fillAmount = elapsedTime / effectTime;
@@ -212,33 +222,33 @@ public class DiarySystem: MonoBehaviour
             yield return null;
         }
 
-		UpdateThicknessLines();
+		UpdateLeftThickness();
 
 		prevButton.enabled = true;
         nextButton.enabled = true;
         _isPageTurning = false;
     }
 
-	private void UpdateThicknessLines()
+	private void UpdateLeftThickness()
 	{
-		if (currentPageIndex % 2 != 0)
-			return;
+		if (currentPageIndex % 2 != 0) return; 
+        
+        int thickness = currentPageIndex / 2;
 
-		int thickness = currentPageIndex / 2;
-
-		// 왼쪽: 쌓인다
 		for (int i = 0; i < leftThicknessLines.Length; i++)
-		{
 			leftThicknessLines[i].SetActive(i < thickness);
-		}
+	}
 
-		// 오른쪽: 줄어든다
+	private void UpdateRightThickness()
+	{
+		if (currentPageIndex % 2 != 0) return; 
+        int thickness = currentPageIndex / 2;
+
 		int rightRemain = rightThicknessLines.Length - thickness;
 		for (int i = 0; i < rightThicknessLines.Length; i++)
-		{
 			rightThicknessLines[i].SetActive(i < rightRemain);
-		}
 	}
+
 
 	[ContextMenu("Load")]
     private void Load()

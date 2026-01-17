@@ -9,6 +9,9 @@ public class UI_BookPopup : UI_Popup
 {
 	[SerializeField] private Button _AnyClick;
 	[SerializeField] private Image _selectImage;
+	[SerializeField] private GameObject _bookClickArea;
+	[SerializeField] private Animator _bookAnimator;
+	[SerializeField] private Button _nextButton;
 
 	[Header("0:Vinter, 1:Chaumm, 2:Gang, 3:Pelmanus")]
 	[SerializeField] private List<Sprite> _icon;
@@ -21,15 +24,26 @@ public class UI_BookPopup : UI_Popup
 	[SerializeField] private GameObject _decisionHintBubble;
 	[SerializeField] private TMP_Text _decisionHintText;
 	[SerializeField] private CanvasGroup _canvasGroup;
+	[SerializeField] private SimpleBookFlip _bookFlip;
+
 	private const float _decisionFadeTime = 1f;
 
 	private LibraryScene _libraryScene;
 	private bool _isHovering;
 
+	public GameObject NextButton => _nextButton.gameObject;
+	public Image BookClickArea => _bookClickArea.GetComponent<Image>();
+
+	private void Awake()
+	{
+		gameObject.GetComponent<Canvas>().worldCamera = Camera.main;
+	}
 
 	public override void Init()
 	{
 		base.Init();
+
+		Debug.Log(_icon.Count);
 
 		if (Managers.Scene.CurrentScene is LibraryScene)
 		{
@@ -46,9 +60,16 @@ public class UI_BookPopup : UI_Popup
 
 		SetImage();
 
+		innerPotrait.gameObject.SetActive(false);
+		_bookFlip.BackPageObject.SetActive(false);
+
+		_selectImage.gameObject.SetActive(false);
 		_selectImage.gameObject.BindEvent(OnClickdecision);
 		_selectImage.gameObject.BindEvent(OnPointerBookEnter, UIEvent.Enter);
 		_selectImage.gameObject.BindEvent(OnPointerBookExit, UIEvent.Exit);
+		_nextButton.onClick.AddListener(_bookFlip.FlipOnce);
+		_bookClickArea.BindEvent(OnPlayAnimation);
+		_bookFlip.Finished += EnableDecision;
 
 		defaultColor = _selectImage.color;
 
@@ -84,7 +105,7 @@ public class UI_BookPopup : UI_Popup
 		book.SetHighlight(true);
 
 		Managers.UI.ClosePopupUI(this);
-		_hud.SetActive(true);
+		_hud?.SetActive(true);
 	}
 
 	private void Update()
@@ -102,6 +123,7 @@ public class UI_BookPopup : UI_Popup
 		switch (currentWorldType)
 		{
 			case WorldType.Vinter:
+				Debug.Log(_icon.Count);
 				innerPotrait.sprite = _icon[0];
 				break;
 			case WorldType.Chaumm:
@@ -126,7 +148,7 @@ public class UI_BookPopup : UI_Popup
 		if (_isHovering)
 			return;
 
-        if (eventData.pointerEnter == _selectImage.gameObject)
+		if (eventData.pointerEnter == _selectImage.gameObject)
 		{
 			_isHovering = true;
 			_selectImage.color = Color.gray;
@@ -140,12 +162,23 @@ public class UI_BookPopup : UI_Popup
 			return;
 
 		Debug.Log(eventData.pointerEnter);
-        if (eventData.pointerEnter == _selectImage.gameObject)
+		if (eventData.pointerEnter == _selectImage.gameObject)
 		{
 			_isHovering = false;
 			_selectImage.color = defaultColor;
 			_decisionHintBubble.SetActive(false);
 		}
+	}
+
+	private void OnPlayAnimation(PointerEventData eventData)
+	{
+		_bookAnimator.CrossFade("book_open", 0.1f);
+	}
+
+	private void EnableDecision()
+	{
+		_nextButton.gameObject.SetActive(false);
+		_selectImage.gameObject.SetActive(true);
 	}
 
 	private IEnumerator CoDecisionFadeSequence()
@@ -169,5 +202,10 @@ public class UI_BookPopup : UI_Popup
 
 		var ui = NoticePopupFactory.CreatePopup(Managers.World.CurrentWorldType);
 		ui.Init(_book);
+	}
+
+	private void OnDestroy()
+	{
+		_bookFlip.Finished -= EnableDecision;
 	}
 }

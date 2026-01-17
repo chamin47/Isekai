@@ -16,16 +16,18 @@ public class TestScene : BaseScene
 
     private void MakePortal(float happiness)
     {
-        if(happiness >= 100f)
+        if (happiness >= 100f)
         {
             _portal.gameObject.SetActive(true);
             _portal.SetPortalPosition(Scene.LoadingScene);
             if(_player.transform.position.x < 0f)
-                _portal.transform.position = new Vector3(_player.transform.position.x + 3f, -1.9f, 0f);
+                _portal.transform.position = new Vector3(_player.transform.position.x + 3f, -3.68f, 0f);
             else
-                _portal.transform.position = new Vector3(_player.transform.position.x - 3f, -1.9f, 0f);
+                _portal.transform.position = new Vector3(_player.transform.position.x - 3f, -3.68f, 0f);
 
-            Managers.Happy.OnHappinessChanged -= MakePortal;
+            _portal.PlayOpenAnimation();
+
+			Managers.Happy.OnHappinessChanged -= MakePortal;
         }
     }
 

@@ -51,6 +51,12 @@ public class NewDialogueRunner : MonoBehaviour
         _database.LoadAllFromResources();
     }
 
+    [ContextMenu("Full Happiness")]
+	private void FullHappiness()
+    {
+        Managers.Happy.AddHappiness(100);
+	}
+
     private void InitializeHooks()
     {
         if (_hookProviderBehaviour == null)

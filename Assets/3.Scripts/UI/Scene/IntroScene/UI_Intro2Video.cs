@@ -80,7 +80,7 @@ public class UI_Intro2Video : UI_Scene
 
         IEnumerator Delay()
         {
-            yield return WaitForSecondsCache.Get(15f);
+            yield return WaitForSecondsCache.Get(1f);
             if (_skipButton != null)
                 _skipButton.gameObject.SetActive(true);
         }
