@@ -140,8 +140,35 @@ public class LibraryScene : BaseScene
 			book.GetComponent<LibraryBook>().EnableClick();
 		}
 	}
-    
-    public void ActiveCurrentWorldBook()
+
+    // 잠겨있는 책만 클릭 불가능한 함수
+    public void DisableLockedBookClicks()
+    {
+        for (int i = 0; i < _books.Length; i++)
+        {
+            var book = _books[i].GetComponent<LibraryBook>();
+           
+            if (book.IsUnlocked() == false) // 잠겨있는 책
+			{
+                book.DisableClick();
+            }
+        }
+	}
+
+	// 복구 함수
+	public void EnableLockedBookClicks()
+    {
+        for (int i = 0; i < _books.Length; i++)
+        {
+            var book = _books[i].GetComponent<LibraryBook>();
+            if (book.IsUnlocked() == false) // 잠겨있는 책
+            {
+                book.EnableClick();
+            }
+        }
+	}
+
+	public void ActiveCurrentWorldBook()
     {
         EnableBooks();
 

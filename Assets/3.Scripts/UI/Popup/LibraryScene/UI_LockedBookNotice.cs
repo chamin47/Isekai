@@ -31,6 +31,8 @@ public class UI_LockedBookNotice : UI_Popup
 
 		_text.text = "지금은 열람할 수 없는 책입니다.";
 
+		(Managers.Scene.CurrentScene as LibraryScene)?.DisableLockedBookClicks();
+
 		StartCoroutine(CoPlay());
 	}
 
@@ -82,5 +84,6 @@ public class UI_LockedBookNotice : UI_Popup
 	private void OnDestroy()
 	{
 		_isShowing = false;
+		(Managers.Scene.CurrentScene as LibraryScene)?.EnableLockedBookClicks();
 	}
 }

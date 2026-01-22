@@ -11,8 +11,6 @@ public class SimpleBookFlip : MonoBehaviour
 	[Header("Setting")]
 	[SerializeField] private float flipDuration = 1.2f;
 
-	private MaterialPropertyBlock _mpb;
-
 	private bool _isFlipped;
 
 	public GameObject BackPageObject => backPage.gameObject;
@@ -21,8 +19,7 @@ public class SimpleBookFlip : MonoBehaviour
 
 	private void Awake()
 	{
-		_mpb = new MaterialPropertyBlock();
-		SetFill(0.877f);
+		SetFill(1f);
 	}
 
 	public void FlipOnce()
@@ -32,7 +29,7 @@ public class SimpleBookFlip : MonoBehaviour
 
 		_isFlipped = true;
 
-		SetFill(0.877f);
+		SetFill(0.287f);
 
 		StartCoroutine(CoFlip());
 	}
@@ -40,12 +37,12 @@ public class SimpleBookFlip : MonoBehaviour
 	private IEnumerator CoFlip()
 	{
 		float t = 0f;
-		while (t < flipDuration)
-		{
-			t += Time.deltaTime;
-			float fill = 0.877f - (t / flipDuration);
-			SetFill(fill);
-			yield return null;
+		while (t < flipDuration) 
+		{ 
+			t += Time.deltaTime; 
+			float fill = 0.287f - (t / flipDuration); 
+			SetFill(fill); 
+			yield return null; 
 		}
 
 		SetFill(0f);
@@ -54,8 +51,6 @@ public class SimpleBookFlip : MonoBehaviour
 
 	private void SetFill(float value)
 	{
-		frontPage.GetPropertyBlock(_mpb);
-		_mpb.SetFloat("_Fill", value);
-		frontPage.SetPropertyBlock(_mpb);
+		frontPage.material.SetFloat("_Fill", value);
 	}
 }

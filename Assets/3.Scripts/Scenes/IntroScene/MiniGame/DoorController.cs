@@ -86,7 +86,7 @@ public class DoorController : MonoBehaviour
         yield return _fadeUI.CoFadeOut(2f);
         _introCameraController.MoveTo(_targetPosition.position);
         _player.transform.position = _playerTragetPosition.position;
-        _player.transform.localScale = new Vector3(1, 1, 1);
+        //_player.transform.localScale = new Vector3(1, 1, 1);
         _happyUI.SetActive(true);
         yield return _fadeUI.CoFadeIn(2f);
         _fadeUI.gameObject.SetActive(false);

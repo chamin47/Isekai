@@ -28,6 +28,7 @@ public class IntroPlayerInteraction : MonoBehaviour
     private IEnumerator ProcessCutScene()
     {
         yield return MoveTo(); 
+        _ani.Play("cutscene1_player");
         GameObject go = new GameObject { name = "CutSceneDirector" };
         go.AddComponent<CutSceneDirector>();
     }

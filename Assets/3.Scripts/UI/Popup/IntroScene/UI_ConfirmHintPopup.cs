@@ -9,6 +9,16 @@ using UnityEngine.UI;
 
 public class UI_ConfirmHintPopup : UI_Popup
 {
+	private enum PopupState
+	{
+		Closed,
+		Opening,
+		Opened,
+		Closing
+	}
+
+	private PopupState _state = PopupState.Closed;
+
 	[Header("Texts")]
 	[SerializeField] private TMP_Text _questionText;
 	[SerializeField] private TMP_Text _yesText;
@@ -118,11 +128,17 @@ public class UI_ConfirmHintPopup : UI_Popup
 
 	private void OnClickNoButton()
 	{
+		if (_state != PopupState.Opened)
+			return;
+
 		PlayPopupScaleReverse();
 	}
 
 	private void OnClickYesButton()
 	{
+		if (_state != PopupState.Opened)
+			return;
+
 		Managers.UI.ClosePopupUI();
 		Managers.UI.ShowPopupUI<UI_HintPopup>().Init(_hintType, _hintController);
 	}
@@ -132,6 +148,11 @@ public class UI_ConfirmHintPopup : UI_Popup
 
 	private void PlayPopupScale()
 	{
+		if (_state != PopupState.Closed)
+			return;
+
+		_state = PopupState.Opening;
+
 		// 팝업 초기 크기
 		_root.localScale = Vector3.one * 0.7f;
 
@@ -143,25 +164,40 @@ public class UI_ConfirmHintPopup : UI_Popup
 		// 배경 먼저 어둡게
 		_popupOverlay.DOFade(0.77f, 0.7f)
 			.SetEase(Ease.Linear)
+			.SetLink(gameObject)
 			.OnComplete(() =>
 			{
 				_infoImage.GetComponent<CanvasGroup>().alpha = 1f;
 				// 팝업 나중에 커지기
 				_root.DOScale(1f, 0.32f)
-					 .SetEase(Ease.OutBack);
+					 .SetEase(Ease.OutBack)
+					 .SetLink(gameObject)
+					 .OnComplete(() =>
+					 {
+						 _state = PopupState.Opened;
+
+					 });
 			});
 	}
 
 	private void PlayPopupScaleReverse()
 	{
+		if (_state != PopupState.Opened)
+			return;
+
+		_state = PopupState.Closing;
+
 		_root.DOScale(0f, 0.32f)
 					 .SetEase(Ease.Linear)
+					 .SetLink(gameObject)
 					 .OnComplete(() =>
 					 {
 						 _popupOverlay.DOFade(0f, 0.7f)
 						 .SetEase(Ease.Linear)
+						 .SetLink(gameObject)
 						 .OnComplete(() =>
 						 {
+							 _state = PopupState.Closed;
 							 Managers.UI.ClosePopupUI();						 
 						 });
 					 });

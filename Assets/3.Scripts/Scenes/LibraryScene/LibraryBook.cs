@@ -153,6 +153,7 @@ public class LibraryBook : MonoBehaviour
 			_isClicked = true;
 
 			_hud.SetActive(false);
+			Managers.UI.ClosePopupUI();
 			var ui = Managers.UI.ShowPopupUI<UI_BookPopup>();
 			ui.Init(this, _hud);
 
@@ -160,7 +161,7 @@ public class LibraryBook : MonoBehaviour
 		}
 	}
 
-	private bool IsUnlocked()
+	public bool IsUnlocked()
 	{
 		Debug.Log(Managers.World.CurrentWorldType);
 		return _worldType == Managers.World.CurrentWorldType;

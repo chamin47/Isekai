@@ -9,6 +9,7 @@ public class UI_LetterPopup : UI_Popup
 	[SerializeField] private Image _letterImage;
 
 	private HappinessHUD _hud;
+    private PlayerAnimator _playerAnim;
 
 	private Coroutine _endCoroutine;
 	private bool _isEnded = false;
@@ -23,8 +24,9 @@ public class UI_LetterPopup : UI_Popup
 		GetComponent<Canvas>().worldCamera = Camera.main;
 
 		_hud = FindAnyObjectByType<HappinessHUD>();
+        _playerAnim = FindAnyObjectByType<PlayerAnimator>();
 
-		_hud.gameObject.SetActive(false);
+		_hud?.gameObject.SetActive(false);
 
         _endCoroutine = StartCoroutine(WaitUntilProductionEnd());
 	}
@@ -53,7 +55,8 @@ public class UI_LetterPopup : UI_Popup
 	{
         _isEnded = true;
 
-        Managers.UI.ShowPopupUI<UI_CutScene2Popup>();
+        _playerAnim.gameObject.GetComponent<Animator>().Play("cutscene2_player");
+		Managers.UI.ShowPopupUI<UI_CutScene2Popup>();
         _hud.gameObject.SetActive(true);
         gameObject.SetActive(false);
     }
