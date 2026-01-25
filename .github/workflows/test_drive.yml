@@ -1,8 +1,6 @@
 name: Google Drive Upload Test 
-
 on:
   workflow_dispatch: # 수동으로 버튼을 눌러서 실행
-
 jobs:
   test-upload:
     runs-on: ubuntu-latest
