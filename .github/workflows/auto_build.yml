@@ -1,0 +1,53 @@
+name: Multi-Platform Build & Upload 
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    name: Build for ${{ matrix.targetPlatform }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        targetPlatform:
+          - StandaloneWindows64 # PC 버전
+          - WebGL               # WebGL 버전
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          lfs: false
+
+      - name: Cache Library
+        uses: actions/cache@v3
+        with:
+          path: Library
+          key: Library-${{ matrix.targetPlatform }}
+
+      # 1. 유니티 빌드 실행
+      - name: Build execution
+        uses: game-ci/unity-builder@v4
+        env:
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+        with:
+          targetPlatform: ${{ matrix.targetPlatform }}
+
+      # 2. 결과물 압축 
+      - name: Zip Build
+        run: |
+          cd build/${{ matrix.targetPlatform }}
+          zip -r ../../${{ matrix.targetPlatform }}.zip .
+
+      # 3. 구글 드라이브 업로드
+      - name: Upload to Google Drive
+        uses: adityak74/google-drive-upload-git-action@main
+        with:
+          credentials: ${{ secrets.GDRIVE_CREDENTIALS }}
+          filename: ${{ matrix.targetPlatform }}.zip
+          folderId: ${{ secrets.GDRIVE_FOLDER_ID }}
+          overwrite: "true"
