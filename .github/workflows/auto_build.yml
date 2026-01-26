@@ -1,8 +1,13 @@
-name: Multi-Platform Build & Upload 
+name: Multi-Platform Build & Deploy
 
 on:
   push:
     branches: [ main ]
+
+permissions: # 권한 설정 추가 (필수)
+  contents: write
+  pages: write
+  id-token: write
 
 jobs:
   build:
@@ -12,14 +17,12 @@ jobs:
       fail-fast: false
       matrix:
         targetPlatform:
-          - StandaloneWindows64 # PC 버전
-          - WebGL               # WebGL 버전
+          - StandaloneWindows64
+          - WebGL
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          lfs: false
 
       - name: Cache Library
         uses: actions/cache@v3
@@ -43,11 +46,21 @@ jobs:
           cd build/${{ matrix.targetPlatform }}
           zip -r ../../${{ matrix.targetPlatform }}.zip .
 
-      # 3. 구글 드라이브 업로드
-      - name: Upload to Google Drive
-        uses: adityak74/google-drive-upload-git-action@main
+      # 3. [Windows 전용] 깃허브 리리스(Releases) 업로드
+      - name: Upload PC Build to Releases
+        if: matrix.targetPlatform == 'StandaloneWindows64'
+        uses: softprops/action-gh-release@v1
         with:
-          credentials: ${{ secrets.GDRIVE_CREDENTIALS }}
-          filename: ${{ matrix.targetPlatform }}.zip
-          folderId: ${{ secrets.GDRIVE_FOLDER_ID }}
-          overwrite: "true"
+          files: StandaloneWindows64.zip
+          tag_name: v${{ github.run_number }}
+          name: Build v${{ github.run_number }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # 4. [WebGL 전용] 깃허브 페이지(Pages) 배포
+      - name: Deploy WebGL to Pages
+        if: matrix.targetPlatform == 'WebGL'
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build/WebGL
